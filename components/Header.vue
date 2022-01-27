@@ -5,7 +5,13 @@
         <h1 class="logo">
           <nuxt-link class="logoLink" to="/">
             <svg class="logoImg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 111.49 37.29">
-              <text class="logoImgColor" transform="translate(0.57 27.96)" style="font-size:33.68355941772461px;font-family:Bilo-MediumItalic, Bilo;font-weight:500;font-style:italic" fill="#fff">SUUGO</text>
+              <defs>
+                <linearGradient id="Gradient">
+                  <stop offset="0%" stop-color="#005c97"/>
+                  <stop offset="100%" stop-color="#363795"/>
+                </linearGradient>
+              </defs>
+              <text class="logoImgColor" transform="translate(0.57 27.96)" style="font-size:33.68355941772461px;font-family:Bilo-MediumItalic, Bilo;font-weight:500;font-style:italic" fill="url(#Gradient)">SUUGO</text>
             </svg>
           </nuxt-link>
         </h1>
@@ -118,7 +124,7 @@ export default {
   width: inherit;
 }
 .logoImgColor {
-  fill: var(--header-logo);
+  /* fill: var(--header-logo); */
 }
 
 </style>

@@ -1757,6 +1757,8 @@ export default {
   margin-top: 10px;
   font-weight: 700;
   font-size: var(--font-size-md);
+  background: linear-gradient(to right, #005c97, #363795);
+  background-clip: text;
 }
 
 .time {
@@ -1771,7 +1773,8 @@ export default {
 
 .nameLink {
   text-decoration: none;
-  color: var(--main-content-name-text);
+  /* color: var(--main-content-name-text); */
+  color: transparent;
   /* display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
