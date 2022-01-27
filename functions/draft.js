@@ -45,7 +45,7 @@ exports.handler = async (event) => {
       /* body: JSON.stringify({ "visit": "111" }), */
     }
   );
-  /* console.log(await result.json()); */
+  console.log(await result.json());
 
   /* return client
     .get({
