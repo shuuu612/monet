@@ -1,0 +1,257 @@
+$breakpoints: (
+  'xs': (
+    min-width: 375px,
+  ),
+  'sm': (
+    min-width: 576px,
+  ),
+  'md': (
+    min-width: 768px,
+  ),
+  'lg': (
+    min-width: 992px,
+  ),
+  'xl': (
+    min-width: 1200px,
+  ),
+  'xxl': (
+    min-width: 1400px,
+  ),
+) !default;
+
+@mixin responsive($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media screen and #{inspect(map-get($breakpoints, $breakpoint))} {
+      @content;
+    }
+  } @else {
+    @error "指定されたブレークポイントは定義されていません。" + "指定できるブレークポイントは次のとおりです。 -> #{map-keys($breakpoints)}";
+  }
+}
+
+@mixin hover() {
+  &:focus {
+    @content;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      @content;
+    }
+  }
+
+  /* @at-root .ua-ie &:hover {
+    @content;
+  } */
+}
+
+/* フォントサイズをレスポンシブに設定 */
+:root {
+  --font-size-xxs: 6px;
+  --font-size-xs: 7px;
+  --font-size-sm: 11px;
+  --font-size-md: 12px;
+  --font-size-lg: 14px;
+  --font-size-xl: 16px;
+  --font-size-xxl: 18px;
+  --font-size-3xl: 20px;
+
+  @include responsive(md) {
+    --font-size-xxs: 8px;
+    --font-size-xs: 9px;
+    --font-size-sm: 12px;
+    --font-size-md: 14px;
+    --font-size-lg: 16px;
+    --font-size-xl: 18px;
+    --font-size-xxl: 20px;
+    --font-size-3xl: 24px;
+  }
+
+  @include responsive(xl) {
+    --font-size-xxs: 10px;
+    --font-size-xs: 12px;
+    --font-size-sm: 13px;
+    --font-size-md: 14px;
+    --font-size-lg: 18px;
+    --font-size-xl: 22px;
+    --font-size-xxl: 26px;
+    --font-size-3xl: 30px;
+  }
+}
+
+/* $main-color: #505C6E; */
+
+:root {
+  --black: #202020;
+  --black-light: #303030;
+  --black-super-light: #474747;
+  --black-ultra-light: #7e7e7e;
+  --black-dark: #181818;
+  --black-super-dark: #111111;
+  --black-ultra-dark: #080808;
+  --black-hover: #505050;
+  --black-transparent: #20202080;
+  --black-transparent-high: #20202038;
+  --black-transparent-low: #202020e3;
+
+  --blue: #0c81cf;
+  --blue-light: #30a2ee;
+  --blue-super-light: #54b6f7;
+  --blue-ultra-light: #b5e1ff;
+  --blue-dark: #096daf;
+  --blue-super-dark: #07578d;
+  --blue-ultra-dark: #043e64;
+  --blue-hover: #3ea2e6;
+  --blue-transparent: #0c81cf7c;
+  --blue-transparent-high: #0c81cf15;
+  --blue-transparent-low: #0c81cfb9;
+
+  --yellow: #f0e21d;
+  --yellow-light: #fcf268;
+  --yellow-super-light: #fffab6;
+  --yellow-ultra-light: #fffeec;
+  --yellow-dark: #d4c710;
+  --yellow-super-dark: #aca10b;
+  --yellow-ultra-dark: #7c7408;
+  --yellow-hover: #dace2f;
+  --yellow-transparent: #f0e21d7e;
+  --yellow-transparent-high: #f0e21d31;
+  --yellow-transparent-low: #f0e21dc0;
+
+  --grey: #555555;
+  --grey-light: #696969;
+  --grey-super-light: #929292;
+  --grey-ultra-light: #c0c0c0;
+  --grey-dark: #424242;
+  --grey-super-dark: #313131;
+  --grey-ultra-dark: #252525;
+  --grey-hover: #494949;
+  --grey-transparent: #55555577;
+  --grey-transparent-high: #55555534;
+  --grey-transparent-low: #555555c9;
+
+  /* --black: #333333; */
+  --white: #f3f3f3;
+  --red: #ed4956;
+  --red-transparent-high: #ed495715;
+
+  --sideMenuWidth: 400px;
+
+  // 共通
+  --body-text: var(--white);
+  --body-background: var(--white);
+  // メインボタン
+  --main-button: var(--blue);
+  --main-button-gradation-start: var(--white);
+  --main-button-gradation-end: var(--blue-dark);
+  --main-button-hover: var(--blue-hover);
+  --main-button-sub: transparent;
+  --main-button-sub-hover: var(--blue-transparent-high);
+  --main-button-bar-close: var(--white);
+  --main-button-bar-open: var(--white);
+  --main-button-icon: var(--black-dark);
+  // ヘッダー
+  --header-logo: var(--black-dark);
+  // 並び替え
+  --order-title: var(--black);
+  --order-list-background: var(--grey-ultra-light);
+  --order-list-background-hover: var(--grey-light);
+  --order-list-background-selected: var(--grey-light);
+  --order-list-text: var(--black);
+  --order-list-text-hover: var(--white);
+  --order-list-text-selected: var(--white);
+  --order-icon: var(--black);
+  // ページトップリンク
+  --scrolltop-button-shadow: var(--grey);
+  --scrolltop-text: var(--black);
+  --scrolltop-icon-fill: var(--blue);
+  --scrolltop-icon-stroke: var(--blue);
+  // 検索
+  --search-border: var(--grey);
+  --search-border-focus: var(--blue);
+  --search-icon: var(--black-ultra-light);
+  @include responsive(md) {
+    --search-icon: var(--grey);
+  }
+  --search-text: var(--black);
+  // サイドメニュー
+  --side-menu-favorate-icon: var(--grey-super-light);
+  --side-menu-favorate-icon-registered-fill: var(--yellow);
+  --side-menu-favorate-icon-registered-stroke: var(--yellow);
+  --side-menu-favorate-button-hover: var(--grey-transparent);
+  --side-menu-tab-overall-border: var(--grey);
+  --side-menu-tab-text: var(--grey-super-light);
+  --side-menu-tab-text-selected: var(--white);
+  --side-menu-tab-border-selected: var(--blue);
+  --side-menu-mask: var(--black-transparent-low);
+  --side-menu-background: var(--black);
+  --side-menu-setting-button: var(--black-super-light);
+  --side-menu-category-group-background: var(--black-light);
+  --side-menu-category-text: var(--white);
+  --side-menu-category-text-selected: var(--blue);
+  --side-menu-multiple-text-selected: var(--black);
+  --side-menu-multiple-background-selected: var(--grey-ultra-light);
+  --side-menu-category-border-hover: var(--white);
+  --side-menu-setting-device-icon: var(--grey-ultra-light);
+  --side-menu-setting-device-icon-active: var(--black);
+  --side-menu-setting-device-text: var(--grey-ultra-light);
+  --side-menu-setting-device-text-active: var(--black);
+  --side-menu-setting-button-selected: var(--white);
+  --side-menu-setting-slider-background: var(--grey-light);
+  --side-menu-setting-slider-button: var(--white);
+  --side-menu-multiple-under-menu-background: var(--black-light);
+  --side-menu-multiple-under-menu-border-top: var(--grey);
+  --side-menu-multiple-under-menu-switch-overall-background: var(--grey);
+  --side-menu-multiple-under-menu-switch-background-selected: var(--white);
+  --side-menu-multiple-under-menu-switch-background: var(--grey-dark);
+  --side-menu-multiple-under-menu-switch-text: var(--grey-ultra-light);
+  --side-menu-multiple-under-menu-switch-text-selected: var(--black);
+  --side-menu-multiple-under-menu-start-button-background: var(--blue);
+  --side-menu-multiple-under-menu-clear-button-background: var(--grey);
+  --side-menu-multiple-under-menu-button-background-deactive: var(--grey);
+  --side-menu-multiple-under-menu-button-text-deactive: var(--grey-ultra-light);
+  --side-menu-color-image-gradation-start: var(--white);
+  --side-menu-color-image-red: #e42525;
+  --side-menu-color-image-pink: #df5ec3;
+  --side-menu-color-image-purple: #880ccf;
+  --side-menu-color-image-blue: #0c67cf;
+  --side-menu-color-image-green: #2bb866;
+  --side-menu-color-image-yellow: #d6da15;
+  --side-menu-color-image-orange: #e07700;
+  --side-menu-color-image-brown: #8f5d00;
+  --side-menu-color-image-white: #f1f1f1;
+  --side-menu-color-image-beige: #ada58a;
+  --side-menu-color-image-grey: #636363;
+  --side-menu-color-image-black: #181818;
+  // 404
+  --error-text: var(--black);
+  // メイン
+  --main-text: var(--black);
+  --main-content-image-shadow: var(--grey);
+  --main-modal-outer-background: var(--black-transparent-low);
+  --main-modal-inner-background: transparent;
+  --main-modal-info-background: var(--white);
+  --main-modal-info-partition: var(--grey-super-light);
+  --main-modal-button-bar: var(--white);
+  --main-modal-button-bar-hover: var(--grey-super-light);
+  --main-modal-tag-text: var(--black);
+  --main-modal-tag-border: var(--black);
+  --main-content-name-text: var(--black);
+  --main-content-detail-button-hover: var(--blue-transparent-high);
+  --main-content-detail-button-icon: var(--grey-ultra-dark);
+  --main-content-detail-button-icon-hover: var(--blue);
+  --main-content-button-comment-background: var(--black);
+  --main-content-button-comment-text: var(--white);
+  --main-content-bookmark-button-icon: var(--grey-ultra-dark);
+  --main-content-bookmark-button-icon-hover: var(--red);
+  --main-content-bookmark-button-icon-Registered: var(--red);
+  --main-content-bookmark-button-icon-hover-Registered: var(--red);
+  --main-content-bookmark-button-hover: var(--red-transparent-high);
+  --main-more-button-background: var(--black);
+  --main-more-button-text: var(--white);
+  --main-more-button-background-hover: var(--black-hover);
+  --main-more-button-text-hover: var(--white);
+}
+
+:root.darkmode {
+}
