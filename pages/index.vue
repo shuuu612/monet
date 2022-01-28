@@ -31,9 +31,9 @@
             <div v-for="(content, index) in getDisplayingContent" :key="content.id" class="content" :class="getStateSliderStep">
               <div class="contentImage" :style="infoStyle">
                 <a :href="`${content.url}`" target="_blank" rel="noopener noreferrer" class="images">
-                  <img v-if="getPcHide" class="image" :src="`${content.imagePC.url}?w=${Math.round(873*getStateSliderSize)}`" :alt="`${content.name}`" :class="getMargin('pc')" :style="getMaxWidth('pc')" loading="lazy" @load="contentSizeChange(index)">
-                  <img v-if="getTbHide" class="image" :src="`${content.imageTB.url}?w=${Math.round(600*getStateSliderSize)}`" :alt="`${content.name}`" :class="getMargin('tb')" :style="getMaxWidth('tb')" loading="lazy" @load="contentSizeChange(index)">
-                  <img v-if="getSpHide" class="image" :src="`${content.imageSP.url}?w=${Math.round(369*getStateSliderSize)}`" :alt="`${content.name}`" :class="getMargin('sp')" :style="getMaxWidth('sp')" loading="lazy" @load="contentSizeChange(index)">
+                  <img v-if="getPcHide" class="image" :src="`${content.imagePC.url}?h=${Math.round(800*getStateSliderSize)}`" :alt="`${content.name}`" :class="getMargin('pc')" :style="getMaxWidth('pc')" loading="lazy" @load="contentSizeChange(index)">
+                  <img v-if="getTbHide" class="image" :src="`${content.imageTB.url}?h=${Math.round(800*getStateSliderSize)}`" :alt="`${content.name}`" :class="getMargin('tb')" :style="getMaxWidth('tb')" loading="lazy" @load="contentSizeChange(index)">
+                  <img v-if="getSpHide" class="image" :src="`${content.imageSP.url}?h=${Math.round(800*getStateSliderSize)}`" :alt="`${content.name}`" :class="getMargin('sp')" :style="getMaxWidth('sp')" loading="lazy" @load="contentSizeChange(index)">
                 </a>
               </div>
               <div class="modal" :class="getActiveModal(content.id)" @click="closeModal">
@@ -708,25 +708,48 @@ export default {
             // 実行タイミング：デバイスの変更、コンテンツサイズの変更
             /* const contents = document.getElementById("contents"); */
             /* const viewWidth = contents.clientWidth; // 表示領域全体の幅 */
-            const imageMaxWidth = this.$store.getters["devicePattern/getStatePatternMaxWidth"];
+
+            // コンテンツの幅を計算
             const devicePattern = this.$store.getters["devicePattern/getStatePatternNumber"]; // 現在のデバイスパターン
             const value = this.$store.getters["slider/getValue"];
-            const sliderSteps = this.$store.getters["slider/getSteps"];
-            const sliderStep = sliderSteps.indexOf(true); // 現在のスライダーステップ
-            const marginLeftRight = [10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30];
-            let width = Math.round(imageMaxWidth * value);
-            switch (devicePattern) {
-                case 4:
-                    width = width + 20;
+
+            let width
+            switch(devicePattern) {
+                case 1:
+                    width = Math.round(873 * value);
                     break;
+
+                case 2:
+                    width = Math.round(600 * value);
+                    break;
+
+                case 3:
+                    width = Math.round(369 * value);
+                    break;
+
+                case 4:
+                    width = Math.round(873 * value) + Math.round(600 * value) + Math.round(369 * value) + 20;
+                    break;
+
                 case 5:
+                    width = Math.round(873 * value) + Math.round(600 * value) + 10;
+                    break;
+
                 case 6:
+                    width = Math.round(873 * value) + Math.round(369 * value) + 10;
+                    break;
+                    
                 case 7:
-                    width = width + 10;
+                    width = Math.round(600 * value) + Math.round(369 * value) + 10;
                     break;
             }
+            // 左右マージンを計算
+            const marginLeftRight = [10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30];
+            const sliderSteps = this.$store.getters["slider/getSteps"];
+            const sliderStep = sliderSteps.indexOf(true); // 現在のスライダーステップ
             const marginLeft = marginLeftRight[sliderStep];
             const marginRight = marginLeftRight[sliderStep];
+
             /* const totalWidth = width + marginRight + marginLeft; // コンテンツ１つ辺りの幅（マージン含む）
             const columnContent = Math.floor(viewWidth / totalWidth); // １カラム内のコンテンツ数
             const contentQuantity = this.displayingContent.length; // １ページ内のコンテンツ数 */
@@ -736,8 +759,8 @@ export default {
                 for (let i = 0; i < columnContent - (contentQuantity % columnContent); i++) {
                     this.$set(this.dummy, i, i);
                 }
-            } */
-            this.dummy.splice();
+            }
+            this.dummy.splice(); */
             // ダミーコンテンツのスタイル設定
             this.dummyStyle.width = `${width}px`;
             this.dummyStyle.height = `0px`;
