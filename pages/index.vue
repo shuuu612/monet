@@ -1432,23 +1432,7 @@ export default {
                 this.displayingPageTags = this.displayingPageTags + 1;
                 const start = 0;
                 const end = start + (this.displayingPageTags * this.displayingLimit);
-                /* this.displayingContent = this.searchTags.slice(start, end); */
-                if (this.displayingContent.length === 0) {
-                    console.log("1");
-                    console.log("this.searchTags", this.searchTags);
-                    this.displayingContent = this.searchTags.slice(start, end);
-                    console.log(this.displayingContent);
-                }
-                else {
-                    console.log("2");
-                    console.log("this.searchTags", this.searchTags);
-                    this.displayingContent.length = 0;
-                    for (let i = 0; i < this.searchTags.slice(start, end).length; i++) {
-                        this.$set(this.displayingContent, i, this.searchTags.slice(start, end)[i]);
-                    }
-                    this.displayingContent.splice();
-                    console.log(this.displayingContent);
-                }
+                this.displayingContent = this.searchTags.slice(start, end);
                 this.remainingContent = this.searchTags.length - this.displayingContent.length;
                 this.displayingJpName = this.tagsJpName;
             }
