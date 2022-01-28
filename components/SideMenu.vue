@@ -163,8 +163,19 @@
               </div>
               <div class="controllerItems checkboxStyle">
                 <label class="checkboxWrapper">
-                  <input id="checkbox" class="checkbox" type="checkbox" name="check" :checked="getSliderCheckboxChecked" @input="sliderCheckboxChange">サイズを自動調整する
+                  <input id="checkbox" class="checkbox" type="checkbox" name="check" :checked="getSliderCheckboxChecked" @input="sliderCheckboxChange">自動調整を有効にする
                 </label>
+              </div>
+              <div v-if="getNotice" class="sliderNotice">
+                <svg class="sliderNoticeIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400.94 400.94">
+                  <circle cx="200.47" cy="117.76" r="28.42"/>
+                  <path d="M200.47,188.35c-12.32,0-22.32,7.6-22.32,17v93.22c0,9.38,10,17,22.32,17s22.32-7.61,22.32-17V205.34C222.79,196,212.8,188.35,200.47,188.35Z"/>
+                  <circle cx="200.47" cy="200.47" r="180.47" style="fill:none;stroke:#231815;stroke-miterlimit:10;stroke-width:40px"/>
+                </svg>
+                <div class="sliderNoticeTexts">
+                  <div class="sliderNoticeText main">手動調整中</div>
+                  <div class="sliderNoticeText sub">ブラウザサイズに変更があった場合は、表示崩れを防止するため手動調整を中止し自動調整が有効になります</div>
+                </div>
               </div>
             </div>
             <div class="controllerContent">
@@ -432,6 +443,9 @@ export default {
     /* getDevice() {
       return { mobile: this.$store.getters['windowSize/getWindowWidth'] < 768, desktop: this.$store.getters['windowSize/getWindowWidth'] >= 768}
     } */
+    getNotice() {
+      return !this.$store.getters["slider/getAutoSizing"]
+    }
   },
   created() {
 
@@ -541,7 +555,7 @@ export default {
       
       // 自動調整中の場合はチェックを外す
       /* if(this.$store.getters['slider/getAutoSizing']) {
-        this.$store.dispatch('slider/pushCheckbox')
+        this.$store.dispatch('slider/pushAutoSizing')
       } */
 
     },
@@ -552,7 +566,7 @@ export default {
       this.$store.dispatch('devicePattern/pushMultidevaice')
     },
     sliderCheckboxChange() {
-      this.$store.dispatch('slider/pushCheckbox')
+      this.$store.dispatch('slider/pushAutoSizing')
     },
     /* setInitialValue() {
       this.initialValue = 0.625
@@ -847,6 +861,34 @@ export default {
 .sliderImageLarge {
   width: 17px;
   margin-left: 10px;
+}
+
+.sliderNotice {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  background-color: var(--grey-super-light);
+  margin-top: 20px;
+  border-radius: 4px;
+}
+
+.sliderNoticeIcon {
+  width: 21px;
+  margin-right: 8px;
+}
+
+.sliderNoticeText {
+  color: var(--black);
+  font-size: var(--font-size-xs);
+  &:not(:first-child) {
+    margin-top: 3px;
+  }
+  &.main {
+    font-weight: 400;
+    font-size: var(--font-size-sm);
+  }
 }
 
 .checkboxStyle {

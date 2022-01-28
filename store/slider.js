@@ -147,7 +147,7 @@ export const mutations = {
     commit('setSteps')
     commit('updateLocalStorage')
   },
-  pushCheckbox({commit}) {
+  pushAutoSizing({commit}) {
     commit('setAutoSizing')
     commit('setSteps')
     commit('updateLocalStorage')

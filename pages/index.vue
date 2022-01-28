@@ -17,6 +17,7 @@
     />
     <!-- <Search /> -->
     <ScrollTop />
+    <Notice />
     <div id="divider" class="divider">
       <div v-cloak class="container">
         
@@ -326,7 +327,7 @@ export default {
     },
     data() {
         return {
-            dummy: [],
+            dummy: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
             dummyStyle: {},
             observer: undefined,
             availableSizes: undefined,
@@ -531,62 +532,60 @@ export default {
             return { sideMenuOpen: this.$store.getters["sideMenu/getOpen"] };
         },
         getDisplayingContent() {
-          console.log('getDisplayingContent',this.displayingContent)
-            return this.displayingContent
+            console.log("getDisplayingContent", this.displayingContent);
+            return this.displayingContent;
         },
         getMaxWidth() {
-          return function(key) {
-            // コンテンツのmax-widthを設定
-            const devicePattern = this.$store.getters["devicePattern/getStatePatternNumber"]; // 現在のデバイスパターン
-            const windowWidth = this.$store.getters["windowSize/getWindowWidth"]; // ウィンドウサイズ
-
-            let maxWidthPc
-            let maxWidthTb
-            let maxWidthSp
-
-            if(windowWidth < 576 && this.$store.getters["slider/getAutoSizing"]) {
-              switch(devicePattern) {
-                case 1:
-                case 2:
-                case 3:
-                  maxWidthPc = "";
-                  maxWidthTb = "";
-                  maxWidthSp = "";
-                  break;
-  
-                case 4:// PC & TB & SP
-                  maxWidthPc = `${873/(873+10+600+10+369)*100*0.97}%`;
-                  maxWidthTb = `${600/(873+10+600+10+369)*100*0.97}%`;
-                  maxWidthSp = `${369/(873+10+600+10+369)*100*0.97}%`;
-                  break;
-  
-                case 5:// PC & TB
-                  maxWidthPc = `${873/(873+10+600)*100*0.978}%`;
-                  maxWidthTb = `${600/(873+10+600)*100*0.978}%`;
-                  maxWidthSp = "";
-                  break;
-  
-                case 6:// PC & SP
-                  maxWidthPc = `${873/(873+10+369)*100*0.975}%`;
-                  maxWidthTb = "";
-                  maxWidthSp = `${369/(873+10+369)*100*0.975}%`;
-                  break;
-  
-                case 7:// TB & SP
-                  maxWidthPc = "";
-                  maxWidthTb = `${600/(600+10+369)*100*0.97}%`;
-                  maxWidthSp = `${369/(600+10+369)*100*0.97}%`;
-                  break;
-              }
-            }else {
-              maxWidthPc = "";
-              maxWidthTb = "";
-              maxWidthSp = "";
-            }
-            if(key === 'pc')  return {maxWidth: maxWidthPc}
-            else if(key === 'tb')  return {maxWidth: maxWidthTb}
-            else if(key === 'sp')  return {maxWidth: maxWidthSp}
-          }
+            return function (key) {
+                // コンテンツのmax-widthを設定
+                const devicePattern = this.$store.getters["devicePattern/getStatePatternNumber"]; // 現在のデバイスパターン
+                const windowWidth = this.$store.getters["windowSize/getWindowWidth"]; // ウィンドウサイズ
+                let maxWidthPc;
+                let maxWidthTb;
+                let maxWidthSp;
+                if (windowWidth < 576 && this.$store.getters["slider/getAutoSizing"]) {
+                    switch (devicePattern) {
+                        case 1:
+                        case 2:
+                        case 3:
+                            maxWidthPc = "";
+                            maxWidthTb = "";
+                            maxWidthSp = "";
+                            break;
+                        case 4: // PC & TB & SP
+                            maxWidthPc = `${873 / (873 + 10 + 600 + 10 + 369) * 100 * 0.97}%`;
+                            maxWidthTb = `${600 / (873 + 10 + 600 + 10 + 369) * 100 * 0.97}%`;
+                            maxWidthSp = `${369 / (873 + 10 + 600 + 10 + 369) * 100 * 0.97}%`;
+                            break;
+                        case 5: // PC & TB
+                            maxWidthPc = `${873 / (873 + 10 + 600) * 100 * 0.978}%`;
+                            maxWidthTb = `${600 / (873 + 10 + 600) * 100 * 0.978}%`;
+                            maxWidthSp = "";
+                            break;
+                        case 6: // PC & SP
+                            maxWidthPc = `${873 / (873 + 10 + 369) * 100 * 0.975}%`;
+                            maxWidthTb = "";
+                            maxWidthSp = `${369 / (873 + 10 + 369) * 100 * 0.975}%`;
+                            break;
+                        case 7: // TB & SP
+                            maxWidthPc = "";
+                            maxWidthTb = `${600 / (600 + 10 + 369) * 100 * 0.97}%`;
+                            maxWidthSp = `${369 / (600 + 10 + 369) * 100 * 0.97}%`;
+                            break;
+                    }
+                }
+                else {
+                    maxWidthPc = "";
+                    maxWidthTb = "";
+                    maxWidthSp = "";
+                }
+                if (key === "pc")
+                    return { maxWidth: maxWidthPc };
+                else if (key === "tb")
+                    return { maxWidth: maxWidthTb };
+                else if (key === "sp")
+                    return { maxWidth: maxWidthSp };
+            };
         },
     },
     created() {
@@ -613,22 +612,16 @@ export default {
         // コンテンツ表示処理
         this.setSearchTags();
         this.setDisplayingContent();
-
         // 読み込み完了を監視
         window.addEventListener("load", this.loadProcess);
-
         // ブラウザサイズの変更を監視
         window.addEventListener("resize", this.resizeProcess);
-
         // コンテンツのサイズ変更を監視
         /* this.setResizeObserver(); */
-
         // スクロールを監視
         window.addEventListener("scroll", this.scrolledWindow);
-
         // ローディング画面を終了させる
         window.setTimeout(this.setLoaded, 1500);
-
         // 検索キーワードの入力を監視
         this.$store.watch(() => this.$store.getters["search/getKeyword"], (value) => {
             this.setSearchKeyword(value);
@@ -653,7 +646,7 @@ export default {
         // デバイス切り替えを監視（imageのloadイベントでは非表示を検知できないため）
         this.$store.watch(() => this.$store.getters["devicePattern/getStatePatternNumber"], () => {
             this.createDummyContent();
-            this.calculateAutoSizing()
+            this.calculateAutoSizing();
         });
         window.matchMedia("(min-width:375px)").addEventListener("change", this.calculateAutoSizing);
         window.matchMedia("(min-width:500px)").addEventListener("change", this.calculateAutoSizing);
@@ -677,12 +670,12 @@ export default {
     updated() {
         console.log("updated");
         // 「もっと見る」で表示件数を増やした時にダミーコンテンツを更新するタイミングがupdata以外にない
-        if (!this.updatedFlg) {
+        /* if (!this.updatedFlg) {
             this.$nextTick(() => {
                 this.resizeProcess();
             });
         }
-        this.updatedFlg = !this.updatedFlg;
+        this.updatedFlg = !this.updatedFlg; */
     },
     beforeDestroy() {
         console.log("beforeDestroy");
@@ -690,7 +683,6 @@ export default {
         window.removeEventListener("resize", this.resizeProcess);
         window.removeEventListener("scroll", this.scrolledWindow);
         /* this.observer.disconnect(); */
-
         window.matchMedia("(min-width:375px)").removeEventListener("change", this.calculateAutoSizing);
         window.matchMedia("(min-width:500px)").removeEventListener("change", this.calculateAutoSizing);
         window.matchMedia("(min-width:576px)").removeEventListener("change", this.calculateAutoSizing);
@@ -712,46 +704,39 @@ export default {
     },
     methods: {
         createDummyContent() {
-          console.log('createDummyContentを実行')
+            console.log("createDummyContentを実行");
             // 実行タイミング：デバイスの変更、コンテンツサイズの変更
             const contents = document.getElementById("contents");
             const viewWidth = contents.clientWidth; // 表示領域全体の幅
-
             const imageMaxWidth = this.$store.getters["devicePattern/getStatePatternMaxWidth"];
             const devicePattern = this.$store.getters["devicePattern/getStatePatternNumber"]; // 現在のデバイスパターン
-            const value = this.$store.getters["slider/getValue"]; 
+            const value = this.$store.getters["slider/getValue"];
             const sliderSteps = this.$store.getters["slider/getSteps"];
             const sliderStep = sliderSteps.indexOf(true); // 現在のスライダーステップ
-
             const marginLeftRight = [10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30];
-
             let width = Math.round(imageMaxWidth * value);
-            switch(devicePattern) {
-              case 4:
-                width = width + 20;
-                break;
-
-              case 5:
-              case 6:
-              case 7:
-                width = width + 10;
-                break;
+            switch (devicePattern) {
+                case 4:
+                    width = width + 20;
+                    break;
+                case 5:
+                case 6:
+                case 7:
+                    width = width + 10;
+                    break;
             }
-
             const marginLeft = marginLeftRight[sliderStep];
             const marginRight = marginLeftRight[sliderStep];
-
             const totalWidth = width + marginRight + marginLeft; // コンテンツ１つ辺りの幅（マージン含む）
             const columnContent = Math.floor(viewWidth / totalWidth); // １カラム内のコンテンツ数
             const contentQuantity = this.displayingContent.length; // １ページ内のコンテンツ数
-
             // ダミーコンテンツ作成
-            this.dummy.length = 0;
+            /* this.dummy.length = 0;
             if (contentQuantity % columnContent !== 0 && contentQuantity > columnContent) {
                 for (let i = 0; i < columnContent - (contentQuantity % columnContent); i++) {
                     this.$set(this.dummy, i, i);
                 }
-            }
+            } */
             this.dummy.splice();
             // ダミーコンテンツのスタイル設定
             this.dummyStyle.width = `${width}px`;
@@ -760,264 +745,345 @@ export default {
             this.dummyStyle.marginBottom = `0px`;
             this.dummyStyle.marginRight = `${marginRight}px`;
             this.dummyStyle.marginLeft = `${marginLeft}px`;
-
             // info領域の大きさを設定
             const infoWidth = width - 75;
             this.infoStyle.width = `${width}px`;
             this.infoButtonStyle.width = `${infoWidth}px`;
-            
         },
         calculateAutoSizing() {
             // 実行タイミング：createDummyContentのタイミング＋自動調整オンを押下、ウィンドウサイズが規定のサイズに達したとき、
-
             const devicePattern = this.$store.getters["devicePattern/getStatePatternNumber"]; // 現在のデバイスパターン
             const windowWidth = this.$store.getters["windowSize/getWindowWidth"]; // ウィンドウサイズ
-
-            if(!this.$store.getters["slider/getAutoSizing"]) return
-            console.log('calculateAutoSizingを実行')
-
+            if (!this.$store.getters["slider/getAutoSizing"])
+                return;
+            console.log("calculateAutoSizingを実行");
             // コンテンツサイズ自動調整用の値を算出
-            let sliderStep
-
-            switch(devicePattern) {
-              case 1: // PC
-                if(windowWidth < 375) {
-                  sliderStep = 3;
-                }else if(windowWidth < 576) {
-                  sliderStep = 5;
-                }else if(windowWidth < 768) {
-                  sliderStep = 5;
-                }else if(windowWidth < 900) {
-                  sliderStep = 5;
-                }else if(windowWidth < 992) {
-                  sliderStep = 2;
-                }else if(windowWidth < 1100) {
-                  sliderStep = 2;
-                }else if(windowWidth < 1200) {
-                  sliderStep = 3;
-                }else if(windowWidth < 1300) {
-                  sliderStep = 3;
-                }else if(windowWidth < 1400) {
-                  sliderStep = 3;
-                }else if(windowWidth < 1500) {
-                  sliderStep = 3;
-                }else {
-                  sliderStep = 3;
-                }
-                break;
-
-              case 2: // TB
-                if(windowWidth < 375) {
-                  sliderStep = 5;
-                }else if(windowWidth < 576) {
-                  sliderStep = 5;
-                }else if(windowWidth < 768) {
-                  sliderStep = 6;
-                }else if(windowWidth < 900) {
-                  sliderStep = 6;
-                }else if(windowWidth < 992) {
-                  sliderStep = 4;
-                }else if(windowWidth < 1100) {
-                  sliderStep = 4;
-                }else if(windowWidth < 1200) {
-                  sliderStep = 5;
-                }else if(windowWidth < 1300) {
-                  sliderStep = 5;
-                }else if(windowWidth < 1400) {
-                  sliderStep = 4;
-                }else if(windowWidth < 1500) {
-                  sliderStep = 4;
-                }else {
-                  sliderStep = 5;
-                }
-                break;
-
-              case 3: // SP
-                if(windowWidth < 375) {
-                  sliderStep = 7;
-                }else if(windowWidth < 576) {
-                  sliderStep = 8;
-                }else if(windowWidth < 768) {
-                  sliderStep = 5;
-                }else if(windowWidth < 900) {
-                  sliderStep = 6;
-                }else if(windowWidth < 992) {
-                  sliderStep = 7;
-                }else if(windowWidth < 1100) {
-                  sliderStep = 8;
-                }else if(windowWidth < 1200) {
-                  sliderStep = 8;
-                }else if(windowWidth < 1300) {
-                  sliderStep = 8;
-                }else if(windowWidth < 1400) {
-                  sliderStep = 8;
-                }else if(windowWidth < 1500) {
-                  sliderStep = 8;
-                }else {
-                  sliderStep = 8;
-                }
-                break;
-                
-              case 4: // PC & TB & SP
-                if(windowWidth < 375) {
-                  sliderStep = 0;
-                }else if(windowWidth < 576) {
-                  sliderStep = 2;
-                }else if(windowWidth < 768) {
-                  sliderStep = 0;
-                }else if(windowWidth < 900) {
-                  sliderStep = 1;
-                }else if(windowWidth < 992) {
-                  sliderStep = 2;
-                }else if(windowWidth < 1100) {
-                  sliderStep = 2;
-                }else if(windowWidth < 1200) {
-                  sliderStep = 3;
-                }else if(windowWidth < 1300) {
-                  sliderStep = 3;
-                }else if(windowWidth < 1400) {
-                  sliderStep = 4;
-                }else if(windowWidth < 1500) {
-                  sliderStep = 5;
-                }else if(windowWidth < 1600) {
-                  sliderStep = 5;
-                }else if(windowWidth < 1700) {
-                  sliderStep = 5;
-                }else if(windowWidth < 1800) {
-                  sliderStep = 5;
-                }else if(windowWidth < 1900) {
-                  sliderStep = 2;
-                }else if(windowWidth < 2000) {
-                  sliderStep = 2;
-                }else if(windowWidth < 2100) {
-                  sliderStep = 2;
-                }else {
-                  sliderStep = 3;
-                }
-                break;
-
-              case 5: // PC & TB
-                if(windowWidth < 375) {
-                  sliderStep = 0;
-                }else if(windowWidth < 576) {
-                  sliderStep = 2;
-                }else if(windowWidth < 768) {
-                  sliderStep = 1;
-                }else if(windowWidth < 900) {
-                  sliderStep = 2;
-                }else if(windowWidth < 992) {
-                  sliderStep = 3;
-                }else if(windowWidth < 1100) {
-                  sliderStep = 4;
-                }else if(windowWidth < 1200) {
-                  sliderStep = 4;
-                }else if(windowWidth < 1300) {
-                  sliderStep = 5;
-                }else if(windowWidth < 1400) {
-                  sliderStep = 5;
-                }else if(windowWidth < 1500) {
-                  sliderStep = 5;
-                }else if(windowWidth < 1600) {
-                  sliderStep = 2;
-                }else if(windowWidth < 1700) {
-                  sliderStep = 2;
-                }else if(windowWidth < 1800) {
-                  sliderStep = 3;
-                }else if(windowWidth < 1900) {
-                  sliderStep = 3;
-                }else if(windowWidth < 2000) {
-                  sliderStep = 3;
-                }else if(windowWidth < 2100) {
-                  sliderStep = 4;
-                }else {
-                  sliderStep = 4;
-                }
-                break;
-                
-              case 6: // PC & SP
-                if(windowWidth < 375) {
-                  sliderStep = 1;
-                }else if(windowWidth < 576) {
-                  sliderStep = 2;
-                }else if(windowWidth < 768) {
-                  sliderStep = 2;
-                }else if(windowWidth < 900) {
-                  sliderStep = 3;
-                }else if(windowWidth < 992) {
-                  sliderStep = 4;
-                }else if(windowWidth < 1100) {
-                  sliderStep = 4;
-                }else if(windowWidth < 1200) {
-                  sliderStep = 5;
-                }else if(windowWidth < 1300) {
-                  sliderStep = 5;
-                }else if(windowWidth < 1400) {
-                  sliderStep = 5;
-                }else if(windowWidth < 1500) {
-                  sliderStep = 5;
-                }else if(windowWidth < 1600) {
-                  sliderStep = 3;
-                }else if(windowWidth < 1700) {
-                  sliderStep = 3;
-                }else if(windowWidth < 1800) {
-                  sliderStep = 4;
-                }else if(windowWidth < 1900) {
-                  sliderStep = 4;
-                }else if(windowWidth < 2000) {
-                  sliderStep = 4;
-                }else if(windowWidth < 2100) {
-                  sliderStep = 4;
-                }else {
-                  sliderStep = 3;
-                }
-                break;
-                
-              case 7: // TB & SP
-                if(windowWidth < 375) {
-                  sliderStep = 2;
-                }else if(windowWidth < 576) {
-                  sliderStep = 3;
-                }else if(windowWidth < 768) {
-                  sliderStep = 4;
-                }else if(windowWidth < 900) {
-                  sliderStep = 5;
-                }else if(windowWidth < 992) {
-                  sliderStep = 6;
-                }else if(windowWidth < 1100) {
-                  sliderStep = 6;
-                }else if(windowWidth < 1200) {
-                  sliderStep = 6;
-                }else if(windowWidth < 1300) {
-                  sliderStep = 7;
-                }else if(windowWidth < 1400) {
-                  sliderStep = 7;
-                }else if(windowWidth < 1500) {
-                  sliderStep = 4;
-                }else if(windowWidth < 1600) {
-                  sliderStep = 4;
-                }else if(windowWidth < 1700) {
-                  sliderStep = 5;
-                }else if(windowWidth < 1800) {
-                  sliderStep = 5;
-                }else if(windowWidth < 1900) {
-                  sliderStep = 5;
-                }else if(windowWidth < 2000) {
-                  sliderStep = 5;
-                }else if(windowWidth < 2100) {
-                  sliderStep = 4;
-                }else if(windowWidth < 2200) {
-                  sliderStep = 4;
-                }else {
-                  sliderStep = 5;
-                }
-                break;
+            let sliderStep;
+            switch (devicePattern) {
+                case 1: // PC
+                    if (windowWidth < 375) {
+                        sliderStep = 3;
+                    }
+                    else if (windowWidth < 576) {
+                        sliderStep = 5;
+                    }
+                    else if (windowWidth < 768) {
+                        sliderStep = 5;
+                    }
+                    else if (windowWidth < 900) {
+                        sliderStep = 5;
+                    }
+                    else if (windowWidth < 992) {
+                        sliderStep = 2;
+                    }
+                    else if (windowWidth < 1100) {
+                        sliderStep = 2;
+                    }
+                    else if (windowWidth < 1200) {
+                        sliderStep = 3;
+                    }
+                    else if (windowWidth < 1300) {
+                        sliderStep = 3;
+                    }
+                    else if (windowWidth < 1400) {
+                        sliderStep = 3;
+                    }
+                    else if (windowWidth < 1500) {
+                        sliderStep = 3;
+                    }
+                    else {
+                        sliderStep = 3;
+                    }
+                    break;
+                case 2: // TB
+                    if (windowWidth < 375) {
+                        sliderStep = 5;
+                    }
+                    else if (windowWidth < 576) {
+                        sliderStep = 5;
+                    }
+                    else if (windowWidth < 768) {
+                        sliderStep = 6;
+                    }
+                    else if (windowWidth < 900) {
+                        sliderStep = 6;
+                    }
+                    else if (windowWidth < 992) {
+                        sliderStep = 4;
+                    }
+                    else if (windowWidth < 1100) {
+                        sliderStep = 4;
+                    }
+                    else if (windowWidth < 1200) {
+                        sliderStep = 5;
+                    }
+                    else if (windowWidth < 1300) {
+                        sliderStep = 5;
+                    }
+                    else if (windowWidth < 1400) {
+                        sliderStep = 4;
+                    }
+                    else if (windowWidth < 1500) {
+                        sliderStep = 4;
+                    }
+                    else {
+                        sliderStep = 5;
+                    }
+                    break;
+                case 3: // SP
+                    if (windowWidth < 375) {
+                        sliderStep = 7;
+                    }
+                    else if (windowWidth < 576) {
+                        sliderStep = 8;
+                    }
+                    else if (windowWidth < 768) {
+                        sliderStep = 5;
+                    }
+                    else if (windowWidth < 900) {
+                        sliderStep = 6;
+                    }
+                    else if (windowWidth < 992) {
+                        sliderStep = 7;
+                    }
+                    else if (windowWidth < 1100) {
+                        sliderStep = 8;
+                    }
+                    else if (windowWidth < 1200) {
+                        sliderStep = 8;
+                    }
+                    else if (windowWidth < 1300) {
+                        sliderStep = 8;
+                    }
+                    else if (windowWidth < 1400) {
+                        sliderStep = 8;
+                    }
+                    else if (windowWidth < 1500) {
+                        sliderStep = 8;
+                    }
+                    else {
+                        sliderStep = 8;
+                    }
+                    break;
+                case 4: // PC & TB & SP
+                    if (windowWidth < 375) {
+                        sliderStep = 0;
+                    }
+                    else if (windowWidth < 576) {
+                        sliderStep = 2;
+                    }
+                    else if (windowWidth < 768) {
+                        sliderStep = 0;
+                    }
+                    else if (windowWidth < 900) {
+                        sliderStep = 1;
+                    }
+                    else if (windowWidth < 992) {
+                        sliderStep = 2;
+                    }
+                    else if (windowWidth < 1100) {
+                        sliderStep = 2;
+                    }
+                    else if (windowWidth < 1200) {
+                        sliderStep = 3;
+                    }
+                    else if (windowWidth < 1300) {
+                        sliderStep = 3;
+                    }
+                    else if (windowWidth < 1400) {
+                        sliderStep = 4;
+                    }
+                    else if (windowWidth < 1500) {
+                        sliderStep = 5;
+                    }
+                    else if (windowWidth < 1600) {
+                        sliderStep = 5;
+                    }
+                    else if (windowWidth < 1700) {
+                        sliderStep = 5;
+                    }
+                    else if (windowWidth < 1800) {
+                        sliderStep = 5;
+                    }
+                    else if (windowWidth < 1900) {
+                        sliderStep = 2;
+                    }
+                    else if (windowWidth < 2000) {
+                        sliderStep = 2;
+                    }
+                    else if (windowWidth < 2100) {
+                        sliderStep = 2;
+                    }
+                    else {
+                        sliderStep = 3;
+                    }
+                    break;
+                case 5: // PC & TB
+                    if (windowWidth < 375) {
+                        sliderStep = 0;
+                    }
+                    else if (windowWidth < 576) {
+                        sliderStep = 2;
+                    }
+                    else if (windowWidth < 768) {
+                        sliderStep = 1;
+                    }
+                    else if (windowWidth < 900) {
+                        sliderStep = 2;
+                    }
+                    else if (windowWidth < 992) {
+                        sliderStep = 3;
+                    }
+                    else if (windowWidth < 1100) {
+                        sliderStep = 4;
+                    }
+                    else if (windowWidth < 1200) {
+                        sliderStep = 4;
+                    }
+                    else if (windowWidth < 1300) {
+                        sliderStep = 5;
+                    }
+                    else if (windowWidth < 1400) {
+                        sliderStep = 5;
+                    }
+                    else if (windowWidth < 1500) {
+                        sliderStep = 5;
+                    }
+                    else if (windowWidth < 1600) {
+                        sliderStep = 2;
+                    }
+                    else if (windowWidth < 1700) {
+                        sliderStep = 2;
+                    }
+                    else if (windowWidth < 1800) {
+                        sliderStep = 3;
+                    }
+                    else if (windowWidth < 1900) {
+                        sliderStep = 3;
+                    }
+                    else if (windowWidth < 2000) {
+                        sliderStep = 3;
+                    }
+                    else if (windowWidth < 2100) {
+                        sliderStep = 4;
+                    }
+                    else {
+                        sliderStep = 4;
+                    }
+                    break;
+                case 6: // PC & SP
+                    if (windowWidth < 375) {
+                        sliderStep = 1;
+                    }
+                    else if (windowWidth < 576) {
+                        sliderStep = 2;
+                    }
+                    else if (windowWidth < 768) {
+                        sliderStep = 2;
+                    }
+                    else if (windowWidth < 900) {
+                        sliderStep = 3;
+                    }
+                    else if (windowWidth < 992) {
+                        sliderStep = 4;
+                    }
+                    else if (windowWidth < 1100) {
+                        sliderStep = 4;
+                    }
+                    else if (windowWidth < 1200) {
+                        sliderStep = 5;
+                    }
+                    else if (windowWidth < 1300) {
+                        sliderStep = 5;
+                    }
+                    else if (windowWidth < 1400) {
+                        sliderStep = 5;
+                    }
+                    else if (windowWidth < 1500) {
+                        sliderStep = 5;
+                    }
+                    else if (windowWidth < 1600) {
+                        sliderStep = 3;
+                    }
+                    else if (windowWidth < 1700) {
+                        sliderStep = 3;
+                    }
+                    else if (windowWidth < 1800) {
+                        sliderStep = 4;
+                    }
+                    else if (windowWidth < 1900) {
+                        sliderStep = 4;
+                    }
+                    else if (windowWidth < 2000) {
+                        sliderStep = 4;
+                    }
+                    else if (windowWidth < 2100) {
+                        sliderStep = 4;
+                    }
+                    else {
+                        sliderStep = 3;
+                    }
+                    break;
+                case 7: // TB & SP
+                    if (windowWidth < 375) {
+                        sliderStep = 2;
+                    }
+                    else if (windowWidth < 576) {
+                        sliderStep = 3;
+                    }
+                    else if (windowWidth < 768) {
+                        sliderStep = 4;
+                    }
+                    else if (windowWidth < 900) {
+                        sliderStep = 5;
+                    }
+                    else if (windowWidth < 992) {
+                        sliderStep = 6;
+                    }
+                    else if (windowWidth < 1100) {
+                        sliderStep = 6;
+                    }
+                    else if (windowWidth < 1200) {
+                        sliderStep = 6;
+                    }
+                    else if (windowWidth < 1300) {
+                        sliderStep = 7;
+                    }
+                    else if (windowWidth < 1400) {
+                        sliderStep = 7;
+                    }
+                    else if (windowWidth < 1500) {
+                        sliderStep = 4;
+                    }
+                    else if (windowWidth < 1600) {
+                        sliderStep = 4;
+                    }
+                    else if (windowWidth < 1700) {
+                        sliderStep = 5;
+                    }
+                    else if (windowWidth < 1800) {
+                        sliderStep = 5;
+                    }
+                    else if (windowWidth < 1900) {
+                        sliderStep = 5;
+                    }
+                    else if (windowWidth < 2000) {
+                        sliderStep = 5;
+                    }
+                    else if (windowWidth < 2100) {
+                        sliderStep = 4;
+                    }
+                    else if (windowWidth < 2200) {
+                        sliderStep = 4;
+                    }
+                    else {
+                        sliderStep = 5;
+                    }
+                    break;
             }
-
-
             const value = 0.25 + sliderStep * 0.075;
             // 自動調整用の値をstoreに設定
             this.$store.dispatch("slider/pushAptitudeValue", value);
-
         },
         loadProcess() {
             console.log("loadProcessを起動");
@@ -1028,18 +1094,18 @@ export default {
             // モーダルの大きさを設定
             /* this.modalSizing(); */
             this.setWindowSize();
-
             this.calculateAutoSizing();
         },
         resizeProcess() {
             this.setWindowSize();
+            this.setAutoSizing();
         },
         contentSizeChange(value) {
             if (this.$store.getters["loaded/getLoaded"]) {
                 if (value === 0 || value === undefined) {
                     // コンテンツ自動調整
-                    this.calculateAutoSizing()
-                    this.createDummyContent()
+                    this.calculateAutoSizing();
+                    this.createDummyContent();
                 }
             }
         },
@@ -1161,7 +1227,7 @@ export default {
                 filterContents = this.contents.filter(function (value) {
                     return bookmarkContent.includes(value.id);
                 });
-                console.log(bookmarkContent)
+                console.log(bookmarkContent);
             }
             else {
                 // タグでフィルター
@@ -1368,21 +1434,21 @@ export default {
                 const start = 0;
                 const end = start + (this.displayingPageTags * this.displayingLimit);
                 /* this.displayingContent = this.searchTags.slice(start, end); */
-                if(this.displayingContent.length === 0) {
-                  console.log('1')
-                  console.log('this.searchTags',this.searchTags)
-                  this.displayingContent = this.searchTags.slice(start, end);
-                  console.log(this.displayingContent)
-                }else {
-                  console.log('2')
-                  console.log('this.searchTags',this.searchTags)
-                  this.displayingContent.length = 0;
-                  for (let i = 0; i < this.searchTags.slice(start, end).length; i++) {
-                      this.$set(this.displayingContent, i, this.searchTags.slice(start, end)[i]);
-                  }
-                  this.displayingContent.splice();
-
-                  console.log(this.displayingContent)
+                if (this.displayingContent.length === 0) {
+                    console.log("1");
+                    console.log("this.searchTags", this.searchTags);
+                    this.displayingContent = this.searchTags.slice(start, end);
+                    console.log(this.displayingContent);
+                }
+                else {
+                    console.log("2");
+                    console.log("this.searchTags", this.searchTags);
+                    this.displayingContent.length = 0;
+                    for (let i = 0; i < this.searchTags.slice(start, end).length; i++) {
+                        this.$set(this.displayingContent, i, this.searchTags.slice(start, end)[i]);
+                    }
+                    this.displayingContent.splice();
+                    console.log(this.displayingContent);
                 }
                 this.remainingContent = this.searchTags.length - this.displayingContent.length;
                 this.displayingJpName = this.tagsJpName;
@@ -1555,9 +1621,18 @@ export default {
             this.modalInfoStyle.height = `${height}px`;
         },
         update() {
-          this.setSearchTags();
-          this.displayingPageTags = this.displayingPageTags - 1;
-          this.setDisplayingContent();
+            this.setSearchTags();
+            this.displayingPageTags = this.displayingPageTags - 1;
+            this.setDisplayingContent();
+        },
+        setAutoSizing() {
+            // コンテンツサイズを手動で変更している時に、ウィンドウサイズが変更されたら、手動から自動に切り替える
+            if (!this.$store.getters["slider/getAutoSizing"]) {
+                this.$store.dispatch("slider/pushAutoSizing");
+                // 自動調整オンの通知
+                this.$store.dispatch("notice/pushDisplay", {id: 2, text: 'サイズの自動調整を有効にしました'});
+                setTimeout(() => (this.$store.dispatch("notice/pushClose")),3000)
+            }
         }
     },
 }
