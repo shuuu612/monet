@@ -706,8 +706,8 @@ export default {
         createDummyContent() {
             console.log("createDummyContentを実行");
             // 実行タイミング：デバイスの変更、コンテンツサイズの変更
-            const contents = document.getElementById("contents");
-            const viewWidth = contents.clientWidth; // 表示領域全体の幅
+            /* const contents = document.getElementById("contents"); */
+            /* const viewWidth = contents.clientWidth; // 表示領域全体の幅 */
             const imageMaxWidth = this.$store.getters["devicePattern/getStatePatternMaxWidth"];
             const devicePattern = this.$store.getters["devicePattern/getStatePatternNumber"]; // 現在のデバイスパターン
             const value = this.$store.getters["slider/getValue"];
@@ -727,9 +727,9 @@ export default {
             }
             const marginLeft = marginLeftRight[sliderStep];
             const marginRight = marginLeftRight[sliderStep];
-            const totalWidth = width + marginRight + marginLeft; // コンテンツ１つ辺りの幅（マージン含む）
+            /* const totalWidth = width + marginRight + marginLeft; // コンテンツ１つ辺りの幅（マージン含む）
             const columnContent = Math.floor(viewWidth / totalWidth); // １カラム内のコンテンツ数
-            const contentQuantity = this.displayingContent.length; // １ページ内のコンテンツ数
+            const contentQuantity = this.displayingContent.length; // １ページ内のコンテンツ数 */
             // ダミーコンテンツ作成
             /* this.dummy.length = 0;
             if (contentQuantity % columnContent !== 0 && contentQuantity > columnContent) {
@@ -1227,7 +1227,6 @@ export default {
                 filterContents = this.contents.filter(function (value) {
                     return bookmarkContent.includes(value.id);
                 });
-                console.log(bookmarkContent);
             }
             else {
                 // タグでフィルター

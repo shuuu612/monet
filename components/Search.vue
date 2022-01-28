@@ -18,12 +18,6 @@ export default {
     };
   },
   computed: {
-    /* getScrollHide() {
-      return { scrollHide: this.$store.getters['scroll/getWindowScroll'] > 0 || this.$store.getters['modal/getOpen']}
-    }, */
-    /* getOpen() {
-      return { isOpen: this.$store.getters['sideMenu/getOpen'] }
-    }, */
     getFocus() {
       return { focus: this.focus}
     },
@@ -90,12 +84,7 @@ export default {
     padding: 10px;
     
     background-color: transparent;
-    /* &.isOpen {
-      transform: translateX(calc(0.5 * var(--sideMenuWidth)));
-    } */
-    /* &.scrollHide {
-      opacity: 0;
-    } */
+
     &.focus {
       width: 450px;
     }
