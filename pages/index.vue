@@ -493,6 +493,7 @@ export default {
             return { hide: this.remainingContent === 0 };
         },
         getNoContentComment() {
+            /* if(!this.$store.getters["loaded/getLoaded"]) return ""; */
             if (!this.activeSearch) {
                 // キーワード検索以外
                 if (this.searchTags.length === 0) {
@@ -532,7 +533,6 @@ export default {
             return { sideMenuOpen: this.$store.getters["sideMenu/getOpen"] };
         },
         getDisplayingContent() {
-            console.log("getDisplayingContent", this.displayingContent);
             return this.displayingContent;
         },
         getMaxWidth() {
@@ -1680,7 +1680,7 @@ export default {
 }
 
 .loading {
-  display: block;
+  display: none;
   background: linear-gradient(to bottom, #404957 50%, #6f88ad 100%);
   position: fixed;
   top: 0;
