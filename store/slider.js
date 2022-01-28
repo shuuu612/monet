@@ -22,15 +22,6 @@ export const state = () => ({
 })
 
 export const getters = {
-  /* getMin: state => {
-    return state.min
-  },
-  getMax: state => {
-    return state.max
-  },
-  getStep: state => {
-    return state.step
-  }, */
   getValue: state => {
     if(state.autoSizing) {
       return state.value
@@ -59,11 +50,12 @@ export const mutations = {
   setStep(state,inputData) {
     state.step = inputData
   },
-  setValue(state,inputData) {
+  /* setValue(state,inputData) {
+    console.log('setValue')
     state.value = inputData
-  },
+  }, */
   setMyValue(state,inputData) {
-    state.myValue = inputData
+    state.myValue = Number(inputData)
     if(state.autoSizing) {
       state.autoSizing = !state.autoSizing
     }
@@ -94,27 +86,27 @@ export const mutations = {
       Value = state.myValue
     }
 
-    if(Value === String(state.stepData[0])) {
+    if(Value === state.stepData[0]) {
       state.steps = [true,false,false,false,false,false,false,false,false,false,false,]
-    }else if(Value === String(state.stepData[1])) {
+    }else if(Value === state.stepData[1]) {
       state.steps = [false,true,false,false,false,false,false,false,false,false,false,]
-    }else if(Value === String(state.stepData[2])) {
+    }else if(Value === state.stepData[2]) {
       state.steps = [false,false,true,false,false,false,false,false,false,false,false,]
-    }else if(Value === String(state.stepData[3])) {
+    }else if(Value === state.stepData[3]) {
       state.steps = [false,false,false,true,false,false,false,false,false,false,false,]
-    }else if(Value === String(state.stepData[4])) {
+    }else if(Value === state.stepData[4]) {
       state.steps = [false,false,false,false,true,false,false,false,false,false,false,]
-    }else if(Value === String(state.stepData[5])) {
+    }else if(Value === state.stepData[5]) {
       state.steps = [false,false,false,false,false,true,false,false,false,false,false,]
-    }else if(Value === String(state.stepData[6])) {
+    }else if(Value === state.stepData[6]) {
       state.steps = [false,false,false,false,false,false,true,false,false,false,false,]
-    }else if(Value === String(state.stepData[7])) {
+    }else if(Value === state.stepData[7]) {
       state.steps = [false,false,false,false,false,false,false,true,false,false,false,]
-    }else if(Value === String(state.stepData[8])) {
+    }else if(Value === state.stepData[8]) {
       state.steps = [false,false,false,false,false,false,false,false,true,false,false,]
-    }else if(Value === String(state.stepData[9])) {
+    }else if(Value === state.stepData[9]) {
       state.steps = [false,false,false,false,false,false,false,false,false,true,false,]
-    }else if(Value === String(state.stepData[10])) {
+    }else if(Value === state.stepData[10]) {
       state.steps = [false,false,false,false,false,false,false,false,false,false,true,]
     }
   },
@@ -151,7 +143,7 @@ export const mutations = {
     commit('setSteps')
   },
   pushAptitudeValue({commit},data) {
-    commit('setAptitudeValue',String(data))
+    commit('setAptitudeValue',data)
     commit('setSteps')
     commit('updateLocalStorage')
   },
@@ -162,6 +154,7 @@ export const mutations = {
   },
   pushLocalStorage({commit},data) {
     commit('setLocalStorage',data)
+    commit('setStepData')
     commit('setSteps')
   },
  }

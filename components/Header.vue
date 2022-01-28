@@ -78,9 +78,10 @@ export default {
   }
   @include responsive(md) {
     height: 120px;
+    margin-left: 25px;
   }
   @include responsive(lg) {
-    
+    margin-left: 0px;
   }
   @include responsive(xl) {
     

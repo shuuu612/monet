@@ -9,9 +9,9 @@ export const state = () => ({
   pattern2: false,  // TB
   pattern3: false,  // SP
   pattern4: false,  // PC & TB & SP
-  pattern5: false,  // PC $ TB
-  pattern6: false,  // PC $ SP
-  pattern7: false,  // TB $ SP
+  pattern5: false,  // PC & TB
+  pattern6: false,  // PC & SP
+  pattern7: false,  // TB & SP
   imageMaxWidth: {
     pattern1: 873,
     pattern2: 600,
@@ -21,7 +21,7 @@ export const state = () => ({
     pattern6: 873+369,
     pattern7: 600+369,
   },
-  multidevice: false,
+  multidevice: false, // ローカルストレージ保存対象
 })
 
 export const getters = {
@@ -191,6 +191,7 @@ export const mutations = {
     state.activePC = Boolean(key[0])
     state.activeTB = Boolean(key[1])
     state.activeSP = Boolean(key[2])
+    state.multidevice = Boolean(key[3])
     /* console.log('ローカルストレージからデータを取得-devicePattern')
     console.log(key) */
   },
@@ -198,7 +199,7 @@ export const mutations = {
     // ローカルストレージ更新
     if (window.localStorage) {
       /* console.log('ローカルストレージに保存-devicePattern') */
-      const devicePattern = [ Number(state.activePC), Number(state.activeTB), Number(state.activeSP) ]
+      const devicePattern = [ Number(state.activePC), Number(state.activeTB), Number(state.activeSP), Number(state.multidevice) ]
       const devicePatternJson = JSON.stringify(devicePattern)
       /* console.log(devicePatternJson) */
       localStorage.setItem('device-pattern', devicePatternJson)

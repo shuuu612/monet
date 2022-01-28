@@ -159,6 +159,7 @@
                 <img class="sliderImageSmall" src="/images/square-small.svg" alt="">
                 <input id="slider" type="range" name="size" min="0.25" max="1" step="0.075" :value="getSliderValue" @input="sliderChange">
                 <img class="sliderImageLarge" src="/images/square-large.svg" alt="">
+                {{$store.getters["slider/getSteps"].indexOf(true)}}
               </div>
               <div class="controllerItems checkboxStyle">
                 <label class="checkboxWrapper">

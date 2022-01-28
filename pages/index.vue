@@ -28,11 +28,11 @@
           <div v-if="getNoContentComment.length > 0" class="noContent" style="white-space: pre-wrap;" v-text="getNoContentComment"></div>
           <div id="contents" class="contents">
             <div v-for="(content, index) in getDisplayingContent" :key="content.id" class="content" :class="getStateSliderStep">
-              <div class="contentImage">
+              <div class="contentImage" :style="infoStyle">
                 <a :href="`${content.url}`" target="_blank" rel="noopener noreferrer" class="images">
-                  <img v-if="getPcHide" class="image" :src="`${content.imagePC.url}?w=${873*getStateSliderSize}`" :alt="`${content.name}`" :class="getMargin('pc')" loading="lazy" @load="resizeProcess(index)">
-                  <img v-if="getTbHide" class="image" :src="`${content.imageTB.url}?w=${600*getStateSliderSize}`" :alt="`${content.name}`" :class="getMargin('tb')" loading="lazy" @load="resizeProcess(index)">
-                  <img v-if="getSpHide" class="image" :src="`${content.imageSP.url}?w=${369*getStateSliderSize}`" :alt="`${content.name}`" :class="getMargin('sp')" loading="lazy" @load="resizeProcess(index)">
+                  <img v-if="getPcHide" class="image" :src="`${content.imagePC.url}?w=${Math.round(873*getStateSliderSize)}`" :alt="`${content.name}`" :class="getMargin('pc')" :style="getMaxWidth('pc')" loading="lazy" @load="contentSizeChange(index)">
+                  <img v-if="getTbHide" class="image" :src="`${content.imageTB.url}?w=${Math.round(600*getStateSliderSize)}`" :alt="`${content.name}`" :class="getMargin('tb')" :style="getMaxWidth('tb')" loading="lazy" @load="contentSizeChange(index)">
+                  <img v-if="getSpHide" class="image" :src="`${content.imageSP.url}?w=${Math.round(369*getStateSliderSize)}`" :alt="`${content.name}`" :class="getMargin('sp')" :style="getMaxWidth('sp')" loading="lazy" @load="contentSizeChange(index)">
                 </a>
               </div>
               <div class="modal" :class="getActiveModal(content.id)" @click="closeModal">
@@ -113,8 +113,8 @@
                     
                 </div>
               </div>
-              <div class="info">
-                <div class="infoText" :style="infoStyle">
+              <div class="info" :style="infoStyle">
+                <div class="infoText" :style="infoButtonStyle">
                   <div class="name">
                     <a :href="`${content.url}`" target="_blank" rel="noopener noreferrer" class="nameLink">
                       {{content.name}}
@@ -348,6 +348,21 @@ export default {
             infoStyle: {
                 width: "",
             },
+            infoButtonStyle: {
+                width: "",
+            },
+            imageStyle: {
+                width: "",
+            },
+            imagePcStyle: {
+                maxWidth: "",
+            },
+            imageTbStyle: {
+                maxWidth: "",
+            },
+            imageSpStyle: {
+                maxWidth: "",
+            },
             modalStyle: {
                 width: "",
             },
@@ -518,46 +533,62 @@ export default {
         getDisplayingContent() {
           console.log('getDisplayingContent',this.displayingContent)
             return this.displayingContent
-        }
+        },
+        getMaxWidth() {
+          return function(key) {
+            // コンテンツのmax-widthを設定
+            const devicePattern = this.$store.getters["devicePattern/getStatePatternNumber"]; // 現在のデバイスパターン
+            const windowWidth = this.$store.getters["windowSize/getWindowWidth"]; // ウィンドウサイズ
+
+            let maxWidthPc
+            let maxWidthTb
+            let maxWidthSp
+
+            if(windowWidth < 576 && this.$store.getters["slider/getAutoSizing"]) {
+              switch(devicePattern) {
+                case 1:
+                case 2:
+                case 3:
+                  maxWidthPc = "";
+                  maxWidthTb = "";
+                  maxWidthSp = "";
+                  break;
+  
+                case 4:// PC & TB & SP
+                  maxWidthPc = `${873/(873+10+600+10+369)*100*0.97}%`;
+                  maxWidthTb = `${600/(873+10+600+10+369)*100*0.97}%`;
+                  maxWidthSp = `${369/(873+10+600+10+369)*100*0.97}%`;
+                  break;
+  
+                case 5:// PC & TB
+                  maxWidthPc = `${873/(873+10+600)*100*0.978}%`;
+                  maxWidthTb = `${600/(873+10+600)*100*0.978}%`;
+                  maxWidthSp = "";
+                  break;
+  
+                case 6:// PC & SP
+                  maxWidthPc = `${873/(873+10+369)*100*0.975}%`;
+                  maxWidthTb = "";
+                  maxWidthSp = `${369/(873+10+369)*100*0.975}%`;
+                  break;
+  
+                case 7:// TB & SP
+                  maxWidthPc = "";
+                  maxWidthTb = `${600/(600+10+369)*100*0.97}%`;
+                  maxWidthSp = `${369/(600+10+369)*100*0.97}%`;
+                  break;
+              }
+            }else {
+              maxWidthPc = "";
+              maxWidthTb = "";
+              maxWidthSp = "";
+            }
+            if(key === 'pc')  return {maxWidth: maxWidthPc}
+            else if(key === 'tb')  return {maxWidth: maxWidthTb}
+            else if(key === 'sp')  return {maxWidth: maxWidthSp}
+          }
+        },
     },
-    /* watch: {
-      getStatePattern1 (after) {
-          if(after) {
-            this.createDummyContent()
-          }
-      },
-      getStatePattern2 (after) {
-          if(after) {
-            this.createDummyContent()
-          }
-      },
-      getStatePattern3 (after) {
-          if(after) {
-            this.createDummyContent()
-          }
-      },
-      getStatePattern4 (after) {
-          if(after) {
-            this.createDummyContent()
-          }
-      },
-      getStatePattern5 (after) {
-          if(after) {
-            this.createDummyContent()
-          }
-      },
-      getStatePattern6 (after) {
-          if(after) {
-            this.createDummyContent()
-          }
-      },
-      getStatePattern7 (after) {
-          if(after) {
-            this.createDummyContent()
-          }
-      },
-    }, */
-    /* watchQuery: true, */
     created() {
         console.log("selectedTag");
     },
@@ -582,18 +613,22 @@ export default {
         // コンテンツ表示処理
         this.setSearchTags();
         this.setDisplayingContent();
+
         // 読み込み完了を監視
         window.addEventListener("load", this.loadProcess);
+
         // ブラウザサイズの変更を監視
-        window.addEventListener("resize", () => this.resizeProcess(-1));
+        window.addEventListener("resize", this.resizeProcess);
+
         // コンテンツのサイズ変更を監視
         /* this.setResizeObserver(); */
+
         // スクロールを監視
         window.addEventListener("scroll", this.scrolledWindow);
-        // スクロールを監視
-        /* document.addEventListener("keypress", this.keypress); */
+
         // ローディング画面を終了させる
         window.setTimeout(this.setLoaded, 1500);
+
         // 検索キーワードの入力を監視
         this.$store.watch(() => this.$store.getters["search/getKeyword"], (value) => {
             this.setSearchKeyword(value);
@@ -609,25 +644,42 @@ export default {
                 this.$store.dispatch("multipleSelect/pushStart");
             }
         });
-        // コンテンツ再表示を監視
-        /* this.$store.watch(() => this.$store.getters["redisplay/getRedisplay"], (value) => {
-            console.log("再表示を検知");
+        // 自動調整オンを監視
+        this.$store.watch(() => this.$store.getters["slider/getAutoSizing"], (value) => {
             if (value) {
-              console.log('処理を実行')
-              console.log('this.selectedTag3',this.selectedTag)
-                this.setSearchTags();
-                this.displayingPageTags = this.displayingPageTags - 1;
-                this.setDisplayingContent();
-                this.$store.dispatch("redisplay/pushRedisplay");
+                this.calculateAutoSizing();
             }
-        }); */
+        });
+        // デバイス切り替えを監視（imageのloadイベントでは非表示を検知できないため）
+        this.$store.watch(() => this.$store.getters["devicePattern/getStatePatternNumber"], () => {
+            this.createDummyContent();
+            this.calculateAutoSizing()
+        });
+        window.matchMedia("(min-width:375px)").addEventListener("change", this.calculateAutoSizing);
+        window.matchMedia("(min-width:500px)").addEventListener("change", this.calculateAutoSizing);
+        window.matchMedia("(min-width:576px)").addEventListener("change", this.calculateAutoSizing);
+        window.matchMedia("(min-width:768px)").addEventListener("change", this.calculateAutoSizing);
+        window.matchMedia("(min-width:900px)").addEventListener("change", this.calculateAutoSizing);
+        window.matchMedia("(min-width:992px)").addEventListener("change", this.calculateAutoSizing);
+        window.matchMedia("(min-width:1100px)").addEventListener("change", this.calculateAutoSizing);
+        window.matchMedia("(min-width:1200px)").addEventListener("change", this.calculateAutoSizing);
+        window.matchMedia("(min-width:1300px)").addEventListener("change", this.calculateAutoSizing);
+        window.matchMedia("(min-width:1400px)").addEventListener("change", this.calculateAutoSizing);
+        window.matchMedia("(min-width:1500px)").addEventListener("change", this.calculateAutoSizing);
+        window.matchMedia("(min-width:1600px)").addEventListener("change", this.calculateAutoSizing);
+        window.matchMedia("(min-width:1700px)").addEventListener("change", this.calculateAutoSizing);
+        window.matchMedia("(min-width:1800px)").addEventListener("change", this.calculateAutoSizing);
+        window.matchMedia("(min-width:1900px)").addEventListener("change", this.calculateAutoSizing);
+        window.matchMedia("(min-width:2000px)").addEventListener("change", this.calculateAutoSizing);
+        window.matchMedia("(min-width:2100px)").addEventListener("change", this.calculateAutoSizing);
+        window.matchMedia("(min-width:2200px)").addEventListener("change", this.calculateAutoSizing);
     },
     updated() {
         console.log("updated");
         // 「もっと見る」で表示件数を増やした時にダミーコンテンツを更新するタイミングがupdata以外にない
         if (!this.updatedFlg) {
             this.$nextTick(() => {
-                this.resizeProcess(0);
+                this.resizeProcess();
             });
         }
         this.updatedFlg = !this.updatedFlg;
@@ -635,59 +687,64 @@ export default {
     beforeDestroy() {
         console.log("beforeDestroy");
         window.removeEventListener("load", this.loadProcess);
-        window.removeEventListener("resize", () => this.resizeProcess(0));
+        window.removeEventListener("resize", this.resizeProcess);
         window.removeEventListener("scroll", this.scrolledWindow);
         /* this.observer.disconnect(); */
+
+        window.matchMedia("(min-width:375px)").removeEventListener("change", this.calculateAutoSizing);
+        window.matchMedia("(min-width:500px)").removeEventListener("change", this.calculateAutoSizing);
+        window.matchMedia("(min-width:576px)").removeEventListener("change", this.calculateAutoSizing);
+        window.matchMedia("(min-width:768px)").removeEventListener("change", this.calculateAutoSizing);
+        window.matchMedia("(min-width:900px)").removeEventListener("change", this.calculateAutoSizing);
+        window.matchMedia("(min-width:992px)").removeEventListener("change", this.calculateAutoSizing);
+        window.matchMedia("(min-width:1100px)").removeEventListener("change", this.calculateAutoSizing);
+        window.matchMedia("(min-width:1200px)").removeEventListener("change", this.calculateAutoSizing);
+        window.matchMedia("(min-width:1300px)").removeEventListener("change", this.calculateAutoSizing);
+        window.matchMedia("(min-width:1400px)").removeEventListener("change", this.calculateAutoSizing);
+        window.matchMedia("(min-width:1500px)").removeEventListener("change", this.calculateAutoSizing);
+        window.matchMedia("(min-width:1600px)").removeEventListener("change", this.calculateAutoSizing);
+        window.matchMedia("(min-width:1700px)").removeEventListener("change", this.calculateAutoSizing);
+        window.matchMedia("(min-width:1800px)").removeEventListener("change", this.calculateAutoSizing);
+        window.matchMedia("(min-width:1900px)").removeEventListener("change", this.calculateAutoSizing);
+        window.matchMedia("(min-width:2000px)").removeEventListener("change", this.calculateAutoSizing);
+        window.matchMedia("(min-width:2100px)").removeEventListener("change", this.calculateAutoSizing);
+        window.matchMedia("(min-width:2200px)").removeEventListener("change", this.calculateAutoSizing);
     },
     methods: {
         createDummyContent() {
-            /* const contentAll = [ ...document.getElementsByClassName("content")];
-            const content = contentAll.shift();
-            if (content === undefined)
-                return; */
+          console.log('createDummyContentを実行')
+            // 実行タイミング：デバイスの変更、コンテンツサイズの変更
             const contents = document.getElementById("contents");
             const viewWidth = contents.clientWidth; // 表示領域全体の幅
-            /* const width = content.clientWidth; // コンテンツ１つ辺りの幅
-            const height = content.clientHeight; // コンテンツ１つ辺りの高さ
-            const styles = window.getComputedStyle(content);
-            const marginTop = parseFloat(styles.marginTop); // コンテンツ１つ辺りの上マージン
-            const marginBottom = parseFloat(styles.marginBottom); // コンテンツ１つ辺りの下マージン
-            const marginRight = parseFloat(styles.marginRight); // コンテンツ１つ辺りの右マージン
-            const marginLeft = parseFloat(styles.marginLeft); // コンテンツ１つ辺りの左マージン
- */
-            let width = 0;
-            let count = 0;
-            if (this.$store.getters["devicePattern/getActivePC"]) {
-                width = width + 873 * this.$store.getters["slider/getValue"];
-                count++;
-            }
-            if (this.$store.getters["devicePattern/getActiveTB"]) {
-                width = width + 600 * this.$store.getters["slider/getValue"];
-                count++;
-            }
-            if (this.$store.getters["devicePattern/getActiveSP"]) {
-                width = width + 369 * this.$store.getters["slider/getValue"];
-                count++;
-            }
-            width = Math.floor(width) + 10 * (count - 1);
-            const height = Math.floor(800 * this.$store.getters["slider/getValue"]);
-            const marginTopBottom = [16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36];
+
+            const imageMaxWidth = this.$store.getters["devicePattern/getStatePatternMaxWidth"];
+            const devicePattern = this.$store.getters["devicePattern/getStatePatternNumber"]; // 現在のデバイスパターン
+            const value = this.$store.getters["slider/getValue"]; 
+            const sliderSteps = this.$store.getters["slider/getSteps"];
+            const sliderStep = sliderSteps.indexOf(true); // 現在のスライダーステップ
+
             const marginLeftRight = [10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30];
-            const steps = this.$store.getters["slider/getSteps"];
-            const step = steps.indexOf(true);
-            const marginTop = marginTopBottom[step];
-            const marginBottom = marginTopBottom[step];
-            const marginLeft = marginLeftRight[step];
-            const marginRight = marginLeftRight[step];
+
+            let width = Math.round(imageMaxWidth * value);
+            switch(devicePattern) {
+              case 4:
+                width = width + 20;
+                break;
+
+              case 5:
+              case 6:
+              case 7:
+                width = width + 10;
+                break;
+            }
+
+            const marginLeft = marginLeftRight[sliderStep];
+            const marginRight = marginLeftRight[sliderStep];
+
             const totalWidth = width + marginRight + marginLeft; // コンテンツ１つ辺りの幅（マージン含む）
             const columnContent = Math.floor(viewWidth / totalWidth); // １カラム内のコンテンツ数
             const contentQuantity = this.displayingContent.length; // １ページ内のコンテンツ数
-            /* console.log('表示領域全体の幅：'+viewWidth)
-            console.log('コンテンツ１つ辺りの幅：'+width)
-            console.log('コンテンツ１つ辺りの高さ：'+height)
-            console.log('コンテンツ１つ辺りの幅（マージン含む）：'+totalWidth)
-            console.log('１カラム内のコンテンツ数：'+columnContent)
-            console.log('１ページ内のコンテンツ数：'+contentQuantity) */
+
             // ダミーコンテンツ作成
             this.dummy.length = 0;
             if (contentQuantity % columnContent !== 0 && contentQuantity > columnContent) {
@@ -698,80 +755,269 @@ export default {
             this.dummy.splice();
             // ダミーコンテンツのスタイル設定
             this.dummyStyle.width = `${width}px`;
-            this.dummyStyle.height = `${height}px`;
-            this.dummyStyle.marginTop = `${marginTop}px`;
-            this.dummyStyle.marginBottom = `${marginBottom}px`;
+            this.dummyStyle.height = `0px`;
+            this.dummyStyle.marginTop = `0px`;
+            this.dummyStyle.marginBottom = `0px`;
             this.dummyStyle.marginRight = `${marginRight}px`;
             this.dummyStyle.marginLeft = `${marginLeft}px`;
-            // コンテンツサイズ自動調整用の値を算出
-            const stepData = this.$store.getters["slider/getStepData"];
-            const imageMaxWidth = this.$store.getters["devicePattern/getStatePatternMaxWidth"];
-            const pattern = this.$store.getters["devicePattern/getStatePatternNumber"];
-            const margin = [10 * 2, 12 * 2, 14 * 2, 16 * 2, 18 * 2, 20 * 2, 22 * 2, 24 * 2, 26 * 2, 28 * 2, 30 * 2]; // ハードコーディングのため、対応検討
-            let availableSizes = [];
-            let marginRL = [];
-            const aptitude = [];
-            const info = [];
-            if (pattern === 3) {
-                if (viewWidth < 718) {
-                    availableSizes = [stepData[5], stepData[6], stepData[7]];
-                    marginRL = [margin[5], margin[6], margin[7]];
-                }
-                else if (viewWidth < 1167) {
-                    availableSizes = [stepData[5], stepData[6], stepData[7]];
-                    marginRL = [margin[5], margin[6], margin[7]];
-                }
-                else {
-                    availableSizes = [stepData[8], stepData[9], stepData[10]];
-                    marginRL = [margin[8], margin[9], margin[10]];
-                }
-            }
-            else if (pattern !== 3) {
-                if (viewWidth < 718) {
-                    availableSizes = [stepData[0], stepData[1], stepData[2], stepData[3]];
-                    marginRL = [margin[0], margin[1], margin[2], margin[3]];
-                }
-                else if (viewWidth < 1167) {
-                    availableSizes = [stepData[1], stepData[2], stepData[3]];
-                    marginRL = [margin[1], margin[2], margin[3]];
-                }
-                else {
-                    availableSizes = [stepData[3], stepData[4]];
-                    marginRL = [margin[3], margin[4]];
-                }
-            }
-            const border = 1 * 2; // ハードコーディングのため、対応検討
-            // 各サイズでの余白を算出
-            for (let i = 0; i < availableSizes.length; i++) {
-                const totalWidthSteps = imageMaxWidth * availableSizes[i] + marginRL[i] + border; // コンテンツ１つ辺りの幅（マージン含む）
-                const columnContentSteps = Math.floor(viewWidth / totalWidthSteps); // １カラム内のコンテンツ数
-                aptitude[i] = viewWidth - (totalWidthSteps * columnContentSteps); // １カラム内の余白の大きさ
-                info[i] = imageMaxWidth * availableSizes[i] + border - 75;
-            }
-            // 余白が一番小さくなるサイズを自動調整用の値とする
-            let aptitudeResult = availableSizes[0];
-            let infoResult = info[0];
-            for (let i = 0, result = aptitude[0]; i < aptitude.length - 1; i++) {
-                if (result > aptitude[i + 1]) {
-                    result = aptitude[i + 1];
-                    aptitudeResult = availableSizes[i + 1];
-                    infoResult = info[i + 1];
-                }
-            }
-            // 自動調整用の値をstoreに設定
-            if (aptitudeResult !== undefined) {
-                this.$store.dispatch("slider/pushAptitudeValue", aptitudeResult);
-            }
+
             // info領域の大きさを設定
-            const auto = this.$store.getters["slider/getAutoSizing"];
-            if (auto) {
-                this.infoStyle.width = `${infoResult}px`;
+            const infoWidth = width - 75;
+            this.infoStyle.width = `${width}px`;
+            this.infoButtonStyle.width = `${infoWidth}px`;
+            
+        },
+        calculateAutoSizing() {
+            // 実行タイミング：createDummyContentのタイミング＋自動調整オンを押下、ウィンドウサイズが規定のサイズに達したとき、
+
+            const devicePattern = this.$store.getters["devicePattern/getStatePatternNumber"]; // 現在のデバイスパターン
+            const windowWidth = this.$store.getters["windowSize/getWindowWidth"]; // ウィンドウサイズ
+
+            if(!this.$store.getters["slider/getAutoSizing"]) return
+            console.log('calculateAutoSizingを実行')
+
+            // コンテンツサイズ自動調整用の値を算出
+            let sliderStep
+
+            switch(devicePattern) {
+              case 1: // PC
+                if(windowWidth < 375) {
+                  sliderStep = 3;
+                }else if(windowWidth < 576) {
+                  sliderStep = 5;
+                }else if(windowWidth < 768) {
+                  sliderStep = 5;
+                }else if(windowWidth < 900) {
+                  sliderStep = 5;
+                }else if(windowWidth < 992) {
+                  sliderStep = 2;
+                }else if(windowWidth < 1100) {
+                  sliderStep = 2;
+                }else if(windowWidth < 1200) {
+                  sliderStep = 3;
+                }else if(windowWidth < 1300) {
+                  sliderStep = 3;
+                }else if(windowWidth < 1400) {
+                  sliderStep = 3;
+                }else if(windowWidth < 1500) {
+                  sliderStep = 3;
+                }else {
+                  sliderStep = 3;
+                }
+                break;
+
+              case 2: // TB
+                if(windowWidth < 375) {
+                  sliderStep = 5;
+                }else if(windowWidth < 576) {
+                  sliderStep = 5;
+                }else if(windowWidth < 768) {
+                  sliderStep = 6;
+                }else if(windowWidth < 900) {
+                  sliderStep = 6;
+                }else if(windowWidth < 992) {
+                  sliderStep = 4;
+                }else if(windowWidth < 1100) {
+                  sliderStep = 4;
+                }else if(windowWidth < 1200) {
+                  sliderStep = 5;
+                }else if(windowWidth < 1300) {
+                  sliderStep = 5;
+                }else if(windowWidth < 1400) {
+                  sliderStep = 4;
+                }else if(windowWidth < 1500) {
+                  sliderStep = 4;
+                }else {
+                  sliderStep = 5;
+                }
+                break;
+
+              case 3: // SP
+                if(windowWidth < 375) {
+                  sliderStep = 7;
+                }else if(windowWidth < 576) {
+                  sliderStep = 8;
+                }else if(windowWidth < 768) {
+                  sliderStep = 5;
+                }else if(windowWidth < 900) {
+                  sliderStep = 6;
+                }else if(windowWidth < 992) {
+                  sliderStep = 7;
+                }else if(windowWidth < 1100) {
+                  sliderStep = 8;
+                }else if(windowWidth < 1200) {
+                  sliderStep = 8;
+                }else if(windowWidth < 1300) {
+                  sliderStep = 8;
+                }else if(windowWidth < 1400) {
+                  sliderStep = 8;
+                }else if(windowWidth < 1500) {
+                  sliderStep = 8;
+                }else {
+                  sliderStep = 8;
+                }
+                break;
+                
+              case 4: // PC & TB & SP
+                if(windowWidth < 375) {
+                  sliderStep = 0;
+                }else if(windowWidth < 576) {
+                  sliderStep = 2;
+                }else if(windowWidth < 768) {
+                  sliderStep = 0;
+                }else if(windowWidth < 900) {
+                  sliderStep = 1;
+                }else if(windowWidth < 992) {
+                  sliderStep = 2;
+                }else if(windowWidth < 1100) {
+                  sliderStep = 2;
+                }else if(windowWidth < 1200) {
+                  sliderStep = 3;
+                }else if(windowWidth < 1300) {
+                  sliderStep = 3;
+                }else if(windowWidth < 1400) {
+                  sliderStep = 4;
+                }else if(windowWidth < 1500) {
+                  sliderStep = 5;
+                }else if(windowWidth < 1600) {
+                  sliderStep = 5;
+                }else if(windowWidth < 1700) {
+                  sliderStep = 5;
+                }else if(windowWidth < 1800) {
+                  sliderStep = 5;
+                }else if(windowWidth < 1900) {
+                  sliderStep = 2;
+                }else if(windowWidth < 2000) {
+                  sliderStep = 2;
+                }else if(windowWidth < 2100) {
+                  sliderStep = 2;
+                }else {
+                  sliderStep = 3;
+                }
+                break;
+
+              case 5: // PC & TB
+                if(windowWidth < 375) {
+                  sliderStep = 0;
+                }else if(windowWidth < 576) {
+                  sliderStep = 2;
+                }else if(windowWidth < 768) {
+                  sliderStep = 1;
+                }else if(windowWidth < 900) {
+                  sliderStep = 2;
+                }else if(windowWidth < 992) {
+                  sliderStep = 3;
+                }else if(windowWidth < 1100) {
+                  sliderStep = 4;
+                }else if(windowWidth < 1200) {
+                  sliderStep = 4;
+                }else if(windowWidth < 1300) {
+                  sliderStep = 5;
+                }else if(windowWidth < 1400) {
+                  sliderStep = 5;
+                }else if(windowWidth < 1500) {
+                  sliderStep = 5;
+                }else if(windowWidth < 1600) {
+                  sliderStep = 2;
+                }else if(windowWidth < 1700) {
+                  sliderStep = 2;
+                }else if(windowWidth < 1800) {
+                  sliderStep = 3;
+                }else if(windowWidth < 1900) {
+                  sliderStep = 3;
+                }else if(windowWidth < 2000) {
+                  sliderStep = 3;
+                }else if(windowWidth < 2100) {
+                  sliderStep = 4;
+                }else {
+                  sliderStep = 4;
+                }
+                break;
+                
+              case 6: // PC & SP
+                if(windowWidth < 375) {
+                  sliderStep = 1;
+                }else if(windowWidth < 576) {
+                  sliderStep = 2;
+                }else if(windowWidth < 768) {
+                  sliderStep = 2;
+                }else if(windowWidth < 900) {
+                  sliderStep = 3;
+                }else if(windowWidth < 992) {
+                  sliderStep = 4;
+                }else if(windowWidth < 1100) {
+                  sliderStep = 4;
+                }else if(windowWidth < 1200) {
+                  sliderStep = 5;
+                }else if(windowWidth < 1300) {
+                  sliderStep = 5;
+                }else if(windowWidth < 1400) {
+                  sliderStep = 5;
+                }else if(windowWidth < 1500) {
+                  sliderStep = 5;
+                }else if(windowWidth < 1600) {
+                  sliderStep = 3;
+                }else if(windowWidth < 1700) {
+                  sliderStep = 3;
+                }else if(windowWidth < 1800) {
+                  sliderStep = 4;
+                }else if(windowWidth < 1900) {
+                  sliderStep = 4;
+                }else if(windowWidth < 2000) {
+                  sliderStep = 4;
+                }else if(windowWidth < 2100) {
+                  sliderStep = 4;
+                }else {
+                  sliderStep = 3;
+                }
+                break;
+                
+              case 7: // TB & SP
+                if(windowWidth < 375) {
+                  sliderStep = 2;
+                }else if(windowWidth < 576) {
+                  sliderStep = 3;
+                }else if(windowWidth < 768) {
+                  sliderStep = 4;
+                }else if(windowWidth < 900) {
+                  sliderStep = 5;
+                }else if(windowWidth < 992) {
+                  sliderStep = 6;
+                }else if(windowWidth < 1100) {
+                  sliderStep = 6;
+                }else if(windowWidth < 1200) {
+                  sliderStep = 6;
+                }else if(windowWidth < 1300) {
+                  sliderStep = 7;
+                }else if(windowWidth < 1400) {
+                  sliderStep = 7;
+                }else if(windowWidth < 1500) {
+                  sliderStep = 4;
+                }else if(windowWidth < 1600) {
+                  sliderStep = 4;
+                }else if(windowWidth < 1700) {
+                  sliderStep = 5;
+                }else if(windowWidth < 1800) {
+                  sliderStep = 5;
+                }else if(windowWidth < 1900) {
+                  sliderStep = 5;
+                }else if(windowWidth < 2000) {
+                  sliderStep = 5;
+                }else if(windowWidth < 2100) {
+                  sliderStep = 4;
+                }else if(windowWidth < 2200) {
+                  sliderStep = 4;
+                }else {
+                  sliderStep = 5;
+                }
+                break;
             }
-            else {
-                const value = this.$store.getters["slider/getValue"];
-                const infoSize = imageMaxWidth * value + border - 75;
-                this.infoStyle.width = `${infoSize}px`;
-            }
+
+
+            const value = 0.25 + sliderStep * 0.075;
+            // 自動調整用の値をstoreに設定
+            this.$store.dispatch("slider/pushAptitudeValue", value);
+
         },
         loadProcess() {
             console.log("loadProcessを起動");
@@ -782,23 +1028,18 @@ export default {
             // モーダルの大きさを設定
             /* this.modalSizing(); */
             this.setWindowSize();
+
+            this.calculateAutoSizing();
         },
-        resizeProcess(value) {
-            // ダミーコンテンツの作成
-            // スライダー操作起因のResizeObserverでDOMの描写前にcreateDummyContentを実装しているっぽいやつの対応
-            // 初回読み込みでwindowのload完了前にimgのload完了で実行されてしまう事象を回避するため
+        resizeProcess() {
+            this.setWindowSize();
+        },
+        contentSizeChange(value) {
             if (this.$store.getters["loaded/getLoaded"]) {
                 if (value === 0 || value === undefined) {
-                    this.createDummyContent();
-                    /* setTimeout(this.createDummyContent, 1000); */
-                    /* this.modalSizing(); */
-                    this.modalInfoSizing();
-                    this.setWindowSize();
-                    console.log('重い処理')
-                }else if(value === -1) {
-                    this.modalInfoSizing();
-                    this.setWindowSize();
-                    console.log('軽い処理')
+                    // コンテンツ自動調整
+                    this.calculateAutoSizing()
+                    this.createDummyContent()
                 }
             }
         },
@@ -809,7 +1050,7 @@ export default {
                 console.log("ResizeObserverを起動前");
                 if (this.$store.getters["loaded/getLoaded"]) {
                     console.log("ResizeObserverを起動");
-                    this.resizeProcess(0);
+                    this.resizeProcess();
                 }
             });
             if (element) {
@@ -1443,13 +1684,13 @@ export default {
     /* padding: 20px 20px 150px 20px; */
   }
   @include responsive(sm) {
-    padding: 0px 100px 150px 100px;
+    padding: 0px 0px 150px 0px;
   }
   @include responsive(md) {
-    padding: 20px 100px 150px 100px;
+    padding: 20px 40px 150px 90px;
   }
   @include responsive(lg) {
-    
+    padding: 20px 90px 150px 90px;
   }
   @include responsive(xl) {
     
@@ -1529,19 +1770,38 @@ export default {
   justify-content: center; */
 }
 .contents {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  
   width: 100%;
+  @include responsive(xs) {
+    
+  }
+  @include responsive(sm) {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  @include responsive(md) {
+    
+  }
+  @include responsive(lg) {
+    
+  }
+  @include responsive(xl) {
+    
+  }
+  @include responsive(xxl) {
+    
+  }
 }
 .content {
-
+  width: 100%;
+  max-width: 100%;
   margin-bottom: 30px;
   @include responsive(xs) {
 
   }
   @include responsive(sm) {
-
+    width: auto;
   }
   @include responsive(md) {
     max-width: 90vw;
@@ -1556,14 +1816,16 @@ export default {
 
   }
 }
+
+.contentImage {
+  max-width: 100%;
+  margin: 0 auto;
+}
 .images {
   display: flex;
-}
-// 注意：createDummyContent関数内で以下のborderの値をハードコーディングで使用しているため、
-//      ここの値を変更する場合は、一緒にcreateDummyContentも変更必要（あとで直す）
-.image {
+  justify-content: center;
   max-width: 100%;
-  
+  width: 100%;
   @include responsive(xs) {
     
   }
@@ -1571,8 +1833,7 @@ export default {
     
   }
   @include responsive(md) {
-    border-radius: 5px;
-    box-shadow: 1px 1px 5px var(--main-content-image-shadow);
+    
   }
   @include responsive(lg) {
     
@@ -1584,6 +1845,40 @@ export default {
     
   }
 }
+// 注意：createDummyContent関数内で以下のborderの値をハードコーディングで使用しているため、
+//      ここの値を変更する場合は、一緒にcreateDummyContentも変更必要（あとで直す）
+.image {
+  max-width: 100%;
+  
+  @include responsive(xs) {
+    
+  }
+  @include responsive(sm) {
+    border-radius: 5px;
+    box-shadow: 1px 1px 5px var(--main-content-image-shadow);
+  }
+  @include responsive(md) {
+    
+  }
+  @include responsive(lg) {
+    
+  }
+  @include responsive(xl) {
+    
+  }
+  @include responsive(xxl) {
+    
+  }
+}
+/* .imagePc {
+  max-width: calc(46.88507% * 0.97);
+}
+.imageTb {
+  max-width: calc(32.223416% * 0.97);
+}
+.imageSp {
+  max-width: calc(19.817401% * 0.97);
+} */
 .marginRight {
   margin-right: 10px;
 }
@@ -1751,14 +2046,23 @@ export default {
 
 .info {
   position: relative;
+  margin: 0 auto;
+  max-width: 100%;
+  margin-top: 10px;
+}
+
+.infoText {
+  max-width: calc(100% - 75px);
+  
 }
 
 .name {
-  margin-top: 10px;
+  /* margin-top: 10px; */
   font-weight: 700;
   font-size: var(--font-size-md);
   background: linear-gradient(to right, #005c97, #363795);
   background-clip: text;
+  display: inline-block;
 }
 
 .time {
@@ -1897,7 +2201,7 @@ export default {
 // 注意：createDummyContent関数内で以下のmarginの値をハードコーディングで使用しているため、
 //      ここの値を変更する場合は、一緒にcreateDummyContentも変更必要（あとで直す）
 
-@include responsive(md) {
+@include responsive(sm) {
   .step0 {
     margin: 16px 10px;
   }
