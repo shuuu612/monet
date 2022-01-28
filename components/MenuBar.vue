@@ -147,7 +147,7 @@ export default {
   bottom: 0;
   left: 0;
   background-color: var(--black-transparent-low);
-  z-index: 90;
+  z-index: 110;
   display: flex;
   align-items: center;
   justify-content: center;
