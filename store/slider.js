@@ -2,7 +2,7 @@ export const state = () => ({
   min: 0.25,
   max: 1,
   step: 0.075,
-  value: 0.625,
+  value: 0,
   myValue: 0,               // ローカルストレージ保存対象
   autoSizing: true,    // ローカルストレージ保存対象
   stepData: [],
