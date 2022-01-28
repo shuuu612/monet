@@ -1681,7 +1681,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100vh;
-  z-index: 100;
+  z-index: 999;
   opacity: 1;
   animation-name: loading;
   animation-duration: 1.5s;
@@ -1712,7 +1712,7 @@ export default {
     left: 0;
     width: 100%;
     height: 2px;
-    z-index: 101;
+    z-index: 999;
     background-color: var(--white);
     clip-path:inset(0 100% 0 0);
     animation-name: loadingLine;
@@ -1961,7 +1961,7 @@ export default {
   width: 100vw;
   height: 100vh;
   background-color: var(--main-modal-outer-background);
-  z-index: 90;
+  z-index: 100;
   display: none;
   clip-path:inset(50% 50% 50% 50%);
   position: fixed;

@@ -671,7 +671,7 @@ export default {
   width: 100%;
   height: 100vh;
   background-color: var(--side-menu-mask);
-  z-index: 60;
+  z-index: 90;
 }
 
 .sideMenu {
@@ -683,7 +683,7 @@ export default {
   height: 100vh;
   background-color: var(--side-menu-background);
   
-  z-index: 70;
+  z-index: 100;
   &.isClose {
     transform: translateX(calc(-1 * var(--sideMenuWidth)));
   }
