@@ -126,6 +126,8 @@ export default {
     height: auto;
     border-radius: 0;
     border-bottom: var(--search-border) 2px solid;
+    border-image: linear-gradient(to right, #247bb1, #52549e);
+    border-image-slice: 1;
     padding-left: 10px;
     background-color: transparent;
     .searchWrapper.focus & {

@@ -2324,6 +2324,7 @@ export default {
   width: 330px;
   height: 50px;
   background-color: var(--main-more-button-background);
+  background: linear-gradient(to right, #005c97, #363795);
   color: var(--main-more-button-text);
   border-radius: 3px;
   display: flex;
@@ -2332,6 +2333,7 @@ export default {
   padding-left: 6px;
   &:hover {
     background-color: var(--main-more-button-background-hover);
+    background: linear-gradient(to right, #247bb1, #52549e);
     color: var(--main-more-button-text-hover);
   }
   margin: 50px auto 0 auto;
