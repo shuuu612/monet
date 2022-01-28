@@ -1680,7 +1680,7 @@ export default {
 }
 
 .loading {
-  display: none;
+  display: block;
   background: linear-gradient(to bottom, #404957 50%, #6f88ad 100%);
   position: fixed;
   top: 0;
