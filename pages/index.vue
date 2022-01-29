@@ -114,7 +114,7 @@
                     
                 </div>
               </div>
-              <div class="info" :style="infoStyle">
+              <div class="info" :style="getInfoStyle">
                 <div class="infoText" :style="infoButtonStyle">
                   <div class="name">
                     <a :href="`${content.url}`" target="_blank" rel="noopener noreferrer" class="nameLink">
@@ -413,6 +413,7 @@ export default {
             return this.$store.getters["devicePattern/getActiveSP"];
         },
         getStateSliderSize() {
+          console.log('getStateSliderSize')
             return this.$store.getters["slider/getValue"];
         },
         getStateSliderStep() {
@@ -587,6 +588,10 @@ export default {
                     return { maxWidth: maxWidthSp };
             };
         },
+        getInfoStyle() {
+          console.log('getInfoStyle')
+          return this.infoStyle
+        }
     },
     created() {
         console.log("selectedTag");
@@ -1126,8 +1131,9 @@ export default {
         contentSizeChange(value) {
             if (this.$store.getters["loaded/getLoaded"]) {
                 if (value === 0 || value === undefined) {
+                  console.log('contentSizeChange')
                     // コンテンツ自動調整
-                    this.calculateAutoSizing();
+                    /* this.calculateAutoSizing(); */
                     this.createDummyContent();
                 }
             }
@@ -1463,7 +1469,6 @@ export default {
         getLocalStorage() {
             // 初回読み込み時にローカルストレージのデータをstoreに取り込み
             // ブックマーク
-            console.log("初回読み込み時のローカルストレージアクセス");
             const bookmarkJson = localStorage.getItem("bookmark");
             const bookmark = JSON.parse(bookmarkJson);
             if (bookmark !== null) {
