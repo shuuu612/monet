@@ -2128,7 +2128,7 @@ export default {
 .info {
   position: relative;
   margin: 0 auto;
-  max-width: 100%;
+  max-width: 91vw;
   margin-top: 10px;
 }
 
