@@ -43,10 +43,14 @@
                 </button>
                 <div class="modalContent" @click.stop>
                   <div class="modalImageWrapper">
-                    <img id="modalImage" class="modalImage" :src="`${content.imagePC.url}?w=1200`" :alt="`${content.name}`" loading="lazy" @load="modalInfoSizing">
+                    <a :href="`${content.url}`" target="_blank" rel="noopener noreferrer" class="modalImages">
+                      <img id="modalImage" class="modalImage" :src="`${content.imagePC.url}?w=1200`" :alt="`${content.name}`" loading="lazy" @load="modalInfoSizing">
+                    </a>
                   </div>
                   <div class="modalInfoWrapper" :style="modalInfoStyle">
-                    <div class="modalName">{{content.name}}</div>
+                    <div class="modalName">
+                      <a :href="`${content.url}`" target="_blank" rel="noopener noreferrer" class="nameLink">{{content.name}}</a>
+                    </div>
                     <div class="modalTimes">
                       <div class="modalTime">
                         <img class="modalTimeImage" src="/images/published.svg" alt="published">
@@ -2106,6 +2110,14 @@ export default {
     
   }
 }
+/* .modalImages {
+  display: block;
+  height: 100%;
+  width: 100%;
+  max-width: 1200px;
+  max-height: 100%;
+  object-fit: contain;
+} */
 
 .modalImage {
   height: 100%;
@@ -2134,13 +2146,13 @@ export default {
   }
   @include responsive(lg) {
     width: 40%;
-    margin-top: 0;
+    margin-top: -3px;
     border-radius: 0 5px 5px 0;
     max-height: 100%;
     min-width: 350px;
   }
   @include responsive(xl) {
-    
+    margin-top: -4px;
   }
   @include responsive(xxl) {
     
@@ -2150,6 +2162,9 @@ export default {
   margin-top: 5px;
   font-weight: 500;
   font-size: var(--font-size-md);
+  background: linear-gradient(to right, #005c97, #363795);
+  background-clip: text;
+  display: inline-block;
 }
 .modalTimes {
   display: flex;
