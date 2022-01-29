@@ -1788,6 +1788,7 @@ export default {
   color: var(--main-text);
   /* padding: 20px 10px 150px 10px; */
   transition: transform .2s;
+  padding: 0px 0px 150px 0px;
   .sideMenuOpen & {
     transform: translateX(calc(0.5 * var(--sideMenuWidth)));
   }
@@ -2435,6 +2436,7 @@ export default {
 
 .moreButton {
   width: 330px;
+  max-width: 90%;
   height: 50px;
   background-color: var(--main-more-button-background);
   background: linear-gradient(to right, #005c97, #363795);
