@@ -36,14 +36,14 @@
                   <img v-if="getSpHide" class="image" :src="`${content.imageSP.url}?h=${Math.round(800*getStateSliderSize)}`" :alt="`${content.name}`" :class="getMargin('sp')" :style="getMaxWidth('sp')" loading="lazy" @load="contentSizeChange(index)">
                 </a>
               </div>
-              <div class="modal" :class="getActiveModal(content.id)" @click="closeModal">
+              <div v-if="getActiveModal(content.id)" class="modal" @click="closeModal">
+                <button class="modalButton" @click="closeModal">
+                  <span class="modalBar"></span>
+                  <span class="modalBar"></span>
+                </button>
                 <div class="modalContent" @click.stop>
-                  <div class="modalButton button" @click="closeModal">
-                    <span class="modalBar"></span>
-                    <span class="modalBar"></span>
-                  </div>
                   <div class="modalImageWrapper">
-                    <img class="modalImage" :src="`${content.imagePC.url}?w=1200`" :alt="`${content.name}`" loading="lazy">
+                    <img id="modalImage" class="modalImage" :src="`${content.imagePC.url}?w=1200`" :alt="`${content.name}`" loading="lazy" @load="modalInfoSizing">
                   </div>
                   <div class="modalInfoWrapper" :style="modalInfoStyle">
                     <div class="modalName">{{content.name}}</div>
@@ -384,6 +384,7 @@ export default {
                 technology: [],
             },
             darkmode: "",
+            modalOpenElement: {},
         };
     },
     head() {
@@ -522,9 +523,14 @@ export default {
                 return "";
             }
         },
-        getActiveModal() {
+        /* getActiveModal() {
             return function (id) {
                 return { activeModal: this.activeModal.includes(id) };
+            };
+        }, */
+        getActiveModal() {
+            return function (id) {
+                return this.activeModal.includes(id)
             };
         },
         getLoadingDisplayed() {
@@ -1127,6 +1133,7 @@ export default {
         resizeProcess() {
             this.setWindowSize();
             this.setAutoSizing();
+            this.modalInfoSizing();
         },
         contentSizeChange(value) {
             if (this.$store.getters["loaded/getLoaded"]) {
@@ -1507,13 +1514,14 @@ export default {
         },
         openModal(id) {
             this.activeModal.push(id);
-            this.modalInfoSizing();
+            /* this.modalInfoSizing(); */
             this.$store.dispatch("modal/pushOpen");
             backfaceFixed(true);
         },
         closeModal() {
             this.activeModal.length = 0;
             this.activeModal.splice();
+            this.modalOpenElement = {};
             this.$store.dispatch("modal/pushOpen");
             backfaceFixed(false);
         },
@@ -1622,14 +1630,28 @@ export default {
             this.$store.dispatch("windowSize/pushWindowWidth", width);
         },
         modalInfoSizing() {
-            if (this.activeModal.length === 0)
-                return;
-            const modalImageAll = [...document.getElementsByClassName("modalImage")];
-            const modalImage = modalImageAll.find(item => item.clientHeight > 0);
-            if (modalImage === undefined || modalImage.length > 1)
-                return;
-            const height = modalImage.clientHeight;
-            this.modalInfoStyle.height = `${height}px`;
+            // モーダルが開いていない時は処理終了
+            if (this.activeModal.length === 0)  return;
+
+            // 初回だけ要素取得
+            if(Object.keys(this.modalOpenElement).length === 0) {
+              const modalImage = document.getElementById("modalImage")
+              this.modalOpenElement = modalImage;
+              console.log(modalImage)
+            }
+            const windowWidth = this.$store.getters["windowSize/getWindowWidth"]; // ウィンドウサイズ
+            console.log('1')
+            if(windowWidth >= 992) {
+              console.log('2')
+              const style = getComputedStyle(this.modalOpenElement, '');
+              const height = style.height;
+              console.log(height)
+              this.modalInfoStyle.height = height;
+            }else {
+              console.log('3')
+              this.modalInfoStyle.height = ""
+            }
+            
         },
         update() {
             this.setSearchTags();
@@ -1972,34 +1994,33 @@ export default {
   width: 100vw;
   height: 100vh;
   background-color: var(--main-modal-outer-background);
-  z-index: 100;
-  display: none;
-  clip-path:inset(50% 50% 50% 50%);
+  z-index: 120;
   position: fixed;
   top: 0;
   right: 0;
-  transition: clip-path 0.2s;
-  padding: 100px 120px;
-}
-
-.modalContent {
-  /* width: 500px;
-  max-height: 70vh; */
-  /* width: 100%;
-  height: 100%; */
-  background-color: var(--main-modal-inner-background);
-  position: relative;
-  /* padding: 40px; */
-  overflow-y: auto;
+  padding: 50px;
   display: flex;
-  /* align-items: center; */
+  align-items: center;
   justify-content: center;
-  max-width: 1678px;
-  /* border-radius: 0 5px 5px 0; */
+  @include responsive(xs) {
+    
+  }
+  @include responsive(sm) {
+    
+  }
+  @include responsive(md) {
+    
+  }
+  @include responsive(lg) {
+    padding: 100px;
+  }
+  @include responsive(xl) {
+    
+  }
+  @include responsive(xxl) {
+    
+  }
 }
-/* .modalContent::-webkit-scrollbar {
-  display:none;
-} */
 
 .modalButton {
   position: fixed;
@@ -2030,28 +2051,100 @@ export default {
   }
 }
 
-.modalImageWrapper {
+.modalContent {
+  background-color: var(--main-modal-inner-background);
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 100%;
+  flex-direction: column;
+  @include responsive(xs) {
+    
+  }
+  @include responsive(sm) {
+    
+  }
+  @include responsive(md) {
+    
+  }
+  @include responsive(lg) {
+    flex-direction: row;
+    max-width: 1600px;
+  }
+  @include responsive(xl) {
+    
+  }
+  @include responsive(xxl) {
+    
+  }
+
+}
+
+.modalImageWrapper {
+  @include responsive(xs) {
+    
+  }
+  @include responsive(sm) {
+    
+  }
+  @include responsive(md) {
+    
+  }
+  @include responsive(lg) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  @include responsive(xl) {
+    
+  }
+  @include responsive(xxl) {
+    
+  }
 }
 
 .modalImage {
   height: 100%;
   width: 100%;
   max-width: 1200px;
+  max-height: 100%;
   object-fit: contain;
 }
 
 .modalInfoWrapper {
-  width: 40%;
-  overflow-y: auto;
-  padding: 10px;
-  border-radius: 0 5px 5px 0;
   background-color: var(--main-modal-info-background);
   overflow-x: hidden;
+  overflow-y: auto;
+  /* height: 40%; */
+  padding: 10px;
+  border-radius: 0 0 5px 5px;
+  margin-top: -2px;
+  @include responsive(xs) {
+    
+  }
+  @include responsive(sm) {
+    
+  }
+  @include responsive(md) {
+    
+  }
+  @include responsive(lg) {
+    width: 40%;
+    margin-top: 0;
+    border-radius: 0 5px 5px 0;
+    max-height: 100%;
+    min-width: 350px;
+  }
+  @include responsive(xl) {
+    
+  }
+  @include responsive(xxl) {
+    
+  }
 }
 .modalName {
   margin-top: 5px;
