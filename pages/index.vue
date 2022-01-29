@@ -28,12 +28,12 @@
           />
           <div v-if="getNoContentComment.length > 0" class="noContent" style="white-space: pre-wrap;" v-text="getNoContentComment"></div>
           <div id="contents" class="contents">
-            <div v-for="(content, index) in getDisplayingContent" :key="content.id" class="content" :class="getStateSliderStep">
+            <div v-for="content in getDisplayingContent" :key="content.id" class="content" :class="getStateSliderStep">
               <div class="contentImage" :style="infoStyle">
                 <a :href="`${content.url}`" target="_blank" rel="noopener noreferrer" class="images">
-                  <img v-if="getPcHide" class="image" :src="`${content.imagePC.url}?h=${Math.round(800*getStateSliderSize)}`" :alt="`${content.name}`" :class="getMargin('pc')" :style="getMaxWidth('pc')" loading="lazy" @load="contentSizeChange(index)">
-                  <img v-if="getTbHide" class="image" :src="`${content.imageTB.url}?h=${Math.round(800*getStateSliderSize)}`" :alt="`${content.name}`" :class="getMargin('tb')" :style="getMaxWidth('tb')" loading="lazy" @load="contentSizeChange(index)">
-                  <img v-if="getSpHide" class="image" :src="`${content.imageSP.url}?h=${Math.round(800*getStateSliderSize)}`" :alt="`${content.name}`" :class="getMargin('sp')" :style="getMaxWidth('sp')" loading="lazy" @load="contentSizeChange(index)">
+                  <img v-if="getPcHide" class="image" :src="`${content.imagePC.url}?h=${Math.round(800*getStateSliderSize)}`" :alt="`${content.name}`" :class="getMargin('pc')" :style="getMaxWidth('pc')" loading="lazy">
+                  <img v-if="getTbHide" class="image" :src="`${content.imageTB.url}?h=${Math.round(800*getStateSliderSize)}`" :alt="`${content.name}`" :class="getMargin('tb')" :style="getMaxWidth('tb')" loading="lazy">
+                  <img v-if="getSpHide" class="image" :src="`${content.imageSP.url}?h=${Math.round(800*getStateSliderSize)}`" :alt="`${content.name}`" :class="getMargin('sp')" :style="getMaxWidth('sp')" loading="lazy">
                 </a>
               </div>
               <div v-if="getActiveModal(content.id)" class="modal" @click="closeModal">
@@ -158,7 +158,7 @@
             <div v-for="item in getDummyContent" :key="item" class="dummy" :style="dummyStyle"></div>
           </div>
         </div>
-        <div class="moreButton button" :class="getNextContent" @click="setDisplayingContent">
+        <div class="moreButton button" :class="getNextContent" @click="clickMore">
           もっと見る（残り{{remainingContent}}サイト）
         </div>
       </div>
@@ -389,6 +389,9 @@ export default {
             },
             darkmode: "",
             modalOpenElement: {},
+            contentsElement: {},
+            totalWidth: 0,
+            columnContent: 0,
         };
     },
     head() {
@@ -627,6 +630,12 @@ export default {
         // コンテンツ表示処理
         this.setSearchTags();
         this.setDisplayingContent();
+        // ページ遷移時の処理
+        if(this.$store.getters["loaded/getLoaded"]) {
+          console.log('ページ遷移の時だけ')
+          this.setContentsElement();
+          this.createDummyContent();
+        }
         // 読み込み完了を監視
         window.addEventListener("load", this.loadProcess);
         // ブラウザサイズの変更を監視
@@ -662,6 +671,10 @@ export default {
         this.$store.watch(() => this.$store.getters["devicePattern/getStatePatternNumber"], () => {
             this.createDummyContent();
             this.calculateAutoSizing();
+        });
+        // サイズの変更を監視（imageのloadイベントでは非表示を検知できないため）
+        this.$store.watch(() => this.$store.getters["slider/getValue"], () => {
+            this.createDummyContent();
         });
         window.matchMedia("(min-width:375px)").addEventListener("change", this.calculateAutoSizing);
         window.matchMedia("(min-width:500px)").addEventListener("change", this.calculateAutoSizing);
@@ -718,12 +731,24 @@ export default {
         window.matchMedia("(min-width:2200px)").removeEventListener("change", this.calculateAutoSizing);
     },
     methods: {
+        setContentsElement() {
+          const contents = document.getElementById("contents");
+          this.contentsElement = contents
+        },
+        wrapChack() {
+            // コンテンツの折り返しをチェック
+            const columnContent = Math.floor(this.contentsElement.clientWidth / this.totalWidth); // １カラム内のコンテンツ数
+            if(this.columnContent !== columnContent) {
+              this.createDummyContent();
+            }
+        },
+        clickMore() {
+            this.setDisplayingContent();
+            this.createDummyContent();
+        },
         createDummyContent() {
             console.log("createDummyContentを実行");
             // 実行タイミング：デバイスの変更、コンテンツサイズの変更
-            /* const contents = document.getElementById("contents"); */
-            /* const viewWidth = contents.clientWidth; // 表示領域全体の幅 */
-
             // コンテンツの幅を計算
             const devicePattern = this.$store.getters["devicePattern/getStatePatternNumber"]; // 現在のデバイスパターン
             const value = this.$store.getters["slider/getValue"];
@@ -765,17 +790,22 @@ export default {
             const marginLeft = marginLeftRight[sliderStep];
             const marginRight = marginLeftRight[sliderStep];
 
-            /* const totalWidth = width + marginRight + marginLeft; // コンテンツ１つ辺りの幅（マージン含む）
+            const viewWidth = this.contentsElement.clientWidth; // 表示領域全体の幅
+            const totalWidth = width + marginRight + marginLeft; // コンテンツ１つ辺りの幅（マージン含む）
             const columnContent = Math.floor(viewWidth / totalWidth); // １カラム内のコンテンツ数
-            const contentQuantity = this.displayingContent.length; // １ページ内のコンテンツ数 */
+            const contentQuantity = this.displayingContent.length; // １ページ内のコンテンツ数
+
+            // wrapChack用に退避
+            this.totalWidth = totalWidth
+            this.columnContent = columnContent
             // ダミーコンテンツ作成
-            /* this.dummy.length = 0;
+            this.dummy.length = 0;
             if (contentQuantity % columnContent !== 0 && contentQuantity > columnContent) {
                 for (let i = 0; i < columnContent - (contentQuantity % columnContent); i++) {
                     this.$set(this.dummy, i, i);
                 }
             }
-            this.dummy.splice(); */
+            this.dummy.splice();
             // ダミーコンテンツのスタイル設定
             this.dummyStyle.width = `${width}px`;
             this.dummyStyle.height = `0px`;
@@ -1125,30 +1155,37 @@ export default {
         },
         loadProcess() {
             console.log("loadProcessを起動");
-            // ロード済みフラグの設定（ResizeObserver用）
+            // ロード済みフラグの設定
             this.$store.dispatch("loaded/pushLoaded");
+            // ウィンドウサイズを取得
+            this.setWindowSize();
+            // コンテンツ要素を取得
+            this.setContentsElement();
+            // 自動サイズ調整処理
+            this.calculateAutoSizing();
             // ダミーコンテンツの作成
             this.createDummyContent();
             // モーダルの大きさを設定
             /* this.modalSizing(); */
-            this.setWindowSize();
-            this.calculateAutoSizing();
+            
+            
+            
         },
         resizeProcess() {
             this.setWindowSize();
             this.setAutoSizing();
             this.modalInfoSizing();
+            this.wrapChack();
         },
-        contentSizeChange(value) {
+        /* contentSizeChange(value) {
             if (this.$store.getters["loaded/getLoaded"]) {
                 if (value === 0 || value === undefined) {
                   console.log('contentSizeChange')
                     // コンテンツ自動調整
-                    /* this.calculateAutoSizing(); */
                     this.createDummyContent();
                 }
             }
-        },
+        }, */
         setResizeObserver() {
             const elementAll = document.getElementsByClassName("content");
             const element = elementAll[0];
