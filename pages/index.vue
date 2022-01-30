@@ -15,7 +15,6 @@
     :tag="tag"
     :selectedtag="analyzedSelectedTag"
     />
-    <!-- <Search /> -->
     <ScrollTop />
     <Notice />
     <div id="divider" class="divider">
@@ -628,7 +627,7 @@ export default {
             console.log("ブラウザのローカルストレージがオフになっています。");
         }
         // コンテンツ表示処理
-        this.setSearchTags();
+        this.searchByTags();
         this.setDisplayingContent();
         // ページ遷移時の処理
         if(this.$store.getters["loaded/getLoaded"]) {
@@ -640,19 +639,17 @@ export default {
         window.addEventListener("load", this.loadProcess);
         // ブラウザサイズの変更を監視
         window.addEventListener("resize", this.resizeProcess);
-        // コンテンツのサイズ変更を監視
-        /* this.setResizeObserver(); */
         // スクロールを監視
-        window.addEventListener("scroll", this.scrolledWindow);
+        window.addEventListener("scroll", this.setWindowScroll);
         // ローディング画面を終了させる
         window.setTimeout(this.setLoaded, 1500);
         // 検索キーワードの入力を監視
         this.$store.watch(() => this.$store.getters["search/getKeyword"], (value) => {
-            this.setSearchKeyword(value);
+            this.searchByKeyword(value);
         });
         // 複数選択タブのタグ選択を監視
         this.$store.watch(() => this.$store.getters["multipleSelect/getContents"], (value) => {
-            this.setSearchTags(value);
+            this.searchByTags(value);
         }, { deep: true });
         // 複数選択タブの決定キー押下を監視
         this.$store.watch(() => this.$store.getters["multipleSelect/getStart"], (value) => {
@@ -667,12 +664,12 @@ export default {
                 this.calculateAutoSizing();
             }
         });
-        // デバイス切り替えを監視（imageのloadイベントでは非表示を検知できないため）
+        // デバイス切り替えを監視
         this.$store.watch(() => this.$store.getters["devicePattern/getStatePatternNumber"], () => {
             this.createDummyContent();
             this.calculateAutoSizing();
         });
-        // サイズの変更を監視（imageのloadイベントでは非表示を検知できないため）
+        // サイズの変更を監視
         this.$store.watch(() => this.$store.getters["slider/getValue"], () => {
             this.createDummyContent();
         });
@@ -697,20 +694,12 @@ export default {
     },
     updated() {
         console.log("updated");
-        // 「もっと見る」で表示件数を増やした時にダミーコンテンツを更新するタイミングがupdata以外にない
-        /* if (!this.updatedFlg) {
-            this.$nextTick(() => {
-                this.resizeProcess();
-            });
-        }
-        this.updatedFlg = !this.updatedFlg; */
     },
     beforeDestroy() {
         console.log("beforeDestroy");
         window.removeEventListener("load", this.loadProcess);
         window.removeEventListener("resize", this.resizeProcess);
-        window.removeEventListener("scroll", this.scrolledWindow);
-        /* this.observer.disconnect(); */
+        window.removeEventListener("scroll", this.setWindowScroll);
         window.matchMedia("(min-width:375px)").removeEventListener("change", this.calculateAutoSizing);
         window.matchMedia("(min-width:500px)").removeEventListener("change", this.calculateAutoSizing);
         window.matchMedia("(min-width:576px)").removeEventListener("change", this.calculateAutoSizing);
@@ -1154,7 +1143,6 @@ export default {
             this.$store.dispatch("slider/pushAptitudeValue", value);
         },
         loadProcess() {
-            console.log("loadProcessを起動");
             // ロード済みフラグの設定
             this.$store.dispatch("loaded/pushLoaded");
             // ウィンドウサイズを取得
@@ -1165,49 +1153,22 @@ export default {
             this.calculateAutoSizing();
             // ダミーコンテンツの作成
             this.createDummyContent();
-            // モーダルの大きさを設定
-            /* this.modalSizing(); */
-            
-            
-            
         },
         resizeProcess() {
             this.setWindowSize();
-            this.setAutoSizing();
+            this.monitorReturnToAuto();
             this.modalInfoSizing();
             this.wrapChack();
         },
-        /* contentSizeChange(value) {
-            if (this.$store.getters["loaded/getLoaded"]) {
-                if (value === 0 || value === undefined) {
-                  console.log('contentSizeChange')
-                    // コンテンツ自動調整
-                    this.createDummyContent();
-                }
-            }
-        }, */
-        setResizeObserver() {
-            const elementAll = document.getElementsByClassName("content");
-            const element = elementAll[0];
-            this.observer = new ResizeObserver(() => {
-                console.log("ResizeObserverを起動前");
-                if (this.$store.getters["loaded/getLoaded"]) {
-                    console.log("ResizeObserverを起動");
-                    this.resizeProcess();
-                }
-            });
-            if (element) {
-                this.observer.observe(element);
-            }
-        },
         setBookmark(id) {
             if (!window.localStorage) {
-                alert("ブラウザのローカルストレージ設定がオフになっています。"); // 変更要
+                alert("ブラウザのローカルストレージがOFFになっています。\nお気に入り機能を使用するため、ブラウザの設定でローカルストレージをONにしてください。");
+                return;
             }
             this.$store.dispatch("bookmark/pushBookmark", id);
         },
-        setSearchTags(multipleContent) {
-            console.log("setSearchTagsを起動");
+        searchByTags(multipleContent) {
+            console.log("searchByTagsを起動");
             if (this.selectedTag === undefined && multipleContent === undefined) {
                 this.searchTags = this.contents;
                 return;
@@ -1405,9 +1366,7 @@ export default {
                             match = true;
                         }
                     }
-                    else {
-                        console.log("AND/OR条件が設定されていません");
-                    }
+                    
                     if (match) {
                         return true;
                     }
@@ -1555,7 +1514,6 @@ export default {
         },
         openModal(id) {
             this.activeModal.push(id);
-            /* this.modalInfoSizing(); */
             this.$store.dispatch("modal/pushOpen");
             backfaceFixed(true);
         },
@@ -1566,16 +1524,10 @@ export default {
             this.$store.dispatch("modal/pushOpen");
             backfaceFixed(false);
         },
-        /* modalSizing() {
-            // 表示領域（サイドバーを除く）を算出
-            const divider = document.getElementById("divider");
-            const width = divider.clientWidth;
-            this.modalStyle.width = `${width}px`;
-        }, */
         setLoaded() {
             this.$store.dispatch("loaded/pushLoadingDisplayed");
         },
-        setSearchKeyword(key) {
+        searchByKeyword(key) {
             // キーワードを一度入力してから削除したとき
             if (key.length === 0) {
                 this.setDisplayingContent();
@@ -1662,7 +1614,7 @@ export default {
             this.setDisplayingContent("keyword");
             this.activeSearch = true;
         },
-        scrolledWindow() {
+        setWindowScroll() {
             const scroll = window.pageYOffset;
             this.$store.dispatch("scroll/pushWindowScroll", scroll);
         },
@@ -1678,29 +1630,24 @@ export default {
             if(Object.keys(this.modalOpenElement).length === 0) {
               const modalImage = document.getElementById("modalImage")
               this.modalOpenElement = modalImage;
-              console.log(modalImage)
             }
             const windowWidth = this.$store.getters["windowSize/getWindowWidth"]; // ウィンドウサイズ
-            console.log('1')
             if(windowWidth >= 992) {
-              console.log('2')
               const style = getComputedStyle(this.modalOpenElement, '');
               const height = style.height;
-              console.log(height)
               this.modalInfoStyle.height = height;
             }else {
-              console.log('3')
               this.modalInfoStyle.height = ""
             }
             
         },
         update() {
-            this.setSearchTags();
+            this.searchByTags();
             this.displayingPageTags = this.displayingPageTags - 1;
             this.setDisplayingContent();
         },
-        setAutoSizing() {
-            // コンテンツサイズを手動で変更している時に、ウィンドウサイズが変更されたら、手動から自動に切り替える
+        monitorReturnToAuto() {
+            // コンテンツサイズが手動設定のときに、ウィンドウサイズが変更されたら、手動から自動に切り替える
             if (!this.$store.getters["slider/getAutoSizing"]) {
                 this.$store.dispatch("slider/pushAutoSizing");
                 // 自動調整オンの通知
@@ -1719,9 +1666,6 @@ export default {
 }
 .wrapper {
   overflow-x: hidden;
-  &.sideMenuOpen {
-  
-  }
 
   @include responsive(xs) {
     
@@ -1823,15 +1767,13 @@ export default {
 .divider {
   position: relative;
   color: var(--main-text);
-  /* padding: 20px 10px 150px 10px; */
   transition: transform .2s;
   padding: 0px 0px 150px 0px;
   .sideMenuOpen & {
     transform: translateX(calc(0.5 * var(--sideMenuWidth)));
   }
-  /* overflow-y: hidden; */
   @include responsive(xs) {
-    /* padding: 20px 20px 150px 20px; */
+
   }
   @include responsive(sm) {
     padding: 0px 0px 150px 0px;
@@ -1849,7 +1791,6 @@ export default {
     
   }
 }
-
 
 .container {
   margin: 0 auto;
@@ -1872,8 +1813,6 @@ export default {
 .selectedTagTitle {
   font-size: var(--font-size-3xl);
   font-weight: 400;
-  /* margin-left: 80px;
-  margin-bottom: 30px; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1910,15 +1849,6 @@ export default {
   }
 }
 
-/* .contentsWrapper {
-  margin-top: 50px;
-} */
-
-.contentsWrapper {
-  /* display: flex;
-  align-items: center;
-  justify-content: center; */
-}
 .contents {
   
   width: 100%;
@@ -2020,15 +1950,6 @@ export default {
     
   }
 }
-/* .imagePc {
-  max-width: calc(46.88507% * 0.97);
-}
-.imageTb {
-  max-width: calc(32.223416% * 0.97);
-}
-.imageSp {
-  max-width: calc(19.817401% * 0.97);
-} */
 .marginRight {
   margin-right: 10px;
 }
@@ -2077,7 +1998,6 @@ export default {
   width: 25px;
   height: 2px;
   position: absolute;
-  /* transition: background-color .2s; */
   &:nth-child(1) {
     top: 14px;
     left: 2px;
@@ -2148,14 +2068,6 @@ export default {
     
   }
 }
-/* .modalImages {
-  display: block;
-  height: 100%;
-  width: 100%;
-  max-width: 1200px;
-  max-height: 100%;
-  object-fit: contain;
-} */
 
 .modalImage {
   height: 100%;
@@ -2169,7 +2081,6 @@ export default {
   background-color: var(--main-modal-info-background);
   overflow-x: hidden;
   overflow-y: auto;
-  /* height: 40%; */
   padding: 10px;
   border-radius: 0 0 5px 5px;
   margin-top: -2px;
@@ -2241,19 +2152,11 @@ export default {
 .modalTagContents {
   display: flex;
   align-items: center;
-  /* justify-content: center; */
-  /* justify-content: space-between; */
   justify-content: left;
   flex-wrap: wrap;
 }
 .modalTagContent {
-  /* border: 1px var(--black) solid;
-  padding: 5px 8px;
-  border-radius: 15px; */
   margin: 1px;
-  /* &:not(:last-child) {
-    flex-grow: 1;
-  } */
 }
 .modalTagLink {
   display: flex;
@@ -2261,9 +2164,7 @@ export default {
   justify-content: center;
   text-decoration: none;
   color: var(--main-modal-tag-text);
-  /* border: 1px var(--main-modal-tag-border) solid; */
   padding: 3px;
-  /* border-radius: 15px; */
 }
 .modalTagName {
   margin-left: 5px;
@@ -2289,7 +2190,6 @@ export default {
 }
 
 .name {
-  /* margin-top: 10px; */
   font-weight: 700;
   font-size: var(--font-size-md);
   background: linear-gradient(to right, #005c97, #363795);
@@ -2309,12 +2209,7 @@ export default {
 
 .nameLink {
   text-decoration: none;
-  /* color: var(--main-content-name-text); */
   color: transparent;
-  /* display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden; */
 }
 
 .infoButton {
@@ -2427,7 +2322,6 @@ export default {
     width: 60px;
   }
 }
-
 
 
 // 注意：createDummyContent関数内で以下のmarginの値をハードコーディングで使用しているため、

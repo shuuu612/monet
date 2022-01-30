@@ -586,7 +586,8 @@ export default {
     setFavoriteTags(id) {
       console.log('setFavoriteTags')
       if(!window.localStorage) {
-        alert('ブラウザのローカルストレージ設定がオフになっています。')   // 変更要
+        alert("ブラウザのローカルストレージがOFFになっています。\nお気に入り機能を使用するため、ブラウザの設定でローカルストレージをONにしてください。");
+        return;
       }
       this.$store.dispatch('favoriteTags/pushFavoriteTags',id)
     },
