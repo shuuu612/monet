@@ -2,7 +2,7 @@
   <div class="orderOuter">
     <div id="pulldown" class="pulldown">
       <div class="button" @click="openList">
-        <svg class="image" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 456.33 425.69" stroke="#231815">
+        <!-- <svg class="image" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 456.33 425.69" stroke="#231815">
           <line y1="70.95" x2="122.73" y2="70.95" style="fill:none;stroke-miterlimit:10;stroke-width:43px"/>
           <line x1="110.35" x2="110.35" y2="141.9" style="fill:none;stroke-miterlimit:10;stroke-width:43px"/>
           <line x1="194.91" y1="141.9" x2="194.91" y2="283.79" style="fill:none;stroke-miterlimit:10;stroke-width:43px"/>
@@ -12,6 +12,14 @@
           <line x1="345.23" y1="354.74" x2="456.33" y2="354.74" style="fill:none;stroke-miterlimit:10;stroke-width:43px"/>
           <line x1="176.46" y1="70.95" x2="456.33" y2="70.95" style="fill:none;stroke-miterlimit:10;stroke-width:43px"/>
           <line y1="354.74" x2="260.2" y2="354.74" style="fill:none;stroke-miterlimit:10;stroke-width:43px"/>
+        </svg> -->
+        <svg class="image" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 456.33 425.69" fill="#231815">
+          <polygon points="88.85 141.9 131.85 141.9 131.85 0 88.85 0 88.85 49.45 0 49.45 0 92.45 88.85 92.45 88.85 141.9"/>
+          <polygon points="173.41 283.79 216.41 283.79 216.41 141.9 173.41 141.9 173.41 191.34 0 191.34 0 234.34 173.41 234.34 173.41 283.79"/>
+          <polygon points="257.97 333.24 0 333.24 0 376.24 257.97 376.24 257.97 425.69 300.97 425.69 300.97 283.79 257.97 283.79 257.97 333.24"/>
+          <rect x="260.2" y="191.34" width="196.13" height="43"/>
+          <rect x="345.23" y="333.24" width="111.1" height="43"/>
+          <rect x="176.46" y="49.45" width="279.86" height="43"/>
         </svg>
         <div class="title">並べ替え</div>
       </div>
@@ -119,7 +127,7 @@ export default {
   width: 16px;
   margin-right: 8px;
   margin-top: 2px;
-  stroke: var(--order-icon);
+  fill: var(--order-icon);
 }
 
 .title {

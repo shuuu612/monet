@@ -2,12 +2,8 @@
   <div v-if="getDesktop">
     <button class="scrollTop" :class="getHide" @click="$moveTop">
       <div class="scrollTopText">Top</div>
-      <!-- <img class="scrollTopImage" src="/images/scroll-top.svg" alt=""> -->
-      <svg class="scrollTopImage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 514.48 411.87" stroke="#000000" fill="#000000">
-        <path d="M342.06,45a127.42,127.42,0,1,1,0,254.83" style="fill:none;stroke-miterlimit:10;stroke-width:90px"/>
-        <line x1="342.06" y1="45" x2="36.04" y2="45" style="fill:none;stroke-miterlimit:10;stroke-width:90px"/>
-        <line x1="342.06" y1="299.83" x2="182.18" y2="299.83" style="fill:none;stroke-miterlimit:10;stroke-width:90px"/>
-        <polygon points="10 299.83 189.05 196.46 189.05 403.21 10 299.83" style="stroke-miterlimit:10;stroke-width:10px"/>
+      <svg class="scrollTopImage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 514.48 411.87" fill="#000000">
+        <path d="M342.06,0H36V90h306a82.42,82.42,0,1,1,0,164.83h-148v-67L0,299.83l194.05,112v-67h148c95.07,0,172.42-77.34,172.42-172.41S437.13,0,342.06,0Z"/>
       </svg>
     </button>
   </div>
@@ -75,7 +71,6 @@ export default {
 .scrollTopImage {
   width: 40%;
   fill: var(--scrolltop-icon-fill);
-  stroke: var(--scrolltop-icon-stroke);
 }
 
 </style>
