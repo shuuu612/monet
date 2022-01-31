@@ -330,7 +330,7 @@ export default {
     },
     data() {
         return {
-            dummy: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+            dummy: [],
             dummyStyle: {},
             observer: undefined,
             availableSizes: undefined,
@@ -385,19 +385,40 @@ export default {
                 pickup: [],
                 technique: [],
                 technology: [],
+                bookmark: false,
+                condition: "",
             },
+            japaneseTags: [],
             darkmode: "",
             modalOpenElement: {},
             contentsElement: {},
             totalWidth: 0,
             columnContent: 0,
+            meta: {
+              title: 'SUUGO | Webデザインギャラリー',
+              keyword: 'デザイン,Webデザイン,Web design,参考,Webデザインギャラリー,ギャラリー,Webサイト',
+              description: 'SUUGOはWeb制作の参考になるWebサイトを集めたギャラリー･リンク集です。日本国内の優れたWebデザインを厳選してご紹介しています。Webデザインの参考んぜひご活用ください。',
+              type: 'website',
+              url: 'https://suugo.jp/',
+              image: 'https://hogehoge.com/images/logo.png',
+            },
         };
     },
     head() {
         return {
             htmlAttrs: {
                 class: this.darkmode
-            }
+            },
+            title: this.meta.title,
+            meta: [
+              { hid: 'description', name: 'description', content: this.meta.description },
+              { hid: 'keyword', name: 'keyword', content: this.meta.keyword },
+              { hid: 'og:type', property: 'og:type', content: this.meta.type },
+              { hid: 'og:title', property: 'og:title', content: this.meta.title },
+              { hid: 'og:description', property: 'og:description', content: this.meta.description },
+              { hid: 'og:url', property: 'og:url', content: this.meta.url },
+              { hid: 'og:image', property: 'og:image', content: this.meta.image },
+            ],
         };
     },
     computed: {
@@ -606,9 +627,11 @@ export default {
         }
     },
     created() {
-        console.log("selectedTag");
+        console.log("created");
+        this.setHead();
     },
     mounted() {
+        console.log("mounted");
         // ダークモードの変更を監視
         this.$store.watch(() => this.$store.getters["darkmode/getActive"], (value) => {
             if (value) {
@@ -618,7 +641,6 @@ export default {
                 this.darkmode = "";
             }
         });
-        console.log("mounted");
         // ローカルストレージの取得
         if (window.localStorage) {
             this.getLocalStorage();
@@ -720,6 +742,19 @@ export default {
         window.matchMedia("(min-width:2200px)").removeEventListener("change", this.calculateAutoSizing);
     },
     methods: {
+        setHead() {
+          // トップページ
+          if(this.selectedTag === undefined) {
+            // ベース設定のまま
+          }else {
+            this.analyzedUrl();
+            // tagIDを日本語に変換
+            const japaneseTag = this.convertTagsToJapanese(this.analyzedSelectedTag)
+            this.japaneseTags = japaneseTag
+            this.meta.title = japaneseTag[0] + ' | ' + this.meta.title;
+            this.meta.keyword = japaneseTag[0] + ',' + this.meta.keyword
+          }
+        },
         setContentsElement() {
           const contents = document.getElementById("contents");
           this.contentsElement = contents
@@ -1167,6 +1202,136 @@ export default {
             }
             this.$store.dispatch("bookmark/pushBookmark", id);
         },
+        analyzedUrl() {
+          let type = [];
+          let industry = [];
+          let impression = [];
+          let layout = [];
+          let color = [];
+          let pickup = [];
+          let technique = [];
+          let technology = [];
+          let condition = "";
+          let bookmark = false;
+          // URLを解析
+          const tagTypes = this.selectedTag.split("*");
+          // tagTypes = ['type=ecsite_portfolio','industry=design']
+          tagTypes.forEach(function (item) {
+              const temp = item.split("=");
+              // temp = ['type','ecsite*portfolio']
+              if (temp[0] === "type") {
+                  const typeTemp = temp[1];
+                  type = typeTemp.split("%");
+                  // type = 'ecsite*portfolio'
+              }
+              else if (temp[0] === "industry") {
+                  const industryTemp = temp[1];
+                  industry = industryTemp.split("%");
+              }
+              else if (temp[0] === "impression") {
+                  const impressionTemp = temp[1];
+                  impression = impressionTemp.split("%");
+              }
+              else if (temp[0] === "layout") {
+                  const layoutTemp = temp[1];
+                  layout = layoutTemp.split("%");
+              }
+              else if (temp[0] === "color") {
+                  const colorTemp = temp[1];
+                  color = colorTemp.split("%");
+              }
+              else if (temp[0] === "pickup") {
+                  const pickupTemp = temp[1];
+                  pickup = pickupTemp.split("%");
+              }
+              else if (temp[0] === "technique") {
+                  const techniqueTemp = temp[1];
+                  technique = techniqueTemp.split("%");
+              }
+              else if (temp[0] === "technology") {
+                  const technologyTemp = temp[1];
+                  technology = technologyTemp.split("%");
+              }
+              else if (temp[0] === "bookmark") {
+                  bookmark = true;
+              }
+              else if (temp[0] === "and") {
+                  condition = "and";
+              }
+              else if (temp[0] === "or") {
+                  condition = "or";
+              }
+          });
+          // サイドメニュー用に現在表示中のタグを退避
+          this.analyzedSelectedTag.type = type;
+          this.analyzedSelectedTag.industry = industry;
+          this.analyzedSelectedTag.impression = impression;
+          this.analyzedSelectedTag.layout = layout;
+          this.analyzedSelectedTag.color = color;
+          this.analyzedSelectedTag.pickup = pickup;
+          this.analyzedSelectedTag.technique = technique;
+          this.analyzedSelectedTag.technology = technology;
+          this.analyzedSelectedTag.bookmark = bookmark;
+          this.analyzedSelectedTag.condition = condition;
+        },
+        convertTagsToJapanese(tags) {
+          // タグIDを日本語に変換する
+          let allTags = [];
+          if (tags.bookmark) {
+              return ["お気に入り"];
+          }
+          else {
+              if (tags.type.length > 0) {
+                  const filteringType = this.tag.type.contents.filter(function (item) {
+                      return tags.type.includes(item.id);
+                  });
+                  allTags = allTags.concat(filteringType);
+              }
+              if (tags.industry.length > 0) {
+                  const filteringIndustry = this.tag.industry.contents.filter(function (item) {
+                      return tags.industry.includes(item.id);
+                  });
+                  allTags = allTags.concat(filteringIndustry);
+              }
+              if (tags.impression.length > 0) {
+                  const filteringImpression = this.tag.impression.contents.filter(function (item) {
+                      return tags.impression.includes(item.id);
+                  });
+                  allTags = allTags.concat(filteringImpression);
+              }
+              if (tags.layout.length > 0) {
+                  const filteringLayout = this.tag.layout.contents.filter(function (item) {
+                      return tags.layout.includes(item.id);
+                  });
+                  allTags = allTags.concat(filteringLayout);
+              }
+              if (tags.color.length > 0) {
+                  const filteringColor = this.tag.color.contents.filter(function (item) {
+                      return tags.color.includes(item.id);
+                  });
+                  allTags = allTags.concat(filteringColor);
+              }
+              if (tags.pickup.length > 0) {
+                  const filteringPickup = this.tag.pickup.contents.filter(function (item) {
+                      return tags.pickup.includes(item.id);
+                  });
+                  allTags = allTags.concat(filteringPickup);
+              }
+              if (tags.technique.length > 0) {
+                  const filteringTechnique = this.tag.technique.contents.filter(function (item) {
+                      return tags.technique.includes(item.id);
+                  });
+                  allTags = allTags.concat(filteringTechnique);
+              }
+              if (tags.technology.length > 0) {
+                  const filteringTechnology = this.tag.technology.contents.filter(function (item) {
+                      return tags.technology.includes(item.id);
+                  });
+                  allTags = allTags.concat(filteringTechnology);
+              }
+              return allTags.map(item => item.name);
+          }
+        },
         searchByTags(multipleContent) {
             console.log("searchByTagsを起動");
             if (this.selectedTag === undefined && multipleContent === undefined) {
@@ -1188,6 +1353,7 @@ export default {
             let condition = "";
             let bookmark = false;
             let filterContents;
+            let japaneseTag;
             if (multipleContent !== undefined) {
                 type = multipleContent.type;
                 industry = multipleContent.industry;
@@ -1198,66 +1364,35 @@ export default {
                 technique = multipleContent.technique;
                 technology = multipleContent.technology;
                 condition = multipleContent.condition;
+                // タグIDを日本語に変換する
+                const tags = {
+                  type: [...type],
+                  industry: [...industry],
+                  impression: [...impression],
+                  layout: [...layout],
+                  color: [...color],
+                  pickup: [...pickup],
+                  technique: [...technique],
+                  technology: [...technology],
+                }
+                tags.bookmark = bookmark;
+                tags.condition = condition;
+    
+                japaneseTag = this.convertTagsToJapanese(tags);
             }
             else {
-                // URLを解析
-                const tagTypes = this.selectedTag.split("*");
-                // tagTypes = ['type=ecsite_portfolio','industry=design']
-                tagTypes.forEach(function (item) {
-                    const temp = item.split("=");
-                    // temp = ['type','ecsite*portfolio']
-                    if (temp[0] === "type") {
-                        const typeTemp = temp[1];
-                        type = typeTemp.split("%");
-                        // type = 'ecsite*portfolio'
-                    }
-                    else if (temp[0] === "industry") {
-                        const industryTemp = temp[1];
-                        industry = industryTemp.split("%");
-                    }
-                    else if (temp[0] === "impression") {
-                        const impressionTemp = temp[1];
-                        impression = impressionTemp.split("%");
-                    }
-                    else if (temp[0] === "layout") {
-                        const layoutTemp = temp[1];
-                        layout = layoutTemp.split("%");
-                    }
-                    else if (temp[0] === "color") {
-                        const colorTemp = temp[1];
-                        color = colorTemp.split("%");
-                    }
-                    else if (temp[0] === "pickup") {
-                        const pickupTemp = temp[1];
-                        pickup = pickupTemp.split("%");
-                    }
-                    else if (temp[0] === "technique") {
-                        const techniqueTemp = temp[1];
-                        technique = techniqueTemp.split("%");
-                    }
-                    else if (temp[0] === "technology") {
-                        const technologyTemp = temp[1];
-                        technology = technologyTemp.split("%");
-                    }
-                    else if (temp[0] === "bookmark") {
-                        bookmark = true;
-                    }
-                    else if (temp[0] === "and") {
-                        condition = "and";
-                    }
-                    else if (temp[0] === "or") {
-                        condition = "or";
-                    }
-                });
-                // サイドメニュー用に現在表示中のタグを退避
-                this.analyzedSelectedTag.type = type;
-                this.analyzedSelectedTag.industry = industry;
-                this.analyzedSelectedTag.impression = impression;
-                this.analyzedSelectedTag.layout = layout;
-                this.analyzedSelectedTag.color = color;
-                this.analyzedSelectedTag.pickup = pickup;
-                this.analyzedSelectedTag.technique = technique;
-                this.analyzedSelectedTag.technology = technology;
+                // 解析済みのURLから設定
+                type = this.analyzedSelectedTag.type;
+                industry = this.analyzedSelectedTag.industry;
+                impression = this.analyzedSelectedTag.impression;
+                layout = this.analyzedSelectedTag.layout;
+                color = this.analyzedSelectedTag.color;
+                pickup = this.analyzedSelectedTag.pickup;
+                technique = this.analyzedSelectedTag.technique;
+                technology = this.analyzedSelectedTag.technology;
+                condition = this.analyzedSelectedTag.condition;
+                bookmark = this.analyzedSelectedTag.bookmark;
+                japaneseTag = this.japaneseTags
             }
             // フィルター処理
             if (bookmark) {
@@ -1375,71 +1510,15 @@ export default {
                     }
                 });
             }
-            // タグIDを日本語に変換する
-            let allTag = [];
-            let changeJp = [];
-            if (bookmark) {
-                changeJp[0] = "お気に入り";
-            }
-            else {
-                if (type.length > 0) {
-                    const newType = this.tag.type.contents.filter(function (item) {
-                        return type.includes(item.id);
-                    });
-                    allTag = allTag.concat(newType);
-                }
-                if (industry.length > 0) {
-                    const newIndustry = this.tag.industry.contents.filter(function (item) {
-                        return industry.includes(item.id);
-                    });
-                    allTag = allTag.concat(newIndustry);
-                }
-                if (impression.length > 0) {
-                    const newImpression = this.tag.impression.contents.filter(function (item) {
-                        return impression.includes(item.id);
-                    });
-                    allTag = allTag.concat(newImpression);
-                }
-                if (layout.length > 0) {
-                    const newLayout = this.tag.layout.contents.filter(function (item) {
-                        return layout.includes(item.id);
-                    });
-                    allTag = allTag.concat(newLayout);
-                }
-                if (color.length > 0) {
-                    const newColor = this.tag.color.contents.filter(function (item) {
-                        return color.includes(item.id);
-                    });
-                    allTag = allTag.concat(newColor);
-                }
-                if (pickup.length > 0) {
-                    const newPickup = this.tag.pickup.contents.filter(function (item) {
-                        return pickup.includes(item.id);
-                    });
-                    allTag = allTag.concat(newPickup);
-                }
-                if (technique.length > 0) {
-                    const newTechnique = this.tag.technique.contents.filter(function (item) {
-                        return technique.includes(item.id);
-                    });
-                    allTag = allTag.concat(newTechnique);
-                }
-                if (technology.length > 0) {
-                    const newTechnology = this.tag.technology.contents.filter(function (item) {
-                        return technology.includes(item.id);
-                    });
-                    allTag = allTag.concat(newTechnology);
-                }
-                changeJp = allTag.map(item => item.name);
-            }
+            
             if (multipleContent !== undefined) {
                 this.searchMultiple = filterContents;
                 this.$store.dispatch("multipleSelect/pushHit", this.searchMultiple.length);
-                this.multipleJpName = changeJp.join(" + ");
+                this.multipleJpName = japaneseTag.join(" + ");
             }
             else {
                 this.searchTags = filterContents;
-                this.tagsJpName = changeJp.join(" + ");
+                this.tagsJpName = japaneseTag.join(" + ");
             }
         },
         setDisplayingContent(id) {

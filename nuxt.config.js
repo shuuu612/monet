@@ -6,18 +6,37 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'suugo',
+    title: 'SUUGO | Webデザインギャラリー',
     htmlAttrs: {
-      lang: 'en'
+      lang: 'ja',
+      prefix: 'og: http://ogp.me/ns#'
     },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=no' }
+      { hid: 'keywords', name: 'keywords', content: '' },
+      { name: 'format-detection', content: 'telephone=no' },
+      { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
+      
+      // <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      // OGP設定
+      { hid: 'og:site_name', property: 'og:site_name', content: 'SUUGO' },
+      { hid: 'og:type', property: 'og:type', content: 'website' },
+      { hid: 'og:url', property: 'og:url', content: 'https://suugo.jp/' },
+      { hid: 'og:title', property: 'og:title', content: 'SUUGO | Webデザインギャラリー' },
+      { hid: 'og:description', property: 'og:description', content: 'サイトの説明' },
+      { hid: 'og:image', property: 'og:image', content: 'サイトURL' },
+
+      // Facebook
+      { hid: 'fb:app_id', property: 'fb:app_id', content: 'App-ID' },
+      // Twitter
+      { hid: 'twitter:card', name: 'twitter:card', content: 'summary_large_image' },
+      { hid: 'twitter:site', name: 'twitter:site', content: '@Twitter' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'icon', type: 'image/png', href: '/favicons/icon-192x192.png' },
+      { rel: 'apple-touch-icon', type: 'image/png', href: '/favicons/apple-touch-icon-180x180.png' },
       { rel: 'preconnect', href: 'https://fonts.googleapis.com'},
       { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: ''},
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap'},
@@ -61,6 +80,13 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    terser: {
+      terserOptions: {
+        compress: {
+          drop_console: process.env.NODE_ENV === "production"
+        }
+      }
+    }
   },
 
   buildModules: ["nuxt-microcms-module"],
