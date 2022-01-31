@@ -19,7 +19,6 @@ export default {
       { name: 'format-detection', content: 'telephone=no' },
       { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
       
-      // <meta http-equiv="X-UA-Compatible" content="IE=edge" />
       // OGP設定
       { hid: 'og:site_name', property: 'og:site_name', content: 'SUUGO' },
       { hid: 'og:type', property: 'og:type', content: 'website' },

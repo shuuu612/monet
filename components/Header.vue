@@ -32,9 +32,6 @@ export default {
     };
   },
   computed: {
-    /* getScrollHide() {
-      return { scrollHide: this.$store.getters['scroll/getWindowScroll'] > 0 || this.$store.getters['modal/getOpen']}
-    }, */
     getOpen() {
       return { isOpen: this.$store.getters['sideMenu/getOpen'] }
     },

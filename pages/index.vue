@@ -35,7 +35,7 @@
                   <img v-if="getSpHide" class="image" :src="`${content.imageSP.url}?h=${Math.round(800*getStateSliderSize)}`" :alt="`${content.name}`" :class="getMargin('sp')" :style="getMaxWidth('sp')" loading="lazy">
                 </a>
               </div>
-              <div v-if="getActiveModal(content.id)" class="modal" @click="closeModal">
+              <div v-if="getActiveModal(content.id)" class="modal" :class="getModalOpen" @click="closeModal">
                 <button class="modalButton" @click="closeModal">
                   <span class="modalBar"></span>
                   <span class="modalBar"></span>
@@ -374,6 +374,7 @@ export default {
                 height: "",
             },
             activeModal: [],
+            modalOpen: false,
             updatedFlg: false,
             visit: "",
             analyzedSelectedTag: {
@@ -624,7 +625,10 @@ export default {
         getInfoStyle() {
           console.log('getInfoStyle')
           return this.infoStyle
-        }
+        },
+        getModalOpen() {
+          return { open: this.modalOpen}
+        },
     },
     created() {
         console.log("created");
@@ -1593,14 +1597,15 @@ export default {
         },
         openModal(id) {
             this.activeModal.push(id);
-            this.$store.dispatch("modal/pushOpen");
+            /* this.$store.dispatch("modal/pushOpen"); */
             backfaceFixed(true);
         },
         closeModal() {
             this.activeModal.length = 0;
             this.activeModal.splice();
             this.modalOpenElement = {};
-            this.$store.dispatch("modal/pushOpen");
+            this.modalOpen = false;
+            /* this.$store.dispatch("modal/pushOpen"); */
             backfaceFixed(false);
         },
         setLoaded() {
@@ -1718,6 +1723,9 @@ export default {
             }else {
               this.modalInfoStyle.height = ""
             }
+            
+            // モーダルの透過を解除して表示する
+            this.modalOpen = true;
             
         },
         update() {
@@ -2044,6 +2052,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  opacity: 0;
   @include responsive(xs) {
     
   }
@@ -2061,6 +2070,9 @@ export default {
   }
   @include responsive(xxl) {
     
+  }
+  &.open {
+    opacity: 1;
   }
 }
 
@@ -2096,7 +2108,6 @@ export default {
   background-color: var(--main-modal-inner-background);
   position: relative;
   width: 100%;
-  height: 100%;
   max-height: 100%;
   display: flex;
   align-items: center;
