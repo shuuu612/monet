@@ -26,10 +26,10 @@ export default {
     },
     getDevice() {
       return { mobile: this.$store.getters['windowSize/getWindowWidth'] < 768, desktop: this.$store.getters['windowSize/getWindowWidth'] >= 768}
-    }
+    },
   },
   mounted() {
-
+    setTimeout(this.setInitialKeyword,500);
   },
   beforeDestroy() {
 
@@ -45,6 +45,12 @@ export default {
     setBlur() {
       this.focus = false;
     },
+    setInitialKeyword() {
+      if(this.$store.getters['search/getKeyword'] !== '') {
+        this.keyword = this.$store.getters['search/getKeyword'];
+        this.focus = true;
+      }
+    }
   },
 }
 </script>
