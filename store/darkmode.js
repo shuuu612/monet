@@ -1,8 +1,9 @@
+// 現在未使用
 export const state = () => ({
-  htmlClass: 'darkmode',   // ローカルストレージ保存対象
-  selectedOn: false,
-  selectedOff: true,
-  selectedOs: false,
+  htmlClass: 'darkmode',
+  selectedOn: false,        // ローカルストレージ保存対象
+  selectedOff: true,        // ローカルストレージ保存対象
+  selectedOs: false,        // ローカルストレージ保存対象
   active: false,
 })
 
@@ -49,7 +50,7 @@ export const mutations = {
     }
   },
   setLocalStorage(state,key) {
-    /* console.log('ローカルストレージからデータを取得-favoriteTags') */
+    // 初回ロード時にローカルストレージからデータを取得
     state.selectedOn = Boolean(key[0])
     state.selectedOff = Boolean(key[1])
     state.selectedOs = Boolean(key[2])
@@ -68,8 +69,7 @@ export const mutations = {
   },
   updateLocalStorage(state) {
     // ローカルストレージ更新
-    if (window.localStorage) {
-      /* console.log('ローカルストレージに保存-favoriteTags') */
+    if (this.$storageAvailable('localStorage')) {
       const darkmode = [Number(state.selectedOn), Number(state.selectedOff), Number(state.selectedOs)]
       const darkmodeJson = JSON.stringify(darkmode)
       localStorage.setItem('darkmode', darkmodeJson)

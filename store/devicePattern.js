@@ -192,16 +192,12 @@ export const mutations = {
     state.activeTB = Boolean(key[1])
     state.activeSP = Boolean(key[2])
     state.multidevice = Boolean(key[3])
-    /* console.log('ローカルストレージからデータを取得-devicePattern')
-    console.log(key) */
   },
   updateLocalStorage(state) {
     // ローカルストレージ更新
-    if (window.localStorage) {
-      /* console.log('ローカルストレージに保存-devicePattern') */
+    if (this.$storageAvailable('localStorage')) {
       const devicePattern = [ Number(state.activePC), Number(state.activeTB), Number(state.activeSP), Number(state.multidevice) ]
       const devicePatternJson = JSON.stringify(devicePattern)
-      /* console.log(devicePatternJson) */
       localStorage.setItem('device-pattern', devicePatternJson)
     }
   },

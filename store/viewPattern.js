@@ -28,7 +28,7 @@ export const mutations = {
   },
   updateLocalStorage(state) {
     // ローカルストレージ更新
-    if (window.localStorage) {
+    if (this.$storageAvailable('localStorage')) {
       /* console.log('ローカルストレージに保存-viewPattern') */
       const viewPattern = [ Number(state.activeList), Number(state.activeGrid) ]
       const viewPatternJson = JSON.stringify(viewPattern)

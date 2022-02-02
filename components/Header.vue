@@ -19,7 +19,9 @@
             </svg>
           </nuxt-link>
         </h1>
-        <Search />
+        <Search
+        @search="passToTheTop"
+        />
       </div>
     </header>
   </div>
@@ -43,6 +45,9 @@ export default {
   beforeDestroy() {
   },
   methods: {
+    passToTheTop() {
+      this.$emit('search')
+    }
   },
   
 };

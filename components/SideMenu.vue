@@ -15,7 +15,7 @@
               <div class="sideMenuSubTitle tagStyle">{{name.toUpperCase()}}</div>
               <div class="tagItems">
                 <div v-for="item in tag[name].contents" :key="item.id" class="tagItem" :class="getSelectedTag(name, item.id, 1)">
-                  <div class="tagLinks" @click="clickButton">
+                  <div class="tagLinks" @click="clickTagButton">
                     <nuxt-link v-if="getSelectedTag(name, item.id, 0)" :to="`/tag/${name}=${item.id}*and`" class="tagLink button">
                       <div v-if="name === 'color'" class="colorImage" :class="`${item.id}`"></div>
                       <div class="tagLinkText">
@@ -85,7 +85,7 @@
                 <div class="tagItems">
                   <template v-for="item in tag[name].contents">
                     <div v-if="getFavorited(item.id)" :key="item.id" class="tagItem" :class="getSelectedTag(name, item.id, 1)">
-                      <div class="tagLinks" @click="clickButton">
+                      <div class="tagLinks" @click="clickTagButton">
                         <nuxt-link v-if="getSelectedTag(name, item.id, 0)" :to="`/tag/${name}=${item.id}*and`" class="tagLink button">
                           <div class="tagLinkText">
                             <div>{{item.name}}</div>
@@ -111,7 +111,7 @@
             <div class="controllerContent">
               <div class="controllerTitle">デバイス</div>
               <div class="controllerItems">
-                <button class="controllerItem" :class="getStatePC" :disabled="getDevicePcDisabled" @click="$store.dispatch('devicePattern/pushPC')">
+                <button class="controllerItem" :class="getStatePC" :disabled="getDevicePcDisabled" @click="clickDevicePc">
                   <div>
                     <div class="typeImageWrapper">
                       <!-- <img class="typeImagePC" src="/images/PC.svg" alt=""> -->
@@ -123,7 +123,7 @@
                     <div class="typeTitle">デスクトップ</div>
                   </div>
                 </button>
-                <button class="controllerItem" :class="getStateTB" :disabled="getDeviceTbDisabled" @click="$store.dispatch('devicePattern/pushTB')">
+                <button class="controllerItem" :class="getStateTB" :disabled="getDeviceTbDisabled" @click="clickDeviceTb">
                   <div>
                     <div class="typeImageWrapper">
                       <!-- <img class="typeImageTB" src="/images/TB.svg" alt=""> -->
@@ -134,7 +134,7 @@
                     <div class="typeTitle">タブレット</div>
                   </div>
                 </button>
-                <button class="controllerItem" :class="getStateSP" :disabled="getDeviceSpDisabled" @click="$store.dispatch('devicePattern/pushSP')">
+                <button class="controllerItem" :class="getStateSP" :disabled="getDeviceSpDisabled" @click="clickDeviceSp">
                   <div>
                     <div class="typeImageWrapper">
                       <!-- <img class="typeImageSP" src="/images/SP.svg" alt=""> -->
@@ -483,7 +483,11 @@ export default {
     }, */
     clickButton() {
       console.log('clickButton')
-      this.$store.dispatch('sideMenu/pushOpen')
+      this.$store.dispatch('sideMenu/pushOpen');
+    },
+    clickTagButton() {
+      this.$store.dispatch('sideMenu/pushOpen');
+      this.$store.dispatch("status/pushSearchTag");
     },
     clickTab(key) {
       console.log('clickTab')
@@ -527,14 +531,18 @@ export default {
       }else if(name === 'technology') {
         this.$store.dispatch('multipleSelect/pushTechnology', id)
       }
+      this.$emit('multipleSearch')
+      /* this.$store.dispatch("status/pushSearchMulti"); */
     },
     clickStart() {
       console.log('clickStart')
-      this.$store.dispatch('multipleSelect/pushStart')
+      /* this.$store.dispatch('multipleSelect/pushStart') */
+      this.$emit('multipleStart')
     },
     clickCrear() {
       console.log('clickCrear')
       this.$store.dispatch('multipleSelect/pushClear')
+      this.$emit('multipleSearch')
     },
     clickSwitch() {
       this.selectedOr = !this.selectedOr
@@ -544,7 +552,7 @@ export default {
       }else {
         this.$store.dispatch('multipleSelect/pushCondition','and')
       }
-      
+      this.$emit('multipleSearch')
     },
     sliderChange(event) {
       /* if(this.$store.getters['slider/getStepData'].includes(Number(event.target.value))) {
@@ -552,6 +560,7 @@ export default {
       }  */
 
       this.$store.dispatch('slider/pushSlider',event.target.value)
+      this.$emit('sliderChange')
       
       // 自動調整中の場合はチェックを外す
       /* if(this.$store.getters['slider/getAutoSizing']) {
@@ -562,11 +571,27 @@ export default {
     sliderInitialSet(data) {
       this.$store.dispatch('slider/pushSliderInitial',data)
     },
+    clickDevicePc() {
+      this.$store.dispatch('devicePattern/pushPC')
+      this.$emit('deviceChange')
+    },
+    clickDeviceTb() {
+      this.$store.dispatch('devicePattern/pushTB')
+      this.$emit('deviceChange')
+    },
+    clickDeviceSp() {
+      this.$store.dispatch('devicePattern/pushSP')
+      this.$emit('deviceChange')
+    },
     deviceCheckboxChange() {
       this.$store.dispatch('devicePattern/pushMultidevaice')
+      if(!this.$store.getters["devicePattern/getMultidevaice"]) {
+        this.$emit('deviceChange')
+      }
     },
     sliderCheckboxChange() {
       this.$store.dispatch('slider/pushAutoSizing')
+      this.$emit('autoSizing')
     },
     /* setInitialValue() {
       this.initialValue = 0.625
@@ -585,7 +610,7 @@ export default {
     },
     setFavoriteTags(id) {
       console.log('setFavoriteTags')
-      if(!window.localStorage) {
+      if(!this.$storageAvailable('localStorage')) {
         alert("ブラウザのローカルストレージがOFFになっています。\nお気に入り機能を使用するため、ブラウザの設定でローカルストレージをONにしてください。");
         return;
       }

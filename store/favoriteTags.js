@@ -22,13 +22,12 @@ export const mutations = {
     }
   },
   setLocalStorage(state,key) {
-    /* console.log('ローカルストレージからデータを取得-favoriteTags') */
+    // 初回ロード時にローカルストレージからデータを取得
     state.favoriteTags = key
   },
   updateLocalStorage(state) {
     // ローカルストレージ更新
-    if (window.localStorage) {
-      /* console.log('ローカルストレージに保存-favoriteTags') */
+    if (this.$storageAvailable('localStorage')) {
       const favoriteTagsJson = JSON.stringify(state.favoriteTags)
       localStorage.setItem('favoriteTags', favoriteTagsJson)
     }

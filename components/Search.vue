@@ -37,6 +37,7 @@ export default {
   methods: {
     setKeyword() {
       this.$store.dispatch('search/pushKeyword',this.keyword)
+       this.$emit('search')
     },
     setFocus() {
       this.focus = true;

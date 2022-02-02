@@ -4,7 +4,7 @@ export const state = () => ({
   step: 0.075,
   value: 0,
   myValue: 0,               // ローカルストレージ保存対象
-  autoSizing: true,    // ローカルストレージ保存対象
+  autoSizing: true,         // ローカルストレージ保存対象
   stepData: [],
   steps: [
     false,
@@ -50,10 +50,6 @@ export const mutations = {
   setStep(state,inputData) {
     state.step = inputData
   },
-  /* setValue(state,inputData) {
-    console.log('setValue')
-    state.value = inputData
-  }, */
   setMyValue(state,inputData) {
     state.myValue = Number(inputData)
     if(state.autoSizing) {
@@ -64,7 +60,6 @@ export const mutations = {
     if(state.autoSizing) {
       state.value = inputData
     }
-    /* state.aptitudeValue = inputData */
   },
   setAutoSizing(state) {
     state.autoSizing = !state.autoSizing
@@ -74,7 +69,6 @@ export const mutations = {
   },
   setStepData(state) {
     for(let i=Number(state.min)*1000, count=0; i <= Number(state.max)*1000; i=i+Number(state.step)*1000,count++) {
-      /* state.stepData[count] = String(i/1000) */
       state.stepData[count] = i/1000
     }
   },
@@ -114,16 +108,12 @@ export const mutations = {
     // 初回ロード時にローカルストレージからデータを取得
     state.myValue = key[0]
     state.autoSizing = Boolean(key[1])
-    /* console.log('ローカルストレージからデータを取得-slider')
-    console.log(key) */
   },
   updateLocalStorage(state) {
     // ローカルストレージ更新
-    if (window.localStorage) {
-      /* console.log('ローカルストレージに保存-slider') */
+    if (this.$storageAvailable('localStorage')) {
       const slider = [ state.myValue, Number(state.autoSizing) ]
       const sliderJson = JSON.stringify(slider)
-      /* console.log(sliderJson) */
       localStorage.setItem('slider', sliderJson)
     }
   },

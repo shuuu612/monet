@@ -1,7 +1,9 @@
 <template>
   <div class="wrapper" :class="getSideMenuOpen">
     <div class="loaded" :class="getLoadingDisplayed"></div>
-    <Header />
+    <Header
+    @search="keywordSearchStart"
+    />
     <Buttons 
     :tag="selectedTag"
     :sort="selectedSort"
@@ -10,10 +12,16 @@
     <MenuBar 
     :tag="selectedTag"
     :sort="selectedSort"
+    @update="update"
     />
     <SideMenu
     :tag="tag"
     :selectedtag="analyzedSelectedTag"
+    @multipleSearch="multipleSearch"
+    @multipleStart="multipleSearchStart"
+    @autoSizing="pushAutoSizing"
+    @deviceChange="changeDevice"
+    @sliderChange="changeSliderSize"
     />
     <ScrollTop />
     <Notice />
@@ -332,9 +340,9 @@ export default {
         return {
             dummy: [],
             dummyStyle: {},
-            observer: undefined,
+            /* observer: undefined,
             availableSizes: undefined,
-            data: {},
+            data: {}, */
             searchTags: [],
             searchKeyword: [],
             searchMultiple: [],
@@ -403,6 +411,9 @@ export default {
               url: 'https://suugo.jp/',
               image: 'https://hogehoge.com/images/logo.png',
             },
+            historyCount: 0,
+            reload: false,
+            backward: false,
         };
     },
     head() {
@@ -442,7 +453,6 @@ export default {
             return this.$store.getters["devicePattern/getActiveSP"];
         },
         getStateSliderSize() {
-          console.log('getStateSliderSize')
             return this.$store.getters["slider/getValue"];
         },
         getStateSliderStep() {
@@ -524,8 +534,25 @@ export default {
         },
         getNoContentComment() {
             /* if(!this.$store.getters["loaded/getLoaded"]) return ""; */
-            if (!this.activeSearch) {
-                // キーワード検索以外
+            if (this.$store.getters["status/getSearchMulti"]) {
+                // 複数選択
+                if (this.searchMultiple.length === 0) {
+                  // ありえない
+                  return this.displayingJpName;
+                }
+                else {
+                    return this.displayingJpName;
+                }
+            }else if (this.$store.getters["status/getSearchKeyword"]) {
+                // キーワード検索
+                if (this.searchKeyword.length === 0) {
+                    return "一致する検索結果はありません";
+                }
+                else {
+                    return "";
+                }
+            }else if (this.$store.getters["status/getSearchTag"]) {
+                // 通常検索
                 if (this.searchTags.length === 0) {
                     if (this.displayingJpName === "お気に入り") {
                         return "お気に入りは登録されていません";
@@ -537,18 +564,8 @@ export default {
                 else {
                     return this.displayingJpName;
                 }
-            }
-            else if (this.activeSearch) {
-                // キーワード検索
-                if (this.searchKeyword.length === 0) {
-                    return "一致する検索結果はありません";
-                }
-                else {
-                    return "";
-                }
-            }
-            else {
-                return "";
+            }else {
+              return '';
             }
         },
         /* getActiveModal() {
@@ -623,7 +640,6 @@ export default {
             };
         },
         getInfoStyle() {
-          console.log('getInfoStyle')
           return this.infoStyle
         },
         getModalOpen() {
@@ -646,15 +662,62 @@ export default {
             }
         });
         // ローカルストレージの取得
-        if (window.localStorage) {
+        if (this.$storageAvailable('localStorage')) {
             this.getLocalStorage();
         }
         else {
             console.log("ブラウザのローカルストレージがオフになっています。");
         }
+
+        
+
+        
+
+        // 履歴設定
+        if(this.$store.getters["page/getPage"] === 0) {
+          // 初回
+          console.log('初回？')
+          // historyにページ情報を付加
+          history.replaceState({ page: 1 }, '', null);
+          this.$store.dispatch("page/pushPageUp");
+
+          // コンテンツ表示処理
+          this.displayContent();
+          
+        }else if(this.$store.getters["page/getBackward"]) {
+          console.log('戻る進むキーでリロードがかかったとき')
+          // 戻るキーフラグを元に戻す
+          this.$store.dispatch("page/pushBackward");
+
+          // 過去のステータスを読み込む
+          this.loadPastStatus();
+
+          // コンテンツ表示処理
+          this.displayContent();
+
+        }else if(this.$store.getters["page/getPage"] === history.length - 1){
+          console.log('最新ページを更新')
+          // storeのページを進める
+          this.$store.dispatch("page/pushPageUp");
+          // historyにページ情報を付加
+          history.replaceState({ page: this.$store.getters["page/getPage"] }, '', null);
+
+          // コンテンツ表示処理
+          this.displayContent('update');
+          
+        }else {
+          // リロード
+          console.log('リロード？')
+          // コンテンツ表示処理
+          this.displayContent();
+        }
+        console.log('mounted length ',history.length)
+        console.log('mounted page ',history.state.page)
+        console.log('mounted store',this.$store.getters["page/getPage"])
+
         // コンテンツ表示処理
-        this.searchByTags();
-        this.setDisplayingContent();
+        /* this.displayContent(); */
+        
         // ページ遷移時の処理
         if(this.$store.getters["loaded/getLoaded"]) {
           console.log('ページ遷移の時だけ')
@@ -669,81 +732,65 @@ export default {
         window.addEventListener("scroll", this.setWindowScroll);
         // ローディング画面を終了させる
         window.setTimeout(this.setLoaded, 1500);
-        // 検索キーワードの入力を監視
-        this.$store.watch(() => this.$store.getters["search/getKeyword"], (value) => {
-            this.searchByKeyword(value);
-        });
-        // 複数選択タブのタグ選択を監視
-        this.$store.watch(() => this.$store.getters["multipleSelect/getContents"], (value) => {
-            this.searchByTags(value);
-        }, { deep: true });
-        // 複数選択タブの決定キー押下を監視
-        this.$store.watch(() => this.$store.getters["multipleSelect/getStart"], (value) => {
-            if (value) {
-                this.setDisplayingContent("multiple");
-                this.$store.dispatch("multipleSelect/pushStart");
-            }
-        });
-        // 自動調整オンを監視
-        this.$store.watch(() => this.$store.getters["slider/getAutoSizing"], (value) => {
-            if (value) {
-                this.calculateAutoSizing();
-            }
-        });
-        // デバイス切り替えを監視
-        this.$store.watch(() => this.$store.getters["devicePattern/getStatePatternNumber"], () => {
-            this.createDummyContent();
-            this.calculateAutoSizing();
-        });
-        // サイズの変更を監視
-        this.$store.watch(() => this.$store.getters["slider/getValue"], () => {
-            this.createDummyContent();
-        });
-        window.matchMedia("(min-width:375px)").addEventListener("change", this.calculateAutoSizing);
-        window.matchMedia("(min-width:500px)").addEventListener("change", this.calculateAutoSizing);
-        window.matchMedia("(min-width:576px)").addEventListener("change", this.calculateAutoSizing);
-        window.matchMedia("(min-width:768px)").addEventListener("change", this.calculateAutoSizing);
-        window.matchMedia("(min-width:900px)").addEventListener("change", this.calculateAutoSizing);
-        window.matchMedia("(min-width:992px)").addEventListener("change", this.calculateAutoSizing);
-        window.matchMedia("(min-width:1100px)").addEventListener("change", this.calculateAutoSizing);
-        window.matchMedia("(min-width:1200px)").addEventListener("change", this.calculateAutoSizing);
-        window.matchMedia("(min-width:1300px)").addEventListener("change", this.calculateAutoSizing);
-        window.matchMedia("(min-width:1400px)").addEventListener("change", this.calculateAutoSizing);
-        window.matchMedia("(min-width:1500px)").addEventListener("change", this.calculateAutoSizing);
-        window.matchMedia("(min-width:1600px)").addEventListener("change", this.calculateAutoSizing);
-        window.matchMedia("(min-width:1700px)").addEventListener("change", this.calculateAutoSizing);
-        window.matchMedia("(min-width:1800px)").addEventListener("change", this.calculateAutoSizing);
-        window.matchMedia("(min-width:1900px)").addEventListener("change", this.calculateAutoSizing);
-        window.matchMedia("(min-width:2000px)").addEventListener("change", this.calculateAutoSizing);
-        window.matchMedia("(min-width:2100px)").addEventListener("change", this.calculateAutoSizing);
-        window.matchMedia("(min-width:2200px)").addEventListener("change", this.calculateAutoSizing);
+
+        // ブラウザの「戻るボタン」または「進むボタン」の押下を監視
+        window.addEventListener('popstate', this.popstate);
+
+        // リロードを監視
+        window.addEventListener('beforeunload', this.beforeunload);
+        // リロードを監視
+        window.addEventListener('unload', this.unload);
+
+        window.matchMedia("(min-width:375px)").addEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:500px)").addEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:576px)").addEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:768px)").addEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:900px)").addEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:992px)").addEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:1100px)").addEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:1200px)").addEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:1300px)").addEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:1400px)").addEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:1500px)").addEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:1600px)").addEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:1700px)").addEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:1800px)").addEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:1900px)").addEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:2000px)").addEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:2100px)").addEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:2200px)").addEventListener("change", this.matchMediaProcess);
     },
     updated() {
         console.log("updated");
+        if(this.$store.getters["page/getBackward"]) {
+          this.$store.dispatch("page/pushBackward");
+        }
     },
     beforeDestroy() {
         console.log("beforeDestroy");
+        /* this.setPage(); */
+
         window.removeEventListener("load", this.loadProcess);
         window.removeEventListener("resize", this.resizeProcess);
         window.removeEventListener("scroll", this.setWindowScroll);
-        window.matchMedia("(min-width:375px)").removeEventListener("change", this.calculateAutoSizing);
-        window.matchMedia("(min-width:500px)").removeEventListener("change", this.calculateAutoSizing);
-        window.matchMedia("(min-width:576px)").removeEventListener("change", this.calculateAutoSizing);
-        window.matchMedia("(min-width:768px)").removeEventListener("change", this.calculateAutoSizing);
-        window.matchMedia("(min-width:900px)").removeEventListener("change", this.calculateAutoSizing);
-        window.matchMedia("(min-width:992px)").removeEventListener("change", this.calculateAutoSizing);
-        window.matchMedia("(min-width:1100px)").removeEventListener("change", this.calculateAutoSizing);
-        window.matchMedia("(min-width:1200px)").removeEventListener("change", this.calculateAutoSizing);
-        window.matchMedia("(min-width:1300px)").removeEventListener("change", this.calculateAutoSizing);
-        window.matchMedia("(min-width:1400px)").removeEventListener("change", this.calculateAutoSizing);
-        window.matchMedia("(min-width:1500px)").removeEventListener("change", this.calculateAutoSizing);
-        window.matchMedia("(min-width:1600px)").removeEventListener("change", this.calculateAutoSizing);
-        window.matchMedia("(min-width:1700px)").removeEventListener("change", this.calculateAutoSizing);
-        window.matchMedia("(min-width:1800px)").removeEventListener("change", this.calculateAutoSizing);
-        window.matchMedia("(min-width:1900px)").removeEventListener("change", this.calculateAutoSizing);
-        window.matchMedia("(min-width:2000px)").removeEventListener("change", this.calculateAutoSizing);
-        window.matchMedia("(min-width:2100px)").removeEventListener("change", this.calculateAutoSizing);
-        window.matchMedia("(min-width:2200px)").removeEventListener("change", this.calculateAutoSizing);
+        window.matchMedia("(min-width:375px)").removeEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:500px)").removeEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:576px)").removeEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:768px)").removeEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:900px)").removeEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:992px)").removeEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:1100px)").removeEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:1200px)").removeEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:1300px)").removeEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:1400px)").removeEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:1500px)").removeEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:1600px)").removeEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:1700px)").removeEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:1800px)").removeEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:1900px)").removeEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:2000px)").removeEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:2100px)").removeEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:2200px)").removeEventListener("change", this.matchMediaProcess);
     },
     methods: {
         setHead() {
@@ -763,6 +810,115 @@ export default {
           const contents = document.getElementById("contents");
           this.contentsElement = contents
         },
+        loadPastStatus() {
+          // 過去のステータスを取得
+          console.log('loadPastStatus')
+          const exist = this.$store.getters["page/getExist"]
+          console.log(exist)
+
+          // 過去のステータス（複数選択）が存在する場合
+          if(exist === 1) {
+            console.log('過去ステータスが存在する')
+            // 現在の状態を「複数選択」にする
+            this.$store.dispatch("status/pushSearchMulti");
+            // 複数選択のキーワードを設定
+            console.log(this.$store.getters["page/getPage"])
+            this.$store.dispatch("multipleSelect/pushClear");
+            /* if(this.$store.getters["page/getType"].length > 0) {
+              this.$store.getters["page/getType"].forEach(function(item) {
+                console.log(item)
+                this.$store.dispatch("multipleSelect/pushType", item);
+              });
+            } */
+            console.log(this.$store.getters["page/getType"])
+            for(let i=0;i<this.$store.getters["page/getType"].length;i++) {
+              console.log(this.$store.getters["page/getType"][i])
+              this.$store.dispatch("multipleSelect/pushType", this.$store.getters["page/getType"][i]);
+            }
+            for(let i=0;i<this.$store.getters["page/getIndustry"].length;i++) {
+              console.log(this.$store.getters["page/getIndustry"][i])
+              this.$store.dispatch("multipleSelect/pushIndustry", this.$store.getters["page/getIndustry"][i]);
+            }
+            for(let i=0;i<this.$store.getters["page/getImpression"].length;i++) {
+              console.log(this.$store.getters["page/getImpression"][i])
+              this.$store.dispatch("multipleSelect/pushImpression", this.$store.getters["page/getImpression"][i]);
+            }
+            for(let i=0;i<this.$store.getters["page/getLayout"].length;i++) {
+              console.log(this.$store.getters["page/getLayout"][i])
+              this.$store.dispatch("multipleSelect/pushLayout", this.$store.getters["page/getLayout"][i]);
+            }
+            for(let i=0;i<this.$store.getters["page/getColor"].length;i++) {
+              console.log(this.$store.getters["page/getColor"][i])
+              this.$store.dispatch("multipleSelect/pushColor", this.$store.getters["page/getColor"][i]);
+            }
+            for(let i=0;i<this.$store.getters["page/getPickup"].length;i++) {
+              console.log(this.$store.getters["page/getPickup"][i])
+              this.$store.dispatch("multipleSelect/pushPickup", this.$store.getters["page/getPickup"][i]);
+            }
+            for(let i=0;i<this.$store.getters["page/getTechnique"].length;i++) {
+              console.log(this.$store.getters["page/getTechnique"][i])
+              this.$store.dispatch("multipleSelect/pushTechnique", this.$store.getters["page/getTechnique"][i]);
+            }
+            for(let i=0;i<this.$store.getters["page/getTechnology"].length;i++) {
+              console.log(this.$store.getters["page/getTechnology"][i])
+              this.$store.dispatch("multipleSelect/pushTechnology", this.$store.getters["page/getTechnology"][i]);
+            }
+            this.$store.dispatch("multipleSelect/pushCondition",this.$store.getters["page/getCondition"]);
+            /* this.displayingPageMultiple = status.displayingPage; */
+            console.log(this.$store.getters["multipleSelect/getContents"])
+            console.log(this.$store.getters["status/getSearchMulti"])
+          }else {
+            // 現在の状態を「通常表示」にする
+            this.$store.dispatch("status/pushSearchTag");
+          }
+
+          /* if(status.search === 0) {
+            this.$store.dispatch("status/pushSearchKeyword");
+            this.$store.dispatch("search/pushKeyword",status.searchKey);
+            this.displayingPageKeyword = status.displayingPage;
+          }else if(status.search === 1) {
+            console.log('1')
+            this.$store.dispatch("status/pushSearchMulti");
+            this.$store.dispatch("multipleSelect/pushContents",status.searchKey);
+            this.displayingPageMultiple = status.displayingPage;
+            console.log(status)
+            console.log(this.$store.getters["multipleSelect/getContents"])
+            console.log(this.$store.getters["status/getSearchMulti"])
+          }else {
+            this.$store.dispatch("status/pushSearchTag");
+            this.analyzedSelectedTag = status.searchKey
+            this.displayingPage = status.displayingPage;
+          } */
+        },
+        displayContent(key) {
+          // コンテンツ表示処理
+          if(this.$store.getters["status/getSearchMulti"]) {
+            // 複数選択で表示
+            console.log('複数選択で表示')
+            const content = this.$store.getters["multipleSelect/getContents"];
+            console.log(content)
+            this.searchByTags(content);
+            if(key === 'update') {
+              this.setDisplayingContent("multiple",'update');
+            }else {
+              this.setDisplayingContent("multiple");
+            }
+            
+          }else if(this.$store.getters["status/getSearchKeyword"]) {
+            // キーワード検索で表示
+            console.log('キーワード検索で表示')
+            const keyword = this.$store.getters["search/getKeyword"]
+            this.searchByKeyword(keyword);
+          }else {
+            console.log('通常表示')
+            this.searchByTags();
+            if(key === 'update') {
+              this.setDisplayingContent("",'update');
+            }else {
+              this.setDisplayingContent("");
+            }
+          }
+        },
         wrapChack() {
             // コンテンツの折り返しをチェック
             const columnContent = Math.floor(this.contentsElement.clientWidth / this.totalWidth); // １カラム内のコンテンツ数
@@ -775,7 +931,6 @@ export default {
             this.createDummyContent();
         },
         createDummyContent() {
-            console.log("createDummyContentを実行");
             // 実行タイミング：デバイスの変更、コンテンツサイズの変更
             // コンテンツの幅を計算
             const devicePattern = this.$store.getters["devicePattern/getStatePatternNumber"]; // 現在のデバイスパターン
@@ -852,7 +1007,6 @@ export default {
             const windowWidth = this.$store.getters["windowSize/getWindowWidth"]; // ウィンドウサイズ
             if (!this.$store.getters["slider/getAutoSizing"])
                 return;
-            console.log("calculateAutoSizingを実行");
             // コンテンツサイズ自動調整用の値を算出
             let sliderStep;
             switch (devicePattern) {
@@ -1200,7 +1354,7 @@ export default {
             this.wrapChack();
         },
         setBookmark(id) {
-            if (!window.localStorage) {
+            if (!this.$storageAvailable('localStorage')) {
                 alert("ブラウザのローカルストレージがOFFになっています。\nお気に入り機能を使用するため、ブラウザの設定でローカルストレージをONにしてください。");
                 return;
             }
@@ -1339,6 +1493,7 @@ export default {
         searchByTags(multipleContent) {
             console.log("searchByTagsを起動");
             if (this.selectedTag === undefined && multipleContent === undefined) {
+                console.log("searchByTags-通常表示のためフィルター処理なしで抜ける");
                 this.searchTags = this.contents;
                 return;
             }
@@ -1359,6 +1514,7 @@ export default {
             let filterContents;
             let japaneseTag;
             if (multipleContent !== undefined) {
+              console.log('11')
                 type = multipleContent.type;
                 industry = multipleContent.industry;
                 impression = multipleContent.impression;
@@ -1406,6 +1562,7 @@ export default {
                 });
             }
             else {
+              console.log('12')
                 // タグでフィルター
                 filterContents = this.contents.filter(function (value) {
                     let matchType = 0;
@@ -1516,7 +1673,9 @@ export default {
             }
             
             if (multipleContent !== undefined) {
+              console.log('13')
                 this.searchMultiple = filterContents;
+                console.log(this.searchMultiple)
                 this.$store.dispatch("multipleSelect/pushHit", this.searchMultiple.length);
                 this.multipleJpName = japaneseTag.join(" + ");
             }
@@ -1525,7 +1684,7 @@ export default {
                 this.tagsJpName = japaneseTag.join(" + ");
             }
         },
-        setDisplayingContent(id) {
+        setDisplayingContent(id, key) {
             console.log("setDisplayingContentを起動");
             // 表示件数を増やす
             if (id === "keyword") {
@@ -1536,6 +1695,8 @@ export default {
                 this.displayingContent = this.searchKeyword.slice(start, end);
                 this.remainingContent = this.searchKeyword.length - this.displayingContent.length;
                 this.displayingJpName = "";
+                this.$store.dispatch("status/pushSearchKeyword");
+                /* this.loadPastStatus('keyword'); */
             }
             else if (id === "multiple") {
                 // 複数選択で検索した結果を表示
@@ -1543,8 +1704,11 @@ export default {
                 const start = 0;
                 const end = start + (this.displayingPageMultiple * this.displayingLimit);
                 this.displayingContent = this.searchMultiple.slice(start, end);
+                console.log(this.searchMultiple)
                 this.remainingContent = this.searchMultiple.length - this.displayingContent.length;
                 this.displayingJpName = this.multipleJpName;
+                this.$store.dispatch("status/pushSearchMulti");
+                /* this.loadPastStatus('multiple'); */
             }
             else {
                 // タグで検索した結果を表示
@@ -1554,7 +1718,15 @@ export default {
                 this.displayingContent = this.searchTags.slice(start, end);
                 this.remainingContent = this.searchTags.length - this.displayingContent.length;
                 this.displayingJpName = this.tagsJpName;
+                this.$store.dispatch("status/pushSearchTag");
+                /* this.loadPastStatus(''); */
             }
+            if(key === 'update') {
+              this.setPage('update');
+            }else {
+              this.setPage();
+            }
+            
         },
         getLocalStorage() {
             // 初回読み込み時にローカルストレージのデータをstoreに取り込み
@@ -1593,6 +1765,30 @@ export default {
             const darkmode = JSON.parse(darkmodeJson);
             if (darkmode !== null) {
                 this.$store.dispatch("darkmode/pushLocalStorage", darkmode);
+            }
+            // 複数選択
+            const multipleSelectJson = sessionStorage.getItem("multipleSelect");
+            const multipleSelect = JSON.parse(multipleSelectJson);
+            if (multipleSelect !== null) {
+                this.$store.dispatch("multipleSelect/pushLocalStorage", multipleSelect);
+            }
+            // 検索キーワード
+            const searchJson = sessionStorage.getItem("search");
+            const search = JSON.parse(searchJson);
+            if (search !== null) {
+                this.$store.dispatch("search/pushLocalStorage", search);
+            }
+            // 検索ステータス
+            const statusJson = sessionStorage.getItem("status");
+            const status = JSON.parse(statusJson);
+            if (status !== null) {
+                this.$store.dispatch("status/pushLocalStorage", status);
+            }
+            // ページ
+            const pageJson = sessionStorage.getItem("page");
+            const page = JSON.parse(pageJson);
+            if (page !== null) {
+                this.$store.dispatch("page/pushLocalStorage", page);
             }
         },
         openModal(id) {
@@ -1733,14 +1929,131 @@ export default {
             this.displayingPageTags = this.displayingPageTags - 1;
             this.setDisplayingContent();
         },
+        keywordSearchStart() {
+          console.log('keywordSearchStart')
+          const keyword = this.$store.getters["search/getKeyword"];
+          this.searchByKeyword(keyword);
+        },
+        multipleSearch() {
+          const content = this.$store.getters["multipleSelect/getContents"];
+          this.searchByTags(content);
+        },
+        multipleSearchStart() {
+          console.log('複数選択が押下された')
+          history.pushState({page: history.state.page + 1}, '', null);
+          this.$store.dispatch("page/pushPageUp");
+          this.setDisplayingContent("multiple", "update");
+          console.log('複数選択 length ',history.length)
+          console.log('複数選択 page ',history.state.page)
+          console.log('複数選択 store',this.$store.getters["page/getPage"])
+        },
+        pushAutoSizing() {
+          if(this.$store.getters["slider/getAutoSizing"]) {
+            this.calculateAutoSizing();
+            this.createDummyContent();
+          }
+        },
+        changeDevice() {
+          this.calculateAutoSizing();
+          this.createDummyContent();
+        },
+        changeSliderSize() {
+          this.createDummyContent();
+        },
+        matchMediaProcess() {
+          this.calculateAutoSizing();
+          this.createDummyContent();
+        },
         monitorReturnToAuto() {
             // コンテンツサイズが手動設定のときに、ウィンドウサイズが変更されたら、手動から自動に切り替える
             if (!this.$store.getters["slider/getAutoSizing"]) {
                 this.$store.dispatch("slider/pushAutoSizing");
+                this.calculateAutoSizing();
                 // 自動調整オンの通知
                 this.$store.dispatch("notice/pushDisplay", {id: 2, text: 'サイズの自動調整を有効にしました'});
                 setTimeout(() => (this.$store.dispatch("notice/pushClose")),3000)
             }
+        },
+        popstate() {
+          console.log('popstate')
+          // ここにくるときにはhistoryのpageはすでに戻るか進むかしている
+          if(this.$store.getters["page/getBackward"]) {
+            this.$store.dispatch("page/pushBackward");
+          }
+
+          if(this.$store.getters["page/getPage"] > history.state.page) {
+            console.log('戻るキーが押下された')
+            this.$store.dispatch("page/pushPageDown");
+            console.log('戻るキー length ',history.length)
+            console.log('戻るキー page ',history.state.page)
+            console.log('戻るキー store',this.$store.getters["page/getPage"])
+          }else if(this.$store.getters["page/getPage"] < history.state.page){
+            console.log('進むキーが押下された')
+            this.$store.dispatch("page/pushPageUp");
+            console.log('進むキー length ',history.length)
+            console.log('進むキー page ',history.state.page)
+            console.log('進むキー store',this.$store.getters["page/getPage"])
+          }
+          this.$store.dispatch("page/pushBackward");
+          this.loadPastStatus();
+          this.displayContent();
+        },
+        setPage(key) {
+          console.log('setPage')
+          
+          if(this.$store.getters["status/getSearchMulti"]) {
+            console.log('現在の状態（複数選択）を退避')
+            const type = this.$store.getters["multipleSelect/getType"]
+            const industry = this.$store.getters["multipleSelect/getIndustry"]
+            const impression = this.$store.getters["multipleSelect/getImpression"]
+            const layout = this.$store.getters["multipleSelect/getLayout"]
+            const color = this.$store.getters["multipleSelect/getColor"]
+            const pickup = this.$store.getters["multipleSelect/getPickup"]
+            const technique = this.$store.getters["multipleSelect/getTechnique"]
+            const technology = this.$store.getters["multipleSelect/getTechnology"]
+            const condition = this.$store.getters["multipleSelect/getCondition"]
+
+            // 現在のステータスをstoreに退避
+            if(key === 'update') {
+              this.$store.dispatch("page/pushUpdateType", [...type]);
+              this.$store.dispatch("page/pushUpdateIndustry", [...industry]);
+              this.$store.dispatch("page/pushUpdateImpression", [...impression]);
+              this.$store.dispatch("page/pushUpdateLayout", [...layout]);
+              this.$store.dispatch("page/pushUpdateColor", [...color]);
+              this.$store.dispatch("page/pushUpdatePickup", [...pickup]);
+              this.$store.dispatch("page/pushUpdateTechnique", [...technique]);
+              this.$store.dispatch("page/pushUpdateTechnology", [...technology]);
+              this.$store.dispatch("page/pushUpdateCondition", condition);
+              this.$store.dispatch("page/pushUpdateExist");
+            }else {
+              this.$store.dispatch("page/pushReplaceType", [...type]);
+              this.$store.dispatch("page/pushReplaceIndustry", [...industry]);
+              this.$store.dispatch("page/pushReplaceImpression", [...impression]);
+              this.$store.dispatch("page/pushReplaceLayout", [...layout]);
+              this.$store.dispatch("page/pushReplaceColor", [...color]);
+              this.$store.dispatch("page/pushReplacePickup", [...pickup]);
+              this.$store.dispatch("page/pushReplaceTechnique", [...technique]);
+              this.$store.dispatch("page/pushReplaceTechnology", [...technology]);
+              this.$store.dispatch("page/pushReplaceCondition", condition);
+              this.$store.dispatch("page/pushReplaceExist");
+            }
+              
+          }else {
+            console.log('現在の状態（通常表示）を退避')
+            if(key === 'update') {
+              this.$store.dispatch("page/pushUpdateEmpty");
+            }else {
+              this.$store.dispatch("page/pushReplaceEmpty");
+            }
+            
+          }
+        },
+        beforeunload() {
+          console.log('beforeunload')
+          this.$store.dispatch("page/pushReload");
+        },
+        unload() {
+          console.log('unload')
         }
     },
 }

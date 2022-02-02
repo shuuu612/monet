@@ -22,13 +22,12 @@ export const mutations = {
     }
   },
   setLocalStorage(state,key) {
-    /* console.log('ローカルストレージからデータを取得-bookmark') */
+    // 初回ロード時にローカルストレージからデータを取得
     state.bookmark = key
   },
   updateLocalStorage(state) {
     // ローカルストレージ更新
-    if (window.localStorage) {
-      /* console.log('ローカルストレージに保存-bookmark') */
+    if (this.$storageAvailable('localStorage')) {
       const bookmarkJson = JSON.stringify(state.bookmark)
       localStorage.setItem('bookmark', bookmarkJson)
     }

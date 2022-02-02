@@ -1,5 +1,5 @@
 export const state = () => ({
-  contents: {
+  contents: {           // セッションストレージ保存対象
     type: [],
     industry: [],
     impression: [],
@@ -10,9 +10,9 @@ export const state = () => ({
     technology: [],
     condition: 'or',
   },
-  active: false,
+  active: false,        // セッションストレージ保存対象
   start: false,
-  hit: 0,
+  hit: 0,               // セッションストレージ保存対象
 })
 
 export const getters = {
@@ -59,6 +59,7 @@ export const getters = {
 
 export const mutations = {
   setType(state,data) {
+    console.log('1')
     if(!state.contents.type.includes(data)) {
       state.contents.type.push(data)
     }else {
@@ -135,11 +136,9 @@ export const mutations = {
     }
   },
   setStart(state) {
-    console.log('setStart')
     state.start = !state.start
   },
   setHit(state,data) {
-    console.log('setHit')
     state.hit = data
   },
   setClear(state) {
@@ -163,51 +162,100 @@ export const mutations = {
     state.contents.technology.splice()
     console.log('setClear-END')
   },
+  setLocalStorage(state,key) {
+    // 初回ロード時にセッションストレージからデータを取得
+    state.contents.type = key[0]
+    state.contents.industry = key[1]
+    state.contents.impression = key[2]
+    state.contents.layout = key[3]
+    state.contents.color = key[4]
+    state.contents.pickup = key[5]
+    state.contents.technique = key[6]
+    state.contents.technology = key[7]
+    state.contents.condition = key[8]
+    state.active = Boolean(key[9])
+    state.hit = key[10]
+  },
+  updateLocalStorage(state) {
+    // セッションストレージ更新
+    if (this.$storageAvailable('localStorage')) {
+      const multipleSelect = [
+        state.contents.type,
+        state.contents.industry,
+        state.contents.impression,
+        state.contents.layout,
+        state.contents.color,
+        state.contents.pickup,
+        state.contents.technique,
+        state.contents.technology,
+        state.contents.condition,
+        Number(state.active),
+        state.hit
+      ]
+      const multipleSelectJson = JSON.stringify(multipleSelect)
+      sessionStorage.setItem('multipleSelect', multipleSelectJson)
+    }
+  },
  }
 
  export const actions = {
   pushType({commit},data) {
     commit('setType',data)
     commit('setActive')
+    commit('updateLocalStorage')
   },
   pushIndustry({commit},data) {
     commit('setIndustry',data)
     commit('setActive')
+    commit('updateLocalStorage')
   },
   pushImpression({commit},data) {
     commit('setImpression',data)
     commit('setActive')
+    commit('updateLocalStorage')
   },
   pushLayout({commit},data) {
     commit('setLayout',data)
     commit('setActive')
+    commit('updateLocalStorage')
   },
   pushColor({commit},data) {
     commit('setColor',data)
     commit('setActive')
+    commit('updateLocalStorage')
   },
   pushPickup({commit},data) {
     commit('setPickup',data)
     commit('setActive')
+    commit('updateLocalStorage')
   },
   pushTechnique({commit},data) {
     commit('setTechnique',data)
     commit('setActive')
+    commit('updateLocalStorage')
   },
   pushTechnology({commit},data) {
     commit('setTechnology',data)
     commit('setActive')
+    commit('updateLocalStorage')
   },
   pushCondition({commit},data) {
     commit('setCondition',data)
+    commit('updateLocalStorage')
   },
   pushStart({commit}) {
     commit('setStart')
+    commit('updateLocalStorage')
   },
   pushHit({commit},data) {
     commit('setHit',data)
+    commit('updateLocalStorage')
   },
   pushClear({commit}) {
     commit('setClear')
+    commit('updateLocalStorage')
+  },
+  pushLocalStorage({commit},data) {
+    commit('setLocalStorage',data)
   },
  }

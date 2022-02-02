@@ -1,6 +1,6 @@
 export const state = () => ({
-  keyword: '',
-  open: false,
+  keyword: '',    // セッションストレージ保存対象
+  open: false,    // モバイル用
 })
 
 export const getters = {
@@ -14,19 +14,36 @@ export const getters = {
 
 export const mutations = {
   setKeyword(state,data) {
-    console.log('setKeyword')
     state.keyword = data
   },
   setOpen(state) {
     state.open = !state.open
+  },
+  setLocalStorage(state,key) {
+    // 初回ロード時にセッションストレージからデータを取得
+    state.keyword = key[0]
+    state.open = Boolean(key[1])
+  },
+  updateLocalStorage(state) {
+    // セッションストレージ更新
+    if (this.$storageAvailable('localStorage')) {
+      const search = [state.keyword, Number(state.open)]
+      const searchJson = JSON.stringify(search)
+      sessionStorage.setItem('search', searchJson)
+    }
   },
  }
 
  export const actions = {
   pushKeyword({commit},data) {
     commit('setKeyword',data)
+    commit('updateLocalStorage')
   },
   pushOpen({commit}) {
     commit('setOpen')
+    commit('updateLocalStorage')
+  },
+  pushLocalStorage({commit},data) {
+    commit('setLocalStorage',data)
   },
  }
