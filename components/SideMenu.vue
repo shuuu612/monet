@@ -4,7 +4,6 @@
     <div id="sideMenu" class="sideMenu" :class="[getOpen,getClose]" @scroll="scrolledSideMenu">
       <div class="tabMenus">
         <div class="tabMenu button" :class="getSelectedTab('tag')" @click="clickTab('tag')">カテゴリー</div>
-        <div class="tabMenu button" :class="getSelectedTab('multiple')" @click="clickTab('multiple')">複数選択</div>
         <div class="tabMenu button" :class="getSelectedTab('favorite')" @click="clickTab('favorite')">お気に入り</div>
         <div class="tabMenu button" :class="getSelectedTab('setting')" @click="clickTab('setting')">設定</div>
       </div>
@@ -35,44 +34,6 @@
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-        <div v-show="selectedMultiple" class="sideMenuContent">
-          <div class="tagContents">
-            <div v-for="name in tagname" :key="name" class="tagContent">
-              <div class="sideMenuSubTitle tagStyle">{{name.toUpperCase()}}</div>
-              <div class="tagItems">
-                <div v-for="item in tag[name].contents" :key="item.id" class="tagItem" :class="getMultipleSelected(name, item.id)">
-                  <div class="tagLinks" @click.stop="clickMultipleContent(name, item.id)">
-                    <div class="tagLink button tagLinkMultiple">
-                      <div class="tagLinkText tagLinkTextMultiple">
-                        <div>{{item.name}}</div>
-                        <!-- <div class="tagLinkTextLine"></div> -->
-                      </div>
-                    </div>
-                    <!-- <div v-else class="tagLink button" @click="$moveTop">{{item.name}}</div> -->
-                    <!-- <div class="starButton button" @click.stop="setFavoriteTags(item.id)">
-                      <svg class="starImage" :class="getAddedFavoriteTags(item.id)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 567.13 539.38" fill="transparent" stroke="#ffffff">
-                        <polygon points="283.57 45.19 357.91 195.83 524.15 219.99 403.86 337.25 432.26 502.81 283.57 424.64 134.88 502.81 163.27 337.25 42.98 219.99 209.22 195.83 283.57 45.19" style="stroke-miterlimit:10;stroke-width:40px"/>
-                      </svg>
-                    </div> -->
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="multipleMenu" :class="getMultipleMenuOpen">
-            <div class="hitViewWrapper">
-              <div class="hitView">{{getMultipleHit}} 件</div>
-            </div>
-            <div class="multipleMenuButtons">
-              <div class="conditionSwitchs button" :class="{selectedOr: selectedOr, selectedAnd: selectedAnd}" @click="clickSwitch">
-                <div class="conditionSwitch orSwitch">OR</div>
-                <div class="conditionSwitch andSwitch">AND</div>
-              </div>
-              <button class="multipleMenuButton clearButton button" :class="getClearDeactive" :disabled="getClearDisabled" @click="clickCrear">クリア</button>
-              <button class="multipleMenuButton startButton button" :class="getStartDeactive" :disabled="getStartDisabled" @click="clickStart(); clickButton()">決定</button>
             </div>
           </div>
         </div>
@@ -235,7 +196,6 @@ export default {
         'technology',
       ],
       selectedTag: true,
-      selectedMultiple: false,
       selectedFavorite: false,
       selectedSetting: false,
       selectedOr: true,
@@ -337,28 +297,6 @@ export default {
         
       }
     },
-    getMultipleSelected() {
-      return function(name, id) {
-        const content = this.$store.getters['multipleSelect/getContents']
-        if(name === 'type') {
-          return { multipleSelected: content.type.includes(id)}
-        }else if(name === 'industry') {
-          return { multipleSelected: content.industry.includes(id)}
-        }else if(name === 'impression') {
-          return { multipleSelected: content.impression.includes(id)}
-        }else if(name === 'layout') {
-          return { multipleSelected: content.layout.includes(id)}
-        }else if(name === 'color') {
-          return { multipleSelected: content.color.includes(id)}
-        }else if(name === 'pickup') {
-          return { multipleSelected: content.pickup.includes(id)}
-        }else if(name === 'technique') {
-          return { multipleSelected: content.technique.includes(id)}
-        }else if(name === 'technology') {
-          return { multipleSelected: content.technology.includes(id)}
-        }
-      }
-    },
     /* getSelectedButton() {
       return function(key) {
         if(key === 'home') {
@@ -388,30 +326,10 @@ export default {
           return { selectedTab: this.selectedTag }
         }else if(key === 'setting') {
           return { selectedTab: this.selectedSetting}
-        }else if(key === 'multiple') {
-          return { selectedTab: this.selectedMultiple}
         }else if(key === 'favorite') {
           return { selectedTab: this.selectedFavorite}
         }
       }
-    },
-    getMultipleMenuOpen() {
-      return { multipleMenuOpen: this.$store.getters['sideMenu/getOpen'] && this.selectedMultiple}
-    },
-    getMultipleHit() {
-      return this.$store.getters['multipleSelect/getHit']
-    },
-    getClearDeactive() {
-      return { deactive: !this.$store.getters['multipleSelect/getActive'] }
-    },
-    getClearDisabled() {
-      return !this.$store.getters['multipleSelect/getActive']
-    },
-    getStartDeactive() {
-      return { deactive: this.$store.getters['multipleSelect/getHit'] === 0 }
-    },
-    getStartDisabled() {
-      return this.$store.getters['multipleSelect/getHit'] === 0
     },
     getDevicePcDisabled() {
       return this.$store.getters['devicePattern/getDisabledPC']
@@ -494,65 +412,16 @@ export default {
       if(key === 'tag') {
         this.selectedTag = true
         this.selectedSetting = false
-        this.selectedMultiple = false
         this.selectedFavorite = false
       }else if(key === 'setting') {
         this.selectedTag = false
         this.selectedSetting = true
-        this.selectedMultiple = false
-        this.selectedFavorite = false
-      }else if(key === 'multiple') {
-        this.selectedTag = false
-        this.selectedSetting = false
-        this.selectedMultiple = true
         this.selectedFavorite = false
       }else if(key === 'favorite') {
         this.selectedTag = false
         this.selectedSetting = false
-        this.selectedMultiple = false
         this.selectedFavorite = true
       }
-    },
-    clickMultipleContent(name, id) {
-      if(name === 'type') {
-        this.$store.dispatch('multipleSelect/pushType', id)
-      }else if(name === 'industry') {
-        this.$store.dispatch('multipleSelect/pushIndustry', id)
-      }else if(name === 'impression') {
-        this.$store.dispatch('multipleSelect/pushImpression', id)
-      }else if(name === 'layout') {
-        this.$store.dispatch('multipleSelect/pushLayout', id)
-      }else if(name === 'color') {
-        this.$store.dispatch('multipleSelect/pushColor', id)
-      }else if(name === 'pickup') {
-        this.$store.dispatch('multipleSelect/pushPickup', id)
-      }else if(name === 'technique') {
-        this.$store.dispatch('multipleSelect/pushTechnique', id)
-      }else if(name === 'technology') {
-        this.$store.dispatch('multipleSelect/pushTechnology', id)
-      }
-      this.$emit('multipleSearch')
-      /* this.$store.dispatch("status/pushSearchMulti"); */
-    },
-    clickStart() {
-      console.log('clickStart')
-      /* this.$store.dispatch('multipleSelect/pushStart') */
-      this.$emit('multipleStart')
-    },
-    clickCrear() {
-      console.log('clickCrear')
-      this.$store.dispatch('multipleSelect/pushClear')
-      this.$emit('multipleSearch')
-    },
-    clickSwitch() {
-      this.selectedOr = !this.selectedOr
-      this.selectedAnd = !this.selectedAnd
-      if(this.selectedOr) {
-        this.$store.dispatch('multipleSelect/pushCondition','or')
-      }else {
-        this.$store.dispatch('multipleSelect/pushCondition','and')
-      }
-      this.$emit('multipleSearch')
     },
     sliderChange(event) {
       /* if(this.$store.getters['slider/getStepData'].includes(Number(event.target.value))) {
@@ -1035,23 +904,7 @@ export default {
     color: var(--side-menu-category-text-selected);
     font-weight: 500;
   }
-  .multipleSelected & {
-    background-color: var(--side-menu-multiple-background-selected);
-    font-weight: 500;
-    color: var(--side-menu-multiple-text-selected);
-    /* &:hover {
-      background-color: var(--blue-dark);
-    } */
-  }
   border-radius: 50px;
-}
-
-.tagLinkMultiple {
-  padding: 6px 15px;
-  &:hover {
-    /* background-color: var(--grey-ultra-light); */
-  }
-
 }
 
 .tagLinkText {
@@ -1061,11 +914,6 @@ export default {
   }
 }
 
-.tagLinkTextMultiple {
-  .tagLink:hover & {
-    /* color: var(--black); */
-  }
-}
 .tagLinkTextLine {
   height: 1px;
   width: 0;
@@ -1213,48 +1061,6 @@ input[type="range"] {
   }
 }
 
-.multipleMenu {
-  /* display: flex;
-  align-items: center;
-  justify-content: center; */
-  height: 110px;
-  width: 100%;
-  max-width: var(--sideMenuWidth);
-  position: fixed;
-  bottom: 40px;
-  left: 0;
-  z-index: 55;
-  background-color: var(--side-menu-multiple-under-menu-background);
-  border-top: var(--side-menu-multiple-under-menu-border-top) 1px solid;
-  transform: translateY(70px);
-  transition: transform .4s;
-  padding: 10px 20px;
-  &.multipleMenuOpen {
-    transform: translateY(0);
-  }
-  @include responsive(xs) {
-    
-  }
-  @include responsive(sm) {
-    
-  }
-  @include responsive(md) {
-    /* width: var(--sideMenuWidth); */
-    bottom: 0;
-    height: 150px;
-    padding: 15px 20px;
-  }
-  @include responsive(lg) {
-    
-  }
-  @include responsive(xl) {
-    
-  }
-  @include responsive(xxl) {
-    
-  }
-}
-
 .hitViewWrapper {
   display: flex;
   align-items: center;
@@ -1307,114 +1113,6 @@ input[type="range"] {
   @include responsive(xxl) {
     
   }
-}
-
-.multipleMenuButtons {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.conditionSwitchs {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100px;
-  border-radius: 50px;
-  padding: 5px 5px;
-  background-color: var(--side-menu-multiple-under-menu-switch-overall-background);
-  margin-right: 10px;
-  &::after {
-    content: '';
-    position: absolute;
-    top: 4.5px;
-    left: 4.5px;
-    background-color: var(--side-menu-multiple-under-menu-switch-background-selected);
-    width: 42.5px;
-    height: 33px;
-    border-radius: 50px;
-    z-index: 50;
-    transition: left .2s;
-    /* &.selectedAnd {
-      left: 54.5px;
-    } */
-  }
-  &.selectedAnd {
-    &::after {
-      left: 52.5px;
-    }
-  }
-}
-
-.conditionSwitch {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--side-menu-multiple-under-menu-switch-background);
-  padding: 8px 5px;
-  border-radius: 50px;
-  width: 47px;
-  transition: background-color .2s;
-  color: var(--side-menu-multiple-under-menu-switch-text);
-  &:first-child {
-    margin-right: 5px;
-  }
-  font-size: var(--font-size-xs);
-  
-}
-
-.orSwitch {
-  .selectedOr & {
-    background-color: transparent;
-    z-index: 60;
-    color: var(--side-menu-multiple-under-menu-switch-text-selected);
-    font-weight: 400;
-  }
-  .selectedAnd & {
-    
-  }
-}
-
-.andSwitch {
-  .selectedOr & {
-
-  }
-  .selectedAnd & {
-    background-color: transparent;
-    z-index: 60;
-    color: var(--side-menu-multiple-under-menu-switch-text-selected);
-    font-weight: 400;
-  }
-}
-
-.multipleMenuButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100px;
-  padding: 11px 0;
-  border-radius: 50px;
-  font-weight: 400;
-  &:not(:last-child) {
-    margin-right: 10px;
-  }
-  
-}
-
-.startButton {
-  background-color: var(--side-menu-multiple-under-menu-start-button-background);
-}
-
-.clearButton {
-  background-color: var(--side-menu-multiple-under-menu-clear-button-background);
-}
-
-.deactive {
-  background-color: var(--side-menu-multiple-under-menu-button-background-deactive);
-  color: var(--side-menu-multiple-under-menu-button-text-deactive);
-  font-weight: 300;
-  pointer-events: none;
 }
 
 </style>

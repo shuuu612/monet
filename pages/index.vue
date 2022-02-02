@@ -17,8 +17,6 @@
     <SideMenu
     :tag="tag"
     :selectedtag="analyzedSelectedTag"
-    @multipleSearch="multipleSearch"
-    @multipleStart="multipleSearchStart"
     @autoSizing="pushAutoSizing"
     @deviceChange="changeDevice"
     @sliderChange="changeSliderSize"
@@ -345,18 +343,14 @@ export default {
             data: {}, */
             searchTags: [],
             searchKeyword: [],
-            searchMultiple: [],
             displayingContent: [],
             displayingLimit: 10,
             displayingPageTags: 0,
             displayingPageKeyword: 0,
-            displayingPageMultiple: 0,
             remainingContent: 0,
             activeSearch: false,
-            activeMultiple: false,
             displayingJpName: "",
             tagsJpName: "",
-            multipleJpName: "",
             infoStyle: {
                 width: "",
             },
@@ -534,16 +528,7 @@ export default {
         },
         getNoContentComment() {
             /* if(!this.$store.getters["loaded/getLoaded"]) return ""; */
-            if (this.$store.getters["status/getSearchMulti"]) {
-                // 複数選択
-                if (this.searchMultiple.length === 0) {
-                  // ありえない
-                  return this.displayingJpName;
-                }
-                else {
-                    return this.displayingJpName;
-                }
-            }else if (this.$store.getters["status/getSearchKeyword"]) {
+            if (this.$store.getters["status/getSearchKeyword"]) {
                 // キーワード検索
                 if (this.searchKeyword.length === 0) {
                     return "一致する検索結果はありません";
@@ -669,54 +654,8 @@ export default {
             console.log("ブラウザのローカルストレージがオフになっています。");
         }
 
-        
-
-        
-
-        // 履歴設定
-        if(this.$store.getters["page/getPage"] === 0) {
-          // 初回
-          console.log('初回？')
-          // historyにページ情報を付加
-          history.replaceState({ page: 1 }, '', null);
-          this.$store.dispatch("page/pushPageUp");
-
-          // コンテンツ表示処理
-          this.displayContent();
-          
-        }else if(this.$store.getters["page/getBackward"]) {
-          console.log('戻る進むキーでリロードがかかったとき')
-          // 戻るキーフラグを元に戻す
-          this.$store.dispatch("page/pushBackward");
-
-          // 過去のステータスを読み込む
-          this.loadPastStatus();
-
-          // コンテンツ表示処理
-          this.displayContent();
-
-        }else if(this.$store.getters["page/getPage"] === history.length - 1){
-          console.log('最新ページを更新')
-          // storeのページを進める
-          this.$store.dispatch("page/pushPageUp");
-          // historyにページ情報を付加
-          history.replaceState({ page: this.$store.getters["page/getPage"] }, '', null);
-
-          // コンテンツ表示処理
-          this.displayContent('update');
-          
-        }else {
-          // リロード
-          console.log('リロード？')
-          // コンテンツ表示処理
-          this.displayContent();
-        }
-        console.log('mounted length ',history.length)
-        console.log('mounted page ',history.state.page)
-        console.log('mounted store',this.$store.getters["page/getPage"])
-
         // コンテンツ表示処理
-        /* this.displayContent(); */
+        this.displayContent();
         
         // ページ遷移時の処理
         if(this.$store.getters["loaded/getLoaded"]) {
@@ -732,14 +671,6 @@ export default {
         window.addEventListener("scroll", this.setWindowScroll);
         // ローディング画面を終了させる
         window.setTimeout(this.setLoaded, 1500);
-
-        // ブラウザの「戻るボタン」または「進むボタン」の押下を監視
-        window.addEventListener('popstate', this.popstate);
-
-        // リロードを監視
-        window.addEventListener('beforeunload', this.beforeunload);
-        // リロードを監視
-        window.addEventListener('unload', this.unload);
 
         window.matchMedia("(min-width:375px)").addEventListener("change", this.matchMediaProcess);
         window.matchMedia("(min-width:500px)").addEventListener("change", this.matchMediaProcess);
@@ -810,101 +741,9 @@ export default {
           const contents = document.getElementById("contents");
           this.contentsElement = contents
         },
-        loadPastStatus() {
-          // 過去のステータスを取得
-          console.log('loadPastStatus')
-          const exist = this.$store.getters["page/getExist"]
-          console.log(exist)
-
-          // 過去のステータス（複数選択）が存在する場合
-          if(exist === 1) {
-            console.log('過去ステータスが存在する')
-            // 現在の状態を「複数選択」にする
-            this.$store.dispatch("status/pushSearchMulti");
-            // 複数選択のキーワードを設定
-            console.log(this.$store.getters["page/getPage"])
-            this.$store.dispatch("multipleSelect/pushClear");
-            /* if(this.$store.getters["page/getType"].length > 0) {
-              this.$store.getters["page/getType"].forEach(function(item) {
-                console.log(item)
-                this.$store.dispatch("multipleSelect/pushType", item);
-              });
-            } */
-            console.log(this.$store.getters["page/getType"])
-            for(let i=0;i<this.$store.getters["page/getType"].length;i++) {
-              console.log(this.$store.getters["page/getType"][i])
-              this.$store.dispatch("multipleSelect/pushType", this.$store.getters["page/getType"][i]);
-            }
-            for(let i=0;i<this.$store.getters["page/getIndustry"].length;i++) {
-              console.log(this.$store.getters["page/getIndustry"][i])
-              this.$store.dispatch("multipleSelect/pushIndustry", this.$store.getters["page/getIndustry"][i]);
-            }
-            for(let i=0;i<this.$store.getters["page/getImpression"].length;i++) {
-              console.log(this.$store.getters["page/getImpression"][i])
-              this.$store.dispatch("multipleSelect/pushImpression", this.$store.getters["page/getImpression"][i]);
-            }
-            for(let i=0;i<this.$store.getters["page/getLayout"].length;i++) {
-              console.log(this.$store.getters["page/getLayout"][i])
-              this.$store.dispatch("multipleSelect/pushLayout", this.$store.getters["page/getLayout"][i]);
-            }
-            for(let i=0;i<this.$store.getters["page/getColor"].length;i++) {
-              console.log(this.$store.getters["page/getColor"][i])
-              this.$store.dispatch("multipleSelect/pushColor", this.$store.getters["page/getColor"][i]);
-            }
-            for(let i=0;i<this.$store.getters["page/getPickup"].length;i++) {
-              console.log(this.$store.getters["page/getPickup"][i])
-              this.$store.dispatch("multipleSelect/pushPickup", this.$store.getters["page/getPickup"][i]);
-            }
-            for(let i=0;i<this.$store.getters["page/getTechnique"].length;i++) {
-              console.log(this.$store.getters["page/getTechnique"][i])
-              this.$store.dispatch("multipleSelect/pushTechnique", this.$store.getters["page/getTechnique"][i]);
-            }
-            for(let i=0;i<this.$store.getters["page/getTechnology"].length;i++) {
-              console.log(this.$store.getters["page/getTechnology"][i])
-              this.$store.dispatch("multipleSelect/pushTechnology", this.$store.getters["page/getTechnology"][i]);
-            }
-            this.$store.dispatch("multipleSelect/pushCondition",this.$store.getters["page/getCondition"]);
-            /* this.displayingPageMultiple = status.displayingPage; */
-            console.log(this.$store.getters["multipleSelect/getContents"])
-            console.log(this.$store.getters["status/getSearchMulti"])
-          }else {
-            // 現在の状態を「通常表示」にする
-            this.$store.dispatch("status/pushSearchTag");
-          }
-
-          /* if(status.search === 0) {
-            this.$store.dispatch("status/pushSearchKeyword");
-            this.$store.dispatch("search/pushKeyword",status.searchKey);
-            this.displayingPageKeyword = status.displayingPage;
-          }else if(status.search === 1) {
-            console.log('1')
-            this.$store.dispatch("status/pushSearchMulti");
-            this.$store.dispatch("multipleSelect/pushContents",status.searchKey);
-            this.displayingPageMultiple = status.displayingPage;
-            console.log(status)
-            console.log(this.$store.getters["multipleSelect/getContents"])
-            console.log(this.$store.getters["status/getSearchMulti"])
-          }else {
-            this.$store.dispatch("status/pushSearchTag");
-            this.analyzedSelectedTag = status.searchKey
-            this.displayingPage = status.displayingPage;
-          } */
-        },
-        displayContent(key) {
+        displayContent() {
           // コンテンツ表示処理
-          if(this.$store.getters["status/getSearchMulti"]) {
-            // 複数選択で表示
-            console.log('複数選択で表示')
-            const content = this.$store.getters["multipleSelect/getContents"];
-            console.log(content)
-            this.searchByTags(content);
-            if(key === 'update') {
-              this.setDisplayingContent("multiple",'update');
-            }else {
-              this.setDisplayingContent("multiple");
-            }
-            
-          }else if(this.$store.getters["status/getSearchKeyword"]) {
+          if(this.$store.getters["status/getSearchKeyword"]) {
             // キーワード検索で表示
             console.log('キーワード検索で表示')
             const keyword = this.$store.getters["search/getKeyword"]
@@ -912,11 +751,7 @@ export default {
           }else {
             console.log('通常表示')
             this.searchByTags();
-            if(key === 'update') {
-              this.setDisplayingContent("",'update');
-            }else {
-              this.setDisplayingContent("");
-            }
+            this.setDisplayingContent();
           }
         },
         wrapChack() {
@@ -1490,9 +1325,9 @@ export default {
               return allTags.map(item => item.name);
           }
         },
-        searchByTags(multipleContent) {
+        searchByTags() {
             console.log("searchByTagsを起動");
-            if (this.selectedTag === undefined && multipleContent === undefined) {
+            if (this.selectedTag === undefined) {
                 console.log("searchByTags-通常表示のためフィルター処理なしで抜ける");
                 this.searchTags = this.contents;
                 return;
@@ -1512,48 +1347,19 @@ export default {
             let condition = "";
             let bookmark = false;
             let filterContents;
-            let japaneseTag;
-            if (multipleContent !== undefined) {
-              console.log('11')
-                type = multipleContent.type;
-                industry = multipleContent.industry;
-                impression = multipleContent.impression;
-                layout = multipleContent.layout;
-                color = multipleContent.color;
-                pickup = multipleContent.pickup;
-                technique = multipleContent.technique;
-                technology = multipleContent.technology;
-                condition = multipleContent.condition;
-                // タグIDを日本語に変換する
-                const tags = {
-                  type: [...type],
-                  industry: [...industry],
-                  impression: [...impression],
-                  layout: [...layout],
-                  color: [...color],
-                  pickup: [...pickup],
-                  technique: [...technique],
-                  technology: [...technology],
-                }
-                tags.bookmark = bookmark;
-                tags.condition = condition;
-    
-                japaneseTag = this.convertTagsToJapanese(tags);
-            }
-            else {
-                // 解析済みのURLから設定
-                type = this.analyzedSelectedTag.type;
-                industry = this.analyzedSelectedTag.industry;
-                impression = this.analyzedSelectedTag.impression;
-                layout = this.analyzedSelectedTag.layout;
-                color = this.analyzedSelectedTag.color;
-                pickup = this.analyzedSelectedTag.pickup;
-                technique = this.analyzedSelectedTag.technique;
-                technology = this.analyzedSelectedTag.technology;
-                condition = this.analyzedSelectedTag.condition;
-                bookmark = this.analyzedSelectedTag.bookmark;
-                japaneseTag = this.japaneseTags
-            }
+
+            // 解析済みのURLから設定
+            type = this.analyzedSelectedTag.type;
+            industry = this.analyzedSelectedTag.industry;
+            impression = this.analyzedSelectedTag.impression;
+            layout = this.analyzedSelectedTag.layout;
+            color = this.analyzedSelectedTag.color;
+            pickup = this.analyzedSelectedTag.pickup;
+            technique = this.analyzedSelectedTag.technique;
+            technology = this.analyzedSelectedTag.technology;
+            condition = this.analyzedSelectedTag.condition;
+            bookmark = this.analyzedSelectedTag.bookmark;
+
             // フィルター処理
             if (bookmark) {
                 // ブックマークでフィルター
@@ -1562,7 +1368,6 @@ export default {
                 });
             }
             else {
-              console.log('12')
                 // タグでフィルター
                 filterContents = this.contents.filter(function (value) {
                     let matchType = 0;
@@ -1672,17 +1477,9 @@ export default {
                 });
             }
             
-            if (multipleContent !== undefined) {
-              console.log('13')
-                this.searchMultiple = filterContents;
-                console.log(this.searchMultiple)
-                this.$store.dispatch("multipleSelect/pushHit", this.searchMultiple.length);
-                this.multipleJpName = japaneseTag.join(" + ");
-            }
-            else {
-                this.searchTags = filterContents;
-                this.tagsJpName = japaneseTag.join(" + ");
-            }
+            this.searchTags = filterContents;
+            this.tagsJpName = this.japaneseTags.join(" + ");
+
         },
         setDisplayingContent(id, key) {
             console.log("setDisplayingContentを起動");
@@ -1696,21 +1493,7 @@ export default {
                 this.remainingContent = this.searchKeyword.length - this.displayingContent.length;
                 this.displayingJpName = "";
                 this.$store.dispatch("status/pushSearchKeyword");
-                /* this.loadPastStatus('keyword'); */
-            }
-            else if (id === "multiple") {
-                // 複数選択で検索した結果を表示
-                this.displayingPageMultiple = this.displayingPageMultiple + 1;
-                const start = 0;
-                const end = start + (this.displayingPageMultiple * this.displayingLimit);
-                this.displayingContent = this.searchMultiple.slice(start, end);
-                console.log(this.searchMultiple)
-                this.remainingContent = this.searchMultiple.length - this.displayingContent.length;
-                this.displayingJpName = this.multipleJpName;
-                this.$store.dispatch("status/pushSearchMulti");
-                /* this.loadPastStatus('multiple'); */
-            }
-            else {
+            }else {
                 // タグで検索した結果を表示
                 this.displayingPageTags = this.displayingPageTags + 1;
                 const start = 0;
@@ -1719,14 +1502,7 @@ export default {
                 this.remainingContent = this.searchTags.length - this.displayingContent.length;
                 this.displayingJpName = this.tagsJpName;
                 this.$store.dispatch("status/pushSearchTag");
-                /* this.loadPastStatus(''); */
             }
-            if(key === 'update') {
-              this.setPage('update');
-            }else {
-              this.setPage();
-            }
-            
         },
         getLocalStorage() {
             // 初回読み込み時にローカルストレージのデータをstoreに取り込み
@@ -1766,12 +1542,6 @@ export default {
             if (darkmode !== null) {
                 this.$store.dispatch("darkmode/pushLocalStorage", darkmode);
             }
-            // 複数選択
-            const multipleSelectJson = sessionStorage.getItem("multipleSelect");
-            const multipleSelect = JSON.parse(multipleSelectJson);
-            if (multipleSelect !== null) {
-                this.$store.dispatch("multipleSelect/pushLocalStorage", multipleSelect);
-            }
             // 検索キーワード
             const searchJson = sessionStorage.getItem("search");
             const search = JSON.parse(searchJson);
@@ -1783,12 +1553,6 @@ export default {
             const status = JSON.parse(statusJson);
             if (status !== null) {
                 this.$store.dispatch("status/pushLocalStorage", status);
-            }
-            // ページ
-            const pageJson = sessionStorage.getItem("page");
-            const page = JSON.parse(pageJson);
-            if (page !== null) {
-                this.$store.dispatch("page/pushLocalStorage", page);
             }
         },
         openModal(id) {
@@ -1934,19 +1698,6 @@ export default {
           const keyword = this.$store.getters["search/getKeyword"];
           this.searchByKeyword(keyword);
         },
-        multipleSearch() {
-          const content = this.$store.getters["multipleSelect/getContents"];
-          this.searchByTags(content);
-        },
-        multipleSearchStart() {
-          console.log('複数選択が押下された')
-          history.pushState({page: history.state.page + 1}, '', null);
-          this.$store.dispatch("page/pushPageUp");
-          this.setDisplayingContent("multiple", "update");
-          console.log('複数選択 length ',history.length)
-          console.log('複数選択 page ',history.state.page)
-          console.log('複数選択 store',this.$store.getters["page/getPage"])
-        },
         pushAutoSizing() {
           if(this.$store.getters["slider/getAutoSizing"]) {
             this.calculateAutoSizing();
@@ -1974,87 +1725,6 @@ export default {
                 setTimeout(() => (this.$store.dispatch("notice/pushClose")),3000)
             }
         },
-        popstate() {
-          console.log('popstate')
-          // ここにくるときにはhistoryのpageはすでに戻るか進むかしている
-          if(this.$store.getters["page/getBackward"]) {
-            this.$store.dispatch("page/pushBackward");
-          }
-
-          if(this.$store.getters["page/getPage"] > history.state.page) {
-            console.log('戻るキーが押下された')
-            this.$store.dispatch("page/pushPageDown");
-            console.log('戻るキー length ',history.length)
-            console.log('戻るキー page ',history.state.page)
-            console.log('戻るキー store',this.$store.getters["page/getPage"])
-          }else if(this.$store.getters["page/getPage"] < history.state.page){
-            console.log('進むキーが押下された')
-            this.$store.dispatch("page/pushPageUp");
-            console.log('進むキー length ',history.length)
-            console.log('進むキー page ',history.state.page)
-            console.log('進むキー store',this.$store.getters["page/getPage"])
-          }
-          this.$store.dispatch("page/pushBackward");
-          this.loadPastStatus();
-          this.displayContent();
-        },
-        setPage(key) {
-          console.log('setPage')
-          
-          if(this.$store.getters["status/getSearchMulti"]) {
-            console.log('現在の状態（複数選択）を退避')
-            const type = this.$store.getters["multipleSelect/getType"]
-            const industry = this.$store.getters["multipleSelect/getIndustry"]
-            const impression = this.$store.getters["multipleSelect/getImpression"]
-            const layout = this.$store.getters["multipleSelect/getLayout"]
-            const color = this.$store.getters["multipleSelect/getColor"]
-            const pickup = this.$store.getters["multipleSelect/getPickup"]
-            const technique = this.$store.getters["multipleSelect/getTechnique"]
-            const technology = this.$store.getters["multipleSelect/getTechnology"]
-            const condition = this.$store.getters["multipleSelect/getCondition"]
-
-            // 現在のステータスをstoreに退避
-            if(key === 'update') {
-              this.$store.dispatch("page/pushUpdateType", [...type]);
-              this.$store.dispatch("page/pushUpdateIndustry", [...industry]);
-              this.$store.dispatch("page/pushUpdateImpression", [...impression]);
-              this.$store.dispatch("page/pushUpdateLayout", [...layout]);
-              this.$store.dispatch("page/pushUpdateColor", [...color]);
-              this.$store.dispatch("page/pushUpdatePickup", [...pickup]);
-              this.$store.dispatch("page/pushUpdateTechnique", [...technique]);
-              this.$store.dispatch("page/pushUpdateTechnology", [...technology]);
-              this.$store.dispatch("page/pushUpdateCondition", condition);
-              this.$store.dispatch("page/pushUpdateExist");
-            }else {
-              this.$store.dispatch("page/pushReplaceType", [...type]);
-              this.$store.dispatch("page/pushReplaceIndustry", [...industry]);
-              this.$store.dispatch("page/pushReplaceImpression", [...impression]);
-              this.$store.dispatch("page/pushReplaceLayout", [...layout]);
-              this.$store.dispatch("page/pushReplaceColor", [...color]);
-              this.$store.dispatch("page/pushReplacePickup", [...pickup]);
-              this.$store.dispatch("page/pushReplaceTechnique", [...technique]);
-              this.$store.dispatch("page/pushReplaceTechnology", [...technology]);
-              this.$store.dispatch("page/pushReplaceCondition", condition);
-              this.$store.dispatch("page/pushReplaceExist");
-            }
-              
-          }else {
-            console.log('現在の状態（通常表示）を退避')
-            if(key === 'update') {
-              this.$store.dispatch("page/pushUpdateEmpty");
-            }else {
-              this.$store.dispatch("page/pushReplaceEmpty");
-            }
-            
-          }
-        },
-        beforeunload() {
-          console.log('beforeunload')
-          this.$store.dispatch("page/pushReload");
-        },
-        unload() {
-          console.log('unload')
-        }
     },
 }
 </script>
