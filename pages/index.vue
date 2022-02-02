@@ -71,49 +71,41 @@
                       <div class="modalTagContents">
                         <div v-for="item in content.type" :key="item.id" class="modalTagContent">
                           <nuxt-link :to="`/tag/type=${item.id}*and`" class="modalTagLink button">
-                            <!-- <img class="modalTagImg" src="/images/tag.svg" alt="tag" /> -->
                             <div class="modalTagName">#{{item.name}}</div>
                           </nuxt-link>
                         </div>
                         <div v-for="item in content.industry" :key="item.id" class="modalTagContent">
                           <nuxt-link :to="`/tag/industry=${item.id}*and`" class="modalTagLink button">
-                            <!-- <img class="modalTagImg" src="/images/tag.svg" alt="tag" /> -->
                             <div class="modalTagName">#{{item.name}}</div>
                           </nuxt-link>
                         </div>
                         <div v-for="item in content.impression" :key="item.id" class="modalTagContent">
                           <nuxt-link :to="`/tag/impression=${item.id}*and`" class="modalTagLink button">
-                            <!-- <img class="modalTagImg" src="/images/tag.svg" alt="tag" /> -->
                             <div class="modalTagName">#{{item.name}}</div>
                           </nuxt-link>
                         </div>
                         <div v-for="item in content.layout" :key="item.id" class="modalTagContent">
                           <nuxt-link :to="`/tag/layout=${item.id}*and`" class="modalTagLink button">
-                            <!-- <img class="modalTagImg" src="/images/tag.svg" alt="tag" /> -->
                             <div class="modalTagName">#{{item.name}}</div>
                           </nuxt-link>
                         </div>
                         <div v-for="item in content.color" :key="item.id" class="modalTagContent">
                           <nuxt-link :to="`/tag/color=${item.id}*and`" class="modalTagLink button">
-                            <!-- <img class="modalTagImg" src="/images/tag.svg" alt="tag" /> -->
                             <div class="modalTagName">#{{item.name}}</div>
                           </nuxt-link>
                         </div>
                         <div v-for="item in content.pickup" :key="item.id" class="modalTagContent">
                           <nuxt-link :to="`/tag/pickup=${item.id}*and`" class="modalTagLink button">
-                            <!-- <img class="modalTagImg" src="/images/tag.svg" alt="tag" /> -->
                             <div class="modalTagName">#{{item.name}}</div>
                           </nuxt-link>
                         </div>
                         <div v-for="item in content.technique" :key="item.id" class="modalTagContent">
                           <nuxt-link :to="`/tag/technique=${item.id}*and`" class="modalTagLink button">
-                            <!-- <img class="modalTagImg" src="/images/tag.svg" alt="tag" /> -->
                             <div class="modalTagName">#{{item.name}}</div>
                           </nuxt-link>
                         </div>
                         <div v-for="item in content.technology" :key="item.id" class="modalTagContent">
                           <nuxt-link :to="`/tag/technology=${item.id}*and`" class="modalTagLink button">
-                            <!-- <img class="modalTagImg" src="/images/tag.svg" alt="tag" /> -->
                             <div class="modalTagName">#{{item.name}}</div>
                           </nuxt-link>
                         </div>
@@ -137,11 +129,6 @@
                   </div>
                 </div>
                 <button class="infoButton detail" @click="openModal(content.id)">
-                  <!-- <svg class="detailImage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 172 36" fill="#333333">
-                    <circle cx="18" cy="18" r="18"/>
-                    <circle cx="86" cy="18" r="18"/>
-                    <circle cx="154" cy="18" r="18"/>
-                  </svg> -->
                   <svg class="detailImage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 425.69 425.69" fill="#333333">
                     <path d="M255.61,165.44H203.18V113a18.88,18.88,0,0,0-37.75,0v52.44H113a18.88,18.88,0,1,0,0,37.75h52.42v52.43a18.88,18.88,0,0,0,37.75,0V203.19h52.43a18.88,18.88,0,1,0,0-37.75Z"/>
                     <path d="M416.48,372l-81.67-81.66a183.05,183.05,0,0,0,33.8-106C368.61,82.69,285.93,0,184.31,0S0,82.69,0,184.31,82.68,368.62,184.31,368.62a183.13,183.13,0,0,0,106-33.8L372,416.47A31.46,31.46,0,1,0,416.48,372ZM37.75,184.31c0-80.82,65.75-146.56,146.56-146.56s146.55,65.74,146.55,146.56S265.12,330.87,184.31,330.87,37.75,265.13,37.75,184.31Z"/>
@@ -149,10 +136,6 @@
                   <div class="comment">詳細</div>
                 </button>
                 <button class="infoButton bookmark" @click="setBookmark(content.id)">
-                  <!-- <svg class="bookmarkImage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144 179">
-                    <polygon :class="getAddedBookmark(content.id)" points="72 117.13 8 163.35 8 8 136 8 136 163.35 72 117.13" fill="#fff"/>
-                    <path class="bookmarkRegistered" d="M128,16V147.71L81.37,114,72,107.26,62.63,114,16,147.71V16H128M138,0H6A6,6,0,0,0,0,6V179l72-52,72,52V6a6,6,0,0,0-6-6Z" fill="#333333"/>
-                  </svg> -->
                   <svg class="bookmarkImage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 451.61 428.07" fill="transparent" stroke="#231815" :class="getAddedBookmark(content.id)">
                     <path d="M328.66,20C282,20,244.47,43.3,225.55,83.13,206.7,43.3,169.53,20,123.42,20,66.39,20,20,65.5,20,121.42,20,186,57.06,233.7,95,277,132,319,203.44,390.25,220.41,406.24a6.76,6.76,0,0,0,4.62,1.83h1a6.76,6.76,0,0,0,4.62-1.83C248.93,389,320.58,317.9,356.53,277c38-43.35,75.08-91.08,75.08-155.59C431.61,64.56,386.4,20,328.66,20Z" style="stroke-miterlimit:10;stroke-width:40px"/>
                   </svg>
@@ -217,10 +200,6 @@ export default {
             const year = publishedDate.getFullYear();
             const month = publishedDate.getMonth() + 1;
             const day = publishedDate.getDate();
-            /* const hour = publishedDate.getHours();
-            const minutes = publishedDate.getMinutes();
-            const second = publishedDate.getSeconds(); */
-            /* const formatDate = year + "-" + month.toString().padStart(2, "0") + "-" + day.toString().padStart(2, "0") + " " + hour.toString().padStart(2, "0") + ":" + minutes.toString().padStart(2, "0") + ":" + second.toString().padStart(2, "0"); */
             const formatDate = year + "/" + month.toString().padStart(2, "0") + "/" + day.toString().padStart(2, "0");
             content.publishedAtJST = formatDate;
             const updatedDate = new Date(content.updatedAt);
@@ -231,10 +210,6 @@ export default {
                 const year = updatedDate.getFullYear();
                 const month = updatedDate.getMonth() + 1;
                 const day = updatedDate.getDate();
-                /* const hour = updatedDate.getHours();
-                const minutes = updatedDate.getMinutes();
-                const second = updatedDate.getSeconds(); */
-                /* const formatDate = year + "-" + month.toString().padStart(2, "0") + "-" + day.toString().padStart(2, "0") + " " + hour.toString().padStart(2, "0") + ":" + minutes.toString().padStart(2, "0") + ":" + second.toString().padStart(2, "0"); */
                 const formatDate = year + "/" + month.toString().padStart(2, "0") + "/" + day.toString().padStart(2, "0");
                 content.updatedAtJST = formatDate;
             }
@@ -338,9 +313,6 @@ export default {
         return {
             dummy: [],
             dummyStyle: {},
-            /* observer: undefined,
-            availableSizes: undefined,
-            data: {}, */
             searchTags: [],
             searchKeyword: [],
             displayingContent: [],
@@ -405,9 +377,6 @@ export default {
               url: 'https://suugo.jp/',
               image: 'https://hogehoge.com/images/logo.png',
             },
-            historyCount: 0,
-            reload: false,
-            backward: false,
         };
     },
     head() {
@@ -428,15 +397,6 @@ export default {
         };
     },
     computed: {
-        /* getPcHide() {
-            return { hide: !this.$store.getters["devicePattern/getActivePC"] };
-        },
-        getTbHide() {
-            return { hide: !this.$store.getters["devicePattern/getActiveTB"] };
-        },
-        getSpHide() {
-            return { hide: !this.$store.getters["devicePattern/getActiveSP"] };
-        }, */
         getPcHide() {
             return this.$store.getters["devicePattern/getActivePC"];
         },
@@ -527,7 +487,6 @@ export default {
             return { hide: this.remainingContent === 0 };
         },
         getNoContentComment() {
-            /* if(!this.$store.getters["loaded/getLoaded"]) return ""; */
             if (this.$store.getters["status/getSearchKeyword"]) {
                 // キーワード検索
                 if (this.searchKeyword.length === 0) {
@@ -553,11 +512,6 @@ export default {
               return '';
             }
         },
-        /* getActiveModal() {
-            return function (id) {
-                return { activeModal: this.activeModal.includes(id) };
-            };
-        }, */
         getActiveModal() {
             return function (id) {
                 return this.activeModal.includes(id)
@@ -693,13 +647,9 @@ export default {
     },
     updated() {
         console.log("updated");
-        if(this.$store.getters["page/getBackward"]) {
-          this.$store.dispatch("page/pushBackward");
-        }
     },
     beforeDestroy() {
         console.log("beforeDestroy");
-        /* this.setPage(); */
 
         window.removeEventListener("load", this.loadProcess);
         window.removeEventListener("resize", this.resizeProcess);
