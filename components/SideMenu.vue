@@ -15,7 +15,7 @@
               <div class="tagItems">
                 <div v-for="item in tag[name].contents" :key="item.id" class="tagItem" :class="getSelectedTag(name, item.id, 1)">
                   <div class="tagLinks" @click="clickTagButton">
-                    <nuxt-link v-if="getSelectedTag(name, item.id, 0)" :to="`/tag/${name}=${item.id}*and`" class="tagLink button">
+                    <nuxt-link v-if="getSelectedTag(name, item.id, 0)" :to="`/tag/${item.id}`" class="tagLink button">
                       <div v-if="name === 'color'" class="colorImage" :class="`${item.id}`"></div>
                       <div class="tagLinkText">
                         <div>{{item.name}}</div>
@@ -47,7 +47,7 @@
                   <template v-for="item in tag[name].contents">
                     <div v-if="getFavorited(item.id)" :key="item.id" class="tagItem" :class="getSelectedTag(name, item.id, 1)">
                       <div class="tagLinks" @click="clickTagButton">
-                        <nuxt-link v-if="getSelectedTag(name, item.id, 0)" :to="`/tag/${name}=${item.id}*and`" class="tagLink button">
+                        <nuxt-link v-if="getSelectedTag(name, item.id, 0)" :to="`/tag/${item.id}`" class="tagLink button">
                           <div class="tagLinkText">
                             <div>{{item.name}}</div>
                             <div class="tagLinkTextLine"></div>
@@ -174,7 +174,7 @@ export default {
       default: undefined,
     },
     selectedtag: {
-      type: Object,
+      type: String,
       required: false,
       default: undefined,
     },
@@ -275,7 +275,7 @@ export default {
     getClose() {
       return { isClose: !this.$store.getters['sideMenu/getOpen'] }
     },
-    getSelectedTag() {
+    /* getSelectedTag() {
       return function(name, id) {
         if(name === 'type') {
           return { selected: this.selectedtag.type.includes(id)}
@@ -295,6 +295,11 @@ export default {
           return { selected: this.selectedtag.technology.includes(id)}
         }
         
+      }
+    }, */
+    getSelectedTag() {
+      return function(id) {
+        return { selected: this.selectedtag === id}
       }
     },
     /* getSelectedButton() {

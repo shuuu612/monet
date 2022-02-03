@@ -16,7 +16,7 @@
     />
     <SideMenu
     :tag="tag"
-    :selectedtag="analyzedSelectedTag"
+    :selectedtag="selectedTag"
     @autoSizing="pushAutoSizing"
     @deviceChange="changeDevice"
     @sliderChange="changeSliderSize"
@@ -160,6 +160,12 @@ export default {
     async asyncData({ params, $microcms }) {
         // タグページ用
         const selectedTag = params.tagId;
+        let apiFilters
+        if(selectedTag !== undefined && selectedTag !== 'bookmark') {
+          apiFilters = `(type[contains]${selectedTag}[or]industry[contains]${selectedTag}[or]impression[contains]${selectedTag}[or]layout[contains]${selectedTag}[or]color[contains]${selectedTag}[or]pickup[contains]${selectedTag}[or]technique[contains]${selectedTag}[or]technology[contains]${selectedTag})[and]hide[equals]false[and]link[equals]false`
+        }else {
+          apiFilters = "hide[equals]false[and]link[equals]false";
+        }
         // 並び替え用
         const selectedSort = params.sortId;
         let order = "";
@@ -182,7 +188,8 @@ export default {
         // 取得するデータ数（全データを取得できること）
         const apiLimit = 1000;
         // 非表示またはリンク切れにチェックが入っているコンテンツは表示しない
-        const apiFilters = "hide[equals]false[and]link[equals]false";
+        /* const apiFilters = "hide[equals]false[and]link[equals]false"; */
+        console.log('ここ',apiFilters)
         // API通信
         console.log("Start API communication");
         const data = await $microcms.get({
@@ -313,12 +320,13 @@ export default {
         return {
             dummy: [],
             dummyStyle: {},
-            searchTags: [],
-            searchKeyword: [],
+            keywordContents: [],
+            bookmarkContents: [],
             displayingContent: [],
             displayingLimit: 10,
-            displayingPageTags: 0,
+            displayingPageOriginal: 0,
             displayingPageKeyword: 0,
+            displayingPageBookmark: 0,
             remainingContent: 0,
             activeSearch: false,
             displayingJpName: "",
@@ -363,7 +371,7 @@ export default {
                 bookmark: false,
                 condition: "",
             },
-            japaneseTags: [],
+            japaneseTags: '',
             darkmode: "",
             modalOpenElement: {},
             contentsElement: {},
@@ -489,7 +497,7 @@ export default {
         getNoContentComment() {
             if (this.$store.getters["status/getSearchKeyword"]) {
                 // キーワード検索
-                if (this.searchKeyword.length === 0) {
+                if (this.keywordContents.length === 0) {
                     return "一致する検索結果はありません";
                 }
                 else {
@@ -497,7 +505,7 @@ export default {
                 }
             }else if (this.$store.getters["status/getSearchTag"]) {
                 // 通常検索
-                if (this.searchTags.length === 0) {
+                if (this.contents.length === 0) {
                     if (this.displayingJpName === "お気に入り") {
                         return "お気に入りは登録されていません";
                     }
@@ -587,6 +595,9 @@ export default {
     },
     created() {
         console.log("created");
+        // タグの日本語名を設定
+        this.convertTagsToJapanese();
+        // headを設定
         this.setHead();
     },
     mounted() {
@@ -608,8 +619,8 @@ export default {
             console.log("ブラウザのローカルストレージがオフになっています。");
         }
 
-        // コンテンツ表示処理
-        this.displayContent();
+        // コンテンツ初期表示
+        this.InitialDisplay();
         
         // ページ遷移時の処理
         if(this.$store.getters["loaded/getLoaded"]) {
@@ -679,30 +690,77 @@ export default {
           if(this.selectedTag === undefined) {
             // ベース設定のまま
           }else {
-            this.analyzedUrl();
+            /* this.analyzedUrl(); */
             // tagIDを日本語に変換
-            const japaneseTag = this.convertTagsToJapanese(this.analyzedSelectedTag)
-            this.japaneseTags = japaneseTag
-            this.meta.title = japaneseTag[0] + ' | ' + this.meta.title;
-            this.meta.keyword = japaneseTag[0] + ',' + this.meta.keyword
+            this.meta.title = this.japaneseTag + ' | ' + this.meta.title;
+            this.meta.keyword = this.japaneseTag + ',' + this.meta.keyword
           }
         },
         setContentsElement() {
           const contents = document.getElementById("contents");
           this.contentsElement = contents
         },
-        displayContent() {
-          // コンテンツ表示処理
+        InitialDisplay() {
+          // コンテンツ初期表示
+
+          this.filterByBookmarks();
+          
           if(this.$store.getters["status/getSearchKeyword"]) {
-            // キーワード検索で表示
-            console.log('キーワード検索で表示')
-            const keyword = this.$store.getters["search/getKeyword"]
-            this.searchByKeyword(keyword);
+            // キーワード検索中
+            console.log('キーワード検索中で復帰')
+            this.searchByKeyword();
           }else {
             console.log('通常表示')
-            this.searchByTags();
+            /* this.filterByBookmarks(); */
             this.setDisplayingContent();
           }
+        },
+        filterByBookmarks() {
+            console.log("filterByBookmarksを起動");
+
+            if(this.selectedTag !== 'bookmark') return;
+
+            // store取得
+            const bookmarkContent = this.$store.getters["bookmark/getBookmark"];
+
+            // ブックマークでフィルター
+            const filterContents = this.contents.filter(function (value) {
+                return bookmarkContent.includes(value.id);
+            });
+            
+            this.bookmarkContents = filterContents;
+        },
+        setDisplayingContent(id) {
+            console.log("setDisplayingContentを起動");
+            // 表示件数を増やす
+            if (this.$store.getters["status/getSearchKeyword"]) {
+                // キーワードで検索した結果を表示
+                this.displayingPageKeyword = this.displayingPageKeyword + 1;
+                const start = 0;
+                const end = start + (this.displayingPageKeyword * this.displayingLimit);
+                this.displayingContent = this.keywordContents.slice(start, end);
+                this.remainingContent = this.keywordContents.length - this.displayingContent.length;
+                this.displayingJpName = "";
+                /* this.$store.dispatch("status/pushSearchKeyword"); */
+            }else if(this.selectedTag === 'bookmark') {
+                // ブックマークを表示
+                this.displayingPageBookmark = this.displayingPageBookmark + 1;
+                const start = 0;
+                const end = start + (this.displayingPageBookmark * this.displayingLimit);
+                this.displayingContent = this.bookmarkContents.slice(start, end);
+                this.remainingContent = this.bookmarkContents.length - this.displayingContent.length;
+                this.displayingJpName = this.japaneseTags;
+                /* this.$store.dispatch("status/pushSearchTag"); */
+            }else {
+                // オリジナルの結果を表示
+                this.displayingPageOriginal = this.displayingPageOriginal + 1;
+                const start = 0;
+                const end = start + (this.displayingPageOriginal * this.displayingLimit);
+                this.displayingContent = this.contents.slice(start, end);
+                this.remainingContent = this.contents.length - this.displayingContent.length;
+                this.displayingJpName = this.japaneseTags;
+                /* this.$store.dispatch("status/pushSearchTag"); */
+            }
         },
         wrapChack() {
             // コンテンツの折り返しをチェック
@@ -1145,315 +1203,59 @@ export default {
             }
             this.$store.dispatch("bookmark/pushBookmark", id);
         },
-        analyzedUrl() {
-          let type = [];
-          let industry = [];
-          let impression = [];
-          let layout = [];
-          let color = [];
-          let pickup = [];
-          let technique = [];
-          let technology = [];
-          let condition = "";
-          let bookmark = false;
-          // URLを解析
-          const tagTypes = this.selectedTag.split("*");
-          // tagTypes = ['type=ecsite_portfolio','industry=design']
-          tagTypes.forEach(function (item) {
-              const temp = item.split("=");
-              // temp = ['type','ecsite*portfolio']
-              if (temp[0] === "type") {
-                  const typeTemp = temp[1];
-                  type = typeTemp.split("%");
-                  // type = 'ecsite*portfolio'
-              }
-              else if (temp[0] === "industry") {
-                  const industryTemp = temp[1];
-                  industry = industryTemp.split("%");
-              }
-              else if (temp[0] === "impression") {
-                  const impressionTemp = temp[1];
-                  impression = impressionTemp.split("%");
-              }
-              else if (temp[0] === "layout") {
-                  const layoutTemp = temp[1];
-                  layout = layoutTemp.split("%");
-              }
-              else if (temp[0] === "color") {
-                  const colorTemp = temp[1];
-                  color = colorTemp.split("%");
-              }
-              else if (temp[0] === "pickup") {
-                  const pickupTemp = temp[1];
-                  pickup = pickupTemp.split("%");
-              }
-              else if (temp[0] === "technique") {
-                  const techniqueTemp = temp[1];
-                  technique = techniqueTemp.split("%");
-              }
-              else if (temp[0] === "technology") {
-                  const technologyTemp = temp[1];
-                  technology = technologyTemp.split("%");
-              }
-              else if (temp[0] === "bookmark") {
-                  bookmark = true;
-              }
-              else if (temp[0] === "and") {
-                  condition = "and";
-              }
-              else if (temp[0] === "or") {
-                  condition = "or";
-              }
-          });
-          // サイドメニュー用に現在表示中のタグを退避
-          this.analyzedSelectedTag.type = type;
-          this.analyzedSelectedTag.industry = industry;
-          this.analyzedSelectedTag.impression = impression;
-          this.analyzedSelectedTag.layout = layout;
-          this.analyzedSelectedTag.color = color;
-          this.analyzedSelectedTag.pickup = pickup;
-          this.analyzedSelectedTag.technique = technique;
-          this.analyzedSelectedTag.technology = technology;
-          this.analyzedSelectedTag.bookmark = bookmark;
-          this.analyzedSelectedTag.condition = condition;
-        },
-        convertTagsToJapanese(tags) {
+        convertTagsToJapanese() {
           // タグIDを日本語に変換する
-          let allTags = [];
-          if (tags.bookmark) {
-              return ["お気に入り"];
+          let tagJp;
+          if(this.selectedTag === undefined) {
+            tagJp = '';
+          }else if (this.selectedTag === 'bookmark') {
+            tagJp = 'お気に入り';
+          }else {
+            const selectedTag = this.selectedTag
+            const type = this.tag.type.contents.find(function(item) {return item.id === selectedTag})
+            if(type !== undefined) {
+              tagJp = type.name;
+              return
+            }
+            const industry = this.tag.industry.contents.find(function(item) {return item.id === selectedTag})
+            if(industry !== undefined) {
+              tagJp = industry.name;
+              return
+            }
+            const impression = this.tag.impression.contents.find(function(item) {return item.id === selectedTag})
+            if(impression !== undefined) {
+              tagJp = impression.name;
+              return
+            }
+            const layout = this.tag.layout.contents.find(function(item) {return item.id === selectedTag})
+            if(layout !== undefined) {
+              tagJp = layout.name;
+              return
+            }
+            const color = this.tag.color.contents.find(function(item) {return item.id === selectedTag})
+            if(color !== undefined) {
+              tagJp = color.name;
+              return
+            }
+            const pickup = this.tag.pickup.contents.find(function(item) {return item.id === selectedTag})
+            if(pickup !== undefined) {
+              tagJp = pickup.name;
+              return
+            }
+            const technique = this.tag.technique.contents.find(function(item) {return item.id === selectedTag})
+            if(technique !== undefined) {
+              tagJp = technique.name;
+              return
+            }
+            const technology = this.tag.technology.contents.find(function(item) {return item.id === selectedTag})
+            if(technology !== undefined) {
+              tagJp = technology.name;
+              return
+            }
           }
-          else {
-              if (tags.type.length > 0) {
-                  const filteringType = this.tag.type.contents.filter(function (item) {
-                      return tags.type.includes(item.id);
-                  });
-                  allTags = allTags.concat(filteringType);
-              }
-              if (tags.industry.length > 0) {
-                  const filteringIndustry = this.tag.industry.contents.filter(function (item) {
-                      return tags.industry.includes(item.id);
-                  });
-                  allTags = allTags.concat(filteringIndustry);
-              }
-              if (tags.impression.length > 0) {
-                  const filteringImpression = this.tag.impression.contents.filter(function (item) {
-                      return tags.impression.includes(item.id);
-                  });
-                  allTags = allTags.concat(filteringImpression);
-              }
-              if (tags.layout.length > 0) {
-                  const filteringLayout = this.tag.layout.contents.filter(function (item) {
-                      return tags.layout.includes(item.id);
-                  });
-                  allTags = allTags.concat(filteringLayout);
-              }
-              if (tags.color.length > 0) {
-                  const filteringColor = this.tag.color.contents.filter(function (item) {
-                      return tags.color.includes(item.id);
-                  });
-                  allTags = allTags.concat(filteringColor);
-              }
-              if (tags.pickup.length > 0) {
-                  const filteringPickup = this.tag.pickup.contents.filter(function (item) {
-                      return tags.pickup.includes(item.id);
-                  });
-                  allTags = allTags.concat(filteringPickup);
-              }
-              if (tags.technique.length > 0) {
-                  const filteringTechnique = this.tag.technique.contents.filter(function (item) {
-                      return tags.technique.includes(item.id);
-                  });
-                  allTags = allTags.concat(filteringTechnique);
-              }
-              if (tags.technology.length > 0) {
-                  const filteringTechnology = this.tag.technology.contents.filter(function (item) {
-                      return tags.technology.includes(item.id);
-                  });
-                  allTags = allTags.concat(filteringTechnology);
-              }
-              return allTags.map(item => item.name);
-          }
+          this.japaneseTags = tagJp;
         },
-        searchByTags() {
-            console.log("searchByTagsを起動");
-            if (this.selectedTag === undefined) {
-                console.log("searchByTags-通常表示のためフィルター処理なしで抜ける");
-                this.searchTags = this.contents;
-                return;
-            }
-            // 例）tag/type=ecsite_portfolio*industry=design*and
-            // 例）tag/type=ecsite%portfolio*industry=design*and
-            // store取得
-            const bookmarkContent = this.$store.getters["bookmark/getBookmark"];
-            let type = [];
-            let industry = [];
-            let impression = [];
-            let layout = [];
-            let color = [];
-            let pickup = [];
-            let technique = [];
-            let technology = [];
-            let condition = "";
-            let bookmark = false;
-            let filterContents;
-
-            // 解析済みのURLから設定
-            type = this.analyzedSelectedTag.type;
-            industry = this.analyzedSelectedTag.industry;
-            impression = this.analyzedSelectedTag.impression;
-            layout = this.analyzedSelectedTag.layout;
-            color = this.analyzedSelectedTag.color;
-            pickup = this.analyzedSelectedTag.pickup;
-            technique = this.analyzedSelectedTag.technique;
-            technology = this.analyzedSelectedTag.technology;
-            condition = this.analyzedSelectedTag.condition;
-            bookmark = this.analyzedSelectedTag.bookmark;
-
-            // フィルター処理
-            if (bookmark) {
-                // ブックマークでフィルター
-                filterContents = this.contents.filter(function (value) {
-                    return bookmarkContent.includes(value.id);
-                });
-            }
-            else {
-                // タグでフィルター
-                filterContents = this.contents.filter(function (value) {
-                    let matchType = 0;
-                    let matchIndustry = 0;
-                    let matchImpression = 0;
-                    let matchLayout = 0;
-                    let matchColor = 0;
-                    let matchPickup = 0;
-                    let matchTechnique = 0;
-                    let matchTechnology = 0;
-                    let countType = 0;
-                    let countIndustry = 0;
-                    let countImpression = 0;
-                    let countLayout = 0;
-                    let countColor = 0;
-                    let countPickup = 0;
-                    let countTechnique = 0;
-                    let countTechnology = 0;
-                    type.forEach(function (item) {
-                        if (value.type.find(data => data.id === item)) {
-                            matchType++;
-                        }
-                        countType++;
-                    });
-                    industry.forEach(function (item) {
-                        if (value.industry.find(data => data.id === item)) {
-                            matchIndustry++;
-                        }
-                        countIndustry++;
-                    });
-                    impression.forEach(function (item) {
-                        if (value.impression.find(data => data.id === item)) {
-                            matchImpression++;
-                        }
-                        countImpression++;
-                    });
-                    layout.forEach(function (item) {
-                        if (value.layout.find(data => data.id === item)) {
-                            matchLayout++;
-                        }
-                        countLayout++;
-                    });
-                    color.forEach(function (item) {
-                        if (value.color.find(data => data.id === item)) {
-                            matchColor++;
-                        }
-                        countColor++;
-                    });
-                    pickup.forEach(function (item) {
-                        if (value.pickup.find(data => data.id === item)) {
-                            matchPickup++;
-                        }
-                        countPickup++;
-                    });
-                    technique.forEach(function (item) {
-                        if (value.technique.find(data => data.id === item)) {
-                            matchTechnique++;
-                        }
-                        countTechnique++;
-                    });
-                    technology.forEach(function (item) {
-                        if (value.technology.find(data => data.id === item)) {
-                            matchTechnology++;
-                        }
-                        countTechnology++;
-                    });
-                    let match;
-                    if (condition === "and") {
-                        if ((matchType > 0 ||
-                            matchIndustry > 0 ||
-                            matchImpression > 0 ||
-                            matchLayout > 0 ||
-                            matchColor > 0 ||
-                            matchPickup > 0 ||
-                            matchTechnique > 0 ||
-                            matchTechnology > 0) &&
-                            matchType === countType &&
-                            matchIndustry === countIndustry &&
-                            matchImpression === countImpression &&
-                            matchLayout === countLayout &&
-                            matchColor === countColor &&
-                            matchPickup === countPickup &&
-                            matchTechnique === countTechnique &&
-                            matchTechnology === countTechnology) {
-                            match = true;
-                        }
-                    }
-                    else if (condition === "or") {
-                        if (matchType > 0 ||
-                            matchIndustry > 0 ||
-                            matchImpression > 0 ||
-                            matchLayout > 0 ||
-                            matchColor > 0 ||
-                            matchPickup > 0 ||
-                            matchTechnique > 0 ||
-                            matchTechnology > 0) {
-                            match = true;
-                        }
-                    }
-                    
-                    if (match) {
-                        return true;
-                    }
-                    else {
-                        return false;
-                    }
-                });
-            }
-            
-            this.searchTags = filterContents;
-            this.tagsJpName = this.japaneseTags.join(" + ");
-
-        },
-        setDisplayingContent(id, key) {
-            console.log("setDisplayingContentを起動");
-            // 表示件数を増やす
-            if (id === "keyword") {
-                // キーワードで検索した結果を表示
-                this.displayingPageKeyword = this.displayingPageKeyword + 1;
-                const start = 0;
-                const end = start + (this.displayingPageKeyword * this.displayingLimit);
-                this.displayingContent = this.searchKeyword.slice(start, end);
-                this.remainingContent = this.searchKeyword.length - this.displayingContent.length;
-                this.displayingJpName = "";
-                this.$store.dispatch("status/pushSearchKeyword");
-            }else {
-                // タグで検索した結果を表示
-                this.displayingPageTags = this.displayingPageTags + 1;
-                const start = 0;
-                const end = start + (this.displayingPageTags * this.displayingLimit);
-                this.displayingContent = this.searchTags.slice(start, end);
-                this.remainingContent = this.searchTags.length - this.displayingContent.length;
-                this.displayingJpName = this.tagsJpName;
-                this.$store.dispatch("status/pushSearchTag");
-            }
-        },
+        
         getLocalStorage() {
             // 初回読み込み時にローカルストレージのデータをstoreに取り込み
             // ブックマーク
@@ -1521,9 +1323,11 @@ export default {
         setLoaded() {
             this.$store.dispatch("loaded/pushLoadingDisplayed");
         },
-        searchByKeyword(key) {
+        searchByKeyword() {
+            const key = this.$store.getters["search/getKeyword"];
             // キーワードを一度入力してから削除したとき
             if (key.length === 0) {
+                this.$store.dispatch("status/pushSearchTag");
                 this.setDisplayingContent();
                 return;
             }
@@ -1604,8 +1408,8 @@ export default {
                     keyword.length !== 0 ? keyword.includes(lowerKey) : false;
                 return result;
             });
-            this.searchKeyword = searchFuzzy;
-            this.setDisplayingContent("keyword");
+            this.keywordContents = searchFuzzy;
+            this.setDisplayingContent();
             this.activeSearch = true;
         },
         setWindowScroll() {
@@ -1639,14 +1443,20 @@ export default {
             
         },
         update() {
-            this.searchByTags();
-            this.displayingPageTags = this.displayingPageTags - 1;
+            console.log('アップデートを検知')
+            this.filterByBookmarks();
+            // 検索フォームを空にする
+            this.$nuxt.$emit('clearKeyword');
+            // ステータスをオリジナルに変更
+            this.$store.dispatch("status/pushSearchTag");
+            this.displayingPageOriginal = this.displayingPageOriginal - 1;
             this.setDisplayingContent();
         },
         keywordSearchStart() {
           console.log('keywordSearchStart')
-          const keyword = this.$store.getters["search/getKeyword"];
-          this.searchByKeyword(keyword);
+          // ステータスをキーワード検索に変更
+          this.$store.dispatch("status/pushSearchKeyword");
+          this.searchByKeyword();
         },
         pushAutoSizing() {
           if(this.$store.getters["slider/getAutoSizing"]) {

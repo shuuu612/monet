@@ -19,6 +19,9 @@ export const mutations = {
   setOpen(state) {
     state.open = !state.open
   },
+  setClear(state) {
+    state.keyword = ''
+  },
   setLocalStorage(state,key) {
     // 初回ロード時にセッションストレージからデータを取得
     state.keyword = key[0]
@@ -43,6 +46,10 @@ export const mutations = {
   },
   pushOpen({commit}) {
     commit('setOpen')
+    commit('updateLocalStorage')
+  },
+  pushClear({commit}) {
+    commit('setClear')
     commit('updateLocalStorage')
   },
   pushLocalStorage({commit},data) {

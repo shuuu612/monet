@@ -1,5 +1,5 @@
 export const state = () => ({
-  searchTag: false,       // セッションストレージ保存対象
+  searchTag: true,       // セッションストレージ保存対象
   searchKeyword: false,    // セッションストレージ保存対象
 })
 

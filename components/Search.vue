@@ -30,14 +30,18 @@ export default {
   },
   mounted() {
     setTimeout(this.setInitialKeyword,500);
+    this.$nuxt.$on('clearKeyword', this.clearKeyword)
   },
   beforeDestroy() {
-
+    this.$nuxt.$off('clearKeyword', this.clearKeyword)
   },
   methods: {
     setKeyword() {
       this.$store.dispatch('search/pushKeyword',this.keyword)
        this.$emit('search')
+    },
+    clearKeyword() {
+      this.keyword = '';
     },
     setFocus() {
       this.focus = true;
