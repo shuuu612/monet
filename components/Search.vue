@@ -100,7 +100,7 @@ export default {
     background-color: transparent;
 
     &.focus {
-      width: 450px;
+      /* width: 450px; */
     }
     &.desktop {
       transition: width .2s;
@@ -108,9 +108,11 @@ export default {
     }
   }
   @include responsive(lg) {
+    width: 250px;
     right: 100px;
   }
   @include responsive(xl) {
+    width: 300px;
     right: 110px;
   }
   @include responsive(xxl) {
@@ -139,7 +141,7 @@ export default {
     width: 100%; */
     height: auto;
     border-radius: 0;
-    border-bottom: var(--search-border) 2px solid;
+    border-bottom: var(--search-border) 1px solid;
     border-image: linear-gradient(to right, #247bb1, #52549e);
     border-image-slice: 1;
     padding-left: 10px;
@@ -188,7 +190,7 @@ export default {
 .search {
   width: calc(100% - 20px);
   height: 36px;
-  border-radius: 20px;
+  border-radius: 4px;
   font-size: var(--font-size-sm);
   color: var(--search-text);
 }
