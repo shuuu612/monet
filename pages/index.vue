@@ -765,6 +765,7 @@ export default {
                 this.displayingJpName = this.japaneseTags;
                 /* this.$store.dispatch("status/pushSearchTag"); */
             }
+            this.createDummyContent();
         },
         wrapChack() {
             // コンテンツの折り返しをチェック
@@ -775,9 +776,9 @@ export default {
         },
         clickMore() {
             this.setDisplayingContent();
-            this.createDummyContent();
         },
         createDummyContent() {
+          console.log("createDummyContentを起動");
             // 実行タイミング：デバイスの変更、コンテンツサイズの変更
             // コンテンツの幅を計算
             const devicePattern = this.$store.getters["devicePattern/getStatePatternNumber"]; // 現在のデバイスパターン
@@ -1183,6 +1184,7 @@ export default {
             this.$store.dispatch("slider/pushAptitudeValue", value);
         },
         loadProcess() {
+            console.log('loadProcess')
             // ロード済みフラグの設定
             this.$store.dispatch("loaded/pushLoaded");
             // ウィンドウサイズを取得
@@ -1454,6 +1456,10 @@ export default {
             this.$nuxt.$emit('clearKeyword');
             // ステータスをオリジナルに変更
             this.$store.dispatch("status/pushSearchTag");
+            // 想定外の動きをしてもページをマイナスにしないための予防策
+            if(this.displayingPageOriginal !== 0) {
+              this.displayingPageOriginal = this.displayingPageOriginal - 1;
+            }
             this.displayingPageOriginal = this.displayingPageOriginal - 1;
             this.setDisplayingContent();
         },
