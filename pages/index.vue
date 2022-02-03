@@ -683,6 +683,10 @@ export default {
         window.matchMedia("(min-width:2000px)").removeEventListener("change", this.matchMediaProcess);
         window.matchMedia("(min-width:2100px)").removeEventListener("change", this.matchMediaProcess);
         window.matchMedia("(min-width:2200px)").removeEventListener("change", this.matchMediaProcess);
+
+        // 検索キーワードを削除
+        this.$store.dispatch('search/pushKeyword',this.keyword)
+        this.$store.dispatch("status/pushSearchTag");
     },
     methods: {
         setHead() {
@@ -1326,7 +1330,8 @@ export default {
         searchByKeyword() {
             const key = this.$store.getters["search/getKeyword"];
             // キーワードを一度入力してから削除したとき
-            if (key.length === 0) {
+            if (!key) {
+                console.log('検索フォームが空になった')
                 this.$store.dispatch("status/pushSearchTag");
                 this.setDisplayingContent();
                 return;

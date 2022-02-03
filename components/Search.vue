@@ -38,7 +38,8 @@ export default {
   methods: {
     setKeyword() {
       this.$store.dispatch('search/pushKeyword',this.keyword)
-       this.$emit('search')
+      // 検索を開始
+      this.$emit('search')
     },
     clearKeyword() {
       this.keyword = '';
@@ -50,7 +51,9 @@ export default {
       this.focus = false;
     },
     setInitialKeyword() {
-      if(this.$store.getters['search/getKeyword'] !== '') {
+      console.log(this.$store.getters['search/getKeyword'])
+      if(this.$store.getters['search/getKeyword']) {
+        console.log('検索キーワードを復活')
         this.keyword = this.$store.getters['search/getKeyword'];
         this.focus = true;
       }
