@@ -4,28 +4,30 @@
     <div id="sideMenu" class="sideMenu" :class="[getOpen,getClose]" @scroll="scrolledSideMenu">
       <div class="tabMenus">
         <div class="tabMenu button" :class="getSelectedTab('tag')" @click="clickTab('tag')">カテゴリー</div>
+        <div class="tabMenu button" :class="getSelectedTab('search')" @click="clickTab('search')">カテゴリー検索</div>
         <div class="tabMenu button" :class="getSelectedTab('favorite')" @click="clickTab('favorite')">お気に入り</div>
         <div class="tabMenu button" :class="getSelectedTab('setting')" @click="clickTab('setting')">設定</div>
       </div>
       <div class="sideMenuContents">
+        <!-- カテゴリー -->
         <div v-show="selectedTag" class="sideMenuContent">
           <div class="tagContents">
             <div v-for="name in tagname" :key="name" class="tagContent">
               <div class="sideMenuSubTitle tagStyle">{{name.toUpperCase()}}</div>
               <div class="tagItems">
-                <div v-for="item in tag[name].contents" :key="item.id" class="tagItem" :class="getSelectedTag(name, item.id, 1)">
+                <div v-for="item in tag[name].contents" :key="item.id" class="tagItem" :class="getSelectedTag(item.id)">
                   <div class="tagLinks" @click="clickTagButton">
-                    <nuxt-link v-if="getSelectedTag(name, item.id, 0)" :to="`/tag/${item.id}`" class="tagLink button">
+                    <nuxt-link :to="`/tag/${item.id}`" class="tagLink button">
                       <div v-if="name === 'color'" class="colorImage" :class="`${item.id}`"></div>
                       <div class="tagLinkText">
                         <div>{{item.name}}</div>
                         <div class="tagLinkTextLine"></div>
                       </div>
                     </nuxt-link>
-                    <div v-else class="tagLink button" @click="$moveTop">
+                    <!-- <div v-else class="tagLink button" @click="$moveTop">
                       <div v-if="name === 'color'" class="colorImage"></div>
                       <div>{{item.name}}</div>
-                    </div>
+                    </div> -->
                     <div class="starButton button" @click.stop="setFavoriteTags(item.id)">
                       <svg class="starImage" :class="getAddedFavoriteTags(item.id)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 567.13 539.38" fill="transparent" stroke="#ffffff">
                         <polygon points="283.57 45.19 357.91 195.83 524.15 219.99 403.86 337.25 432.26 502.81 283.57 424.64 134.88 502.81 163.27 337.25 42.98 219.99 209.22 195.83 283.57 45.19" style="stroke-miterlimit:10;stroke-width:40px"/>
@@ -37,6 +39,32 @@
             </div>
           </div>
         </div>
+        <!-- カテゴリー検索 -->
+        <div v-show="selectedSearch" class="sideMenuContent">
+          <div class="searchBlock">
+            <svg class="searchImage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 393.47 393.47" fill="#000000">
+              <path d="M383.52,335.43l-102-102c36.94-58.86,29.95-137.61-21.23-188.8-59.45-59.45-156.19-59.46-215.65,0s-59.45,156.19,0,215.65c51.19,51.17,129.94,58.18,188.81,21.24l102,102a34,34,0,1,0,48.08-48.09ZM232.77,232.76a113.64,113.64,0,1,1,0-160.71A113.77,113.77,0,0,1,232.77,232.76Z"/>
+            </svg>
+            <input id="search" v-model="keyword" class="search" type="text" placeholder="カテゴリーを検索" @input="setKeyword" @focus="setFocus" @blur="setBlur">
+          </div>
+          <div v-for="item in keywordContents" :key="item.id" class="tagItem">
+              <div class="tagLinks" @click="clickTagButton">
+                <nuxt-link :to="`/tag/${item.id}`" class="tagLink button">
+                  <div v-if="getColorMark(item)" class="colorImage" :class="`${item.id}`"></div>
+                  <div class="tagLinkText">
+                    <div>{{item.name}}</div>
+                    <div class="tagLinkTextLine"></div>
+                  </div>
+                </nuxt-link>
+                <div class="starButton button" @click.stop="setFavoriteTags(item.id)">
+                  <svg class="starImage" :class="getAddedFavoriteTags(item.id)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 567.13 539.38" fill="transparent" stroke="#ffffff">
+                    <polygon points="283.57 45.19 357.91 195.83 524.15 219.99 403.86 337.25 432.26 502.81 283.57 424.64 134.88 502.81 163.27 337.25 42.98 219.99 209.22 195.83 283.57 45.19" style="stroke-miterlimit:10;stroke-width:40px"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+        </div>
+        <!-- お気に入り -->
         <div v-show="selectedFavorite" class="sideMenuContent">
           <div class="tagContents">
             <div v-if="getNoContent" class="noFavoriteTagsComment">お気に入りのタグは登録されていません</div>
@@ -45,15 +73,15 @@
                 <div class="sideMenuSubTitle tagStyle">{{name.toUpperCase()}}</div>
                 <div class="tagItems">
                   <template v-for="item in tag[name].contents">
-                    <div v-if="getFavorited(item.id)" :key="item.id" class="tagItem" :class="getSelectedTag(name, item.id, 1)">
+                    <div v-if="getFavorited(item.id)" :key="item.id" class="tagItem" :class="getSelectedTag(item.id)">
                       <div class="tagLinks" @click="clickTagButton">
-                        <nuxt-link v-if="getSelectedTag(name, item.id, 0)" :to="`/tag/${item.id}`" class="tagLink button">
+                        <nuxt-link :to="`/tag/${item.id}`" class="tagLink button">
                           <div class="tagLinkText">
                             <div>{{item.name}}</div>
                             <div class="tagLinkTextLine"></div>
                           </div>
                         </nuxt-link>
-                        <div v-else class="tagLink button" @click="$moveTop">{{item.name}}</div>
+                        <!-- <div v-else class="tagLink button" @click="$moveTop">{{item.name}}</div> -->
                         <div class="starButton button" @click.stop="setFavoriteTags(item.id)">
                           <svg class="starImage" :class="getAddedFavoriteTags(item.id)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 567.13 539.38" fill="transparent" stroke="#ffffff">
                             <polygon points="283.57 45.19 357.91 195.83 524.15 219.99 403.86 337.25 432.26 502.81 283.57 424.64 134.88 502.81 163.27 337.25 42.98 219.99 209.22 195.83 283.57 45.19" style="stroke-miterlimit:10;stroke-width:40px"/>
@@ -67,6 +95,7 @@
             </template>
           </div>
         </div>
+        <!-- 設定 -->
         <div v-show="selectedSetting" class="sideMenuContent">
           <div class="controllerContents">
             <div class="controllerContent">
@@ -196,10 +225,14 @@ export default {
         'technology',
       ],
       selectedTag: true,
+      selectedSearch: false,
       selectedFavorite: false,
       selectedSetting: false,
-      selectedOr: true,
-      selectedAnd: false,
+      keyword: '',
+      keywordContents: [],
+      focus: false,
+      /* selectedOr: true,
+      selectedAnd: false, */
     };
   },
   computed: {
@@ -333,6 +366,8 @@ export default {
           return { selectedTab: this.selectedSetting}
         }else if(key === 'favorite') {
           return { selectedTab: this.selectedFavorite}
+        }else if(key === 'search') {
+          return { selectedTab: this.selectedSearch}
         }
       }
     },
@@ -368,6 +403,11 @@ export default {
     } */
     getNotice() {
       return !this.$store.getters["slider/getAutoSizing"]
+    },
+    getColorMark() {
+      return function(key) {
+        return this.tag.color.contents.includes(key)
+      }
     }
   },
   created() {
@@ -418,14 +458,22 @@ export default {
         this.selectedTag = true
         this.selectedSetting = false
         this.selectedFavorite = false
+        this.selectedSearch = false
       }else if(key === 'setting') {
         this.selectedTag = false
         this.selectedSetting = true
         this.selectedFavorite = false
+        this.selectedSearch = false
       }else if(key === 'favorite') {
         this.selectedTag = false
         this.selectedSetting = false
         this.selectedFavorite = true
+        this.selectedSearch = false
+      }else if(key === 'search') {
+        this.selectedTag = false
+        this.selectedSetting = false
+        this.selectedFavorite = false
+        this.selectedSearch = true
       }
     },
     sliderChange(event) {
@@ -498,7 +546,50 @@ export default {
       }else if(key === 'os') {
         this.$store.dispatch('darkmode/pushDarkmodeOs')
       }
-    }
+    },
+    setKeyword() {
+      this.searchByKeyword();
+    },
+    setFocus() {
+      this.focus = true;
+    },
+    setBlur() {
+      this.focus = false;
+    },
+    searchByKeyword() {
+      const key = this.keyword;
+      const tags = [
+        ...this.tag.type.contents,
+        ...this.tag.industry.contents,
+        ...this.tag.impression.contents,
+        ...this.tag.layout.contents,
+        ...this.tag.color.contents,
+        ...this.tag.pickup.contents,
+        ...this.tag.technique.contents,
+        ...this.tag.technology.contents,
+      ]
+      // キーワードを一度入力してから削除したとき
+      if (!key) {
+          console.log('検索フォームが空になった')
+          this.keywordContents.length = 0;
+          return;
+      }
+      // キーワードでフィルター（大文字・小文字・ひらがな・カタカナを区別しない）
+      const searchFuzzy = tags.filter(function (content) {
+          // 検索対象を抽出
+          const id = content.id !== undefined ? content.id.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96)) : "";
+          const name = content.name !== undefined ? content.name.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96)) : "";
+          const keyword = content.keyword !== undefined ? content.keyword.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96)) : "";
+          const lowerKey = key.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
+          
+          // 一致判定
+          const result = (id.length !== 0 ? id.includes(lowerKey) : false) ||
+                         (name.length !== 0 ? name.includes(lowerKey) : false) ||
+                         (keyword.length !== 0 ? keyword.includes(lowerKey) : false);
+          return result;
+      });
+      this.keywordContents = searchFuzzy;
+    },
 
   },
   
@@ -1118,6 +1209,69 @@ input[type="range"] {
   @include responsive(xxl) {
     
   }
+}
+
+.searchBlock {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 40px;
+  border-radius: 50px;
+  background-color: var(--black-super-light);
+  @include responsive(xs) {
+    
+  }
+  @include responsive(sm) {
+    
+  }
+  @include responsive(md) {
+
+  }
+  @include responsive(lg) {
+    
+  }
+  @include responsive(xl) {
+    
+  }
+  @include responsive(xxl) {
+    
+  }
+}
+
+.searchImage {
+  width: 16px;
+  margin-right: 10px;
+  margin-left: 10px;
+  fill: var(--white);
+  @include responsive(xs) {
+    
+  }
+  @include responsive(sm) {
+    
+  }
+  @include responsive(md) {
+
+  }
+  @include responsive(lg) {
+    
+  }
+  @include responsive(xl) {
+    
+  }
+  @include responsive(xxl) {
+    
+  }
+}
+.search {
+  width: calc(100% - 20px);
+  height: 36px;
+  border-radius: 20px;
+  font-size: var(--font-size-sm);
+  color: var(--white);
+}
+::placeholder {
+  color: var(--grey-super-light);;
 }
 
 </style>
