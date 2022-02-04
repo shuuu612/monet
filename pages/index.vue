@@ -1395,25 +1395,25 @@ export default {
                 const keyword = content.keyword !== undefined ? content.keyword.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96)) : "";
                 const lowerKey = key.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
                 // 一致判定
-                const result = name.length !== 0 ? name.includes(lowerKey) : false ||
-                    url.length !== 0 ? url.includes(lowerKey) : false ||
-                    typeId.length !== 0 ? typeId.includes(lowerKey) : false ||
-                    typeName.length !== 0 ? typeName.includes(lowerKey) : false ||
-                    industryId.length !== 0 ? industryId.includes(lowerKey) : false ||
-                    industryName.length !== 0 ? industryName.includes(lowerKey) : false ||
-                    impressionId.length !== 0 ? impressionId.includes(lowerKey) : false ||
-                    impressionName.length !== 0 ? impressionName.includes(lowerKey) : false ||
-                    layoutId.length !== 0 ? layoutId.includes(lowerKey) : false ||
-                    layoutName.length !== 0 ? layoutName.includes(lowerKey) : false ||
-                    colorId.length !== 0 ? colorId.includes(lowerKey) : false ||
-                    colorName.length !== 0 ? colorName.includes(lowerKey) : false ||
-                    pickupId.length !== 0 ? pickupId.includes(lowerKey) : false ||
-                    pickupName.length !== 0 ? pickupName.includes(lowerKey) : false ||
-                    techniqueId.length !== 0 ? techniqueId.includes(lowerKey) : false ||
-                    techniqueName.length !== 0 ? techniqueName.includes(lowerKey) : false ||
-                    technologyId.length !== 0 ? technologyId.includes(lowerKey) : false ||
-                    technologyName.length !== 0 ? technologyName.includes(lowerKey) : false ||
-                    keyword.length !== 0 ? keyword.includes(lowerKey) : false;
+                const result = (name.length !== 0 ? name.includes(lowerKey) : false) ||
+                               (url.length !== 0 ? url.includes(lowerKey) : false) ||
+                               (typeId.length !== 0 ? typeId.includes(lowerKey) : false) ||
+                               (typeName.length !== 0 ? typeName.includes(lowerKey) : false) ||
+                               (industryId.length !== 0 ? industryId.includes(lowerKey) : false) ||
+                               (industryName.length !== 0 ? industryName.includes(lowerKey) : false) ||
+                               (impressionId.length !== 0 ? impressionId.includes(lowerKey) : false) ||
+                               (impressionName.length !== 0 ? impressionName.includes(lowerKey) : false) ||
+                               (layoutId.length !== 0 ? layoutId.includes(lowerKey) : false) ||
+                               (layoutName.length !== 0 ? layoutName.includes(lowerKey) : false) ||
+                               (colorId.length !== 0 ? colorId.includes(lowerKey) : false) ||
+                               (colorName.length !== 0 ? colorName.includes(lowerKey) : false) ||
+                               (pickupId.length !== 0 ? pickupId.includes(lowerKey) : false) ||
+                               (pickupName.length !== 0 ? pickupName.includes(lowerKey) : false) ||
+                               (techniqueId.length !== 0 ? techniqueId.includes(lowerKey) : false) ||
+                               (techniqueName.length !== 0 ? techniqueName.includes(lowerKey) : false) ||
+                               (technologyId.length !== 0 ? technologyId.includes(lowerKey) : false) ||
+                               (technologyName.length !== 0 ? technologyName.includes(lowerKey) : false) ||
+                               (keyword.length !== 0 ? keyword.includes(lowerKey) : false);
                 return result;
             });
             this.keywordContents = searchFuzzy;
