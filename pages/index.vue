@@ -1332,6 +1332,7 @@ export default {
         searchByKeyword() {
             const key = this.$store.getters["search/getKeyword"];
             const contents = this.selectedTag === 'bookmark' ? this.bookmarkContents : this.contents;
+            const bookmarkContents = this.$store.getters["bookmark/getBookmark"]
             // キーワードを一度入力してから削除したとき
             if (!key) {
                 console.log('検索フォームが空になった')
@@ -1350,11 +1351,17 @@ export default {
                 const typeName = content.type.map(function (item) {
                     return item.name.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
                 });
+                const typeKeyword = content.type.map(function (item) {
+                    return item.keyword !== undefined ? item.keyword.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96)) : '';
+                });
                 const industryId = content.industry.map(function (item) {
                     return item.id.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
                 });
                 const industryName = content.industry.map(function (item) {
                     return item.name.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
+                });
+                const industryKeyword = content.industry.map(function (item) {
+                    return item.keyword !== undefined ? item.keyword.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96)) : '';
                 });
                 const impressionId = content.impression.map(function (item) {
                     return item.id.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
@@ -1362,11 +1369,17 @@ export default {
                 const impressionName = content.impression.map(function (item) {
                     return item.name.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
                 });
+                const impressionKeyword = content.impression.map(function (item) {
+                    return item.keyword !== undefined ? item.keyword.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96)) : '';
+                });
                 const layoutId = content.layout.map(function (item) {
                     return item.id.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
                 });
                 const layoutName = content.layout.map(function (item) {
                     return item.name.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
+                });
+                const layoutKeyword = content.layout.map(function (item) {
+                    return item.keyword !== undefined ? item.keyword.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96)) : '';
                 });
                 const colorId = content.color.map(function (item) {
                     return item.id.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
@@ -1374,11 +1387,17 @@ export default {
                 const colorName = content.color.map(function (item) {
                     return item.name.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
                 });
+                const colorKeyword = content.color.map(function (item) {
+                    return item.keyword !== undefined ? item.keyword.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96)) : '';
+                });
                 const pickupId = content.pickup.map(function (item) {
                     return item.id.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
                 });
                 const pickupName = content.pickup.map(function (item) {
                     return item.name.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
+                });
+                const pickupKeyword = content.pickup.map(function (item) {
+                    return item.keyword !== undefined ? item.keyword.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96)) : '';
                 });
                 const techniqueId = content.technique.map(function (item) {
                     return item.id.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
@@ -1386,34 +1405,63 @@ export default {
                 const techniqueName = content.technique.map(function (item) {
                     return item.name.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
                 });
+                const techniqueKeyword = content.technique.map(function (item) {
+                    return item.keyword !== undefined ? item.keyword.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96)) : '';
+                });
                 const technologyId = content.technology.map(function (item) {
                     return item.id.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
                 });
                 const technologyName = content.technology.map(function (item) {
                     return item.name.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
                 });
+                const technologyKeyword = content.technology.map(function (item) {
+                    return item.keyword !== undefined ? item.keyword.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96)) : '';
+                });
                 const keyword = content.keyword !== undefined ? content.keyword.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96)) : "";
+
+                let bookmark;
+                if(bookmarkContents.includes(content.id)) {
+                  const bookmarkKeyword = ['bookmark','ブックマーク','お気に入り','favorite']
+                  bookmark = bookmarkKeyword.map(function (item) {
+                    return item.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
+                  });
+                }else {
+                  bookmark = [];
+                }
+
                 const lowerKey = key.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
+
+                const regExp = new RegExp(String.raw`${lowerKey}`);
                 // 一致判定
                 const result = (name.length !== 0 ? name.includes(lowerKey) : false) ||
                                (url.length !== 0 ? url.includes(lowerKey) : false) ||
-                               (typeId.length !== 0 ? typeId.includes(lowerKey) : false) ||
-                               (typeName.length !== 0 ? typeName.includes(lowerKey) : false) ||
-                               (industryId.length !== 0 ? industryId.includes(lowerKey) : false) ||
-                               (industryName.length !== 0 ? industryName.includes(lowerKey) : false) ||
-                               (impressionId.length !== 0 ? impressionId.includes(lowerKey) : false) ||
-                               (impressionName.length !== 0 ? impressionName.includes(lowerKey) : false) ||
-                               (layoutId.length !== 0 ? layoutId.includes(lowerKey) : false) ||
-                               (layoutName.length !== 0 ? layoutName.includes(lowerKey) : false) ||
-                               (colorId.length !== 0 ? colorId.includes(lowerKey) : false) ||
-                               (colorName.length !== 0 ? colorName.includes(lowerKey) : false) ||
-                               (pickupId.length !== 0 ? pickupId.includes(lowerKey) : false) ||
-                               (pickupName.length !== 0 ? pickupName.includes(lowerKey) : false) ||
-                               (techniqueId.length !== 0 ? techniqueId.includes(lowerKey) : false) ||
-                               (techniqueName.length !== 0 ? techniqueName.includes(lowerKey) : false) ||
-                               (technologyId.length !== 0 ? technologyId.includes(lowerKey) : false) ||
-                               (technologyName.length !== 0 ? technologyName.includes(lowerKey) : false) ||
-                               (keyword.length !== 0 ? keyword.includes(lowerKey) : false);
+                               (typeId.length !== 0 ? (typeId.find(value => value.match(regExp)) !== undefined) : false) ||
+                               (typeName.length !== 0 ? (typeName.find(value => value.match(regExp)) !== undefined) : false) ||
+                               (typeKeyword.length !== 0 ? (typeKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
+                               (industryId.length !== 0 ? (industryId.find(value => value.match(regExp)) !== undefined) : false) ||
+                               (industryName.length !== 0 ? (industryName.find(value => value.match(regExp)) !== undefined) : false) ||
+                               (industryKeyword.length !== 0 ? (industryKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
+                               (impressionId.length !== 0 ? (impressionId.find(value => value.match(regExp)) !== undefined) : false) ||
+                               (impressionName.length !== 0 ? (impressionName.find(value => value.match(regExp)) !== undefined) : false) ||
+                               (impressionKeyword.length !== 0 ? (impressionKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
+                               (layoutId.length !== 0 ? (layoutId.find(value => value.match(regExp)) !== undefined) : false) ||
+                               (layoutName.length !== 0 ? (layoutName.find(value => value.match(regExp)) !== undefined) : false) ||
+                               (layoutKeyword.length !== 0 ? (layoutKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
+                               (colorId.length !== 0 ? (colorId.find(value => value.match(regExp)) !== undefined) : false) ||
+                               (colorName.length !== 0 ? (colorName.find(value => value.match(regExp)) !== undefined) : false) ||
+                               (colorKeyword.length !== 0 ? (colorKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
+                               (pickupId.length !== 0 ? (pickupId.find(value => value.match(regExp)) !== undefined) : false) ||
+                               (pickupName.length !== 0 ? (pickupName.find(value => value.match(regExp)) !== undefined) : false) ||
+                               (pickupKeyword.length !== 0 ? (pickupKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
+                               (techniqueId.length !== 0 ? (techniqueId.find(value => value.match(regExp)) !== undefined) : false) ||
+                               (techniqueName.length !== 0 ? (techniqueName.find(value => value.match(regExp)) !== undefined) : false) ||
+                               (techniqueKeyword.length !== 0 ? (techniqueKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
+                               (technologyId.length !== 0 ? (technologyId.find(value => value.match(regExp)) !== undefined) : false) ||
+                               (technologyName.length !== 0 ? (technologyName.find(value => value.match(regExp)) !== undefined) : false) ||
+                               (technologyKeyword.length !== 0 ? (technologyKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
+                               (keyword.length !== 0 ? keyword.includes(lowerKey) : false) ||
+                               (bookmark.length !== 0 ? (bookmark.find(value => value.match(regExp)) !== undefined) : false);
+
                 return result;
             });
             this.keywordContents = searchFuzzy;
