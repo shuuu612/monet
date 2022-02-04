@@ -495,7 +495,9 @@ export default {
             return { hide: this.remainingContent === 0 };
         },
         getNoContentComment() {
+            console.log('getNoContentComment')
             if (this.$store.getters["status/getSearchKeyword"]) {
+              console.log('1')
                 // キーワード検索
                 if (this.keywordContents.length === 0) {
                     return "一致する検索結果はありません";
@@ -504,6 +506,7 @@ export default {
                     return "";
                 }
             }else if (this.$store.getters["status/getSearchTag"]) {
+              console.log('2')
                 // 通常検索
                 if (this.contents.length === 0) {
                     if (this.displayingJpName === "お気に入り") {
@@ -514,9 +517,11 @@ export default {
                     }
                 }
                 else {
+                    console.log(this.displayingJpName)
                     return this.displayingJpName;
                 }
             }else {
+              console.log('3')
               return '';
             }
         },
@@ -763,6 +768,8 @@ export default {
                 this.displayingContent = this.contents.slice(start, end);
                 this.remainingContent = this.contents.length - this.displayingContent.length;
                 this.displayingJpName = this.japaneseTags;
+                console.log(this.japaneseTags)
+                console.log(this.displayingJpName)
                 /* this.$store.dispatch("status/pushSearchTag"); */
             }
             this.createDummyContent();
@@ -1210,56 +1217,55 @@ export default {
             this.$store.dispatch("bookmark/pushBookmark", id);
         },
         convertTagsToJapanese() {
+          console.log('convertTagsToJapanese')
           // タグIDを日本語に変換する
-          let tagJp;
           if(this.selectedTag === undefined) {
-            tagJp = '';
+            this.japaneseTags = '';
           }else if (this.selectedTag === 'bookmark') {
-            tagJp = 'お気に入り';
+            this.japaneseTags = 'お気に入り';
           }else {
             const selectedTag = this.selectedTag
             const type = this.tag.type.contents.find(function(item) {return item.id === selectedTag})
             if(type !== undefined) {
-              tagJp = type.name;
+              this.japaneseTags = type.name;
               return
             }
             const industry = this.tag.industry.contents.find(function(item) {return item.id === selectedTag})
+            console.log(industry)
             if(industry !== undefined) {
-              tagJp = industry.name;
+              this.japaneseTags = industry.name;
               return
             }
             const impression = this.tag.impression.contents.find(function(item) {return item.id === selectedTag})
             if(impression !== undefined) {
-              tagJp = impression.name;
+              this.japaneseTags = impression.name;
               return
             }
             const layout = this.tag.layout.contents.find(function(item) {return item.id === selectedTag})
             if(layout !== undefined) {
-              tagJp = layout.name;
+              this.japaneseTags = layout.name;
               return
             }
             const color = this.tag.color.contents.find(function(item) {return item.id === selectedTag})
             if(color !== undefined) {
-              tagJp = color.name;
+              this.japaneseTags = color.name;
               return
             }
             const pickup = this.tag.pickup.contents.find(function(item) {return item.id === selectedTag})
             if(pickup !== undefined) {
-              tagJp = pickup.name;
+              this.japaneseTags = pickup.name;
               return
             }
             const technique = this.tag.technique.contents.find(function(item) {return item.id === selectedTag})
             if(technique !== undefined) {
-              tagJp = technique.name;
+              this.japaneseTags = technique.name;
               return
             }
             const technology = this.tag.technology.contents.find(function(item) {return item.id === selectedTag})
             if(technology !== undefined) {
-              tagJp = technology.name;
-              return
+              this.japaneseTags = technology.name;
             }
           }
-          this.japaneseTags = tagJp;
         },
         
         getLocalStorage() {
