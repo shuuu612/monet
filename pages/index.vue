@@ -495,9 +495,7 @@ export default {
             return { hide: this.remainingContent === 0 };
         },
         getNoContentComment() {
-            console.log('getNoContentComment')
             if (this.$store.getters["status/getSearchKeyword"]) {
-              console.log('1')
                 // キーワード検索
                 if (this.keywordContents.length === 0) {
                     return "一致する検索結果はありません";
@@ -506,7 +504,6 @@ export default {
                     return "";
                 }
             }else if (this.$store.getters["status/getSearchTag"]) {
-              console.log('2')
                 // 通常検索
                 if (this.contents.length === 0) {
                     if (this.displayingJpName === "お気に入り") {
@@ -517,11 +514,9 @@ export default {
                     }
                 }
                 else {
-                    console.log(this.displayingJpName)
                     return this.displayingJpName;
                 }
             }else {
-              console.log('3')
               return '';
             }
         },
@@ -730,11 +725,11 @@ export default {
             if(this.selectedTag !== 'bookmark') return;
 
             // store取得
-            const bookmarkContent = this.$store.getters["bookmark/getBookmark"];
+            const bookmark = this.$store.getters["bookmark/getBookmark"];
 
             // ブックマークでフィルター
             const filterContents = this.contents.filter(function (value) {
-                return bookmarkContent.includes(value.id);
+                return bookmark.includes(value.id);
             });
             
             this.bookmarkContents = filterContents;
@@ -1217,7 +1212,6 @@ export default {
             this.$store.dispatch("bookmark/pushBookmark", id);
         },
         convertTagsToJapanese() {
-          console.log('convertTagsToJapanese')
           // タグIDを日本語に変換する
           if(this.selectedTag === undefined) {
             this.japaneseTags = '';
@@ -1337,6 +1331,7 @@ export default {
         },
         searchByKeyword() {
             const key = this.$store.getters["search/getKeyword"];
+            const contents = this.selectedTag === 'bookmark' ? this.bookmarkContents : this.contents;
             // キーワードを一度入力してから削除したとき
             if (!key) {
                 console.log('検索フォームが空になった')
@@ -1345,7 +1340,7 @@ export default {
                 return;
             }
             // キーワードでフィルター（大文字・小文字・ひらがな・カタカナを区別しない）
-            const searchFuzzy = this.contents.filter(function (content) {
+            const searchFuzzy = contents.filter(function (content) {
                 // 検索対象を抽出
                 const name = content.name !== undefined ? content.name.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96)) : "";
                 const url = content.url !== undefined ? content.url.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96)) : "";
