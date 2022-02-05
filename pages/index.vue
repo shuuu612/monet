@@ -1332,6 +1332,10 @@ export default {
             // キーワードを一度入力してから削除したとき
             if (!key) {
                 this.$store.dispatch("status/pushSearchTag");
+                // 想定外の動きをしてもページをマイナスにしないための予防策
+                if(this.displayingPageOriginal !== 0) {
+                  this.displayingPageOriginal = this.displayingPageOriginal - 1;
+                }
                 this.setDisplayingContent();
                 return;
             }
@@ -1522,6 +1526,11 @@ export default {
                   
             });
             this.keywordContents = searchFuzzy;
+            // 想定外の動きをしてもページをマイナスにしないための予防策
+            if(this.displayingPageKeyword !== 0) {
+              this.displayingPageKeyword = this.displayingPageKeyword - 1;
+            }
+            /* this.displayingPageKeyword = this.displayingPageKeyword - 1; */
             this.setDisplayingContent();
         },
         setWindowScroll() {
@@ -1565,7 +1574,7 @@ export default {
             if(this.displayingPageOriginal !== 0) {
               this.displayingPageOriginal = this.displayingPageOriginal - 1;
             }
-            this.displayingPageOriginal = this.displayingPageOriginal - 1;
+            /* this.displayingPageOriginal = this.displayingPageOriginal - 1; */
             this.setDisplayingContent();
         },
         keywordSearchStart() {
