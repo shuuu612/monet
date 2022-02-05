@@ -21,7 +21,7 @@
                       <div v-if="name === 'color'" class="colorImage" :class="`${item.id}`"></div>
                       <div class="tagLinkText">
                         <div>{{item.name}}</div>
-                        <div class="tagLinkTextLine"></div>
+                        <!-- <div class="tagLinkTextLine"></div> -->
                       </div>
                     </nuxt-link>
                     <!-- <div v-else class="tagLink button" @click="$moveTop">
@@ -78,7 +78,7 @@
                         <nuxt-link :to="`/tag/${item.id}`" class="tagLink button">
                           <div class="tagLinkText">
                             <div>{{item.name}}</div>
-                            <div class="tagLinkTextLine"></div>
+                            <!-- <div class="tagLinkTextLine"></div> -->
                           </div>
                         </nuxt-link>
                         <!-- <div v-else class="tagLink button" @click="$moveTop">{{item.name}}</div> -->
@@ -983,30 +983,31 @@ export default {
 .tagLink {
   display: inline-flex;
   align-items: center;
-  padding: 5px 15px;
+  padding: 7px 15px;
   text-decoration: none;
   color: var(--side-menu-category-text);
   width: 100%;
   /* height: 30px; */
   &:hover {
     /* color: var(--blue); */
-    /* background-color: var(--blue-dark); */
+    background-color: var(--black-super-light);
     /* border-bottom: var(--blue) 2px solid; */
   }
   /* .selected &:hover {
     background-color: var(--black-light);
   } */
   .selected & {
-    color: var(--side-menu-category-text-selected);
-    font-weight: 500;
+    /* color: var(--side-menu-category-text-selected); */
+    /* font-weight: 500; */
+    background-color: var(--black-super-light);
   }
-  border-radius: 50px;
+  /* border-radius: 50px; */
 }
 
 .tagLinkText {
-  margin-top: 2px;
+  /* margin-top: 2px; */
   .tagLink:hover & {
-    font-weight: 400;
+    /* font-weight: 400; */
   }
 }
 
