@@ -41,80 +41,81 @@
                   <img v-if="getSpHide" class="image" :src="`${content.imageSP.url}?h=${Math.round(800*getStateSliderSize)}`" :alt="`${content.name}`" :class="getMargin('sp')" :style="getMaxWidth('sp')" loading="lazy">
                 </a>
               </div>
-              <div v-if="getActiveModal(content.id)" class="modal" :class="getModalOpen" @click="closeModal">
-                <button class="modalButton" @click="closeModal">
-                  <span class="modalBar"></span>
-                  <span class="modalBar"></span>
-                </button>
-                <div class="modalContent" @click.stop>
-                  <div class="modalImageWrapper">
-                    <a :href="`${content.url}`" target="_blank" rel="noopener noreferrer" class="modalImages">
-                      <img id="modalImage" class="modalImage" :src="`${content.imagePC.url}?w=1200`" :alt="`${content.name}`" loading="lazy" @load="modalInfoSizing">
-                    </a>
+              <transition name="modal">
+                <div v-if="getActiveModal(content.id)" class="modal" :class="getModalOpen" @click="closeModal">
+                  <button class="modalButton" @click="closeModal">
+                    <span class="modalBar"></span>
+                    <span class="modalBar"></span>
+                  </button>
+                  <div class="modalContent" @click.stop>
+                    <div class="modalImageWrapper">
+                      <a :href="`${content.url}`" target="_blank" rel="noopener noreferrer" class="modalImages">
+                        <img id="modalImage" class="modalImage" :src="`${content.imagePC.url}?w=1200`" :alt="`${content.name}`" loading="lazy" @load="modalInfoSizing">
+                      </a>
+                    </div>
+                    <div class="modalInfoWrapper" :style="modalInfoStyle">
+                      <div class="modalName">
+                        <a :href="`${content.url}`" target="_blank" rel="noopener noreferrer" class="nameLink">{{content.name}}</a>
+                      </div>
+                      <div class="modalTimes">
+                        <div class="modalTime">
+                          <img class="modalTimeImage" src="/images/published.svg" alt="published">
+                          <div>{{content.publishedAtJST}}</div>
+                        </div>
+                        <div v-if="content.updatedAtJST !== undefined &&  content.updatedAtJST !== content.publishedAtJST" class="modalTime">
+                          <img class="modalTimeImage" src="/images/updated.svg" alt="updated">
+                          <div>{{content.updatedAtJST}}</div>
+                        </div>
+                      </div>
+                      <div class="modalTag">
+                        <div class="modalTagTitle">タグ</div>
+                        <div class="modalTagContents">
+                          <div v-for="item in content.type" :key="item.id" class="modalTagContent">
+                            <nuxt-link :to="`/tag/type=${item.id}*and`" class="modalTagLink button">
+                              <div class="modalTagName">#{{item.name}}</div>
+                            </nuxt-link>
+                          </div>
+                          <div v-for="item in content.industry" :key="item.id" class="modalTagContent">
+                            <nuxt-link :to="`/tag/industry=${item.id}*and`" class="modalTagLink button">
+                              <div class="modalTagName">#{{item.name}}</div>
+                            </nuxt-link>
+                          </div>
+                          <div v-for="item in content.impression" :key="item.id" class="modalTagContent">
+                            <nuxt-link :to="`/tag/impression=${item.id}*and`" class="modalTagLink button">
+                              <div class="modalTagName">#{{item.name}}</div>
+                            </nuxt-link>
+                          </div>
+                          <div v-for="item in content.layout" :key="item.id" class="modalTagContent">
+                            <nuxt-link :to="`/tag/layout=${item.id}*and`" class="modalTagLink button">
+                              <div class="modalTagName">#{{item.name}}</div>
+                            </nuxt-link>
+                          </div>
+                          <div v-for="item in content.color" :key="item.id" class="modalTagContent">
+                            <nuxt-link :to="`/tag/color=${item.id}*and`" class="modalTagLink button">
+                              <div class="modalTagName">#{{item.name}}</div>
+                            </nuxt-link>
+                          </div>
+                          <div v-for="item in content.pickup" :key="item.id" class="modalTagContent">
+                            <nuxt-link :to="`/tag/pickup=${item.id}*and`" class="modalTagLink button">
+                              <div class="modalTagName">#{{item.name}}</div>
+                            </nuxt-link>
+                          </div>
+                          <div v-for="item in content.technique" :key="item.id" class="modalTagContent">
+                            <nuxt-link :to="`/tag/technique=${item.id}*and`" class="modalTagLink button">
+                              <div class="modalTagName">#{{item.name}}</div>
+                            </nuxt-link>
+                          </div>
+                          <div v-for="item in content.technology" :key="item.id" class="modalTagContent">
+                            <nuxt-link :to="`/tag/technology=${item.id}*and`" class="modalTagLink button">
+                              <div class="modalTagName">#{{item.name}}</div>
+                            </nuxt-link>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div class="modalInfoWrapper" :style="modalInfoStyle">
-                    <div class="modalName">
-                      <a :href="`${content.url}`" target="_blank" rel="noopener noreferrer" class="nameLink">{{content.name}}</a>
-                    </div>
-                    <div class="modalTimes">
-                      <div class="modalTime">
-                        <img class="modalTimeImage" src="/images/published.svg" alt="published">
-                        <div>{{content.publishedAtJST}}</div>
-                      </div>
-                      <div v-if="content.updatedAtJST !== undefined &&  content.updatedAtJST !== content.publishedAtJST" class="modalTime">
-                        <img class="modalTimeImage" src="/images/updated.svg" alt="updated">
-                        <div>{{content.updatedAtJST}}</div>
-                      </div>
-                    </div>
-                    <div class="modalTag">
-                      <div class="modalTagTitle">タグ</div>
-                      <div class="modalTagContents">
-                        <div v-for="item in content.type" :key="item.id" class="modalTagContent">
-                          <nuxt-link :to="`/tag/type=${item.id}*and`" class="modalTagLink button">
-                            <div class="modalTagName">#{{item.name}}</div>
-                          </nuxt-link>
-                        </div>
-                        <div v-for="item in content.industry" :key="item.id" class="modalTagContent">
-                          <nuxt-link :to="`/tag/industry=${item.id}*and`" class="modalTagLink button">
-                            <div class="modalTagName">#{{item.name}}</div>
-                          </nuxt-link>
-                        </div>
-                        <div v-for="item in content.impression" :key="item.id" class="modalTagContent">
-                          <nuxt-link :to="`/tag/impression=${item.id}*and`" class="modalTagLink button">
-                            <div class="modalTagName">#{{item.name}}</div>
-                          </nuxt-link>
-                        </div>
-                        <div v-for="item in content.layout" :key="item.id" class="modalTagContent">
-                          <nuxt-link :to="`/tag/layout=${item.id}*and`" class="modalTagLink button">
-                            <div class="modalTagName">#{{item.name}}</div>
-                          </nuxt-link>
-                        </div>
-                        <div v-for="item in content.color" :key="item.id" class="modalTagContent">
-                          <nuxt-link :to="`/tag/color=${item.id}*and`" class="modalTagLink button">
-                            <div class="modalTagName">#{{item.name}}</div>
-                          </nuxt-link>
-                        </div>
-                        <div v-for="item in content.pickup" :key="item.id" class="modalTagContent">
-                          <nuxt-link :to="`/tag/pickup=${item.id}*and`" class="modalTagLink button">
-                            <div class="modalTagName">#{{item.name}}</div>
-                          </nuxt-link>
-                        </div>
-                        <div v-for="item in content.technique" :key="item.id" class="modalTagContent">
-                          <nuxt-link :to="`/tag/technique=${item.id}*and`" class="modalTagLink button">
-                            <div class="modalTagName">#{{item.name}}</div>
-                          </nuxt-link>
-                        </div>
-                        <div v-for="item in content.technology" :key="item.id" class="modalTagContent">
-                          <nuxt-link :to="`/tag/technology=${item.id}*and`" class="modalTagLink button">
-                            <div class="modalTagName">#{{item.name}}</div>
-                          </nuxt-link>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                    
                 </div>
-              </div>
+              </transition>
               <div class="info" :style="getInfoStyle">
                 <div class="infoText" :style="infoButtonStyle">
                   <div class="name">
@@ -1320,8 +1321,7 @@ export default {
             this.activeModal.splice();
             this.modalOpenElement = {};
             this.modalOpen = false;
-            /* this.$store.dispatch("modal/pushOpen"); */
-            backfaceFixed(false);
+            setTimeout(()=>{backfaceFixed(false)},200);
         },
         setLoaded() {
             this.$store.dispatch("loaded/pushLoadingDisplayed");
@@ -1921,6 +1921,7 @@ export default {
   align-items: center;
   justify-content: center;
   opacity: 0;
+  transition: opacity .2s;
   @include responsive(xs) {
     
   }
@@ -1942,6 +1943,13 @@ export default {
   &.open {
     opacity: 1;
   }
+}
+
+.modal-leave-active {
+  transition: opacity .2s;
+}
+.modal-leave-to {
+  opacity: 0 !important;
 }
 
 .modalButton {
