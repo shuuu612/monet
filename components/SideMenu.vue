@@ -168,7 +168,7 @@
                 </div>
               </div>
             </div>
-            <div class="controllerContent">
+            <!-- <div class="controllerContent">
               <div class="controllerTitle">ダークモード</div>
               <div class="controllerItems">
                 <button class="controllerItem" :class="getDarkmodeOn" :disabled="getDarkmodeOnDisabled" @click="clickDarkmode('on')">
@@ -181,7 +181,7 @@
                   <div class="typeTitle typeTitleDarkmode">OSの設定</div>
                 </button>
               </div>
-            </div>
+            </div> -->
             <div class="controllerItems working">
               <label class="checkboxWrapper">
                 <input id="checkbox" class="checkbox" type="checkbox" name="check" value="test" checked>リンク切れのサイトを表示しない
