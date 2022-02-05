@@ -739,10 +739,10 @@ export default {
 }
 
 .tab-enter-active {
-  transition: opacity .3s .3s ease-out;
+  transition: opacity .15s .15s ease-out;
 }
 .tab-leave-active {
-  transition: opacity .2s ease-in;
+  transition: opacity .1s ease-in;
 }
 .tab-enter, .tab-leave-to {
   opacity: 0;
