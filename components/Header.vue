@@ -67,14 +67,10 @@ export default {
   align-items: center;
   justify-content: center;
   z-index: 15;
-  transition: transform .2s, opacity .2s;
-  opacity: 1;
+  transition: transform .25s ease-in;
   &.isOpen {
     transform: translateX(calc(0.5 * var(--sideMenuWidth)));
-  }
-  &.scrollHide {
-    opacity: 0;
-    visibility: hidden;
+    transition: transform .25s ease-out;
   }
   @include responsive(xs) {
     

@@ -676,8 +676,11 @@ export default {
   z-index: 90;
 }
 
-.mask-enter-active, .mask-leave-active {
-  transition: opacity .2s;
+.mask-enter-active {
+  transition: opacity .25s ease-out;
+}
+.mask-leave-active {
+  transition: opacity .25s ease-in;
 }
 .mask-enter, .mask-leave-to {
   opacity: 0;
@@ -691,10 +694,11 @@ export default {
   max-width: var(--sideMenuWidth);
   height: 100vh;
   background-color: var(--side-menu-background);
-  transition: transform .2s;
+  transition: transform .25s ease-out;
   z-index: 100;
   &.isClose {
     transform: translateX(calc(-1 * var(--sideMenuWidth)));
+    transition: transform .25s ease-in;
   }
   padding: 50px 15px 40px 15px;
   overflow-y: scroll;

@@ -1722,10 +1722,11 @@ export default {
 .divider {
   position: relative;
   color: var(--main-text);
-  transition: transform .2s;
+  transition: transform .25s ease-in;
   padding: 0px 0px 150px 0px;
   .sideMenuOpen & {
     transform: translateX(calc(0.5 * var(--sideMenuWidth)));
+    transition: transform .25s ease-out;
   }
   @include responsive(xs) {
 
