@@ -693,10 +693,9 @@ export default {
           if(this.selectedTag === undefined) {
             // ベース設定のまま
           }else {
-            /* this.analyzedUrl(); */
             // tagIDを日本語に変換
-            this.meta.title = this.japaneseTag + ' | ' + this.meta.title;
-            this.meta.keyword = this.japaneseTag + ',' + this.meta.keyword
+            this.meta.title = this.japaneseTags + ' | ' + this.meta.title;
+            this.meta.keyword = this.japaneseTags + ',' + this.meta.keyword
           }
         },
         setContentsElement() {
@@ -1224,7 +1223,6 @@ export default {
               return
             }
             const industry = this.tag.industry.contents.find(function(item) {return item.id === selectedTag})
-            console.log(industry)
             if(industry !== undefined) {
               this.japaneseTags = industry.name;
               return
