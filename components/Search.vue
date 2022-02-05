@@ -69,9 +69,10 @@ export default {
   left: 0;
   width: 100%;
   height: 70px;
-  background-color: var(--black-transparent-low);
+  background-color: var(--white-transparent-low);
   padding: 14px 10px;
   transform: translateY(-70px);
+  border-bottom: 2px var(--black-transparent-high) solid;
   &.open {
     transform: translateY(0);
   }
@@ -98,6 +99,7 @@ export default {
     padding: 10px;
     
     background-color: transparent;
+    border-bottom: 0;
 
     &.focus {
       /* width: 450px; */
@@ -127,7 +129,7 @@ export default {
   width: 100%;
   height: 100%;
   border-radius: 50px;
-  background-color: var(--black-transparent);
+  background-color: var(--black-transparent-high);
   @include responsive(xs) {
     
   }

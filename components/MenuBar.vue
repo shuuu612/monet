@@ -1,5 +1,15 @@
 <template>
   <div v-if="getMobile" class="menuBtns">
+    <button class="menuBtn" :class="getOpen" @click="clickButton">
+      <!-- <div class="bars">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div> -->
+      <svg class="openImage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 485.26 289.43"  fill="#231815">
+        <polygon points="485.26 144.71 292.33 0 292.33 92.26 0 92.26 0 197.16 292.33 197.16 292.33 289.43 485.26 144.71"/>
+      </svg>
+    </button>
     <button class="menuBtn" :class="{selected: !getSelectedHome}" @click="setClose">
       <nuxt-link v-if="getSelectedHome" class="menuLink" to="/">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 508.67 457.62" class="homeImage">
@@ -26,12 +36,10 @@
         </svg>
       </div>
     </button>
-    <button class="menuBtn" :class="getOpen" @click="clickButton">
-      <div class="bars">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-      </div>
+    <button class="menuBtn" @click="clickSearch">
+      <svg class="searchImage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 393.47 393.47" fill="#000000">
+        <path d="M383.52,335.43l-102-102c36.94-58.86,29.95-137.61-21.23-188.8-59.45-59.45-156.19-59.46-215.65,0s-59.45,156.19,0,215.65c51.19,51.17,129.94,58.18,188.81,21.24l102,102a34,34,0,1,0,48.08-48.09ZM232.77,232.76a113.64,113.64,0,1,1,0-160.71A113.77,113.77,0,0,1,232.77,232.76Z"/>
+      </svg>
     </button>
   </div>
 </template>
@@ -96,6 +104,9 @@ export default {
       if(this.$store.getters['sideMenu/getOpen']) {
         this.$store.dispatch("sideMenu/pushOpen");
       }
+    },
+    clickSearch() {
+      this.$store.dispatch('search/pushOpen')
     }
   },
   
@@ -179,51 +190,6 @@ export default {
   }
 }
 
-// ハンバーガーメニュー
-/* .bars {
-  position: relative;
-  width: 22px;
-  height: 18px;
-}
-
-.bar {
-  background-color: var(--white);;
-  width: inherit;
-  height: 2px;
-  position: absolute;
-  transition: transform .3s;
-  display: block;
-  border-radius: 5px;
-  &:nth-child(1) {
-    top: 0;
-    left: 0;
-  }
-  &:nth-child(2) {
-    top: 8px;
-    left: 0;
-  }
-  &:nth-child(3) {
-    top: 16px;
-    left: 0;
-  }
-  .open & {
-    background-color: var(--white);
-    &:nth-child(1) {
-      top: 8px;
-      left: 0;
-      transform: rotate(135deg);
-    }
-    &:nth-child(2) {
-      display: none;
-    }
-    &:nth-child(3) {
-      top: 8px;
-      left: 0;
-      transform: rotate(-135deg);
-    }
-  }
-} */
-
 .homeImage {
   height: 16px;
 }
@@ -241,6 +207,20 @@ export default {
   .selected & {
     fill: var(--white);
   }
+}
+
+.openImage {
+  width: 22px;
+  fill: var(--white);
+  transition: transform .2s;
+  .open & {
+    transform: rotate(-180deg);
+  }
+}
+
+.searchImage {
+  width: 16px;
+  fill: var(--white);
 }
 
 </style>
