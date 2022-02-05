@@ -1,6 +1,8 @@
 <template>
   <div class="sideMenuWrapper">
-    <div v-if="$store.getters['sideMenu/getOpen']" class="mask" @click="clickButton"></div>
+    <transition name="mask">
+      <div v-if="$store.getters['sideMenu/getOpen']" class="mask" @click="clickButton"></div>
+    </transition>
     <div id="sideMenu" class="sideMenu" :class="[getOpen,getClose]" @scroll="scrolledSideMenu">
       <div class="tabMenus">
         <div class="tabMenu button" :class="getSelectedTab('tag')" @click="clickTab('tag')">カテゴリー</div>
@@ -665,6 +667,13 @@ export default {
   z-index: 90;
 }
 
+.mask-enter-active, .mask-leave-active {
+  transition: opacity .2s;
+}
+.mask-enter, .mask-leave-to {
+  opacity: 0;
+}
+
 .sideMenu {
   position: fixed;
   top: 0;
@@ -673,7 +682,7 @@ export default {
   max-width: var(--sideMenuWidth);
   height: 100vh;
   background-color: var(--side-menu-background);
-  
+  transition: transform .2s;
   z-index: 100;
   &.isClose {
     transform: translateX(calc(-1 * var(--sideMenuWidth)));
