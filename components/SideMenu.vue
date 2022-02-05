@@ -12,185 +12,194 @@
       </div>
       <div class="sideMenuContents">
         <!-- カテゴリー -->
-        <div v-show="selectedTag" class="sideMenuContent">
-          <div class="tagContents">
-            <div v-for="name in tagname" :key="name" class="tagContent">
-              <div class="sideMenuSubTitle tagStyle">{{name.toUpperCase()}}</div>
-              <div class="tagItems">
-                <div v-for="item in tag[name].contents" :key="item.id" class="tagItem" :class="getSelectedTag(item.id)">
-                  <div class="tagLinks" @click="clickTagButton">
-                    <nuxt-link :to="`/tag/${item.id}`" class="tagLink button">
-                      <div v-if="name === 'color'" class="colorImage" :class="`${item.id}`"></div>
-                      <div class="tagLinkText">
-                        <div>{{item.name}}</div>
-                        <!-- <div class="tagLinkTextLine"></div> -->
-                      </div>
-                    </nuxt-link>
-                    <!-- <div v-else class="tagLink button" @click="$moveTop">
-                      <div v-if="name === 'color'" class="colorImage"></div>
-                      <div>{{item.name}}</div>
-                    </div> -->
-                    <div class="starButton button" @click.stop="setFavoriteTags(item.id)">
-                      <svg class="starImage" :class="getAddedFavoriteTags(item.id)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 567.13 539.38" fill="transparent" stroke="#ffffff">
-                        <polygon points="283.57 45.19 357.91 195.83 524.15 219.99 403.86 337.25 432.26 502.81 283.57 424.64 134.88 502.81 163.27 337.25 42.98 219.99 209.22 195.83 283.57 45.19" style="stroke-miterlimit:10;stroke-width:40px"/>
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- カテゴリー検索 -->
-        <div v-show="selectedSearch" class="sideMenuContent">
-          <div class="searchBlock">
-            <svg class="searchImage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 393.47 393.47" fill="#000000">
-              <path d="M383.52,335.43l-102-102c36.94-58.86,29.95-137.61-21.23-188.8-59.45-59.45-156.19-59.46-215.65,0s-59.45,156.19,0,215.65c51.19,51.17,129.94,58.18,188.81,21.24l102,102a34,34,0,1,0,48.08-48.09ZM232.77,232.76a113.64,113.64,0,1,1,0-160.71A113.77,113.77,0,0,1,232.77,232.76Z"/>
-            </svg>
-            <input id="search" v-model="keyword" class="search" type="text" placeholder="カテゴリーを検索" autocomplete="off" @input="setKeyword" @focus="setFocus" @blur="setBlur">
-          </div>
-          <div v-for="item in keywordContents" :key="item.id" class="tagItem">
-              <div class="tagLinks" @click="clickTagButton">
-                <nuxt-link :to="`/tag/${item.id}`" class="tagLink button">
-                  <div v-if="getColorMark(item)" class="colorImage" :class="`${item.id}`"></div>
-                  <div class="tagLinkText">
-                    <div>{{item.name}}</div>
-                    <div class="tagLinkTextLine"></div>
-                  </div>
-                </nuxt-link>
-                <div class="starButton button" @click.stop="setFavoriteTags(item.id)">
-                  <svg class="starImage" :class="getAddedFavoriteTags(item.id)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 567.13 539.38" fill="transparent" stroke="#ffffff">
-                    <polygon points="283.57 45.19 357.91 195.83 524.15 219.99 403.86 337.25 432.26 502.81 283.57 424.64 134.88 502.81 163.27 337.25 42.98 219.99 209.22 195.83 283.57 45.19" style="stroke-miterlimit:10;stroke-width:40px"/>
-                  </svg>
-                </div>
-              </div>
-            </div>
-        </div>
-        <!-- お気に入り -->
-        <div v-show="selectedFavorite" class="sideMenuContent">
-          <div class="tagContents">
-            <div v-if="getNoContent" class="noFavoriteTagsComment">お気に入りのタグは登録されていません</div>
-            <template v-for="name in tagname">
-              <div v-if="getFavoritedType(name)" :key="name" class="tagContent">
+        <transition name="tab">
+          <div v-show="selectedTag" key="tag" class="sideMenuContent">
+            <div class="tagContents">
+              <div v-for="name in tagname" :key="name" class="tagContent">
                 <div class="sideMenuSubTitle tagStyle">{{name.toUpperCase()}}</div>
                 <div class="tagItems">
-                  <template v-for="item in tag[name].contents">
-                    <div v-if="getFavorited(item.id)" :key="item.id" class="tagItem" :class="getSelectedTag(item.id)">
-                      <div class="tagLinks" @click="clickTagButton">
-                        <nuxt-link :to="`/tag/${item.id}`" class="tagLink button">
-                          <div class="tagLinkText">
-                            <div>{{item.name}}</div>
-                            <!-- <div class="tagLinkTextLine"></div> -->
-                          </div>
-                        </nuxt-link>
-                        <!-- <div v-else class="tagLink button" @click="$moveTop">{{item.name}}</div> -->
-                        <div class="starButton button" @click.stop="setFavoriteTags(item.id)">
-                          <svg class="starImage" :class="getAddedFavoriteTags(item.id)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 567.13 539.38" fill="transparent" stroke="#ffffff">
-                            <polygon points="283.57 45.19 357.91 195.83 524.15 219.99 403.86 337.25 432.26 502.81 283.57 424.64 134.88 502.81 163.27 337.25 42.98 219.99 209.22 195.83 283.57 45.19" style="stroke-miterlimit:10;stroke-width:40px"/>
-                          </svg>
+                  <div v-for="item in tag[name].contents" :key="item.id" class="tagItem" :class="getSelectedTag(item.id)">
+                    <div class="tagLinks" @click="clickTagButton">
+                      <nuxt-link :to="`/tag/${item.id}`" class="tagLink button">
+                        <div v-if="name === 'color'" class="colorImage" :class="`${item.id}`"></div>
+                        <div class="tagLinkText">
+                          <div>{{item.name}}</div>
+                          <!-- <div class="tagLinkTextLine"></div> -->
                         </div>
+                      </nuxt-link>
+                      <!-- <div v-else class="tagLink button" @click="$moveTop">
+                        <div v-if="name === 'color'" class="colorImage"></div>
+                        <div>{{item.name}}</div>
+                      </div> -->
+                      <div class="starButton button" @click.stop="setFavoriteTags(item.id)">
+                        <svg class="starImage" :class="getAddedFavoriteTags(item.id)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 567.13 539.38" fill="transparent" stroke="#ffffff">
+                          <polygon points="283.57 45.19 357.91 195.83 524.15 219.99 403.86 337.25 432.26 502.81 283.57 424.64 134.88 502.81 163.27 337.25 42.98 219.99 209.22 195.83 283.57 45.19" style="stroke-miterlimit:10;stroke-width:40px"/>
+                        </svg>
                       </div>
                     </div>
-                  </template>
+                  </div>
                 </div>
               </div>
-            </template>
+            </div>
           </div>
-        </div>
+        </transition>
+        <!-- カテゴリー検索 -->
+        <transition name="tab">
+          <div v-show="selectedSearch" key="search" class="sideMenuContent">
+            <div class="searchBlock">
+              <svg class="searchImage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 393.47 393.47" fill="#000000">
+                <path d="M383.52,335.43l-102-102c36.94-58.86,29.95-137.61-21.23-188.8-59.45-59.45-156.19-59.46-215.65,0s-59.45,156.19,0,215.65c51.19,51.17,129.94,58.18,188.81,21.24l102,102a34,34,0,1,0,48.08-48.09ZM232.77,232.76a113.64,113.64,0,1,1,0-160.71A113.77,113.77,0,0,1,232.77,232.76Z"/>
+              </svg>
+              <input id="search" v-model="keyword" class="search" type="text" placeholder="カテゴリーを検索" autocomplete="off" @input="setKeyword" @focus="setFocus" @blur="setBlur">
+            </div>
+            <div v-for="item in keywordContents" :key="item.id" class="tagItem">
+                <div class="tagLinks" @click="clickTagButton">
+                  <nuxt-link :to="`/tag/${item.id}`" class="tagLink button">
+                    <div v-if="getColorMark(item)" class="colorImage" :class="`${item.id}`"></div>
+                    <div class="tagLinkText">
+                      <div>{{item.name}}</div>
+                      <div class="tagLinkTextLine"></div>
+                    </div>
+                  </nuxt-link>
+                  <div class="starButton button" @click.stop="setFavoriteTags(item.id)">
+                    <svg class="starImage" :class="getAddedFavoriteTags(item.id)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 567.13 539.38" fill="transparent" stroke="#ffffff">
+                      <polygon points="283.57 45.19 357.91 195.83 524.15 219.99 403.86 337.25 432.26 502.81 283.57 424.64 134.88 502.81 163.27 337.25 42.98 219.99 209.22 195.83 283.57 45.19" style="stroke-miterlimit:10;stroke-width:40px"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </transition>
+        <!-- お気に入り -->
+        <transition name="tab">
+          <div v-show="selectedFavorite" key="favorite" class="sideMenuContent">
+            <div class="tagContents">
+              <div v-if="getNoContent" class="noFavoriteTagsComment">お気に入りのタグは登録されていません</div>
+              <template v-for="name in tagname">
+                <div v-if="getFavoritedType(name)" :key="name" class="tagContent">
+                  <div class="sideMenuSubTitle tagStyle">{{name.toUpperCase()}}</div>
+                  <div class="tagItems">
+                    <template v-for="item in tag[name].contents">
+                      <div v-if="getFavorited(item.id)" :key="item.id" class="tagItem" :class="getSelectedTag(item.id)">
+                        <div class="tagLinks" @click="clickTagButton">
+                          <nuxt-link :to="`/tag/${item.id}`" class="tagLink button">
+                            <div class="tagLinkText">
+                              <div>{{item.name}}</div>
+                              <!-- <div class="tagLinkTextLine"></div> -->
+                            </div>
+                          </nuxt-link>
+                          <!-- <div v-else class="tagLink button" @click="$moveTop">{{item.name}}</div> -->
+                          <div class="starButton button" @click.stop="setFavoriteTags(item.id)">
+                            <svg class="starImage" :class="getAddedFavoriteTags(item.id)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 567.13 539.38" fill="transparent" stroke="#ffffff">
+                              <polygon points="283.57 45.19 357.91 195.83 524.15 219.99 403.86 337.25 432.26 502.81 283.57 424.64 134.88 502.81 163.27 337.25 42.98 219.99 209.22 195.83 283.57 45.19" style="stroke-miterlimit:10;stroke-width:40px"/>
+                            </svg>
+                          </div>
+                        </div>
+                      </div>
+                    </template>
+                  </div>
+                </div>
+              </template>
+            </div>
+          </div>
+        </transition>
         <!-- 設定 -->
-        <div v-show="selectedSetting" class="sideMenuContent">
-          <div class="controllerContents">
-            <div class="controllerContent">
-              <div class="controllerTitle">デバイス</div>
-              <div class="controllerItems">
-                <button class="controllerItem" :class="getStatePC" :disabled="getDevicePcDisabled" @click="clickDevicePc">
-                  <div>
-                    <div class="typeImageWrapper">
-                      <!-- <img class="typeImagePC" src="/images/PC.svg" alt=""> -->
-                      <svg class="typeImage typeImagePC" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 357 299" fill="#ffffff">
-                        <path d="M348.44,0H8.56A8.56,8.56,0,0,0,0,8.56V240.44A8.56,8.56,0,0,0,8.56,249H348.44a8.56,8.56,0,0,0,8.56-8.56V8.56A8.56,8.56,0,0,0,348.44,0ZM331,219.12a4.87,4.87,0,0,1-4.88,4.88H29.88A4.87,4.87,0,0,1,25,219.12V29.88A4.87,4.87,0,0,1,29.88,25H326.12A4.87,4.87,0,0,1,331,29.88Z"/>
-                        <rect class="cls-1" x="66" y="274" width="225" height="25" rx="2.6"/>
-                      </svg>
+        <transition name="tab">
+          <div v-show="selectedSetting" key="setting" class="sideMenuContent">
+            <div class="controllerContents">
+              <div class="controllerContent">
+                <div class="controllerTitle">デバイス</div>
+                <div class="controllerItems">
+                  <button class="controllerItem" :class="getStatePC" :disabled="getDevicePcDisabled" @click="clickDevicePc">
+                    <div>
+                      <div class="typeImageWrapper">
+                        <!-- <img class="typeImagePC" src="/images/PC.svg" alt=""> -->
+                        <svg class="typeImage typeImagePC" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 357 299" fill="#ffffff">
+                          <path d="M348.44,0H8.56A8.56,8.56,0,0,0,0,8.56V240.44A8.56,8.56,0,0,0,8.56,249H348.44a8.56,8.56,0,0,0,8.56-8.56V8.56A8.56,8.56,0,0,0,348.44,0ZM331,219.12a4.87,4.87,0,0,1-4.88,4.88H29.88A4.87,4.87,0,0,1,25,219.12V29.88A4.87,4.87,0,0,1,29.88,25H326.12A4.87,4.87,0,0,1,331,29.88Z"/>
+                          <rect class="cls-1" x="66" y="274" width="225" height="25" rx="2.6"/>
+                        </svg>
+                      </div>
+                      <div class="typeTitle">デスクトップ</div>
                     </div>
-                    <div class="typeTitle">デスクトップ</div>
-                  </div>
-                </button>
-                <button class="controllerItem" :class="getStateTB" :disabled="getDeviceTbDisabled" @click="clickDeviceTb">
-                  <div>
-                    <div class="typeImageWrapper">
-                      <!-- <img class="typeImageTB" src="/images/TB.svg" alt=""> -->
-                      <svg class="typeImage typeImageTB" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 315.88 374.1" fill="#ffffff">
-                        <path d="M304.56,0H11.32A11.32,11.32,0,0,0,0,11.32V362.78A11.32,11.32,0,0,0,11.32,374.1H304.56a11.32,11.32,0,0,0,11.32-11.32V11.32A11.32,11.32,0,0,0,304.56,0Zm-17.8,340.3a9.06,9.06,0,0,1-9.05,9.06H37a9.06,9.06,0,0,1-9.06-9.06V37.87a9.06,9.06,0,0,1,9.06-9H277.71a9,9,0,0,1,9.05,9Z"/>
-                      </svg>
+                  </button>
+                  <button class="controllerItem" :class="getStateTB" :disabled="getDeviceTbDisabled" @click="clickDeviceTb">
+                    <div>
+                      <div class="typeImageWrapper">
+                        <!-- <img class="typeImageTB" src="/images/TB.svg" alt=""> -->
+                        <svg class="typeImage typeImageTB" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 315.88 374.1" fill="#ffffff">
+                          <path d="M304.56,0H11.32A11.32,11.32,0,0,0,0,11.32V362.78A11.32,11.32,0,0,0,11.32,374.1H304.56a11.32,11.32,0,0,0,11.32-11.32V11.32A11.32,11.32,0,0,0,304.56,0Zm-17.8,340.3a9.06,9.06,0,0,1-9.05,9.06H37a9.06,9.06,0,0,1-9.06-9.06V37.87a9.06,9.06,0,0,1,9.06-9H277.71a9,9,0,0,1,9.05,9Z"/>
+                        </svg>
+                      </div>
+                      <div class="typeTitle">タブレット</div>
                     </div>
-                    <div class="typeTitle">タブレット</div>
-                  </div>
-                </button>
-                <button class="controllerItem" :class="getStateSP" :disabled="getDeviceSpDisabled" @click="clickDeviceSp">
-                  <div>
-                    <div class="typeImageWrapper">
-                      <!-- <img class="typeImageSP" src="/images/SP.svg" alt=""> -->
-                      <svg class="typeImage typeImageSP" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 216.45 386.3" fill="#ffffff">
-                        <path d="M207.69,0H8.76A8.76,8.76,0,0,0,0,8.76V377.54a8.76,8.76,0,0,0,8.76,8.76H207.69a8.76,8.76,0,0,0,8.76-8.76V8.76A8.76,8.76,0,0,0,207.69,0Zm-19.8,351a8.21,8.21,0,0,1-8.22,8.21H35.57A8.21,8.21,0,0,1,27.35,351V36.77a8.22,8.22,0,0,1,8.22-8.21h144.1a8.22,8.22,0,0,1,8.22,8.21Z"/>
-                        <rect x="75.16" y="9.02" width="63.13" height="37.58" rx="4.34"/>
-                      </svg>
+                  </button>
+                  <button class="controllerItem" :class="getStateSP" :disabled="getDeviceSpDisabled" @click="clickDeviceSp">
+                    <div>
+                      <div class="typeImageWrapper">
+                        <!-- <img class="typeImageSP" src="/images/SP.svg" alt=""> -->
+                        <svg class="typeImage typeImageSP" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 216.45 386.3" fill="#ffffff">
+                          <path d="M207.69,0H8.76A8.76,8.76,0,0,0,0,8.76V377.54a8.76,8.76,0,0,0,8.76,8.76H207.69a8.76,8.76,0,0,0,8.76-8.76V8.76A8.76,8.76,0,0,0,207.69,0Zm-19.8,351a8.21,8.21,0,0,1-8.22,8.21H35.57A8.21,8.21,0,0,1,27.35,351V36.77a8.22,8.22,0,0,1,8.22-8.21h144.1a8.22,8.22,0,0,1,8.22,8.21Z"/>
+                          <rect x="75.16" y="9.02" width="63.13" height="37.58" rx="4.34"/>
+                        </svg>
+                      </div>
+                      <div class="typeTitle">スマートフォン</div>
                     </div>
-                    <div class="typeTitle">スマートフォン</div>
-                  </div>
-                </button>
-              </div>
-              <div class="controllerItems checkboxStyle">
-                <label class="checkboxWrapper">
-                  <input id="checkbox" class="checkbox" type="checkbox" name="check" :checked="getDeviceCheckboxChecked" @input="deviceCheckboxChange">マルチデバイスを有効にする
-                </label>
-              </div>
-            </div>
-            <div class="controllerContent">
-              <div class="controllerTitle">サイズ</div>
-              <div class="controllerItems sliderStyle">
-                <img class="sliderImageSmall" src="/images/square-small.svg" alt="">
-                <input id="slider" type="range" name="size" min="0.25" max="1" step="0.075" :value="getSliderValue" @input="sliderChange">
-                <img class="sliderImageLarge" src="/images/square-large.svg" alt="">
-                <!-- {{$store.getters["slider/getSteps"].indexOf(true)}} -->
-              </div>
-              <div class="controllerItems checkboxStyle">
-                <label class="checkboxWrapper">
-                  <input id="checkbox" class="checkbox" type="checkbox" name="check" :checked="getSliderCheckboxChecked" @input="sliderCheckboxChange">自動調整を有効にする
-                </label>
-              </div>
-              <div v-if="getNotice" class="sliderNotice">
-                <svg class="sliderNoticeIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400.94 400.94">
-                  <circle cx="200.47" cy="117.76" r="28.42"/>
-                  <path d="M200.47,188.35c-12.32,0-22.32,7.6-22.32,17v93.22c0,9.38,10,17,22.32,17s22.32-7.61,22.32-17V205.34C222.79,196,212.8,188.35,200.47,188.35Z"/>
-                  <circle cx="200.47" cy="200.47" r="180.47" style="fill:none;stroke:#231815;stroke-miterlimit:10;stroke-width:40px"/>
-                </svg>
-                <div class="sliderNoticeTexts">
-                  <div class="sliderNoticeText main">手動調整中</div>
-                  <div class="sliderNoticeText sub">ブラウザサイズに変更があった場合は、表示崩れを防止するため手動調整を中止し自動調整が有効になります</div>
+                  </button>
+                </div>
+                <div class="controllerItems checkboxStyle">
+                  <label class="checkboxWrapper">
+                    <input id="checkbox" class="checkbox" type="checkbox" name="check" :checked="getDeviceCheckboxChecked" @input="deviceCheckboxChange">マルチデバイスを有効にする
+                  </label>
                 </div>
               </div>
-            </div>
-            <!-- <div class="controllerContent">
-              <div class="controllerTitle">ダークモード</div>
-              <div class="controllerItems">
-                <button class="controllerItem" :class="getDarkmodeOn" :disabled="getDarkmodeOnDisabled" @click="clickDarkmode('on')">
-                  <div class="typeTitle typeTitleDarkmode">ON</div>
-                </button>
-                <button class="controllerItem" :class="getDarkmodeOff" :disabled="getDarkmodeOffDisabled" @click="clickDarkmode('off')">
-                  <div class="typeTitle typeTitleDarkmode">OFF</div>
-                </button>
-                <button class="controllerItem" :class="getDarkmodeOs" :disabled="getDarkmodeOsDisabled" @click="clickDarkmode('os')">
-                  <div class="typeTitle typeTitleDarkmode">OSの設定</div>
-                </button>
+              <div class="controllerContent">
+                <div class="controllerTitle">サイズ</div>
+                <div class="controllerItems sliderStyle">
+                  <img class="sliderImageSmall" src="/images/square-small.svg" alt="">
+                  <input id="slider" type="range" name="size" min="0.25" max="1" step="0.075" :value="getSliderValue" @input="sliderChange">
+                  <img class="sliderImageLarge" src="/images/square-large.svg" alt="">
+                  <!-- {{$store.getters["slider/getSteps"].indexOf(true)}} -->
+                </div>
+                <div class="controllerItems checkboxStyle">
+                  <label class="checkboxWrapper">
+                    <input id="checkbox" class="checkbox" type="checkbox" name="check" :checked="getSliderCheckboxChecked" @input="sliderCheckboxChange">自動調整を有効にする
+                  </label>
+                </div>
+                <div v-if="getNotice" class="sliderNotice">
+                  <svg class="sliderNoticeIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400.94 400.94">
+                    <circle cx="200.47" cy="117.76" r="28.42"/>
+                    <path d="M200.47,188.35c-12.32,0-22.32,7.6-22.32,17v93.22c0,9.38,10,17,22.32,17s22.32-7.61,22.32-17V205.34C222.79,196,212.8,188.35,200.47,188.35Z"/>
+                    <circle cx="200.47" cy="200.47" r="180.47" style="fill:none;stroke:#231815;stroke-miterlimit:10;stroke-width:40px"/>
+                  </svg>
+                  <div class="sliderNoticeTexts">
+                    <div class="sliderNoticeText main">手動調整中</div>
+                    <div class="sliderNoticeText sub">ブラウザサイズに変更があった場合は、表示崩れを防止するため手動調整を中止し自動調整が有効になります</div>
+                  </div>
+                </div>
               </div>
-            </div> -->
-            <div class="controllerItems working">
-              <label class="checkboxWrapper">
-                <input id="checkbox" class="checkbox" type="checkbox" name="check" value="test" checked>リンク切れのサイトを表示しない
-              </label>
+              <!-- <div class="controllerContent">
+                <div class="controllerTitle">ダークモード</div>
+                <div class="controllerItems">
+                  <button class="controllerItem" :class="getDarkmodeOn" :disabled="getDarkmodeOnDisabled" @click="clickDarkmode('on')">
+                    <div class="typeTitle typeTitleDarkmode">ON</div>
+                  </button>
+                  <button class="controllerItem" :class="getDarkmodeOff" :disabled="getDarkmodeOffDisabled" @click="clickDarkmode('off')">
+                    <div class="typeTitle typeTitleDarkmode">OFF</div>
+                  </button>
+                  <button class="controllerItem" :class="getDarkmodeOs" :disabled="getDarkmodeOsDisabled" @click="clickDarkmode('os')">
+                    <div class="typeTitle typeTitleDarkmode">OSの設定</div>
+                  </button>
+                </div>
+              </div> -->
+              <div class="controllerItems working">
+                <label class="checkboxWrapper">
+                  <input id="checkbox" class="checkbox" type="checkbox" name="check" value="test" checked>リンク切れのサイトを表示しない
+                </label>
+              </div>
             </div>
           </div>
-        </div>
+        </transition>
+          
       </div>
     </div>
   </div>
@@ -722,10 +731,24 @@ export default {
 
 .sideMenuContents {
   margin-top: 20px;
+  position: relative;
+}
+
+.tab-enter-active {
+  transition: opacity .3s .3s ease-out;
+}
+.tab-leave-active {
+  transition: opacity .2s ease-in;
+}
+.tab-enter, .tab-leave-to {
+  opacity: 0;
 }
 
 .sideMenuContent {
-  
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
 }
 
 .partitionOpen {
