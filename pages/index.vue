@@ -328,7 +328,6 @@ export default {
             displayingPageKeyword: 0,
             displayingPageBookmark: 0,
             remainingContent: 0,
-            activeSearch: false,
             displayingJpName: "",
             tagsJpName: "",
             infoStyle: {
@@ -1330,16 +1329,26 @@ export default {
             this.$store.dispatch("loaded/pushLoadingDisplayed");
         },
         searchByKeyword() {
+            // 検索キーワードを取得
             const key = this.$store.getters["search/getKeyword"];
-            const contents = this.selectedTag === 'bookmark' ? this.bookmarkContents : this.contents;
-            const bookmarkContents = this.$store.getters["bookmark/getBookmark"]
             // キーワードを一度入力してから削除したとき
             if (!key) {
-                console.log('検索フォームが空になった')
                 this.$store.dispatch("status/pushSearchTag");
                 this.setDisplayingContent();
                 return;
             }
+            // キーワードをスペースで分割
+            let keySplit
+            if(key.includes('　') || key.includes(' ')) {
+              keySplit = key.split(/\s/)
+              // 最後スペースの場合に作成される空文字（''）を削除
+              keySplit = keySplit.filter(function(item) {return item !== ''})
+            }
+
+            // 検索対象のコンテンツを取得
+            const contents = this.selectedTag === 'bookmark' ? this.bookmarkContents : this.contents;
+            const bookmarkContents = this.$store.getters["bookmark/getBookmark"]
+
             // キーワードでフィルター（大文字・小文字・ひらがな・カタカナを区別しない）
             const searchFuzzy = contents.filter(function (content) {
                 // 検索対象を抽出
@@ -1419,6 +1428,7 @@ export default {
                 });
                 const keyword = content.keyword !== undefined ? content.keyword.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96)) : "";
 
+                // ブックマークに登録されている場合は、ブックマーク関連のキーワードも対象にする
                 let bookmark;
                 if(bookmarkContents.includes(content.id)) {
                   const bookmarkKeyword = ['bookmark','ブックマーク','お気に入り','favorite']
@@ -1429,44 +1439,92 @@ export default {
                   bookmark = [];
                 }
 
-                const lowerKey = key.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
+                // フィルター処理
+                if(keySplit === undefined) {
+                  // 検索キーワードの書式を統一する
+                  const lowerKey = key.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
+                  // 検索キーワードを正規表現に変換
+                  const regExp = new RegExp(String.raw`${lowerKey}`);
+                  // 一致判定
+                  const result = (name.length !== 0 ? name.includes(lowerKey) : false) ||
+                                 (url.length !== 0 ? url.includes(lowerKey) : false) ||
+                                 (typeId.length !== 0 ? (typeId.find(value => value.match(regExp)) !== undefined) : false) ||
+                                 (typeName.length !== 0 ? (typeName.find(value => value.match(regExp)) !== undefined) : false) ||
+                                 (typeKeyword.length !== 0 ? (typeKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
+                                 (industryId.length !== 0 ? (industryId.find(value => value.match(regExp)) !== undefined) : false) ||
+                                 (industryName.length !== 0 ? (industryName.find(value => value.match(regExp)) !== undefined) : false) ||
+                                 (industryKeyword.length !== 0 ? (industryKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
+                                 (impressionId.length !== 0 ? (impressionId.find(value => value.match(regExp)) !== undefined) : false) ||
+                                 (impressionName.length !== 0 ? (impressionName.find(value => value.match(regExp)) !== undefined) : false) ||
+                                 (impressionKeyword.length !== 0 ? (impressionKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
+                                 (layoutId.length !== 0 ? (layoutId.find(value => value.match(regExp)) !== undefined) : false) ||
+                                 (layoutName.length !== 0 ? (layoutName.find(value => value.match(regExp)) !== undefined) : false) ||
+                                 (layoutKeyword.length !== 0 ? (layoutKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
+                                 (colorId.length !== 0 ? (colorId.find(value => value.match(regExp)) !== undefined) : false) ||
+                                 (colorName.length !== 0 ? (colorName.find(value => value.match(regExp)) !== undefined) : false) ||
+                                 (colorKeyword.length !== 0 ? (colorKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
+                                 (pickupId.length !== 0 ? (pickupId.find(value => value.match(regExp)) !== undefined) : false) ||
+                                 (pickupName.length !== 0 ? (pickupName.find(value => value.match(regExp)) !== undefined) : false) ||
+                                 (pickupKeyword.length !== 0 ? (pickupKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
+                                 (techniqueId.length !== 0 ? (techniqueId.find(value => value.match(regExp)) !== undefined) : false) ||
+                                 (techniqueName.length !== 0 ? (techniqueName.find(value => value.match(regExp)) !== undefined) : false) ||
+                                 (techniqueKeyword.length !== 0 ? (techniqueKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
+                                 (technologyId.length !== 0 ? (technologyId.find(value => value.match(regExp)) !== undefined) : false) ||
+                                 (technologyName.length !== 0 ? (technologyName.find(value => value.match(regExp)) !== undefined) : false) ||
+                                 (technologyKeyword.length !== 0 ? (technologyKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
+                                 (keyword.length !== 0 ? keyword.includes(lowerKey) : false) ||
+                                 (bookmark.length !== 0 ? (bookmark.find(value => value.match(regExp)) !== undefined) : false);
+  
+                  return result;
+                }else {
+                  // 検索キーワードの書式を統一する
+                  const lowerKey = keySplit.map(function (item) {
+                      return item.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
+                  });
 
-                const regExp = new RegExp(String.raw`${lowerKey}`);
-                // 一致判定
-                const result = (name.length !== 0 ? name.includes(lowerKey) : false) ||
-                               (url.length !== 0 ? url.includes(lowerKey) : false) ||
-                               (typeId.length !== 0 ? (typeId.find(value => value.match(regExp)) !== undefined) : false) ||
-                               (typeName.length !== 0 ? (typeName.find(value => value.match(regExp)) !== undefined) : false) ||
-                               (typeKeyword.length !== 0 ? (typeKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
-                               (industryId.length !== 0 ? (industryId.find(value => value.match(regExp)) !== undefined) : false) ||
-                               (industryName.length !== 0 ? (industryName.find(value => value.match(regExp)) !== undefined) : false) ||
-                               (industryKeyword.length !== 0 ? (industryKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
-                               (impressionId.length !== 0 ? (impressionId.find(value => value.match(regExp)) !== undefined) : false) ||
-                               (impressionName.length !== 0 ? (impressionName.find(value => value.match(regExp)) !== undefined) : false) ||
-                               (impressionKeyword.length !== 0 ? (impressionKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
-                               (layoutId.length !== 0 ? (layoutId.find(value => value.match(regExp)) !== undefined) : false) ||
-                               (layoutName.length !== 0 ? (layoutName.find(value => value.match(regExp)) !== undefined) : false) ||
-                               (layoutKeyword.length !== 0 ? (layoutKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
-                               (colorId.length !== 0 ? (colorId.find(value => value.match(regExp)) !== undefined) : false) ||
-                               (colorName.length !== 0 ? (colorName.find(value => value.match(regExp)) !== undefined) : false) ||
-                               (colorKeyword.length !== 0 ? (colorKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
-                               (pickupId.length !== 0 ? (pickupId.find(value => value.match(regExp)) !== undefined) : false) ||
-                               (pickupName.length !== 0 ? (pickupName.find(value => value.match(regExp)) !== undefined) : false) ||
-                               (pickupKeyword.length !== 0 ? (pickupKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
-                               (techniqueId.length !== 0 ? (techniqueId.find(value => value.match(regExp)) !== undefined) : false) ||
-                               (techniqueName.length !== 0 ? (techniqueName.find(value => value.match(regExp)) !== undefined) : false) ||
-                               (techniqueKeyword.length !== 0 ? (techniqueKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
-                               (technologyId.length !== 0 ? (technologyId.find(value => value.match(regExp)) !== undefined) : false) ||
-                               (technologyName.length !== 0 ? (technologyName.find(value => value.match(regExp)) !== undefined) : false) ||
-                               (technologyKeyword.length !== 0 ? (technologyKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
-                               (keyword.length !== 0 ? keyword.includes(lowerKey) : false) ||
-                               (bookmark.length !== 0 ? (bookmark.find(value => value.match(regExp)) !== undefined) : false);
+                  let matchingCount = 0
+                  lowerKey.forEach(function(key) {
+                    // 検索キーワードを正規表現に変換
+                    const regExp = new RegExp(String.raw`${key}`);
+                    // 一致判定
+                    const result = (name.length !== 0 ? name.includes(key) : false) ||
+                                   (url.length !== 0 ? url.includes(key) : false) ||
+                                   (typeId.length !== 0 ? (typeId.find(value => value.match(regExp)) !== undefined) : false) ||
+                                   (typeName.length !== 0 ? (typeName.find(value => value.match(regExp)) !== undefined) : false) ||
+                                   (typeKeyword.length !== 0 ? (typeKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
+                                   (industryId.length !== 0 ? (industryId.find(value => value.match(regExp)) !== undefined) : false) ||
+                                   (industryName.length !== 0 ? (industryName.find(value => value.match(regExp)) !== undefined) : false) ||
+                                   (industryKeyword.length !== 0 ? (industryKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
+                                   (impressionId.length !== 0 ? (impressionId.find(value => value.match(regExp)) !== undefined) : false) ||
+                                   (impressionName.length !== 0 ? (impressionName.find(value => value.match(regExp)) !== undefined) : false) ||
+                                   (impressionKeyword.length !== 0 ? (impressionKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
+                                   (layoutId.length !== 0 ? (layoutId.find(value => value.match(regExp)) !== undefined) : false) ||
+                                   (layoutName.length !== 0 ? (layoutName.find(value => value.match(regExp)) !== undefined) : false) ||
+                                   (layoutKeyword.length !== 0 ? (layoutKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
+                                   (colorId.length !== 0 ? (colorId.find(value => value.match(regExp)) !== undefined) : false) ||
+                                   (colorName.length !== 0 ? (colorName.find(value => value.match(regExp)) !== undefined) : false) ||
+                                   (colorKeyword.length !== 0 ? (colorKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
+                                   (pickupId.length !== 0 ? (pickupId.find(value => value.match(regExp)) !== undefined) : false) ||
+                                   (pickupName.length !== 0 ? (pickupName.find(value => value.match(regExp)) !== undefined) : false) ||
+                                   (pickupKeyword.length !== 0 ? (pickupKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
+                                   (techniqueId.length !== 0 ? (techniqueId.find(value => value.match(regExp)) !== undefined) : false) ||
+                                   (techniqueName.length !== 0 ? (techniqueName.find(value => value.match(regExp)) !== undefined) : false) ||
+                                   (techniqueKeyword.length !== 0 ? (techniqueKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
+                                   (technologyId.length !== 0 ? (technologyId.find(value => value.match(regExp)) !== undefined) : false) ||
+                                   (technologyName.length !== 0 ? (technologyName.find(value => value.match(regExp)) !== undefined) : false) ||
+                                   (technologyKeyword.length !== 0 ? (technologyKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
+                                   (keyword.length !== 0 ? keyword.includes(key) : false) ||
+                                   (bookmark.length !== 0 ? (bookmark.find(value => value.match(regExp)) !== undefined) : false);
+                    // 検索キーワードに一致した場合はマッチングカウントをUP
+                    if(result) matchingCount++
+                  })
 
-                return result;
+                  return lowerKey.length === matchingCount
+                }
+                  
             });
             this.keywordContents = searchFuzzy;
             this.setDisplayingContent();
-            this.activeSearch = true;
         },
         setWindowScroll() {
             const scroll = window.pageYOffset;
