@@ -140,7 +140,7 @@ export default {
   },
 
   generate: {
-    interval: 100,
+    interval: 200,
     /* async routes() {
       const data = (
         await client.get({
