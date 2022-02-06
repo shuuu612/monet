@@ -51,9 +51,7 @@ export default {
       this.focus = false;
     },
     setInitialKeyword() {
-      console.log(this.$store.getters['search/getKeyword'])
       if(this.$store.getters['search/getKeyword']) {
-        console.log('検索キーワードを復活')
         this.keyword = this.$store.getters['search/getKeyword'];
         this.focus = true;
       }

@@ -57,9 +57,6 @@ export default {
 
 
 .topMenu {
-  /* position: fixed;
-  top: 0;
-  right: 0; */
   position: relative;
   width: 100%;
   height: 80px;

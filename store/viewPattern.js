@@ -23,16 +23,12 @@ export const mutations = {
     // 初回ロード時にローカルストレージからデータを取得
     state.activeList = Boolean(key[0])
     state.activeGrid = Boolean(key[1])
-    /* console.log('ローカルストレージからデータを取得-viewPattern')
-    console.log(key) */
   },
   updateLocalStorage(state) {
     // ローカルストレージ更新
     if (this.$storageAvailable('localStorage')) {
-      /* console.log('ローカルストレージに保存-viewPattern') */
       const viewPattern = [ Number(state.activeList), Number(state.activeGrid) ]
       const viewPatternJson = JSON.stringify(viewPattern)
-      /* console.log(viewPatternJson) */
       localStorage.setItem('view-pattern', viewPatternJson)
     }
   },

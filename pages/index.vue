@@ -188,9 +188,6 @@ export default {
         const apiOrder = order;
         // 取得するデータ数（全データを取得できること）
         const apiLimit = 1000;
-        // 非表示またはリンク切れにチェックが入っているコンテンツは表示しない
-        /* const apiFilters = "hide[equals]false[and]link[equals]false"; */
-        console.log('ここ',apiFilters)
         // API通信
         console.log("Start API communication");
         const data = await $microcms.get({
@@ -449,9 +446,6 @@ export default {
                     else if (id === "sp") {
                         return { marginRight: false };
                     }
-                    else {
-                        console.log("Unexpected route");
-                    }
                 }
                 else if (pattern === 5 || pattern === 6) {
                     if (id === "pc") {
@@ -463,9 +457,6 @@ export default {
                     else if (id === "sp") {
                         return { marginRight: false };
                     }
-                    else {
-                        console.log("Unexpected route");
-                    }
                 }
                 else if (pattern === 7) {
                     if (id === "pc") {
@@ -476,9 +467,6 @@ export default {
                     }
                     else if (id === "sp") {
                         return { marginRight: false };
-                    }
-                    else {
-                        console.log("Unexpected route");
                     }
                 }
             };
@@ -719,8 +707,6 @@ export default {
           }
         },
         filterByBookmarks() {
-            console.log("filterByBookmarksを起動");
-
             if(this.selectedTag !== 'bookmark') return;
 
             // store取得
@@ -733,8 +719,7 @@ export default {
             
             this.bookmarkContents = filterContents;
         },
-        setDisplayingContent(id) {
-            console.log("setDisplayingContentを起動");
+        setDisplayingContent() {
             // 表示件数を増やす
             if (this.$store.getters["status/getSearchKeyword"]) {
                 // キーワードで検索した結果を表示
@@ -762,8 +747,6 @@ export default {
                 this.displayingContent = this.contents.slice(start, end);
                 this.remainingContent = this.contents.length - this.displayingContent.length;
                 this.displayingJpName = this.japaneseTags;
-                console.log(this.japaneseTags)
-                console.log(this.displayingJpName)
                 /* this.$store.dispatch("status/pushSearchTag"); */
             }
             this.createDummyContent();
@@ -1185,7 +1168,6 @@ export default {
             this.$store.dispatch("slider/pushAptitudeValue", value);
         },
         loadProcess() {
-            console.log('loadProcess')
             // ロード済みフラグの設定
             this.$store.dispatch("loaded/pushLoaded");
             // ウィンドウサイズを取得
@@ -1564,7 +1546,6 @@ export default {
             
         },
         update() {
-            console.log('アップデートを検知')
             this.filterByBookmarks();
             // 検索フォームを空にする
             this.$nuxt.$emit('clearKeyword');
@@ -1574,11 +1555,9 @@ export default {
             if(this.displayingPageOriginal !== 0) {
               this.displayingPageOriginal = this.displayingPageOriginal - 1;
             }
-            /* this.displayingPageOriginal = this.displayingPageOriginal - 1; */
             this.setDisplayingContent();
         },
         keywordSearchStart() {
-          console.log('keywordSearchStart')
           // ステータスをキーワード検索に変更
           this.$store.dispatch("status/pushSearchKeyword");
           this.searchByKeyword();

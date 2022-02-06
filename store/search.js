@@ -26,12 +26,10 @@ export const mutations = {
     // 初回ロード時にセッションストレージからデータを取得
     state.keyword = key[0]
     state.open = Boolean(key[1])
-    console.log('読み込み',state.keyword)
   },
   updateLocalStorage(state) {
     // セッションストレージ更新
     if (this.$storageAvailable('localStorage')) {
-      console.log('保存',state.keyword)
       const search = [state.keyword, Number(state.open)]
       const searchJson = JSON.stringify(search)
       sessionStorage.setItem('search', searchJson)

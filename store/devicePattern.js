@@ -182,8 +182,6 @@ export const mutations = {
       state.disabledPC = false
       state.disabledTB = false
       state.disabledSP = false
-    }else {
-      console.log('想定外のパターン')
     }
   },
   setLocalStorage(state,key) {

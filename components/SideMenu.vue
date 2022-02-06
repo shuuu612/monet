@@ -456,7 +456,6 @@ export default {
       this.open = value;
     }, */
     clickButton() {
-      console.log('clickButton')
       this.$store.dispatch('sideMenu/pushOpen');
     },
     clickTagButton() {
@@ -464,7 +463,6 @@ export default {
       this.$store.dispatch("status/pushSearchTag");
     },
     clickTab(key) {
-      console.log('clickTab')
       if(key === 'tag') {
         this.selectedTag = true
         this.selectedSetting = false
@@ -542,7 +540,6 @@ export default {
       this.$store.dispatch('scroll/pushSideMenuScroll',scroll)
     },
     setFavoriteTags(id) {
-      console.log('setFavoriteTags')
       if(!this.$storageAvailable('localStorage')) {
         alert("ブラウザのローカルストレージがOFFになっています。\nお気に入り機能を使用するため、ブラウザの設定でローカルストレージをONにしてください。");
         return;
@@ -581,7 +578,6 @@ export default {
       ]
       // キーワードを一度入力してから削除したとき
       if (!key) {
-          console.log('検索フォームが空になった')
           this.keywordContents.length = 0;
           return;
       }
