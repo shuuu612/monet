@@ -321,7 +321,7 @@ export default {
             keywordContents: [],
             bookmarkContents: [],
             displayingContent: [],
-            displayingLimit: 10,
+            displayingLimit: 120,
             displayingPageOriginal: 0,
             displayingPageKeyword: 0,
             displayingPageBookmark: 0,
