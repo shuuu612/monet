@@ -493,16 +493,19 @@ export default {
                 }
             }else if (this.$store.getters["status/getSearchTag"]) {
                 // 通常検索
-                if (this.contents.length === 0) {
-                    if (this.displayingJpName === "お気に入り") {
-                        return "お気に入りは登録されていません";
-                    }
-                    else {
-                        return `「${this.displayingJpName}」はただいま準備中です。\n公開まで今しばらくお待ちください。`;
-                    }
-                }
-                else {
+                if(this.selectedTag === 'bookmark') {
+                  if(this.bookmarkContents.length === 0) {
+                    return "お気に入りは登録されていません";
+                  }else {
                     return this.displayingJpName;
+                  }
+                }else {
+                  console.log('error avoidance')
+                  if(this.contents.length === 0) {
+                    return `「${this.displayingJpName}」はただいま準備中です。\n公開まで今しばらくお待ちください。`;
+                  }else {
+                    return this.displayingJpName;
+                  }
                 }
             }else {
               return '';
