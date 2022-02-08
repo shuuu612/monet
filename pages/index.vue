@@ -36,9 +36,9 @@
             <div v-for="content in getDisplayingContent" :key="content.id" class="content" :class="getStateSliderStep">
               <div class="contentImage" :style="infoStyle">
                 <a :href="`${content.url}`" target="_blank" rel="noopener noreferrer" class="images">
-                  <img v-if="getPcHide" class="image" :src="`${content.imagePC.url}?h=${Math.round(800*getStateSliderSize)}`" :alt="`${content.name}`" :class="getMargin('pc')" :style="getMaxWidth('pc')" loading="lazy" @load="imageLoaded">
-                  <img v-if="getTbHide" class="image" :src="`${content.imageTB.url}?h=${Math.round(800*getStateSliderSize)}`" :alt="`${content.name}`" :class="getMargin('tb')" :style="getMaxWidth('tb')" loading="lazy" @load="imageLoaded">
-                  <img v-if="getSpHide" class="image" :src="`${content.imageSP.url}?h=${Math.round(800*getStateSliderSize)}`" :alt="`${content.name}`" :class="getMargin('sp')" :style="getMaxWidth('sp')" loading="lazy" @load="imageLoaded">
+                  <img v-if="getPcHide" class="image" :src="`${content.imagePC.url}?h=${Math.round(800*getStateSliderSize)}&fm=webp`" :alt="`${content.name}`" :class="getMargin('pc')" :style="getMaxWidth('pc')" loading="lazy" @load="imageLoaded">
+                  <img v-if="getTbHide" class="image" :src="`${content.imageTB.url}?h=${Math.round(800*getStateSliderSize)}&fm=webp`" :alt="`${content.name}`" :class="getMargin('tb')" :style="getMaxWidth('tb')" loading="lazy" @load="imageLoaded">
+                  <img v-if="getSpHide" class="image" :src="`${content.imageSP.url}?h=${Math.round(800*getStateSliderSize)}&fm=webp`" :alt="`${content.name}`" :class="getMargin('sp')" :style="getMaxWidth('sp')" loading="lazy" @load="imageLoaded">
                 </a>
               </div>
               <transition name="modal">
