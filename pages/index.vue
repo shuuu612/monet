@@ -33,8 +33,8 @@
           />
           <div v-if="getNoContentComment.length > 0" class="noContent" style="white-space: pre-wrap;" v-text="getNoContentComment"></div>
           <div id="contents" class="contents">
-            <div v-for="content in getDisplayingContent" :key="content.id" class="content" :class="getStateSliderStep">
-              <div class="contentImage" :style="infoStyle">
+            <div v-for="content in getDisplayingContent" :key="content.id" class="content" :class="getStateSliderStep" :style="getContentStyle">
+              <div class="contentImage">
                 <a :href="`${content.url}`" target="_blank" rel="noopener noreferrer" class="images">
                   <img v-if="getPcHide" class="image" :src="`${content.imagePC.url}?h=${Math.round(800*getStateSliderSize)}&fm=webp`" :alt="`${content.name}`" :class="getMargin('pc')" :style="getMaxWidth('pc')" loading="lazy" @load="imageLoaded">
                   <img v-if="getTbHide" class="image" :src="`${content.imageTB.url}?h=${Math.round(800*getStateSliderSize)}&fm=webp`" :alt="`${content.name}`" :class="getMargin('tb')" :style="getMaxWidth('tb')" loading="lazy" @load="imageLoaded">
@@ -116,7 +116,7 @@
                   </div>
                 </div>
               </transition>
-              <div class="info" :style="getInfoStyle">
+              <div class="info">
                 <div class="infoText" :style="infoButtonStyle">
                   <div class="name">
                     <a :href="`${content.url}`" target="_blank" rel="noopener noreferrer" class="nameLink">
@@ -577,6 +577,10 @@ export default {
         getInfoStyle() {
           return this.infoStyle
         },
+        getContentStyle() {
+          console.log('getContentStyle',this.infoStyle)
+          return this.infoStyle
+        },
         getModalOpen() {
           return { open: this.modalOpen}
         },
@@ -831,6 +835,7 @@ export default {
             // info領域の大きさを設定
             const infoWidth = width - 75;
             this.infoStyle.width = `${width}px`;
+            console.log('width',this.infoStyle.width)
             this.infoButtonStyle.width = `${infoWidth}px`;
         },
         calculateAutoSizing() {
@@ -1760,6 +1765,7 @@ export default {
 }
 
 .contentImage {
+  width: 100%;
   max-width: 100%;
   margin: 0 auto;
 }
@@ -2054,6 +2060,7 @@ export default {
 }
 
 .info {
+  width: 100%;
   position: relative;
   margin: 0 auto;
   max-width: 91vw;
