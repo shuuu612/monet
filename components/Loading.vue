@@ -1,5 +1,14 @@
 <template>
-  <div class="loaded" :class="getLoadingDisplayed"></div>
+  <transition name="loading">
+    <div v-if="getLoadingDisplayed" class="loading">
+      <div class="squares">
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+      </div>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -10,7 +19,7 @@ export default {
   },
   computed: {
     getLoadingDisplayed() {
-      return { loading: !this.$store.getters["loaded/getLoadingDisplayed"] };
+      return !(this.$store.getters["loaded/getLoaded"] && this.$store.getters["loaded/getLoadedImage"]) ;
     },
   },
   created() {
@@ -27,83 +36,103 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-.loaded {
-  display: none;
-}
-
 .loading {
   display: block;
-  background: linear-gradient(to bottom, #404957 50%, #6f88ad 100%);
+  background-color: var(--white);
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   z-index: 999;
-  opacity: 1;
-  animation-name: loading;
-  animation-duration: 1.5s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.squares {
+  width: 65px;
+  height: 65px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  animation-name: squares;
+  animation-duration: 1.25s;
   animation-timing-function: ease;
   animation-delay: 0s;
-  animation-iteration-count: 1;
+  animation-iteration-count: infinite;
   animation-direction: normal;
   animation-fill-mode: forwards;
   animation-play-state: running;
   
-  @keyframes loading {
-    0% {
-      
-    }
-    70% {
-      opacity: 1;
+  @keyframes squares {
+    50% {
+      transform: rotate(90deg);
     }
     100% {
-      opacity: 0;
-      visibility: hidden;
+      transform: rotate(180deg);
     }
   }
+}
 
-  &:before {
-    content: '';
-    position: fixed;
-    top: 50vh;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    z-index: 999;
-    background-color: var(--white);
-    clip-path:inset(0 100% 0 0);
-    animation-name: loadingLine;
-    animation-duration: 1.5s;
-    animation-timing-function: ease;
-    animation-delay: 0s;
-    animation-iteration-count: 1;
-    animation-direction: normal;
-    animation-fill-mode: forwards;
-    animation-play-state: running;
-    
-    @keyframes loadingLine {
-      0% {
-        
-      }
-      10% {
-        clip-path:inset(0 100% 0 0);
-      }
-      30% {
-        clip-path:inset(0 0 0 0);
-      }
-      40% {
-        clip-path:inset(0 0 0 0);
-      }
-      60% {
-        clip-path:inset(0 0 0 100%);
-      }
-      100% {
-        
-      }
+.square {
+  width: calc(65px * 0.25 / 1.3);
+  height: calc(65px * 0.25 / 1.3);
+  margin: auto;
+  border: calc(65px * 0.04 / 1.3) solid #000;
+  border-image: linear-gradient(to right, #247bb1, #52549e);
+  border-image-slice: 1;
+  position: absolute;  
+
+  &:nth-child(1) {
+    animation-name: square1;
+  }
+  &:nth-child(2) {
+    animation-name: square2;
+  }
+  &:nth-child(3) {
+    animation-name: square3;
+  }
+  &:nth-child(4) {
+    animation-name: square4;
+  }
+  animation-duration: 1.25s;
+  animation-timing-function: ease;
+  animation-delay: 0s;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+  
+  @keyframes square1 {
+    50% {
+      transform: translate(150%,150%) scale(2,2);
     }
   }
+  @keyframes square2 {
+    50% {
+      transform: translate(-150%,150%) scale(2,2);
+    }
+  }
+  @keyframes square3 {
+    50% {
+      transform: translate(-150%,-150%) scale(2,2);
+    }
+  }
+  @keyframes square4 {
+    50% {
+      transform: translate(150%,-150%) scale(2,2);
+    }
+  }
+}
+
+.loading-leave-active {
+  transition: opacity .25s ease-in;
+}
+.loading-leave-to {
+  opacity: 0;
 }
 
 </style>

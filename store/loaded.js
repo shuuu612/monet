@@ -1,6 +1,7 @@
 export const state = () => ({
-  loaded: false,                // 初回読み込み時にResizeObserverを実行しないためのフラグ
+  loaded: false,                // 初回読み込み完了フラグ
   loadingDisplayed: false,      // ローディング画面表示済みフラグ
+  loadedImage: false,           // 画像の読み込み完了フラグ
 })
 
 export const getters = {
@@ -9,6 +10,9 @@ export const getters = {
   },
   getLoadingDisplayed: state => {
     return state.loadingDisplayed
+  },
+  getLoadedImage: state => {
+    return state.loadedImage
   },
  }
 
@@ -19,6 +23,9 @@ export const mutations = {
   setLoadingDisplayed(state) {
     state.loadingDisplayed = true
   },
+  setLoadedImage(state) {
+    state.loadedImage = true
+  },
  }
 
  export const actions = {
@@ -27,5 +34,8 @@ export const mutations = {
   },
   pushLoadingDisplayed({commit}) {
     commit('setLoadingDisplayed')
+  },
+  pushLoadedImage({commit}) {
+    commit('setLoadedImage')
   },
  }
