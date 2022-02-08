@@ -1865,27 +1865,30 @@ export default {
   right: 20px;
   width: 30px;
   height: 30px;
+  .modalBar {
+    background-color: var(--main-modal-button-bar);
+    width: 25px;
+    height: 2px;
+    position: absolute;
+    &:nth-child(1) {
+      top: 14px;
+      left: 2px;
+      transform: rotate(45deg);
+    }
+    &:nth-child(2) {
+      top: 14px;
+      left: 2px;
+      transform: rotate(135deg);
+    }
+  }
+  @include hover() {
+    .modalBar {
+      background-color: var(--main-modal-button-bar-hover);
+    }
+  }
 }
 
-.modalBar {
-  background-color: var(--main-modal-button-bar);
-  width: 25px;
-  height: 2px;
-  position: absolute;
-  &:nth-child(1) {
-    top: 14px;
-    left: 2px;
-    transform: rotate(45deg);
-  }
-  &:nth-child(2) {
-    top: 14px;
-    left: 2px;
-    transform: rotate(135deg);
-  }
-  .modalButton:hover & {
-    background-color: var(--main-modal-button-bar-hover);
-  }
-}
+  
 
 .modalContent {
   background-color: var(--main-modal-inner-background);
@@ -2098,68 +2101,65 @@ export default {
 }
 .detail {
   right: 40px;
-  /* &:hover {
-    background-color: var(--main-content-detail-button-hover);
-  } */
+  .detailImage {
+    width: 18px;
+    transition: fill .25s;
+    fill: var(--main-content-detail-button-icon);
+  }
   @include hover() {
     background-color: var(--main-content-detail-button-hover);
+    .detailImage {
+      fill: var(--main-content-detail-button-icon-hover);
+    }
   }
 }
 
-.detailImage {
-  width: 18px;
-  transition: fill .25s;
-  fill: var(--main-content-detail-button-icon);
-  .detail:hover &{
-    fill: var(--main-content-detail-button-icon-hover);
-  }
-}
+  
 
 .bookmark {
   right: 3px;
-  /* &:hover {
-    background-color: var(--main-content-bookmark-button-hover);
-  } */
+  transition: background-color .25s;
+  .bookmarkImage {
+    width: 17px;
+    stroke: var(--main-content-bookmark-button-icon);
+    transition: stroke .25s, fill .25s;
+  }
+  .bookmarkRegistered {
+    stroke: var(--main-content-bookmark-button-icon-Registered);
+    fill: var(--main-content-bookmark-button-icon-Registered);
+    animation-name: like;
+    animation-duration: .3s;
+    animation-timing-function: ease-in-out;
+    animation-delay: 0s;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+    
+    @keyframes like {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.2);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+  }
   @include hover() {
     background-color: var(--main-content-bookmark-button-hover);
+    .bookmarkImage {
+      stroke: var(--main-content-bookmark-button-icon-hover);
+    }
+    .bookmarkRegistered {
+      fill: var(--main-content-bookmark-button-icon-hover-Registered);
+    }
   }
 }
 
-.bookmarkImage {
-  width: 17px;
-  stroke: var(--main-content-bookmark-button-icon);
-  .bookmark:hover &{
-    stroke: var(--main-content-bookmark-button-icon-hover);
-  }
-}
-
-.bookmarkRegistered {
-  stroke: var(--main-content-bookmark-button-icon-Registered);
-  fill: var(--main-content-bookmark-button-icon-Registered);
-  animation-name: like;
-  animation-duration: .3s;
-  animation-timing-function: ease-in-out;
-  animation-delay: 0s;
-  animation-iteration-count: 1;
-  animation-direction: normal;
-  animation-fill-mode: forwards;
-  animation-play-state: running;
   
-  @keyframes like {
-    0% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.2);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
-  .bookmark:hover &{
-    fill: var(--main-content-bookmark-button-icon-hover-Registered);
-  }
-}
 
 .comment {
   position: absolute;
@@ -2174,22 +2174,11 @@ export default {
   justify-content: center;
   opacity: 0;
   font-size: var(--font-size-xxs);
-  .detail:hover &,.bookmark:hover &{
-    display: flex;
-    animation-name: comment-open;
-    animation-duration: .2s;
-    animation-timing-function: ease;
-    animation-delay: .3s;
-    animation-iteration-count: 1;
-    animation-direction: normal;
-    animation-fill-mode: forwards;
-    animation-play-state: running;
-    
-    @keyframes comment-open {
-      100% {
-        opacity: 1;
-        
-      }
+  
+  @keyframes comment-open {
+    100% {
+      opacity: 1;
+      
     }
   }
   .detail &{
@@ -2201,6 +2190,23 @@ export default {
     width: 60px;
   }
 }
+
+.detail,.bookmark {
+  @include hover() {
+    .comment {
+      display: flex;
+      animation-name: comment-open;
+      animation-duration: .2s;
+      animation-timing-function: ease;
+      animation-delay: .3s;
+      animation-iteration-count: 1;
+      animation-direction: normal;
+      animation-fill-mode: forwards;
+      animation-play-state: running;
+    } 
+  }
+}
+
 
 
 // 注意：createDummyContent関数内で以下のmarginの値をハードコーディングで使用しているため、
@@ -2256,7 +2262,7 @@ export default {
   justify-content: center;
   align-items: center;
   padding-left: 6px;
-  &:hover {
+  @include hover() {
     background-color: var(--main-more-button-background-hover);
     background: linear-gradient(to right, #247bb1, #52549e);
     color: var(--main-more-button-text-hover);

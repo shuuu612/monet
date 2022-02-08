@@ -58,7 +58,7 @@
                     <div v-if="getColorMark(item)" class="colorImage" :class="`${item.id}`"></div>
                     <div class="tagLinkText">
                       <div>{{item.name}}</div>
-                      <div class="tagLinkTextLine"></div>
+                      <!-- <div class="tagLinkTextLine"></div> -->
                     </div>
                   </nuxt-link>
                   <div class="starButton button" @click.stop="setFavoriteTags(item.id)">
@@ -619,7 +619,7 @@ export default {
   align-items: center;
   justify-content: center;
   border-radius: 20px;
-  &:hover {
+  @include hover() {
     background-color: var(--side-menu-favorate-button-hover);
   }
 }
@@ -1019,42 +1019,15 @@ export default {
   text-decoration: none;
   color: var(--side-menu-category-text);
   width: 100%;
-  /* height: 30px; */
-  &:hover {
-    /* color: var(--blue); */
+  @include hover() {
     background-color: var(--black-super-light);
-    /* border-bottom: var(--blue) 2px solid; */
   }
-  /* .selected &:hover {
-    background-color: var(--black-light);
-  } */
   .selected & {
     /* color: var(--side-menu-category-text-selected); */
     /* font-weight: 500; */
     background-color: var(--black-super-light);
   }
   /* border-radius: 50px; */
-}
-
-.tagLinkText {
-  /* margin-top: 2px; */
-  .tagLink:hover & {
-    /* font-weight: 400; */
-  }
-}
-
-.tagLinkTextLine {
-  height: 1px;
-  width: 0;
-  margin-top: 1px;
-  background-color: var(--side-menu-category-border-hover);
-  /* clip-path:inset(0 100% 0 0); */
-  /* transition: clip-path .2s; */
-  transition: width .2s;
-  .tagLink:hover & {
-    /* clip-path:inset(0 0 0 0); */
-    width: 100%;
-  }
 }
 
 .button {

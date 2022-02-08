@@ -54,7 +54,7 @@ export default {
   z-index: 50;
   transition: transform .3s;
   transform: translateY(0);
-  &:hover {
+  @include hover() {
     transform: translateY(2px);
   }
   &.hide {

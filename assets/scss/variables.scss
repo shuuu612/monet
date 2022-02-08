@@ -30,9 +30,9 @@ $breakpoints: (
 }
 
 @mixin hover() {
-  &:focus {
+  /* &:focus {
     @content;
-  }
+  } */
 
   @media (hover: hover) and (pointer: fine) {
     &:hover {

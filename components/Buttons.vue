@@ -133,7 +133,7 @@ export default {
   z-index: 110;
   transition: background-color .2s, opacity .2s;
   opacity: 1;
-  &:hover {
+  @include hover() {
     background-color: var(--main-button-hover);
   }
   &.scrollHide {
@@ -147,7 +147,7 @@ export default {
   border-radius: 25px;
   background-color: var(--main-button-sub);
   z-index: 40;
-  &:hover {
+  @include hover() {
     background-color: var(--main-button-sub-hover);
   }
 }

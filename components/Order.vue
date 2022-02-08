@@ -151,7 +151,7 @@ export default {
   background-color: var(--order-list-background);
   cursor: pointer;
   padding-left: 10px;
-  &:hover {
+  @include hover() {
     background-color: var(--order-list-background-hover);
   }
   &.selected {
@@ -173,7 +173,7 @@ export default {
   height: 100%;
   text-decoration: none;
   color: var(--order-list-text);
-  &:hover {
+  @include hover() {
     color: var(--order-list-text-hover);
   }
   &.selected {
