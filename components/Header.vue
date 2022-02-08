@@ -5,6 +5,7 @@
         <h1 class="logo">
           <nuxt-link class="logoLink" to="/">
             <svg class="logoImg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 111.32 22.9" fill="url(#Gradient)">
+              <title>SUUGO</title>
               <defs>
                 <linearGradient id="Gradient">
                   <stop offset="0%" stop-color="#005c97"/>
