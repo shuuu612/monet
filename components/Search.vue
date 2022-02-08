@@ -146,6 +146,9 @@ export default {
     border-image-slice: 1;
     padding-left: 10px;
     background-color: transparent;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
     .searchWrapper.focus & {
       border-bottom: var(--search-border-focus) 2px solid;
     }

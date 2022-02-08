@@ -103,7 +103,7 @@ export default {
 <style lang="scss" scoped>
 .orderOuter {
   display: flex;
-  justify-content: right;
+  justify-content: flex-end;
   z-index: 100;
   margin-bottom: 30px;
 }
@@ -116,7 +116,7 @@ export default {
 .button {
   display: flex;
   align-items: center;
-  justify-content: right;
+  justify-content: flex-end;
   height: inherit;
   user-select: none;
   cursor: pointer;
