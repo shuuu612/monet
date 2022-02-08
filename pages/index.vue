@@ -2117,7 +2117,10 @@ export default {
 
 .bookmark {
   right: 3px;
-  &:hover {
+  /* &:hover {
+    background-color: var(--main-content-bookmark-button-hover);
+  } */
+  @include hover() {
     background-color: var(--main-content-bookmark-button-hover);
   }
 }
