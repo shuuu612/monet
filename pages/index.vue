@@ -33,12 +33,12 @@
           />
           <div v-if="getNoContentComment.length > 0" class="noContent" style="white-space: pre-wrap;" v-text="getNoContentComment"></div>
           <div id="contents" class="contents">
-            <div v-for="content in getDisplayingContent" :key="content.id" class="content" :class="getStateSliderStep" :style="getContentStyle">
+            <div v-for="content in getDisplayingContent" :key="content.id" class="content" :class="getStateSliderStep">
               <div class="contentImage">
                 <a :href="`${content.url}`" target="_blank" rel="noopener noreferrer" class="images">
-                  <img v-if="getPcHide" class="image" :src="`${content.imagePC.url}?h=${Math.round(800*getStateSliderSize)}&fm=webp`" :alt="`${content.name}`" :class="getMargin('pc')" :style="getMaxWidth('pc')" @load="imageLoaded">
-                  <img v-if="getTbHide" class="image" :src="`${content.imageTB.url}?h=${Math.round(800*getStateSliderSize)}&fm=webp`" :alt="`${content.name}`" :class="getMargin('tb')" :style="getMaxWidth('tb')" @load="imageLoaded">
-                  <img v-if="getSpHide" class="image" :src="`${content.imageSP.url}?h=${Math.round(800*getStateSliderSize)}&fm=webp`" :alt="`${content.name}`" :class="getMargin('sp')" :style="getMaxWidth('sp')" @load="imageLoaded">
+                  <img v-if="getPcHide" class="image" :src="`${content.imagePC.url}?h=${Math.round(800*getStateSliderSize)}&fm=webp`" :alt="`${content.name}`" :class="getMargin('pc')" :style="getMaxWidth('pc')" :width="`${Math.round(873*getStateSliderSize)}`" :height="`${Math.round(800*getStateSliderSize)}`" @load="imageLoaded">
+                  <img v-if="getTbHide" class="image" :src="`${content.imageTB.url}?h=${Math.round(800*getStateSliderSize)}&fm=webp`" :alt="`${content.name}`" :class="getMargin('tb')" :style="getMaxWidth('tb')" :width="`${Math.round(600*getStateSliderSize)}`" :height="`${Math.round(800*getStateSliderSize)}`" @load="imageLoaded">
+                  <img v-if="getSpHide" class="image" :src="`${content.imageSP.url}?h=${Math.round(800*getStateSliderSize)}&fm=webp`" :alt="`${content.name}`" :class="getMargin('sp')" :style="getMaxWidth('sp')" :width="`${Math.round(369*getStateSliderSize)}`" :height="`${Math.round(800*getStateSliderSize)}`" @load="imageLoaded">
                 </a>
               </div>
               <transition name="modal">
@@ -328,8 +328,9 @@ export default {
             remainingContent: 0,
             displayingJpName: "",
             tagsJpName: "",
-            infoStyle: {
+            contentStyle: {
                 width: "",
+                height: "",
             },
             infoButtonStyle: {
                 width: "",
@@ -574,12 +575,9 @@ export default {
                     return { maxWidth: maxWidthSp };
             };
         },
-        getInfoStyle() {
-          return this.infoStyle
-        },
         getContentStyle() {
-          console.log('getContentStyle',this.infoStyle)
-          return this.infoStyle
+          console.log('getContentStyle',this.contentStyle)
+          return this.contentStyle
         },
         getModalOpen() {
           return { open: this.modalOpen}
@@ -773,6 +771,7 @@ export default {
             const value = this.$store.getters["slider/getValue"];
 
             let width
+            const height = Math.round(800 * value);
             switch(devicePattern) {
                 case 1:
                     width = Math.round(873 * value);
@@ -834,9 +833,10 @@ export default {
             this.dummyStyle.marginLeft = `${marginLeft}px`;
             // info領域の大きさを設定
             const infoWidth = width - 75;
-            this.infoStyle.width = `${width}px`;
-            console.log('width',this.infoStyle.width)
             this.infoButtonStyle.width = `${infoWidth}px`;
+            // コンテンツ領域の大きさを設定
+            this.contentStyle.width = `${width}px`;
+            this.contentStyle.height = `${height}px`;
         },
         calculateAutoSizing() {
             // 実行タイミング：createDummyContentのタイミング＋自動調整オンを押下、ウィンドウサイズが規定のサイズに達したとき、
