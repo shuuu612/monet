@@ -2098,7 +2098,10 @@ export default {
 }
 .detail {
   right: 40px;
-  &:hover {
+  /* &:hover {
+    background-color: var(--main-content-detail-button-hover);
+  } */
+  @include hover() {
     background-color: var(--main-content-detail-button-hover);
   }
 }
