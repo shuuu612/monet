@@ -500,7 +500,7 @@ export default {
                     return this.displayingJpName;
                   }
                 }else {
-                  console.log('error avoidance')
+                  console.log('')
                   if(this.contents.length === 0) {
                     return `「${this.displayingJpName}」はただいま準備中です。\n公開まで今しばらくお待ちください。`;
                   }else {
