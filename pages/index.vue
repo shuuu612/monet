@@ -608,15 +608,16 @@ export default {
         else {
             console.log("ブラウザのローカルストレージがオフになっています。");
         }
-
-        // コンテンツ初期表示
-        this.InitialDisplay();
         
         // ページ遷移時の処理
         if(this.$store.getters["loaded/getLoaded"]) {
           console.log('ページ遷移の時だけ')
+          // コンテンツ要素を取得
           this.setContentsElement();
+          // ダミーコンテンツの作成
           this.createDummyContent();
+          // コンテンツ初期表示
+            this.InitialDisplay();
         }
         // 読み込み完了を監視
         window.addEventListener("load", this.loadProcess);
@@ -1183,6 +1184,8 @@ export default {
             this.calculateAutoSizing();
             // ダミーコンテンツの作成
             this.createDummyContent();
+            // コンテンツ初期表示
+            this.InitialDisplay();
         },
         resizeProcess() {
             this.setWindowSize();
