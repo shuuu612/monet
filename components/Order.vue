@@ -105,7 +105,10 @@ export default {
   display: flex;
   justify-content: flex-end;
   z-index: 100;
-  margin-bottom: 30px;
+  /* margin-bottom: 30px; */
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 .pulldown {
   width: 130px;

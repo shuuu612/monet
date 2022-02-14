@@ -88,6 +88,7 @@ export default {
   methods: {
     clickButton() {
       this.$store.dispatch('sideMenu/pushOpen')
+      this.$store.dispatch('slider/pushDecidedSteps');
     },
     update() {
       if(this.$store.getters['scroll/getWindowScroll'] === 0) {

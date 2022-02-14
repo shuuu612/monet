@@ -51,6 +51,7 @@ export default {
   height: 60px;
   border-radius: 50%;
   box-shadow: 1px 1px 5px var(--scrolltop-button-shadow);
+  background-color: var(--white);
   z-index: 50;
   transition: transform .3s;
   transform: translateY(0);
