@@ -10,7 +10,7 @@
 
   --black: #202020;
   --black-light: #292929;
-  --black-super-light: #474747;
+  --black-super-light: #414141;
   --black-ultra-light: #7e7e7e;
   --black-dark: #181818;
   --black-super-dark: #111111;
@@ -158,7 +158,7 @@
   --gradation-end: #0f9b0f;
   --gradation-end-hover: #14be14;
 
-  --gradation-start: var(--black);
+  --gradation-start: var(--black-super-light);
   --gradation-start-hover: #0f4d27;
   --gradation-end: var(--color);
   --gradation-end-hover: #14be14;

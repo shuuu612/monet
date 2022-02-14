@@ -134,8 +134,8 @@
                     </a>
                   </div>
                   <div class="time">
+                    <div class="published">{{content.publishedAtJST}}</div>
                     <div class="elapsed">{{content.elapsedDate}}</div>
-                    <div class="published">{{'追加日 '+content.publishedAtJST}}</div>
                     <div class="updated">{{content.updatedAtJST !== undefined &&  content.updatedAtJST !== content.publishedAtJST? '更新日 '+content.updatedAtJST : ''}}</div>
                   </div>
                 </div>
@@ -2200,9 +2200,14 @@ export default {
 
 .time {
   margin-top: 3px;
+  color: var(--black-super-light);
+  font-size: var(--font-size-xs);
+  display: flex;
+  align-items: center;
 }
 .published {
-  display: none;
+  /* display: none; */
+  margin-right: 10px;
 }
 .updated {
   display: none;
