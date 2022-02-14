@@ -130,11 +130,11 @@ export default {
   width: 16px;
   margin-right: 8px;
   margin-top: 2px;
-  fill: var(--order-icon);
+  fill: var(--black-forDarkMode);
 }
 
 .title {
-  color: var(--order-title);
+  color: var(--black-forDarkMode);
 }
 
 .lists {
@@ -151,14 +151,14 @@ export default {
   display: flex;
   align-items: center;
   user-select: none;
-  background-color: var(--order-list-background);
+  background-color: var(--grey-ultra-light);
   cursor: pointer;
   padding-left: 10px;
   @include hover() {
-    background-color: var(--order-list-background-hover);
+    background-color: var(--grey-light);
   }
   &.selected {
-    background-color: var(--order-list-background-selected);
+    background-color: var(--grey-light);
   }
   &:first-child {
     border-radius: 4px 4px 0 0;
@@ -175,12 +175,12 @@ export default {
   width: 100%;
   height: 100%;
   text-decoration: none;
-  color: var(--order-list-text);
+  color: var(--black);
   @include hover() {
-    color: var(--order-list-text-hover);
+    color: var(--white);
   }
   &.selected {
-    color: var(--order-list-text-selected);
+    color: var(--white);
   }
 }
 

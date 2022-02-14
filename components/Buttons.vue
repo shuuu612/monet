@@ -133,14 +133,13 @@ export default {
   width: 50px;
   height: 50px;
   border-radius: 30px;
-  background-color: var(--main-button);
-  background: linear-gradient(to bottom, var(--main-button-gradation-start) -150%, var(--main-button-gradation-end) 100%);
-  background: linear-gradient(to bottom, var(--gradation-start) -150%, var(--gradation-end) 100%);
+  background-color: var(--color);
+  background: linear-gradient(to top, var(--white) -150%, var(--color) 100%);
   z-index: 110;
   transition: background-color .2s, opacity .2s;
   opacity: 1;
   @include hover() {
-    background-color: var(--main-button-hover);
+    background-color: var(--color-hover);
   }
   &.scrollHide {
     opacity: 0;
@@ -151,10 +150,10 @@ export default {
   width: 50px;
   height: 50px;
   border-radius: 25px;
-  background-color: var(--main-button-sub);
+  background-color: transparent;
   z-index: 40;
   @include hover() {
-    background-color: var(--main-button-sub-hover);
+    background-color: var(--color-transparent-high);
   }
 }
 
@@ -176,7 +175,7 @@ export default {
 }
 
 .bar {
-  background-color: var(--main-button-bar-close);
+  background-color: var(--white);
   width: inherit;
   height: 2px;
   position: absolute;
@@ -196,7 +195,6 @@ export default {
     left: 0;
   }
   .open & {
-    background-color: var(--main-button-bar-open);
     &:nth-child(1) {
       top: 8px;
       left: 0;
@@ -263,17 +261,17 @@ export default {
 }
 .homeImageInner {
   .selected & {
-    fill: var(--main-button-icon);
+    fill: var(--black-dark-forDarkMode);
   }
 }
 .homeImageOuter {
-  fill: var(--main-button-icon);
+  fill: var(--black-dark-forDarkMode);
 }
 .bookmarkImage {
   height: 16px;
-  stroke: var(--main-button-icon);
+  stroke: var(--black-dark-forDarkMode);
   .selected & {
-    fill: var(--main-button-icon);
+    fill: var(--black-dark-forDarkMode);
   }
 }
 

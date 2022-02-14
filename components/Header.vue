@@ -127,7 +127,7 @@ export default {
 .logoImg {
   display: block;
   width: inherit;
-  fill: var(--header-logo);
+  fill: var(--black-forDarkMode);
 }
 
 .gradationStart {

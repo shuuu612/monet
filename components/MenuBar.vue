@@ -154,7 +154,7 @@ export default {
 }
 
 .bar {
-  background-color: var(--main-button-bar-close);
+  background-color: var(--white);
   width: inherit;
   height: 2px;
   position: absolute;
@@ -174,7 +174,6 @@ export default {
     left: 0;
   }
   .open & {
-    background-color: var(--main-button-bar-open);
     &:nth-child(1) {
       top: 8px;
       left: 0;

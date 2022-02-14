@@ -49,7 +49,7 @@ export default {
 <style lang="scss" scoped>
 .loading {
   display: block;
-  background-color: var(--white);
+  background-color: var(--white-forDarkMode);
   position: fixed;
   top: 0;
   left: 0;

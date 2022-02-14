@@ -360,7 +360,7 @@ export default {
   max-width: 100%;
   @include responsive(xs) {
     border-radius: 5px;
-    box-shadow: 1px 1px 5px var(--main-content-image-shadow);
+    box-shadow: 1px 1px 5px var(--grey);
   }
   @include responsive(sm) {
     

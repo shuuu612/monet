@@ -703,19 +703,19 @@ export default {
   justify-content: center;
   border-radius: 20px;
   @include hover() {
-    background-color: var(--side-menu-favorate-button-hover);
+    background-color: var(--black-super-light);
   }
 }
 
 .starImage {
   width: 14px;
-  stroke: var(--side-menu-favorate-icon);
+  stroke: var(--black-ultra-light);
   transition: fill .2s,stroke .2s;
 }
 
 .favoriteTagsColor {
-  fill: var(--side-menu-favorate-icon-registered-fill);
-  stroke: var(--side-menu-favorate-icon-registered-stroke);
+  fill: var(--yellow);
+  stroke: var(--yellow);
 }
 
 /* .selectedButton {
@@ -728,22 +728,24 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-bottom: var(--side-menu-tab-overall-border) 1px solid;
+  border-bottom: var(--black-super-light) 1px solid;
   /* padding-right: 30px; */
 }
 
 .tabMenu {
   padding: 5px 2px;
-  color: var(--side-menu-tab-text);
+  color: var(--grey-super-light);
   &:not(:first-child) {
     margin-left: 26px;
   }
+  &.selectedTab {
+    color: var(--white);
+    font-weight: 400;
+    border-bottom: var(--color) 2px solid;
+  }
 }
 
-.selectedTab {
-  color: var(--side-menu-tab-text-selected);
-  border-bottom: var(--side-menu-tab-border-selected) 2px solid;
-}
+  
 
 .mask {
   position: fixed;
@@ -751,7 +753,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100vh;
-  background-color: var(--side-menu-mask);
+  background-color: var(--black-transparent-low);
   z-index: 90;
 }
 
@@ -772,9 +774,10 @@ export default {
   width: 100%;
   max-width: var(--sideMenuWidth);
   height: 100vh;
-  background-color: var(--side-menu-background);
+  background-color: var(--black);
   transition: transform .25s ease-out;
   z-index: 100;
+  color: var(--white);
   &.isClose {
     transform: translateX(calc(-1 * var(--sideMenuWidth)));
     transition: transform .25s ease-in;
@@ -842,7 +845,7 @@ export default {
       width: 100%;
       height: 1px;
       /* margin: auto 0; */
-      background-color: rgba(255, 255, 255, 0.267);
+      background-color: var(--black-ultra-light);
       position: relative;
       /* left: -10px; */
       margin-bottom: 20px;
@@ -871,6 +874,7 @@ export default {
 
 .sideMenuSubTitle {
   font-size: var(--font-size-xs);
+  color: var(--white);
 }
 .controllerTitleWrapper {
   display: flex;
@@ -893,7 +897,7 @@ export default {
   justify-content: center;
   margin-top: 14px;
   width: 100%;
-  background-color: var(--side-menu-setting-button);
+  background-color: var(--black-super-light);
   border-radius: 5px;
 }
 
@@ -911,7 +915,7 @@ export default {
     border-radius: 0 5px 5px 0;
   }
   &.active {
-    background-color: var(--side-menu-setting-button-selected);
+    background-color: var(--white);
   }
 
   &.disabled {
@@ -940,17 +944,17 @@ export default {
   width: 24px;
   height: 24px;
   border-radius: 3px;
-  background-color: var(--black-light);
+  background-color: var(--black-super-light);
   display: flex;
   align-items: center;
   justify-content: center;
   transition: background-color .2s;
   @include hover() {
-    background-color: var(--black-super-light);
+    background-color: var(--black-hover);
   }
   &.disabled {
     @include hover() {
-      background-color: var(--black-light);
+      background-color: var(--black-super-light);
     }
     pointer-events: none;
   }
@@ -1082,7 +1086,7 @@ export default {
 
 .tagItems {
   border-radius: 5px;
-  background-color: var(--side-menu-category-group-background);
+  background-color: var(--black-light);
   padding: 10px 0;
   margin-top: 3px;
   
@@ -1107,55 +1111,55 @@ export default {
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background-color: var(--white);
+  background-color: var(--white-forDarkMode);
   margin-right: 8px;
   &.red {
-    background: linear-gradient(to bottom, var(--side-menu-color-image-gradation-start) -150%, var(--side-menu-color-image-red) 100%);
+    background: linear-gradient(to bottom, var(--white) -150%, var(--color-image-red) 100%);
   }
   &.pink {
-    background: linear-gradient(to bottom, var(--side-menu-color-image-gradation-start) -150%, var(--side-menu-color-image-pink) 100%);
+    background: linear-gradient(to bottom, var(--white) -150%, var(--color-image-pink) 100%);
   }
   &.purple {
-    background: linear-gradient(to bottom, var(--side-menu-color-image-gradation-start) -150%, var(--side-menu-color-image-purple) 100%);
+    background: linear-gradient(to bottom, var(--white) -150%, var(--color-image-purple) 100%);
   }
   &.blue {
-    background: linear-gradient(to bottom, var(--side-menu-color-image-gradation-start) -150%, var(--side-menu-color-image-blue) 100%);
+    background: linear-gradient(to bottom, var(--white) -150%, var(--color-image-blue) 100%);
   }
   &.green {
-    background: linear-gradient(to bottom, var(--side-menu-color-image-gradation-start) -150%, var(--side-menu-color-image-green) 100%);
+    background: linear-gradient(to bottom, var(--white) -150%, var(--color-image-green) 100%);
   }
   &.yellow {
-    background: linear-gradient(to bottom, var(--side-menu-color-image-gradation-start) -150%, var(--side-menu-color-image-yellow) 100%);
+    background: linear-gradient(to bottom, var(--white) -150%, var(--color-image-yellow) 100%);
   }
   &.orange {
-    background: linear-gradient(to bottom, var(--side-menu-color-image-gradation-start) -150%, var(--side-menu-color-image-orange) 100%);
+    background: linear-gradient(to bottom, var(--white) -150%, var(--color-image-orange) 100%);
   }
   &.brown {
-    background: linear-gradient(to bottom, var(--side-menu-color-image-gradation-start) -150%, var(--side-menu-color-image-brown) 100%);
+    background: linear-gradient(to bottom, var(--white) -150%, var(--color-image-brown) 100%);
   }
   &.white {
-    background: linear-gradient(to bottom, var(--side-menu-color-image-gradation-start) -150%, var(--side-menu-color-image-white) 100%);
+    background: linear-gradient(to bottom, var(--white) -150%, var(--color-image-white) 100%);
   }
   &.beige {
-    background: linear-gradient(to bottom, var(--side-menu-color-image-gradation-start) -150%, var(--side-menu-color-image-beige) 100%);
+    background: linear-gradient(to bottom, var(--white) -150%, var(--color-image-beige) 100%);
   }
   &.grey {
-    background: linear-gradient(to bottom, var(--side-menu-color-image-gradation-start) -150%, var(--side-menu-color-image-grey) 100%);
+    background: linear-gradient(to bottom, var(--white) -150%, var(--color-image-grey) 100%);
   }
   &.black {
-    background: linear-gradient(to bottom, var(--side-menu-color-image-gradation-start) -150%, var(--side-menu-color-image-black) 100%);
+    background: linear-gradient(to bottom, var(--white) -150%, var(--color-image-black) 100%);
   }
   &.colorful {
-    background: linear-gradient(to right, var(--side-menu-color-image-red), var(--side-menu-color-image-yellow), var(--side-menu-color-image-blue));
+    background: linear-gradient(to right, var(--color-image-red), var(--color-image-yellow), var(--color-image-blue));
   }
   &.gradation {
-    background: linear-gradient(to right, var(--side-menu-color-image-blue), var(--side-menu-color-image-white));
+    background: linear-gradient(to right, var(--color-image-blue), var(--color-image-white));
   }
   &.pastel {
       background: linear-gradient(to right, #9796f0, #fbc7d4);
   }
   &.monotone {
-    background: linear-gradient(to right, var(--side-menu-color-image-white) 40%, var(--side-menu-color-image-black) 55%);
+    background: linear-gradient(to right, var(--color-image-white) 40%, var(--color-image-black) 55%);
   }
 }
 
@@ -1164,14 +1168,13 @@ export default {
   align-items: center;
   padding: 7px 15px;
   text-decoration: none;
-  color: var(--side-menu-category-text);
+  color: var(--white);
   width: 100%;
   @include hover() {
     background-color: var(--black-super-light);
   }
   .selected & {
-    /* color: var(--side-menu-category-text-selected); */
-    /* font-weight: 500; */
+    font-weight: 500;
     background-color: var(--black-super-light);
   }
   /* border-radius: 50px; */
@@ -1205,9 +1208,9 @@ export default {
 }
 
 .typeImage {
-  fill: var(--side-menu-setting-device-icon);
+  fill: var(--black-ultra-light);
   .active & {
-    fill: var(--side-menu-setting-device-icon-active);
+    fill: var(--black);
   }
 }
 
@@ -1229,9 +1232,10 @@ export default {
   justify-content: center;
   font-size: var(--font-size-xxs);
   margin-top: 3px;
-  color: var(--side-menu-setting-device-text);
+  color: var(--black-ultra-light);
+  font-weight: 400;
   .active & {
-    color: var(--side-menu-setting-device-text-active);
+    color: var(--black);
     font-weight: 500;
   }
 }
@@ -1277,14 +1281,14 @@ input[type="range"] {
   appearance: none;                 // お決まり
   cursor: pointer;                  // カーソル
   outline: none;                    // スライダーのアウトライン
-  background: var(--side-menu-setting-slider-background);               // スライダーの背景色
+  background: var(--black-super-light);               // スライダーの背景色
   height: 3px;                      // スライダーの高さ
   width: 222px;                      // スライダーの幅
   border-radius: 10px;              // スライダーの端の丸み
   // -webkit-向けのつまみ
   &::-webkit-slider-thumb {
     -webkit-appearance: none;       // お決まり
-    background: var(--side-menu-setting-slider-button);     // 背景色
+    background: var(--white);     // 背景色
     width: 16px;                    // 幅
     height: 16px;                   // 高さ
     border-radius: 50%;             // 円形に
@@ -1292,7 +1296,7 @@ input[type="range"] {
   }
   // -moz-向けのつまみ
   &::-moz-range-thumb {
-    background: var(--side-menu-setting-slider-button);     // 背景色
+    background: var(--white);     // 背景色
     width: 18px;                    // 幅
     height: 18px;                   // 高さ
     border-radius: 50%;             // 円形に
@@ -1370,7 +1374,7 @@ input[type="range"] {
   width: 100%;
   height: 40px;
   border-radius: 50px;
-  background-color: var(--black-super-light);
+  background-color: var(--black-light);
   @include responsive(xs) {
     
   }
@@ -1395,7 +1399,7 @@ input[type="range"] {
   width: 16px;
   margin-right: 10px;
   margin-left: 10px;
-  fill: var(--white);
+  fill: var(--grey-light);
   @include responsive(xs) {
     
   }
@@ -1423,7 +1427,7 @@ input[type="range"] {
   color: var(--white);
 }
 ::placeholder {
-  color: var(--grey-super-light);;
+  color: var(--black-ultra-light);
 }
 
 .partitionLine {

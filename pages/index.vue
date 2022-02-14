@@ -1799,7 +1799,6 @@ export default {
 
 .divider {
   position: relative;
-  color: var(--main-text);
   transition: transform .25s ease-in;
   padding: 0px 0px 150px 0px;
   .sideMenuOpen & {
@@ -1943,7 +1942,7 @@ export default {
 .modal {
   width: 100vw;
   height: 100vh;
-  background-color: var(--main-modal-outer-background);
+  background-color: var(--black-transparent-low);
   z-index: 120;
   position: fixed;
   top: 0;
@@ -1991,7 +1990,7 @@ export default {
   width: 30px;
   height: 30px;
   .modalBar {
-    background-color: var(--main-modal-button-bar);
+    background-color: var(--white);
     width: 25px;
     height: 2px;
     position: absolute;
@@ -2008,7 +2007,7 @@ export default {
   }
   @include hover() {
     .modalBar {
-      background-color: var(--main-modal-button-bar-hover);
+      background-color: var(--grey-super-light);
     }
   }
 }
@@ -2016,7 +2015,7 @@ export default {
   
 
 .modalContent {
-  background-color: var(--main-modal-inner-background);
+  background-color: transparent;
   position: relative;
   width: 100%;
   max-height: 100%;
@@ -2079,7 +2078,7 @@ export default {
 }
 
 .modalInfoWrapper {
-  background-color: var(--main-modal-info-background);
+  background-color: var(--white-forDarkMode);
   overflow-x: hidden;
   overflow-y: auto;
   padding: 10px;
@@ -2142,7 +2141,7 @@ export default {
     position: absolute;
     top: -10px;
     left: -10px;
-    background-color: var(--main-modal-info-partition);
+    background-color: var(--grey-super-light);
   }
 }
 .modalTagTitle {
@@ -2164,7 +2163,7 @@ export default {
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  color: var(--main-modal-tag-text);
+  color: var(--black-forDarkMode);
   padding: 3px;
 }
 .modalTagName {
@@ -2192,7 +2191,7 @@ export default {
 }
 
 .name {
-  font-weight: 700;
+  font-weight: 500;
   font-size: var(--font-size-md);
   background: linear-gradient(to right, var(--gradation-start), var(--gradation-end));
   background-clip: text;
@@ -2230,12 +2229,12 @@ export default {
   .detailImage {
     width: 18px;
     transition: fill .25s;
-    fill: var(--main-content-detail-button-icon);
+    fill: var(--black-forDarkMode);
   }
   @include hover() {
-    background-color: var(--main-content-detail-button-hover);
+    background-color: var(--color-transparent-high);
     .detailImage {
-      fill: var(--main-content-detail-button-icon-hover);
+      fill: var(--color);
     }
   }
 }
@@ -2247,12 +2246,12 @@ export default {
   transition: background-color .25s;
   .bookmarkImage {
     width: 17px;
-    stroke: var(--main-content-bookmark-button-icon);
+    stroke: var(--black-forDarkMode);
     transition: stroke .25s, fill .25s;
   }
   .bookmarkRegistered {
-    stroke: var(--main-content-bookmark-button-icon-Registered);
-    fill: var(--main-content-bookmark-button-icon-Registered);
+    stroke: var(--red);
+    fill: var(--red);
     animation-name: like;
     animation-duration: .3s;
     animation-timing-function: ease-in-out;
@@ -2275,12 +2274,12 @@ export default {
     }
   }
   @include hover() {
-    background-color: var(--main-content-bookmark-button-hover);
+    background-color: var(--red-transparent-high);
     .bookmarkImage {
-      stroke: var(--main-content-bookmark-button-icon-hover);
+      stroke: var(--red);
     }
     .bookmarkRegistered {
-      fill: var(--main-content-bookmark-button-icon-hover-Registered);
+      fill: var(--red);
     }
   }
 }
@@ -2293,8 +2292,8 @@ export default {
   height: 18px;
   border-radius: 3px;
   padding: 0 0 1px 1px;
-  background-color: var(--main-content-button-comment-background);
-  color: var(--main-content-button-comment-text);
+  background-color: var(--black-forDarkMode);
+  color: var(--white-forDarkMode);
   display: none;
   align-items: center;
   justify-content: center;
@@ -2380,18 +2379,18 @@ export default {
   width: 330px;
   max-width: 90%;
   height: 50px;
-  background-color: var(--main-more-button-background);
+  background-color: var(--color-dark);
   /* background: linear-gradient(to right, var(--gradation-start), var(--gradation-end)); */
-  color: var(--main-more-button-text);
+  color: var(--white);
   border-radius: 3px;
   display: flex;
   justify-content: center;
   align-items: center;
   padding-left: 6px;
   @include hover() {
-    background-color: var(--main-more-button-background-hover);
+    background-color: var(--color);
     /* background: linear-gradient(to right, var(--gradation-start-hover), var(--gradation-end-hover)); */
-    color: var(--main-more-button-text-hover);
+    color: var(--white);
   }
   margin: 50px auto 0 auto;
 }

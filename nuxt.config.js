@@ -74,7 +74,9 @@ export default {
 
   styleResources: {
     scss: [
-      '@/assets/scss/variables.scss'
+      '@/assets/scss/mixin.scss',
+      '@/assets/scss/font.scss',
+      '@/assets/scss/color.scss',
     ]
   },
 
