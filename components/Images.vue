@@ -359,7 +359,7 @@ export default {
 .image {
   max-width: 100%;
   @include responsive(xs) {
-    border-radius: 5px;
+    border-radius: 1.5%;
     box-shadow: 1px 1px 5px var(--grey);
   }
   @include responsive(sm) {
