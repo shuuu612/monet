@@ -135,6 +135,7 @@ export default {
   border-radius: 30px;
   background-color: var(--main-button);
   background: linear-gradient(to bottom, var(--main-button-gradation-start) -150%, var(--main-button-gradation-end) 100%);
+  background: linear-gradient(to bottom, var(--gradation-start) -150%, var(--gradation-end) 100%);
   z-index: 110;
   transition: background-color .2s, opacity .2s;
   opacity: 1;

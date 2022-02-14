@@ -6,7 +6,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'SUUGO | Webデザインギャラリー',
+    title: 'すごーいデザイン | Webデザインギャラリー',
     htmlAttrs: {
       lang: 'ja',
       prefix: 'og: http://ogp.me/ns#'
@@ -20,10 +20,10 @@ export default {
       { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
       
       // OGP設定
-      { hid: 'og:site_name', property: 'og:site_name', content: 'SUUGO' },
+      { hid: 'og:site_name', property: 'og:site_name', content: 'すごーいデザイン' },
       { hid: 'og:type', property: 'og:type', content: 'website' },
-      { hid: 'og:url', property: 'og:url', content: 'https://suugo.jp/' },
-      { hid: 'og:title', property: 'og:title', content: 'SUUGO | Webデザインギャラリー' },
+      { hid: 'og:url', property: 'og:url', content: 'https://sugoi-design.com/' },
+      { hid: 'og:title', property: 'og:title', content: 'すごーいデザイン | Webデザインギャラリー' },
       { hid: 'og:description', property: 'og:description', content: 'サイトの説明' },
       { hid: 'og:image', property: 'og:image', content: 'サイトURL' },
 

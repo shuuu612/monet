@@ -389,12 +389,12 @@ export default {
             totalWidth: 0,
             columnContent: 0,
             meta: {
-              title: 'SUUGO | Webデザインギャラリー',
+              title: 'すごーいデザイン | Webデザインギャラリー',
               keyword: 'デザイン,Webデザイン,Web design,参考,Webデザインギャラリー,ギャラリー,Webサイト',
-              description: 'SUUGOはWeb制作の参考になるWebサイトを集めたギャラリー･リンク集です。日本国内の優れたWebデザインを厳選してご紹介しています。Webデザインの参考んぜひご活用ください。',
+              description: 'すごーいデザインはWeb制作の参考になるWebサイトを集めたギャラリー･リンク集です。日本国内の優れたWebデザインを厳選してご紹介しています。Webデザインの参考にぜひご活用ください。',
               type: 'website',
-              url: 'https://suugo.jp/',
-              image: 'https://hogehoge.com/images/logo.png',
+              url: 'https://sugoi-design.com/',
+              image: 'https://sugoi-design.com/images/ogp/logo.png',
             },
         };
     },
@@ -2112,7 +2112,7 @@ export default {
   margin-top: 5px;
   font-weight: 500;
   font-size: var(--font-size-md);
-  background: linear-gradient(to right, #005c97, #363795);
+  background: linear-gradient(to right, var(--gradation-start), var(--gradation-end));
   background-clip: text;
   display: inline-block;
 }
@@ -2194,7 +2194,7 @@ export default {
 .name {
   font-weight: 700;
   font-size: var(--font-size-md);
-  background: linear-gradient(to right, #005c97, #363795);
+  background: linear-gradient(to right, var(--gradation-start), var(--gradation-end));
   background-clip: text;
   display: inline-block;
 }
@@ -2381,7 +2381,7 @@ export default {
   max-width: 90%;
   height: 50px;
   background-color: var(--main-more-button-background);
-  background: linear-gradient(to right, #005c97, #363795);
+  /* background: linear-gradient(to right, var(--gradation-start), var(--gradation-end)); */
   color: var(--main-more-button-text);
   border-radius: 3px;
   display: flex;
@@ -2390,7 +2390,7 @@ export default {
   padding-left: 6px;
   @include hover() {
     background-color: var(--main-more-button-background-hover);
-    background: linear-gradient(to right, #247bb1, #52549e);
+    /* background: linear-gradient(to right, var(--gradation-start-hover), var(--gradation-end-hover)); */
     color: var(--main-more-button-text-hover);
   }
   margin: 50px auto 0 auto;

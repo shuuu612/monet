@@ -142,7 +142,7 @@ export default {
     height: auto;
     border-radius: 0;
     border-bottom: var(--search-border) 1px solid;
-    border-image: linear-gradient(to right, #247bb1, #52549e);
+    border-image: linear-gradient(to right, var(--gradation-start), var(--gradation-end));
     border-image-slice: 1;
     padding-left: 10px;
     background-color: transparent;
