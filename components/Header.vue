@@ -99,29 +99,30 @@ export default {
   width: 100px;
   padding-top: 5px;
   @include responsive(xs) {
-    width: 110px;
+    width: 130px;
   }
   @include responsive(sm) {
     
   }
   @include responsive(md) {
-    width: 120px;
-  }
-  @include responsive(lg) {
     width: 140px;
   }
-  @include responsive(xl) {
+  @include responsive(lg) {
     width: 160px;
   }
-  @include responsive(xxl) {
+  @include responsive(xl) {
     width: 180px;
+  }
+  @include responsive(xxl) {
+    width: 200px;
   }
 }
 
 
 .logoLink {
   display: block;
-  width: inherit;
+  /* width: inherit; */
+  padding: 8px;
 }
 
 .logoImg {
