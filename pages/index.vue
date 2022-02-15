@@ -2193,8 +2193,9 @@ export default {
 .name {
   font-weight: 500;
   font-size: var(--font-size-md);
+  /* // グラデーション
   background: linear-gradient(to right, var(--gradation-start), var(--gradation-end));
-  background-clip: text;
+  background-clip: text; */
   display: inline-block;
 }
 
@@ -2215,7 +2216,9 @@ export default {
 
 .nameLink {
   text-decoration: none;
-  color: transparent;
+  /* // グラデーション
+  color: transparent; */
+  color: var(--color-ultra-dark);
 }
 
 .infoButton {
