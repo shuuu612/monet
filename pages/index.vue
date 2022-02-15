@@ -144,6 +144,10 @@
                     <path d="M255.61,165.44H203.18V113a18.88,18.88,0,0,0-37.75,0v52.44H113a18.88,18.88,0,1,0,0,37.75h52.42v52.43a18.88,18.88,0,0,0,37.75,0V203.19h52.43a18.88,18.88,0,1,0,0-37.75Z"/>
                     <path d="M416.48,372l-81.67-81.66a183.05,183.05,0,0,0,33.8-106C368.61,82.69,285.93,0,184.31,0S0,82.69,0,184.31,82.68,368.62,184.31,368.62a183.13,183.13,0,0,0,106-33.8L372,416.47A31.46,31.46,0,1,0,416.48,372ZM37.75,184.31c0-80.82,65.75-146.56,146.56-146.56s146.55,65.74,146.55,146.56S265.12,330.87,184.31,330.87,37.75,265.13,37.75,184.31Z"/>
                   </svg>
+                  <!-- <svg class="detailImage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 433.39 416.92" fill="#040000">
+                    <path d="M426.51,377.52l-90.78-89.28a183,183,0,0,0,32.4-104.17C368.13,82.57,285.56,0,184.07,0S0,82.57,0,184.07,82.57,368.13,184.07,368.13a183.3,183.3,0,0,0,121-45.5l89.16,87.68a23,23,0,0,0,32.25-32.79ZM184.07,338.13C99.11,338.13,30,269,30,184.07S99.11,30,184.07,30,338.13,99.11,338.13,184.07,269,338.13,184.07,338.13Z"/>
+                    <path d="M254.93,168.07H200.07V113.2a16,16,0,1,0-32,0v54.87H113.2a16,16,0,1,0,0,32h54.87v54.86a16,16,0,0,0,32,0V200.07h54.86a16,16,0,0,0,0-32Z"/>
+                  </svg> -->
                   <div class="comment">詳細</div>
                 </button>
                 <button class="infoButton bookmark" aria-label="Add To Favorites" @click="setBookmark(content.id)">
@@ -2235,9 +2239,9 @@ export default {
 .detail {
   right: 40px;
   .detailImage {
-    width: 18px;
+    width: 16px;
     transition: fill .25s;
-    fill: var(--black-forDarkMode);
+    fill: var(--black-super-light-forDarkMode);
   }
   @include hover() {
     background-color: var(--color-transparent-high);
@@ -2253,8 +2257,8 @@ export default {
   right: 3px;
   transition: background-color .25s;
   .bookmarkImage {
-    width: 17px;
-    stroke: var(--black-forDarkMode);
+    width: 15px;
+    stroke: var(--black-super-light-forDarkMode);
     transition: stroke .25s, fill .25s;
   }
   .bookmarkRegistered {
