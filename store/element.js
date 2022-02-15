@@ -14,8 +14,8 @@ export const mutations = {
   },
  }
 
- export const actions = {
+export const actions = {
   pushContents({commit},data) {
     commit('setContents',data)
   },
- }
+}

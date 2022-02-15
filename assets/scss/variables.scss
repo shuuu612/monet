@@ -106,6 +106,18 @@ $breakpoints: (
   --blue-transparent-high: #0c81cf15;
   --blue-transparent-low: #0c81cfb9;
 
+  --green: #1d8a48;
+  --green-light: #22a557;
+  --green-super-light: #2abe65;
+  --green-ultra-light: #2fda73;
+  --green-dark: #156635;
+  --green-super-dark: #11512b;
+  --green-ultra-dark: #0a3119;
+  --green-hover: #22a356;
+  --green-transparent: #1d8a496c;
+  --green-transparent-high: #1d8a491c;
+  --green-transparent-low: #1d8a49e0;
+
   --yellow: #f0e21d;
   --yellow-light: #fcf268;
   --yellow-super-light: #fffab6;
@@ -151,17 +163,17 @@ $breakpoints: (
   --body-text: var(--white);
   --body-background: var(--white);
   // メインボタン
-  --main-button: var(--blue);
+  --main-button: var(--green);
   --main-button-gradation-start: var(--white);
-  --main-button-gradation-end: var(--blue-dark);
-  --main-button-hover: var(--blue-hover);
+  --main-button-gradation-end: var(--green-dark);
+  --main-button-hover: var(--green-hover);
   --main-button-sub: transparent;
-  --main-button-sub-hover: var(--blue-transparent-high);
+  --main-button-sub-hover: var(--green-transparent-high);
   --main-button-bar-close: var(--white);
   --main-button-bar-open: var(--white);
   --main-button-icon: var(--black-dark);
   // ヘッダー
-  --header-logo: var(--black-dark);
+  --header-logo: var(--green-super-dark);
   // 並び替え
   --order-title: var(--black);
   --order-list-background: var(--grey-ultra-light);
@@ -174,11 +186,11 @@ $breakpoints: (
   // ページトップリンク
   --scrolltop-button-shadow: var(--grey);
   --scrolltop-text: var(--black);
-  --scrolltop-icon-fill: var(--blue);
-  --scrolltop-icon-stroke: var(--blue);
+  --scrolltop-icon-fill: var(--green);
+  --scrolltop-icon-stroke: var(--green);
   // 検索
   --search-border: var(--grey);
-  --search-border-focus: var(--blue);
+  --search-border-focus: var(--green);
   --search-icon: var(--black-ultra-light);
   @include responsive(md) {
     --search-icon: var(--grey);
@@ -192,13 +204,13 @@ $breakpoints: (
   --side-menu-tab-overall-border: var(--grey);
   --side-menu-tab-text: var(--grey-super-light);
   --side-menu-tab-text-selected: var(--white);
-  --side-menu-tab-border-selected: var(--blue);
+  --side-menu-tab-border-selected: var(--green);
   --side-menu-mask: var(--black-transparent-low);
   --side-menu-background: var(--black);
   --side-menu-setting-button: var(--black-super-light);
   --side-menu-category-group-background: var(--black-light);
   --side-menu-category-text: var(--white);
-  --side-menu-category-text-selected: var(--blue);
+  --side-menu-category-text-selected: var(--green);
   --side-menu-multiple-text-selected: var(--black);
   --side-menu-multiple-background-selected: var(--grey-ultra-light);
   --side-menu-category-border-hover: var(--white);
@@ -216,7 +228,7 @@ $breakpoints: (
   --side-menu-multiple-under-menu-switch-background: var(--grey-dark);
   --side-menu-multiple-under-menu-switch-text: var(--grey-ultra-light);
   --side-menu-multiple-under-menu-switch-text-selected: var(--black);
-  --side-menu-multiple-under-menu-start-button-background: var(--blue);
+  --side-menu-multiple-under-menu-start-button-background: var(--green);
   --side-menu-multiple-under-menu-clear-button-background: var(--grey);
   --side-menu-multiple-under-menu-button-background-deactive: var(--grey);
   --side-menu-multiple-under-menu-button-text-deactive: var(--grey-ultra-light);
@@ -247,9 +259,9 @@ $breakpoints: (
   --main-modal-tag-text: var(--black);
   --main-modal-tag-border: var(--black);
   --main-content-name-text: var(--black);
-  --main-content-detail-button-hover: var(--blue-transparent-high);
+  --main-content-detail-button-hover: var(--green-transparent-high);
   --main-content-detail-button-icon: var(--grey-ultra-dark);
-  --main-content-detail-button-icon-hover: var(--blue);
+  --main-content-detail-button-icon-hover: var(--green);
   --main-content-button-comment-background: var(--black);
   --main-content-button-comment-text: var(--white);
   --main-content-bookmark-button-icon: var(--grey-ultra-dark);
@@ -257,10 +269,20 @@ $breakpoints: (
   --main-content-bookmark-button-icon-Registered: var(--red);
   --main-content-bookmark-button-icon-hover-Registered: var(--red);
   --main-content-bookmark-button-hover: var(--red-transparent-high);
-  --main-more-button-background: var(--black);
+  --main-more-button-background: var(--green-dark);
   --main-more-button-text: var(--white);
-  --main-more-button-background-hover: var(--black-hover);
+  --main-more-button-background-hover: var(--green);
   --main-more-button-text-hover: var(--white);
+  // グラデーション
+  --gradation-start: #005c97;
+  --gradation-start-hover: #247bb1;
+  --gradation-end: #363795;
+  --gradation-end-hover: #52549e;
+
+  --gradation-start: #0a3119;
+  --gradation-start-hover: #0f4d27;
+  --gradation-end: #0f9b0f;
+  --gradation-end-hover: #14be14;
 }
 
 :root.darkmode {

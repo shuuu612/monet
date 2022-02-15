@@ -21,11 +21,11 @@ export const mutations = {
   },
  }
 
- export const actions = {
+export const actions = {
   pushWindowScroll({commit},data) {
     commit('setWindowScroll',data)
   },
   pushSideMenuScroll({commit},data) {
     commit('setSideMenuScroll',data)
   },
- }
+}

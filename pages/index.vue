@@ -3,12 +3,9 @@
     <Loading />
     <Header
     @search="keywordSearchStart"
-    />
-    <Buttons 
-    :tag="selectedTag"
-    :sort="selectedSort"
     @update="update"
     />
+    <MenuButton />
     <MenuBar 
     :tag="selectedTag"
     :sort="selectedSort"
@@ -17,10 +14,13 @@
     <SideMenu
     :tag="tag"
     :selectedtag="selectedTag"
+    :contentswidth="contentsElement.clientWidth"
     @autoSizing="pushAutoSizing"
     @deviceChange="changeDevice"
     @sliderChange="changeSliderSize"
+    @multideviceCancel="monitorReturnToSingledevice"
     />
+    <ScrollMenu />
     <ScrollTop />
     <Notice />
     <div id="divider" class="divider">
@@ -35,11 +35,9 @@
           <div id="contents" class="contents">
             <div v-for="content in getDisplayingContent" :key="content.id" class="content" :class="getStateSliderStep">
               <div class="contentImage">
-                <a :href="`${content.url}`" target="_blank" rel="noopener noreferrer" class="images">
-                  <img v-if="getPcHide" class="image" :src="`${content.imagePC.url}?h=${Math.round(800*getStateSliderSize)}&fm=webp`" :alt="`${content.name}`" :class="getMargin('pc')" :style="getMaxWidth('pc')" :width="`${Math.round(873*getStateSliderSize)}`" :height="`${Math.round(800*getStateSliderSize)}`" @load="imageLoaded">
-                  <img v-if="getTbHide" class="image" :src="`${content.imageTB.url}?h=${Math.round(800*getStateSliderSize)}&fm=webp`" :alt="`${content.name}`" :class="getMargin('tb')" :style="getMaxWidth('tb')" :width="`${Math.round(600*getStateSliderSize)}`" :height="`${Math.round(800*getStateSliderSize)}`" @load="imageLoaded">
-                  <img v-if="getSpHide" class="image" :src="`${content.imageSP.url}?h=${Math.round(800*getStateSliderSize)}&fm=webp`" :alt="`${content.name}`" :class="getMargin('sp')" :style="getMaxWidth('sp')" :width="`${Math.round(369*getStateSliderSize)}`" :height="`${Math.round(800*getStateSliderSize)}`" @load="imageLoaded">
-                </a>
+                <Images
+                :content="content"
+                />
               </div>
               <transition name="modal">
                 <div v-if="getActiveModal(content.id)" class="modal" :class="getModalOpen" @click="closeModal">
@@ -50,7 +48,17 @@
                   <div class="modalContent" @click.stop>
                     <div class="modalImageWrapper">
                       <a :href="`${content.url}`" target="_blank" rel="noopener noreferrer" class="modalImages">
-                        <img id="modalImage" class="modalImage" :src="`${content.imagePC.url}?w=1200`" :alt="`${content.name}`" loading="lazy" @load="modalInfoSizing">
+                        <img
+                          id="modalImage"
+                          class="modalImage"
+                          :src="`${getPath(content.imagePC.url)}-1200.jpg`"
+                          :srcset="`
+                          ${getPath(content.imagePC.url)}-1200.jpg 1x,
+                          ${getPath(content.imagePC.url)}-2400.jpg 2x
+                          `"
+                          :alt="`${content.name}`"
+                          @load="modalInfoSizing"
+                        >
                       </a>
                     </div>
                     <div class="modalInfoWrapper" :style="modalInfoStyle">
@@ -116,7 +124,7 @@
                   </div>
                 </div>
               </transition>
-              <div class="info">
+              <div class="info" :style="infoStyle">
                 <div class="infoText" :style="infoButtonStyle">
                   <div class="name">
                     <a :href="`${content.url}`" target="_blank" rel="noopener noreferrer" class="nameLink">
@@ -124,8 +132,8 @@
                     </a>
                   </div>
                   <div class="time">
+                    <div class="published">{{content.publishedAtJST}}</div>
                     <div class="elapsed">{{content.elapsedDate}}</div>
-                    <div class="published">{{'追加日 '+content.publishedAtJST}}</div>
                     <div class="updated">{{content.updatedAtJST !== undefined &&  content.updatedAtJST !== content.publishedAtJST? '更新日 '+content.updatedAtJST : ''}}</div>
                   </div>
                 </div>
@@ -134,6 +142,10 @@
                     <path d="M255.61,165.44H203.18V113a18.88,18.88,0,0,0-37.75,0v52.44H113a18.88,18.88,0,1,0,0,37.75h52.42v52.43a18.88,18.88,0,0,0,37.75,0V203.19h52.43a18.88,18.88,0,1,0,0-37.75Z"/>
                     <path d="M416.48,372l-81.67-81.66a183.05,183.05,0,0,0,33.8-106C368.61,82.69,285.93,0,184.31,0S0,82.69,0,184.31,82.68,368.62,184.31,368.62a183.13,183.13,0,0,0,106-33.8L372,416.47A31.46,31.46,0,1,0,416.48,372ZM37.75,184.31c0-80.82,65.75-146.56,146.56-146.56s146.55,65.74,146.55,146.56S265.12,330.87,184.31,330.87,37.75,265.13,37.75,184.31Z"/>
                   </svg>
+                  <!-- <svg class="detailImage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 433.39 416.92" fill="#040000">
+                    <path d="M426.51,377.52l-90.78-89.28a183,183,0,0,0,32.4-104.17C368.13,82.57,285.56,0,184.07,0S0,82.57,0,184.07,82.57,368.13,184.07,368.13a183.3,183.3,0,0,0,121-45.5l89.16,87.68a23,23,0,0,0,32.25-32.79ZM184.07,338.13C99.11,338.13,30,269,30,184.07S99.11,30,184.07,30,338.13,99.11,338.13,184.07,269,338.13,184.07,338.13Z"/>
+                    <path d="M254.93,168.07H200.07V113.2a16,16,0,1,0-32,0v54.87H113.2a16,16,0,1,0,0,32h54.87v54.86a16,16,0,0,0,32,0V200.07h54.86a16,16,0,0,0,0-32Z"/>
+                  </svg> -->
                   <div class="comment">詳細</div>
                 </button>
                 <button class="infoButton bookmark" aria-label="Add To Favorites" @click="setBookmark(content.id)">
@@ -335,6 +347,9 @@ export default {
             infoButtonStyle: {
                 width: "",
             },
+            infoStyle: {
+                width: "",
+            },
             imageStyle: {
                 width: "",
             },
@@ -376,12 +391,12 @@ export default {
             totalWidth: 0,
             columnContent: 0,
             meta: {
-              title: 'SUUGO | Webデザインギャラリー',
+              title: 'すごーいデザイン | Webデザインギャラリー',
               keyword: 'デザイン,Webデザイン,Web design,参考,Webデザインギャラリー,ギャラリー,Webサイト',
-              description: 'SUUGOはWeb制作の参考になるWebサイトを集めたギャラリー･リンク集です。日本国内の優れたWebデザインを厳選してご紹介しています。Webデザインの参考んぜひご活用ください。',
+              description: 'すごーいデザインはWeb制作の参考になるWebサイトを集めたギャラリー･リンク集です。日本国内の優れたWebデザインを厳選してご紹介しています。Webデザインの参考にぜひご活用ください。',
               type: 'website',
-              url: 'https://suugo.jp/',
-              image: 'https://hogehoge.com/images/logo.png',
+              url: 'https://sugoi-design.com/',
+              image: 'https://sugoi-design.com/images/ogp/logo.png',
             },
         };
     },
@@ -403,15 +418,6 @@ export default {
         };
     },
     computed: {
-        getPcHide() {
-            return this.$store.getters["devicePattern/getActivePC"];
-        },
-        getTbHide() {
-            return this.$store.getters["devicePattern/getActiveTB"];
-        },
-        getSpHide() {
-            return this.$store.getters["devicePattern/getActiveSP"];
-        },
         getStateSliderSize() {
             return this.$store.getters["slider/getValue"];
         },
@@ -431,47 +437,7 @@ export default {
                 step10: steps[10],
             };
         },
-        getMargin() {
-            return function (id) {
-                const pattern = this.$store.getters["devicePattern/getStatePatternNumber"];
-                if (pattern === 1 || pattern === 2 || pattern === 3) {
-                    return { marginRight: false };
-                }
-                else if (pattern === 4) {
-                    if (id === "pc") {
-                        return { marginRight: true };
-                    }
-                    else if (id === "tb") {
-                        return { marginRight: true };
-                    }
-                    else if (id === "sp") {
-                        return { marginRight: false };
-                    }
-                }
-                else if (pattern === 5 || pattern === 6) {
-                    if (id === "pc") {
-                        return { marginRight: true };
-                    }
-                    else if (id === "tb") {
-                        return { marginRight: false };
-                    }
-                    else if (id === "sp") {
-                        return { marginRight: false };
-                    }
-                }
-                else if (pattern === 7) {
-                    if (id === "pc") {
-                        return { marginRight: false };
-                    }
-                    else if (id === "tb") {
-                        return { marginRight: true };
-                    }
-                    else if (id === "sp") {
-                        return { marginRight: false };
-                    }
-                }
-            };
-        },
+        
         getDummyContent() {
             return this.dummy;
         },
@@ -500,13 +466,14 @@ export default {
                   }else {
                     return this.displayingJpName;
                   }
-                }else {
-                  console.log('')
+                }else if(this.selectedTag !== 'bookmark') {
                   if(this.contents.length === 0) {
                     return `「${this.displayingJpName}」はただいま準備中です。\n公開まで今しばらくお待ちください。`;
                   }else {
                     return this.displayingJpName;
                   }
+                }else {
+                  return ''
                 }
             }else {
               return '';
@@ -523,58 +490,7 @@ export default {
         getDisplayingContent() {
             return this.displayingContent;
         },
-        getMaxWidth() {
-            return function (key) {
-                // コンテンツのmax-widthを設定
-                const devicePattern = this.$store.getters["devicePattern/getStatePatternNumber"]; // 現在のデバイスパターン
-                const windowWidth = this.$store.getters["windowSize/getWindowWidth"]; // ウィンドウサイズ
-                let maxWidthPc;
-                let maxWidthTb;
-                let maxWidthSp;
-                if (windowWidth < 576 && this.$store.getters["slider/getAutoSizing"]) {
-                    switch (devicePattern) {
-                        case 1:
-                        case 2:
-                        case 3:
-                            maxWidthPc = "";
-                            maxWidthTb = "";
-                            maxWidthSp = "";
-                            break;
-                        case 4: // PC & TB & SP
-                            maxWidthPc = `${873 / (873 + 10 + 600 + 10 + 369) * 100 * 0.97}%`;
-                            maxWidthTb = `${600 / (873 + 10 + 600 + 10 + 369) * 100 * 0.97}%`;
-                            maxWidthSp = `${369 / (873 + 10 + 600 + 10 + 369) * 100 * 0.97}%`;
-                            break;
-                        case 5: // PC & TB
-                            maxWidthPc = `${873 / (873 + 10 + 600) * 100 * 0.978}%`;
-                            maxWidthTb = `${600 / (873 + 10 + 600) * 100 * 0.978}%`;
-                            maxWidthSp = "";
-                            break;
-                        case 6: // PC & SP
-                            maxWidthPc = `${873 / (873 + 10 + 369) * 100 * 0.975}%`;
-                            maxWidthTb = "";
-                            maxWidthSp = `${369 / (873 + 10 + 369) * 100 * 0.975}%`;
-                            break;
-                        case 7: // TB & SP
-                            maxWidthPc = "";
-                            maxWidthTb = `${600 / (600 + 10 + 369) * 100 * 0.97}%`;
-                            maxWidthSp = `${369 / (600 + 10 + 369) * 100 * 0.97}%`;
-                            break;
-                    }
-                }
-                else {
-                    maxWidthPc = "";
-                    maxWidthTb = "";
-                    maxWidthSp = "";
-                }
-                if (key === "pc")
-                    return { maxWidth: maxWidthPc };
-                else if (key === "tb")
-                    return { maxWidth: maxWidthTb };
-                else if (key === "sp")
-                    return { maxWidth: maxWidthSp };
-            };
-        },
+        
         getContentStyle() {
           console.log('getContentStyle',this.contentStyle)
           return this.contentStyle
@@ -582,6 +498,23 @@ export default {
         getModalOpen() {
           return { open: this.modalOpen}
         },
+        getUrl() {
+          return function(url) {
+            // 最後のスラッシュより後を切り出す
+            const cutUrl = require(`~/static/images/site/${url.substr(url.lastIndexOf('/') + 1)}?resize&sizes[]=349&sizes[]=415&sizes[]=546&sizes[]=${349*2}&sizes[]=${415*2}&sizes[]=${546*2}&format=webp`);
+            console.log(cutUrl)
+            return cutUrl
+          }
+        },
+        getPath() {
+          return function(url) {
+            // 前半の不要部分を切り取り
+            const path1 = `/images/site/${url.substr(url.lastIndexOf('/') + 1)}`
+            // .pngを切り取り
+            const path2 = path1.substring(0, path1.indexOf(".png"))
+            return path2
+          }
+        }
     },
     created() {
         console.log("created");
@@ -589,9 +522,16 @@ export default {
         this.convertTagsToJapanese();
         // headを設定
         this.setHead();
+        // urlをstoreに退避
+        this.setUrl();
+    },
+    beforeMount() {
+      console.log("beforeMount");
     },
     mounted() {
         console.log("mounted");
+        // ウィンドウサイズを取得
+        this.setWindowSize();
         // ダークモードの変更を監視
         this.$store.watch(() => this.$store.getters["darkmode/getActive"], (value) => {
             if (value) {
@@ -625,24 +565,32 @@ export default {
         window.addEventListener("resize", this.resizeProcess);
         // スクロールを監視
         window.addEventListener("scroll", this.setWindowScroll);
-        // ローディング画面を終了させる
-        window.setTimeout(this.setLoaded, 1500);
 
         window.matchMedia("(min-width:375px)").addEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:400px)").addEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:450px)").addEventListener("change", this.matchMediaProcess);
         window.matchMedia("(min-width:500px)").addEventListener("change", this.matchMediaProcess);
         window.matchMedia("(min-width:576px)").addEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:630px)").addEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:660px)").addEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:700px)").addEventListener("change", this.matchMediaProcess);
         window.matchMedia("(min-width:768px)").addEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:830px)").addEventListener("change", this.matchMediaProcess);
         window.matchMedia("(min-width:900px)").addEventListener("change", this.matchMediaProcess);
         window.matchMedia("(min-width:992px)").addEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:1030px)").addEventListener("change", this.matchMediaProcess);
         window.matchMedia("(min-width:1100px)").addEventListener("change", this.matchMediaProcess);
         window.matchMedia("(min-width:1200px)").addEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:1230px)").addEventListener("change", this.matchMediaProcess);
         window.matchMedia("(min-width:1300px)").addEventListener("change", this.matchMediaProcess);
         window.matchMedia("(min-width:1400px)").addEventListener("change", this.matchMediaProcess);
         window.matchMedia("(min-width:1500px)").addEventListener("change", this.matchMediaProcess);
         window.matchMedia("(min-width:1600px)").addEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:1620px)").addEventListener("change", this.matchMediaProcess);
         window.matchMedia("(min-width:1700px)").addEventListener("change", this.matchMediaProcess);
         window.matchMedia("(min-width:1800px)").addEventListener("change", this.matchMediaProcess);
         window.matchMedia("(min-width:1900px)").addEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:1920px)").addEventListener("change", this.matchMediaProcess);
         window.matchMedia("(min-width:2000px)").addEventListener("change", this.matchMediaProcess);
         window.matchMedia("(min-width:2100px)").addEventListener("change", this.matchMediaProcess);
         window.matchMedia("(min-width:2200px)").addEventListener("change", this.matchMediaProcess);
@@ -657,20 +605,30 @@ export default {
         window.removeEventListener("resize", this.resizeProcess);
         window.removeEventListener("scroll", this.setWindowScroll);
         window.matchMedia("(min-width:375px)").removeEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:400px)").removeEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:450px)").removeEventListener("change", this.matchMediaProcess);
         window.matchMedia("(min-width:500px)").removeEventListener("change", this.matchMediaProcess);
         window.matchMedia("(min-width:576px)").removeEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:630px)").removeEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:660px)").removeEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:700px)").removeEventListener("change", this.matchMediaProcess);
         window.matchMedia("(min-width:768px)").removeEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:830px)").removeEventListener("change", this.matchMediaProcess);
         window.matchMedia("(min-width:900px)").removeEventListener("change", this.matchMediaProcess);
         window.matchMedia("(min-width:992px)").removeEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:1030px)").removeEventListener("change", this.matchMediaProcess);
         window.matchMedia("(min-width:1100px)").removeEventListener("change", this.matchMediaProcess);
         window.matchMedia("(min-width:1200px)").removeEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:1230px)").removeEventListener("change", this.matchMediaProcess);
         window.matchMedia("(min-width:1300px)").removeEventListener("change", this.matchMediaProcess);
         window.matchMedia("(min-width:1400px)").removeEventListener("change", this.matchMediaProcess);
         window.matchMedia("(min-width:1500px)").removeEventListener("change", this.matchMediaProcess);
         window.matchMedia("(min-width:1600px)").removeEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:1620px)").removeEventListener("change", this.matchMediaProcess);
         window.matchMedia("(min-width:1700px)").removeEventListener("change", this.matchMediaProcess);
         window.matchMedia("(min-width:1800px)").removeEventListener("change", this.matchMediaProcess);
         window.matchMedia("(min-width:1900px)").removeEventListener("change", this.matchMediaProcess);
+        window.matchMedia("(min-width:1920px)").removeEventListener("change", this.matchMediaProcess);
         window.matchMedia("(min-width:2000px)").removeEventListener("change", this.matchMediaProcess);
         window.matchMedia("(min-width:2100px)").removeEventListener("change", this.matchMediaProcess);
         window.matchMedia("(min-width:2200px)").removeEventListener("change", this.matchMediaProcess);
@@ -688,6 +646,18 @@ export default {
             // tagIDを日本語に変換
             this.meta.title = this.japaneseTags + ' | ' + this.meta.title;
             this.meta.keyword = this.japaneseTags + ',' + this.meta.keyword
+          }
+        },
+        setUrl() {
+          if(this.selectedTag !== undefined) {
+            this.$store.dispatch('url/pushTag',this.selectedTag)
+          }else {
+            this.$store.dispatch('url/pushTag','')
+          }
+          if(this.selectedSort !== undefined) {
+            this.$store.dispatch('url/pushSort',this.selectedSort)
+          }else {
+            this.$store.dispatch('url/pushSort','')
           }
         },
         setContentsElement() {
@@ -772,7 +742,7 @@ export default {
             const value = this.$store.getters["slider/getValue"];
 
             let width
-            const height = Math.round(800 * value);
+            /* const height = Math.round(800 * value); */
             switch(devicePattern) {
                 case 1:
                     width = Math.round(873 * value);
@@ -835,349 +805,560 @@ export default {
             // info領域の大きさを設定
             const infoWidth = width - 75;
             this.infoButtonStyle.width = `${infoWidth}px`;
+            this.infoStyle.width = `${width}px`;
             // コンテンツ領域の大きさを設定
-            this.contentStyle.width = `${width}px`;
-            this.contentStyle.height = `${height}px`;
+            /* this.contentStyle.width = `${width}px`;
+            const windowWidth = this.$store.getters["windowSize/getWindowWidth"]; // ウィンドウサイズ
+            if (windowWidth < 576 && this.$store.getters["slider/getAutoSizing"] && (devicePattern === 4 || devicePattern === 5 || devicePattern === 6 || devicePattern === 7)) {
+              this.contentStyle.height = 'auto';
+              console.log('ここ')
+            }else {
+              this.contentStyle.height = `${height}px`;
+              console.log('ここはダメ')
+            } */
         },
         calculateAutoSizing() {
-            // 実行タイミング：createDummyContentのタイミング＋自動調整オンを押下、ウィンドウサイズが規定のサイズに達したとき、
+            console.log("calculateAutoSizingを起動");
             const devicePattern = this.$store.getters["devicePattern/getStatePatternNumber"]; // 現在のデバイスパターン
             const windowWidth = this.$store.getters["windowSize/getWindowWidth"]; // ウィンドウサイズ
-            if (!this.$store.getters["slider/getAutoSizing"])
-                return;
+            /* if (!this.$store.getters["slider/getAutoSizing"])
+                return; */
             // コンテンツサイズ自動調整用の値を算出
-            let sliderStep;
+            let bestStep;
+            let maxStep;
             switch (devicePattern) {
                 case 1: // PC
                     if (windowWidth < 375) {
-                        sliderStep = 3;
+                        bestStep = 3;
+                        maxStep = 3;
                     }
-                    else if (windowWidth < 576) {
-                        sliderStep = 5;
+                    else if (windowWidth >= 375 && windowWidth < 500) {
+                        bestStep = 2;
+                        maxStep = 2;
                     }
-                    else if (windowWidth < 768) {
-                        sliderStep = 5;
+                    else if (windowWidth >= 500 && windowWidth < 576) {
+                        bestStep = 3;
+                        maxStep = 3;
                     }
-                    else if (windowWidth < 900) {
-                        sliderStep = 5;
+                    else if (windowWidth >= 576 && windowWidth < 768) {
+                        bestStep = 4;
+                        maxStep = 4;
                     }
-                    else if (windowWidth < 992) {
-                        sliderStep = 2;
+                    else if (windowWidth >= 768 && windowWidth < 900) {
+                        bestStep = 5;
+                        maxStep = 6;
                     }
-                    else if (windowWidth < 1100) {
-                        sliderStep = 2;
+                    else if (windowWidth >= 900 && windowWidth < 992) {
+                        bestStep = 2;
+                        maxStep = 8;
                     }
-                    else if (windowWidth < 1200) {
-                        sliderStep = 3;
+                    else if (windowWidth >= 992 && windowWidth < 1100) {
+                        bestStep = 2;
+                        maxStep = 9;
                     }
-                    else if (windowWidth < 1300) {
-                        sliderStep = 3;
+                    else if (windowWidth >= 1100 && windowWidth < 1200) {
+                        bestStep = 3;
+                        maxStep = 10;
                     }
-                    else if (windowWidth < 1400) {
-                        sliderStep = 3;
+                    else if (windowWidth >= 1200 && windowWidth < 1300) {
+                        bestStep = 3;
+                        maxStep = 10;
                     }
-                    else if (windowWidth < 1500) {
-                        sliderStep = 3;
+                    else if (windowWidth >= 1300 && windowWidth < 1400) {
+                        bestStep = 3;
+                        maxStep = 10;
                     }
-                    else {
-                        sliderStep = 3;
+                    else if (windowWidth >= 1400 && windowWidth < 1500) {
+                        bestStep = 3;
+                        maxStep = 10;
+                    }
+                    else if(windowWidth >= 1500) {
+                        bestStep = 3;
+                        maxStep = 10;
                     }
                     break;
+
                 case 2: // TB
                     if (windowWidth < 375) {
-                        sliderStep = 5;
+                        bestStep = 4;
+                        maxStep = 4;
                     }
-                    else if (windowWidth < 576) {
-                        sliderStep = 5;
+                    else if (windowWidth >= 375 && windowWidth < 400) {
+                        bestStep = 4;
+                        maxStep = 4;
                     }
-                    else if (windowWidth < 768) {
-                        sliderStep = 6;
+                    else if (windowWidth >= 400 && windowWidth < 450) {
+                        bestStep = 5;
+                        maxStep = 5;
                     }
-                    else if (windowWidth < 900) {
-                        sliderStep = 6;
+                    else if (windowWidth >= 450 && windowWidth < 500) {
+                        bestStep = 5;
+                        maxStep = 6;
                     }
-                    else if (windowWidth < 992) {
-                        sliderStep = 4;
+                    else if (windowWidth >= 500 && windowWidth < 576) {
+                        bestStep = 5;
+                        maxStep = 7;
                     }
-                    else if (windowWidth < 1100) {
-                        sliderStep = 4;
+                    else if (windowWidth >= 576 && windowWidth < 630) {
+                        bestStep = 6;
+                        maxStep = 8;
                     }
-                    else if (windowWidth < 1200) {
-                        sliderStep = 5;
+                    else if (windowWidth >= 630 && windowWidth < 700) {
+                        bestStep = 6;
+                        maxStep = 9;
                     }
-                    else if (windowWidth < 1300) {
-                        sliderStep = 5;
+                    else if (windowWidth >= 700 && windowWidth < 768) {
+                        bestStep = 7;
+                        maxStep = 10;
                     }
-                    else if (windowWidth < 1400) {
-                        sliderStep = 4;
+                    else if (windowWidth >= 768 && windowWidth < 900) {
+                        bestStep = 7;
+                        maxStep = 10;
                     }
-                    else if (windowWidth < 1500) {
-                        sliderStep = 4;
+                    else if (windowWidth >= 900 && windowWidth < 992) {
+                        bestStep = 4;
+                        maxStep = 10;
                     }
-                    else {
-                        sliderStep = 5;
+                    else if (windowWidth >= 992 && windowWidth < 1100) {
+                        bestStep = 4;
+                        maxStep = 10;
+                    }
+                    else if (windowWidth >= 1100 && windowWidth < 1200) {
+                        bestStep = 5;
+                        maxStep = 10;
+                    }
+                    else if (windowWidth >= 1200 && windowWidth < 1300) {
+                        bestStep = 5;
+                        maxStep = 10;
+                    }
+                    else if (windowWidth >= 1300 && windowWidth < 1400) {
+                        bestStep = 4;
+                        maxStep = 10;
+                    }
+                    else if (windowWidth >= 1400 && windowWidth < 1500) {
+                        bestStep = 4;
+                        maxStep = 10;
+                    }
+                    else if(windowWidth >= 1500) {
+                        bestStep = 5;
+                        maxStep = 10;
                     }
                     break;
+
                 case 3: // SP
                     if (windowWidth < 375) {
-                        sliderStep = 7;
+                        bestStep = 7;
+                        maxStep = 9;
                     }
-                    else if (windowWidth < 576) {
-                        sliderStep = 8;
+                    else if (windowWidth >= 375 && windowWidth < 400) {
+                        bestStep = 8;
+                        maxStep = 9;
                     }
-                    else if (windowWidth < 768) {
-                        sliderStep = 5;
+                    else if (windowWidth >= 400 && windowWidth < 576) {
+                        bestStep = 8;
+                        maxStep = 10;
                     }
-                    else if (windowWidth < 900) {
-                        sliderStep = 6;
+                    else if (windowWidth >= 576 && windowWidth < 768) {
+                        bestStep = 5;
+                        maxStep = 10;
                     }
-                    else if (windowWidth < 992) {
-                        sliderStep = 7;
+                    else if (windowWidth >= 768 && windowWidth < 900) {
+                        bestStep = 6;
+                        maxStep = 10;
                     }
-                    else if (windowWidth < 1100) {
-                        sliderStep = 8;
+                    else if (windowWidth >= 900 && windowWidth < 992) {
+                        bestStep = 7;
+                        maxStep = 10;
                     }
-                    else if (windowWidth < 1200) {
-                        sliderStep = 8;
+                    else if (windowWidth >= 992 && windowWidth < 1100) {
+                        bestStep = 8;
+                        maxStep = 10;
                     }
-                    else if (windowWidth < 1300) {
-                        sliderStep = 8;
+                    else if (windowWidth >= 1100 && windowWidth < 1200) {
+                        bestStep = 8;
+                        maxStep = 10;
                     }
-                    else if (windowWidth < 1400) {
-                        sliderStep = 8;
+                    else if (windowWidth >= 1200 && windowWidth < 1300) {
+                        bestStep = 8;
+                        maxStep = 10;
                     }
-                    else if (windowWidth < 1500) {
-                        sliderStep = 8;
+                    else if (windowWidth >= 1300 && windowWidth < 1400) {
+                        bestStep = 8;
+                        maxStep = 10;
                     }
-                    else {
-                        sliderStep = 8;
+                    else if (windowWidth >= 1400 && windowWidth < 1500) {
+                        bestStep = 8;
+                        maxStep = 10;
+                    }
+                    else if(windowWidth >= 1500) {
+                        bestStep = 8;
+                        maxStep = 10;
                     }
                     break;
+
                 case 4: // PC & TB & SP
                     if (windowWidth < 375) {
-                        sliderStep = 0;
+                        // 仕様変更により未使用
+                        bestStep = 0;
+                        maxStep = 0;
                     }
-                    else if (windowWidth < 576) {
-                        sliderStep = 2;
+                    else if (windowWidth >= 375 && windowWidth < 576) {
+                        // 仕様変更により未使用
+                        bestStep = 2;
+                        maxStep = 0;
                     }
-                    else if (windowWidth < 768) {
-                        sliderStep = 0;
+                    else if (windowWidth >= 576 && windowWidth < 660) {
+                        bestStep = 0;
+                        maxStep = 0;
                     }
-                    else if (windowWidth < 900) {
-                        sliderStep = 1;
+                    else if (windowWidth >= 660 && windowWidth < 768) {
+                        bestStep = 0;
+                        maxStep = 1;
                     }
-                    else if (windowWidth < 992) {
-                        sliderStep = 2;
+                    else if (windowWidth >= 768 && windowWidth < 900) {
+                        bestStep = 1;
+                        maxStep = 1;
                     }
-                    else if (windowWidth < 1100) {
-                        sliderStep = 2;
+                    else if (windowWidth >= 900 && windowWidth < 992) {
+                        bestStep = 2;
+                        maxStep = 2;
                     }
-                    else if (windowWidth < 1200) {
-                        sliderStep = 3;
+                    else if (windowWidth >= 992 && windowWidth < 1100) {
+                        bestStep = 2;
+                        maxStep = 2;
                     }
-                    else if (windowWidth < 1300) {
-                        sliderStep = 3;
+                    else if (windowWidth >= 1100 && windowWidth < 1200) {
+                        bestStep = 3;
+                        maxStep = 3;
                     }
-                    else if (windowWidth < 1400) {
-                        sliderStep = 4;
+                    else if (windowWidth >= 1200 && windowWidth < 1230) {
+                        bestStep = 3;
+                        maxStep = 3;
                     }
-                    else if (windowWidth < 1500) {
-                        sliderStep = 5;
+                    else if (windowWidth >= 1230 && windowWidth < 1300) {
+                        bestStep = 3;
+                        maxStep = 4;
                     }
-                    else if (windowWidth < 1600) {
-                        sliderStep = 5;
+                    else if (windowWidth >= 1300 && windowWidth < 1400) {
+                        bestStep = 4;
+                        maxStep = 4;
                     }
-                    else if (windowWidth < 1700) {
-                        sliderStep = 5;
+                    else if (windowWidth >= 1400 && windowWidth < 1500) {
+                        bestStep = 5;
+                        maxStep = 5;
                     }
-                    else if (windowWidth < 1800) {
-                        sliderStep = 5;
+                    else if (windowWidth >= 1500 && windowWidth < 1600) {
+                        bestStep = 5;
+                        maxStep = 6;
                     }
-                    else if (windowWidth < 1900) {
-                        sliderStep = 2;
+                    else if (windowWidth >= 1600 && windowWidth < 1620) {
+                        bestStep = 5;
+                        maxStep = 6;
                     }
-                    else if (windowWidth < 2000) {
-                        sliderStep = 2;
+                    else if (windowWidth >= 1620 && windowWidth < 1700) {
+                        bestStep = 5;
+                        maxStep = 7;
                     }
-                    else if (windowWidth < 2100) {
-                        sliderStep = 2;
+                    else if (windowWidth >= 1700 && windowWidth < 1800) {
+                        bestStep = 5;
+                        maxStep = 7;
                     }
-                    else {
-                        sliderStep = 3;
+                    else if (windowWidth >= 1800 && windowWidth < 1900) {
+                        bestStep = 2;
+                        maxStep = 8;
+                    }
+                    else if (windowWidth >= 1900 && windowWidth < 1920) {
+                        bestStep = 2;
+                        maxStep = 8;
+                    }
+                    else if (windowWidth >= 1920 && windowWidth < 2000) {
+                        bestStep = 2;
+                        maxStep = 9;
+                    }
+                    else if (windowWidth >= 2000 && windowWidth < 2100) {
+                        bestStep = 2;
+                        maxStep = 9;
+                    }
+                    else if(windowWidth >= 2100) {
+                        bestStep = 3;
+                        maxStep = 10;
                     }
                     break;
+
                 case 5: // PC & TB
                     if (windowWidth < 375) {
-                        sliderStep = 0;
+                        // 仕様変更により未使用
+                        bestStep = 0;
+                        maxStep = 0;
                     }
-                    else if (windowWidth < 576) {
-                        sliderStep = 2;
+                    else if (windowWidth >= 375 && windowWidth < 576) {
+                        // 仕様変更により未使用
+                        bestStep = 2;
+                        maxStep = 2;
                     }
-                    else if (windowWidth < 768) {
-                        sliderStep = 1;
+                    else if (windowWidth >= 576 && windowWidth < 660) {
+                        bestStep = 1;
+                        maxStep = 1;
                     }
-                    else if (windowWidth < 900) {
-                        sliderStep = 2;
+                    else if (windowWidth >= 660 && windowWidth < 768) {
+                        bestStep = 1;
+                        maxStep = 2;
                     }
-                    else if (windowWidth < 992) {
-                        sliderStep = 3;
+                    else if (windowWidth >= 768 && windowWidth < 900) {
+                        bestStep = 2;
+                        maxStep = 2;
                     }
-                    else if (windowWidth < 1100) {
-                        sliderStep = 4;
+                    else if (windowWidth >= 900 && windowWidth < 992) {
+                        bestStep = 3;
+                        maxStep = 3;
                     }
-                    else if (windowWidth < 1200) {
-                        sliderStep = 4;
+                    else if (windowWidth >= 992 && windowWidth < 1100) {
+                        bestStep = 4;
+                        maxStep = 4;
                     }
-                    else if (windowWidth < 1300) {
-                        sliderStep = 5;
+                    else if (windowWidth >= 1100 && windowWidth < 1200) {
+                        bestStep = 4;
+                        maxStep = 5;
                     }
-                    else if (windowWidth < 1400) {
-                        sliderStep = 5;
+                    else if (windowWidth >= 1200 && windowWidth < 1230) {
+                        bestStep = 5;
+                        maxStep = 5;
                     }
-                    else if (windowWidth < 1500) {
-                        sliderStep = 5;
+                    else if (windowWidth >= 1230 && windowWidth < 1300) {
+                        bestStep = 5;
+                        maxStep = 6;
                     }
-                    else if (windowWidth < 1600) {
-                        sliderStep = 2;
+                    else if (windowWidth >= 1300 && windowWidth < 1400) {
+                        bestStep = 5;
+                        maxStep = 6;
                     }
-                    else if (windowWidth < 1700) {
-                        sliderStep = 2;
+                    else if (windowWidth >= 1400 && windowWidth < 1500) {
+                        bestStep = 5;
+                        maxStep = 7;
                     }
-                    else if (windowWidth < 1800) {
-                        sliderStep = 3;
+                    else if (windowWidth >= 1500 && windowWidth < 1600) {
+                        bestStep = 2;
+                        maxStep = 8;
                     }
-                    else if (windowWidth < 1900) {
-                        sliderStep = 3;
+                    else if (windowWidth >= 1600 && windowWidth < 1700) {
+                        bestStep = 2;
+                        maxStep = 9;
                     }
-                    else if (windowWidth < 2000) {
-                        sliderStep = 3;
+                    else if (windowWidth >= 1700 && windowWidth < 1800) {
+                        bestStep = 3;
+                        maxStep = 10;
                     }
-                    else if (windowWidth < 2100) {
-                        sliderStep = 4;
+                    else if (windowWidth >= 1800 && windowWidth < 1900) {
+                        bestStep = 3;
+                        maxStep = 10;
                     }
-                    else {
-                        sliderStep = 4;
+                    else if (windowWidth >= 1900 && windowWidth < 2000) {
+                        bestStep = 3;
+                        maxStep = 10;
+                    }
+                    else if (windowWidth >= 2000 && windowWidth < 2100) {
+                        bestStep = 4;
+                        maxStep = 10;
+                    }
+                    else if(windowWidth >= 2100) {
+                        bestStep = 4;
+                        maxStep = 10;
                     }
                     break;
+
                 case 6: // PC & SP
                     if (windowWidth < 375) {
-                        sliderStep = 1;
+                        // 仕様変更により未使用
+                        bestStep = 1;
+                        maxStep = 1;
                     }
-                    else if (windowWidth < 576) {
-                        sliderStep = 2;
+                    else if (windowWidth >= 375 && windowWidth < 576) {
+                        // 仕様変更により未使用
+                        bestStep = 2;
+                        maxStep = 2;
                     }
-                    else if (windowWidth < 768) {
-                        sliderStep = 2;
+                    else if (windowWidth >= 576 && windowWidth < 660) {
+                        bestStep = 2;
+                        maxStep = 2;
                     }
-                    else if (windowWidth < 900) {
-                        sliderStep = 3;
+                    else if (windowWidth >= 660 && windowWidth < 768) {
+                        bestStep = 2;
+                        maxStep = 3;
                     }
-                    else if (windowWidth < 992) {
-                        sliderStep = 4;
+                    else if (windowWidth >= 768 && windowWidth < 830) {
+                        bestStep = 3;
+                        maxStep = 3;
                     }
-                    else if (windowWidth < 1100) {
-                        sliderStep = 4;
+                    else if (windowWidth >= 830 && windowWidth < 900) {
+                        bestStep = 3;
+                        maxStep = 4;
                     }
-                    else if (windowWidth < 1200) {
-                        sliderStep = 5;
+                    else if (windowWidth >= 900 && windowWidth < 992) {
+                        bestStep = 4;
+                        maxStep = 4;
                     }
-                    else if (windowWidth < 1300) {
-                        sliderStep = 5;
+                    else if (windowWidth >= 992 && windowWidth < 1100) {
+                        bestStep = 4;
+                        maxStep = 5;
                     }
-                    else if (windowWidth < 1400) {
-                        sliderStep = 5;
+                    else if (windowWidth >= 1100 && windowWidth < 1200) {
+                        bestStep = 5;
+                        maxStep = 6;
                     }
-                    else if (windowWidth < 1500) {
-                        sliderStep = 5;
+                    else if (windowWidth >= 1200 && windowWidth < 1300) {
+                        bestStep = 5;
+                        maxStep = 7;
                     }
-                    else if (windowWidth < 1600) {
-                        sliderStep = 3;
+                    else if (windowWidth >= 1300 && windowWidth < 1400) {
+                        bestStep = 5;
+                        maxStep = 8;
                     }
-                    else if (windowWidth < 1700) {
-                        sliderStep = 3;
+                    else if (windowWidth >= 1400 && windowWidth < 1500) {
+                        bestStep = 5;
+                        maxStep = 9;
                     }
-                    else if (windowWidth < 1800) {
-                        sliderStep = 4;
+                    else if (windowWidth >= 1500 && windowWidth < 1600) {
+                        bestStep = 3;
+                        maxStep = 10;
                     }
-                    else if (windowWidth < 1900) {
-                        sliderStep = 4;
+                    else if (windowWidth >= 1600 && windowWidth < 1700) {
+                        bestStep = 3;
+                        maxStep = 10;
                     }
-                    else if (windowWidth < 2000) {
-                        sliderStep = 4;
+                    else if (windowWidth >= 1700 && windowWidth < 1800) {
+                        bestStep = 4;
+                        maxStep = 10;
                     }
-                    else if (windowWidth < 2100) {
-                        sliderStep = 4;
+                    else if (windowWidth >= 1800 && windowWidth < 1900) {
+                        bestStep = 4;
+                        maxStep = 10;
                     }
-                    else {
-                        sliderStep = 3;
+                    else if (windowWidth >= 1900 && windowWidth < 2000) {
+                        bestStep = 4;
+                        maxStep = 10;
+                    }
+                    else if (windowWidth >= 2000 && windowWidth < 2100) {
+                        bestStep = 4;
+                        maxStep = 10;
+                    }
+                    else if(windowWidth >= 2100) {
+                        bestStep = 3;
+                        maxStep = 10;
                     }
                     break;
+
                 case 7: // TB & SP
                     if (windowWidth < 375) {
-                        sliderStep = 2;
+                        // 仕様変更により未使用
+                        bestStep = 2;
+                        maxStep = 10;
                     }
-                    else if (windowWidth < 576) {
-                        sliderStep = 3;
+                    else if (windowWidth >= 375 && windowWidth < 576) {
+                        // 仕様変更により未使用
+                        bestStep = 3;
+                        maxStep = 10;
                     }
-                    else if (windowWidth < 768) {
-                        sliderStep = 4;
+                    else if (windowWidth >= 576 && windowWidth < 660) {
+                        bestStep = 3;
+                        maxStep = 3;
                     }
-                    else if (windowWidth < 900) {
-                        sliderStep = 5;
+                    else if (windowWidth >= 660 && windowWidth < 700) {
+                        bestStep = 4;
+                        maxStep = 4;
                     }
-                    else if (windowWidth < 992) {
-                        sliderStep = 6;
+                    else if (windowWidth >= 700 && windowWidth < 768) {
+                        bestStep = 4;
+                        maxStep = 5;
                     }
-                    else if (windowWidth < 1100) {
-                        sliderStep = 6;
+                    else if (windowWidth >= 768 && windowWidth < 830) {
+                        bestStep = 5;
+                        maxStep = 5;
                     }
-                    else if (windowWidth < 1200) {
-                        sliderStep = 6;
+                    else if (windowWidth >= 830 && windowWidth < 900) {
+                        bestStep = 5;
+                        maxStep = 6;
                     }
-                    else if (windowWidth < 1300) {
-                        sliderStep = 7;
+                    else if (windowWidth >= 900 && windowWidth < 992) {
+                        bestStep = 6;
+                        maxStep = 7;
                     }
-                    else if (windowWidth < 1400) {
-                        sliderStep = 7;
+                    else if (windowWidth >= 992 && windowWidth < 1030) {
+                        bestStep = 6;
+                        maxStep = 7;
                     }
-                    else if (windowWidth < 1500) {
-                        sliderStep = 4;
+                    else if (windowWidth >= 1030 && windowWidth < 1100) {
+                        bestStep = 6;
+                        maxStep = 8;
                     }
-                    else if (windowWidth < 1600) {
-                        sliderStep = 4;
+                    else if (windowWidth >= 1100 && windowWidth < 1200) {
+                        bestStep = 6;
+                        maxStep = 9;
                     }
-                    else if (windowWidth < 1700) {
-                        sliderStep = 5;
+                    else if (windowWidth >= 1200 && windowWidth < 1300) {
+                        bestStep = 7;
+                        maxStep = 10;
                     }
-                    else if (windowWidth < 1800) {
-                        sliderStep = 5;
+                    else if (windowWidth >= 1300 && windowWidth < 1400) {
+                        bestStep = 7;
+                        maxStep = 10;
                     }
-                    else if (windowWidth < 1900) {
-                        sliderStep = 5;
+                    else if (windowWidth >= 1400 && windowWidth < 1500) {
+                        bestStep = 4;
+                        maxStep = 10;
                     }
-                    else if (windowWidth < 2000) {
-                        sliderStep = 5;
+                    else if (windowWidth >= 1500 && windowWidth < 1600) {
+                        bestStep = 4;
+                        maxStep = 10;
                     }
-                    else if (windowWidth < 2100) {
-                        sliderStep = 4;
+                    else if (windowWidth >= 1600 && windowWidth < 1700) {
+                        bestStep = 5;
+                        maxStep = 10;
                     }
-                    else if (windowWidth < 2200) {
-                        sliderStep = 4;
+                    else if (windowWidth >= 1700 && windowWidth < 1800) {
+                        bestStep = 5;
+                        maxStep = 10;
                     }
-                    else {
-                        sliderStep = 5;
+                    else if (windowWidth >= 1800 && windowWidth < 1900) {
+                        bestStep = 5;
+                        maxStep = 10;
+                    }
+                    else if (windowWidth >= 1900 && windowWidth < 2000) {
+                        bestStep = 5;
+                        maxStep = 10;
+                    }
+                    else if (windowWidth >= 2000 && windowWidth < 2100) {
+                        bestStep = 4;
+                        maxStep = 10;
+                    }
+                    else if (windowWidth >= 2100 && windowWidth < 2200) {
+                        bestStep = 4;
+                        maxStep = 10;
+                    }
+                    else if(windowWidth >= 2200) {
+                        bestStep = 5;
+                        maxStep = 10;
                     }
                     break;
             }
-            const value = 0.25 + sliderStep * 0.075;
-            // 自動調整用の値をstoreに設定
+
+            // ステップを倍率に変換
+            const value = (0.25*1000 + bestStep * (0.075*1000))/1000;
+            const maxValue = (0.25*1000 + maxStep * (0.075*1000))/1000;
+
+            // 自動調整用の値を退避
             this.$store.dispatch("slider/pushAptitudeValue", value);
+            // スライダー最大値を退避
+            this.$store.dispatch("slider/pushMaxValue", maxValue);
+
+            // ブラウザサイズ変更により最大値を超えてしまった場合
+            const nowValue = this.$store.getters["slider/getValue"]
+            if(nowValue > maxValue) {
+              this.$store.dispatch('slider/pushSlider',maxValue)
+            }
         },
         loadProcess() {
             // ロード済みフラグの設定
             this.$store.dispatch("loaded/pushLoaded");
-            // ウィンドウサイズを取得
-            this.setWindowSize();
             // コンテンツ要素を取得
             this.setContentsElement();
             // 自動サイズ調整処理
@@ -1192,10 +1373,6 @@ export default {
             this.monitorReturnToAuto();
             this.modalInfoSizing();
             this.wrapChack();
-        },
-        imageLoaded() {
-          // 画像ロード済みフラグの設定
-          this.$store.dispatch("loaded/pushLoadedImage");
         },
         setBookmark(id) {
             if (!this.$storageAvailable('localStorage')) {
@@ -1316,9 +1493,6 @@ export default {
             this.modalOpenElement = {};
             this.modalOpen = false;
             setTimeout(()=>{backfaceFixed(false)},200);
-        },
-        setLoaded() {
-            this.$store.dispatch("loaded/pushLoadingDisplayed");
         },
         searchByKeyword() {
             // 検索キーワードを取得
@@ -1596,10 +1770,16 @@ export default {
             if (!this.$store.getters["slider/getAutoSizing"]) {
                 this.$store.dispatch("slider/pushAutoSizing");
                 this.calculateAutoSizing();
+                this.createDummyContent();
                 // 自動調整オンの通知
                 this.$store.dispatch("notice/pushDisplay", {id: 2, text: 'サイズの自動調整を有効にしました'});
                 setTimeout(() => (this.$store.dispatch("notice/pushClose")),3000)
             }
+        },
+        monitorReturnToSingledevice() {
+          // マルチデバイス解除の通知
+          this.$store.dispatch("notice/pushDisplay", {id: 2, text: 'マルチデバイスを解除しました'});
+          setTimeout(() => (this.$store.dispatch("notice/pushClose")),3000)
         },
     },
 }
@@ -1635,7 +1815,6 @@ export default {
 
 .divider {
   position: relative;
-  color: var(--main-text);
   transition: transform .25s ease-in;
   padding: 0px 0px 150px 0px;
   .sideMenuOpen & {
@@ -1718,6 +1897,10 @@ export default {
     
   }
 }
+.contentsWrapper {
+  position: relative;
+  padding-top: 60px;
+}
 
 .contents {
   
@@ -1772,62 +1955,10 @@ export default {
   max-width: 100%;
   margin: 0 auto;
 }
-.images {
-  display: flex;
-  justify-content: center;
-  max-width: 100%;
-  width: 100%;
-  @include responsive(xs) {
-    
-  }
-  @include responsive(sm) {
-    
-  }
-  @include responsive(md) {
-    
-  }
-  @include responsive(lg) {
-    
-  }
-  @include responsive(xl) {
-    
-  }
-  @include responsive(xxl) {
-    
-  }
-}
-// 注意：createDummyContent関数内で以下のborderの値をハードコーディングで使用しているため、
-//      ここの値を変更する場合は、一緒にcreateDummyContentも変更必要（あとで直す）
-.image {
-  max-width: 100%;
-  
-  @include responsive(xs) {
-    
-  }
-  @include responsive(sm) {
-    border-radius: 5px;
-    box-shadow: 1px 1px 5px var(--main-content-image-shadow);
-  }
-  @include responsive(md) {
-    
-  }
-  @include responsive(lg) {
-    
-  }
-  @include responsive(xl) {
-    
-  }
-  @include responsive(xxl) {
-    
-  }
-}
-.marginRight {
-  margin-right: 10px;
-}
 .modal {
   width: 100vw;
   height: 100vh;
-  background-color: var(--main-modal-outer-background);
+  background-color: var(--black-transparent-low);
   z-index: 120;
   position: fixed;
   top: 0;
@@ -1875,7 +2006,7 @@ export default {
   width: 30px;
   height: 30px;
   .modalBar {
-    background-color: var(--main-modal-button-bar);
+    background-color: var(--white);
     width: 25px;
     height: 2px;
     position: absolute;
@@ -1892,7 +2023,7 @@ export default {
   }
   @include hover() {
     .modalBar {
-      background-color: var(--main-modal-button-bar-hover);
+      background-color: var(--grey-super-light);
     }
   }
 }
@@ -1900,7 +2031,7 @@ export default {
   
 
 .modalContent {
-  background-color: var(--main-modal-inner-background);
+  background-color: transparent;
   position: relative;
   width: 100%;
   max-height: 100%;
@@ -1963,7 +2094,7 @@ export default {
 }
 
 .modalInfoWrapper {
-  background-color: var(--main-modal-info-background);
+  background-color: var(--white-forDarkMode);
   overflow-x: hidden;
   overflow-y: auto;
   padding: 10px;
@@ -1996,7 +2127,7 @@ export default {
   margin-top: 5px;
   font-weight: 500;
   font-size: var(--font-size-md);
-  background: linear-gradient(to right, #005c97, #363795);
+  background: linear-gradient(to right, var(--gradation-start), var(--gradation-end));
   background-clip: text;
   display: inline-block;
 }
@@ -2026,7 +2157,7 @@ export default {
     position: absolute;
     top: -10px;
     left: -10px;
-    background-color: var(--main-modal-info-partition);
+    background-color: var(--grey-super-light);
   }
 }
 .modalTagTitle {
@@ -2048,7 +2179,7 @@ export default {
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  color: var(--main-modal-tag-text);
+  color: var(--black-forDarkMode);
   padding: 3px;
 }
 .modalTagName {
@@ -2076,18 +2207,24 @@ export default {
 }
 
 .name {
-  font-weight: 700;
+  font-weight: 500;
   font-size: var(--font-size-md);
-  background: linear-gradient(to right, #005c97, #363795);
-  background-clip: text;
+  /* // グラデーション
+  background: linear-gradient(to right, var(--gradation-start), var(--gradation-end));
+  background-clip: text; */
   display: inline-block;
 }
 
 .time {
   margin-top: 3px;
+  color: var(--black-super-light);
+  font-size: var(--font-size-xs);
+  display: flex;
+  align-items: center;
 }
 .published {
-  display: none;
+  /* display: none; */
+  margin-right: 10px;
 }
 .updated {
   display: none;
@@ -2095,7 +2232,9 @@ export default {
 
 .nameLink {
   text-decoration: none;
-  color: transparent;
+  /* // グラデーション
+  color: transparent; */
+  color: var(--color-ultra-dark);
 }
 
 .infoButton {
@@ -2112,14 +2251,14 @@ export default {
 .detail {
   right: 40px;
   .detailImage {
-    width: 18px;
+    width: 16px;
     transition: fill .25s;
-    fill: var(--main-content-detail-button-icon);
+    fill: var(--black-super-light-forDarkMode);
   }
   @include hover() {
-    background-color: var(--main-content-detail-button-hover);
+    background-color: var(--color-transparent-high);
     .detailImage {
-      fill: var(--main-content-detail-button-icon-hover);
+      fill: var(--color);
     }
   }
 }
@@ -2130,13 +2269,13 @@ export default {
   right: 3px;
   transition: background-color .25s;
   .bookmarkImage {
-    width: 17px;
-    stroke: var(--main-content-bookmark-button-icon);
+    width: 15px;
+    stroke: var(--black-super-light-forDarkMode);
     transition: stroke .25s, fill .25s;
   }
   .bookmarkRegistered {
-    stroke: var(--main-content-bookmark-button-icon-Registered);
-    fill: var(--main-content-bookmark-button-icon-Registered);
+    stroke: var(--red);
+    fill: var(--red);
     animation-name: like;
     animation-duration: .3s;
     animation-timing-function: ease-in-out;
@@ -2159,12 +2298,12 @@ export default {
     }
   }
   @include hover() {
-    background-color: var(--main-content-bookmark-button-hover);
+    background-color: var(--red-transparent-high);
     .bookmarkImage {
-      stroke: var(--main-content-bookmark-button-icon-hover);
+      stroke: var(--red);
     }
     .bookmarkRegistered {
-      fill: var(--main-content-bookmark-button-icon-hover-Registered);
+      fill: var(--red);
     }
   }
 }
@@ -2177,8 +2316,8 @@ export default {
   height: 18px;
   border-radius: 3px;
   padding: 0 0 1px 1px;
-  background-color: var(--main-content-button-comment-background);
-  color: var(--main-content-button-comment-text);
+  background-color: var(--black-forDarkMode);
+  color: var(--white-forDarkMode);
   display: none;
   align-items: center;
   justify-content: center;
@@ -2264,18 +2403,15 @@ export default {
   width: 330px;
   max-width: 90%;
   height: 50px;
-  background-color: var(--main-more-button-background);
-  background: linear-gradient(to right, #005c97, #363795);
-  color: var(--main-more-button-text);
+  background-color: var(--color-dark-transparent-low);
+  color: var(--white);
   border-radius: 3px;
   display: flex;
   justify-content: center;
   align-items: center;
   padding-left: 6px;
   @include hover() {
-    background-color: var(--main-more-button-background-hover);
-    background: linear-gradient(to right, #247bb1, #52549e);
-    color: var(--main-more-button-text-hover);
+    background-color: var(--color-dark-transparent-low-hover);
   }
   margin: 50px auto 0 auto;
 }

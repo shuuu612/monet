@@ -38,7 +38,7 @@ export const mutations = {
   },
  }
 
- export const actions = {
+export const actions = {
   pushSearchTag({commit}) {
     commit('setSearchTag')
     commit('updateLocalStorage')
@@ -50,4 +50,4 @@ export const mutations = {
   pushLocalStorage({commit},data) {
     commit('setLocalStorage',data)
   },
- }
+}

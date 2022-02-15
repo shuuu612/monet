@@ -67,7 +67,7 @@ export default {
   left: 0;
   width: 100%;
   height: 70px;
-  background-color: var(--white-transparent-low);
+  background-color: var(--white-transparent-low-forDarkMode);
   padding: 14px 10px;
   transform: translateY(-70px);
   border-bottom: 2px var(--black-transparent-high) solid;
@@ -108,6 +108,7 @@ export default {
     }
   }
   @include responsive(lg) {
+    top: 40px;
     width: 250px;
     right: 100px;
   }
@@ -141,16 +142,17 @@ export default {
     width: 100%; */
     height: auto;
     border-radius: 0;
-    border-bottom: var(--search-border) 1px solid;
-    border-image: linear-gradient(to right, #247bb1, #52549e);
-    border-image-slice: 1;
-    padding-left: 10px;
+    border-bottom: var(--black-forDarkMode) 1px solid;
+    /* // グラデーション
+    border-image: linear-gradient(to right, var(--gradation-start), var(--gradation-end));
+    border-image-slice: 1; */
     background-color: transparent;
+    padding-left: 10px;
     border-top: 0;
     border-left: 0;
     border-right: 0;
     .searchWrapper.focus & {
-      border-bottom: var(--search-border-focus) 2px solid;
+      border-bottom: var(--color-dark) 2px solid;
     }
   }
   @include responsive(lg) {
@@ -168,7 +170,7 @@ export default {
   width: 16px;
   margin-right: 10px;
   margin-left: 10px;
-  fill: var(--search-icon);
+  fill: var(--black-ultra-light);
   @include responsive(xs) {
     
   }
@@ -176,9 +178,7 @@ export default {
     
   }
   @include responsive(md) {
-    /* width: 16px;
-    margin-right: 10px;
-    fill: var(--search-icon); */
+    fill: var(--grey);
   }
   @include responsive(lg) {
     
@@ -195,6 +195,6 @@ export default {
   height: 36px;
   border-radius: 4px;
   font-size: var(--font-size-sm);
-  color: var(--search-text);
+  color: var(--black-forDarkMode);
 }
 </style>

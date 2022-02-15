@@ -50,27 +50,28 @@ export default {
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  box-shadow: 1px 1px 5px var(--scrolltop-button-shadow);
+  box-shadow: 1px 1px 5px var(--grey);
+  background-color: var(--white-forDarkMode);
   z-index: 50;
-  transition: transform .3s;
+  transition: transform .4s;
   transform: translateY(0);
   @include hover() {
     transform: translateY(2px);
   }
   &.hide {
-    transform: translateY(130px)
+    transform: translateY(280px);
   }
 }
 
 .scrollTopText {
-  color: var(--scrolltop-text);
+  color: var(--black-forDarkMode);
   font-size: var(--font-size-xs);
   margin-bottom: 4px;
 }
 
 .scrollTopImage {
   width: 40%;
-  fill: var(--scrolltop-icon-fill);
+  fill: var(--color-dark);
 }
 
 </style>

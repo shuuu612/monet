@@ -1,7 +1,12 @@
 <template>
   <div class="sideMenuWrapper">
     <transition name="mask">
-      <div v-if="$store.getters['sideMenu/getOpen']" class="mask" @click="clickButton"></div>
+      <div v-if="$store.getters['sideMenu/getOpen']" class="mask" @click="clickButton">
+        <button class="modalButton">
+          <span class="modalBar"></span>
+          <span class="modalBar"></span>
+        </button>
+      </div>
     </transition>
     <div id="sideMenu" class="sideMenu" :class="[getOpen,getClose]" @scroll="scrolledSideMenu">
       <div class="tabMenus">
@@ -148,16 +153,43 @@
                 </div>
                 <div class="controllerItems checkboxStyle">
                   <label class="checkboxWrapper">
-                    <input id="checkbox" class="checkbox" type="checkbox" name="check" :checked="getDeviceCheckboxChecked" @input="deviceCheckboxChange">マルチデバイスを有効にする
+                    <input id="checkbox" class="checkbox" type="checkbox" name="check" :checked="getDeviceCheckboxChecked" :disabled="getMultideviceDisabled" @input="deviceCheckboxChange">
+                    <div class="multideviceText" :class="getMultideviceCancelLine">マルチデバイスを有効にする</div>
                   </label>
                 </div>
+                <div v-if="multideviceDisabled" class="sliderNotice">
+                  <div>
+                    <svg class="sliderNoticeIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400.94 400.94">
+                      <circle cx="200.47" cy="117.76" r="28.42"/>
+                      <path d="M200.47,188.35c-12.32,0-22.32,7.6-22.32,17v93.22c0,9.38,10,17,22.32,17s22.32-7.61,22.32-17V205.34C222.79,196,212.8,188.35,200.47,188.35Z"/>
+                      <circle cx="200.47" cy="200.47" r="180.47" style="fill:none;stroke:#231815;stroke-miterlimit:10;stroke-width:40px"/>
+                    </svg>
+                  </div>
+                  <div class="sliderNoticeTexts">
+                    <div class="sliderNoticeText sub">ご使用の端末ではマルチデバイスはご利用いただくことができません。</div>
+                    <div class="sliderNoticeText sub">マルチデバイスのご利用にはウィンドウ幅が576px以上の端末が必要です。</div>
+                  </div>
+                </div>
               </div>
+              <div class="partitionLine"></div>
               <div class="controllerContent">
-                <div class="controllerTitle">サイズ</div>
+                <div class="controllerTitleWrapper">
+                  <div class="controllerTitle">サイズ</div>
+                  <div class="selectableRange">現在の選択可能範囲：{{`1 〜 ${gatMaxValue}`}}</div>
+                </div>
                 <div class="controllerItems sliderStyle">
-                  <img class="sliderImageSmall" src="/images/square-small.svg" alt="">
-                  <input id="slider" type="range" name="size" min="0.25" max="1" step="0.075" :value="getSliderValue" @input="sliderChange">
-                  <img class="sliderImageLarge" src="/images/square-large.svg" alt="">
+                  <div class="scale" :class="getPosition">{{getScaleValue}}</div>
+                  <button class="sliderButton" :class="getSliderDownButtonDisabled" @click="sliderDown">
+                    <svg class="sliderImageMinus" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 425.2 68.03" fill="#fff">
+                      <rect width="425.2" height="68.03" rx="8.5"/>
+                    </svg>
+                  </button>
+                  <input id="slider" class="slider" type="range" name="size" min="0.25" max="1" step="0.075" :value="getSliderValue" @input="sliderChange">
+                  <button class="sliderButton" :class="getSliderUpButtonDisabled" @click="sliderUp">
+                    <svg class="sliderImagePlus" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 425.2 425.2" fill="#fff">
+                      <path d="M416.69,178.58H246.61V8.5a8.5,8.5,0,0,0-8.5-8.5h-51a8.51,8.51,0,0,0-8.51,8.5V178.58H8.5A8.51,8.51,0,0,0,0,187.09v51a8.5,8.5,0,0,0,8.5,8.5H178.58V416.69a8.51,8.51,0,0,0,8.51,8.51h51a8.5,8.5,0,0,0,8.5-8.51V246.61H416.69a8.5,8.5,0,0,0,8.51-8.5v-51A8.51,8.51,0,0,0,416.69,178.58Z"/>
+                    </svg>
+                  </button>
                   <!-- {{$store.getters["slider/getSteps"].indexOf(true)}} -->
                 </div>
                 <div class="controllerItems checkboxStyle">
@@ -166,14 +198,16 @@
                   </label>
                 </div>
                 <div v-if="getNotice" class="sliderNotice">
-                  <svg class="sliderNoticeIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400.94 400.94">
-                    <circle cx="200.47" cy="117.76" r="28.42"/>
-                    <path d="M200.47,188.35c-12.32,0-22.32,7.6-22.32,17v93.22c0,9.38,10,17,22.32,17s22.32-7.61,22.32-17V205.34C222.79,196,212.8,188.35,200.47,188.35Z"/>
-                    <circle cx="200.47" cy="200.47" r="180.47" style="fill:none;stroke:#231815;stroke-miterlimit:10;stroke-width:40px"/>
-                  </svg>
+                  <div>
+                    <svg class="sliderNoticeIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400.94 400.94">
+                      <circle cx="200.47" cy="117.76" r="28.42"/>
+                      <path d="M200.47,188.35c-12.32,0-22.32,7.6-22.32,17v93.22c0,9.38,10,17,22.32,17s22.32-7.61,22.32-17V205.34C222.79,196,212.8,188.35,200.47,188.35Z"/>
+                      <circle cx="200.47" cy="200.47" r="180.47" style="fill:none;stroke:#231815;stroke-miterlimit:10;stroke-width:40px"/>
+                    </svg>
+                  </div>
                   <div class="sliderNoticeTexts">
                     <div class="sliderNoticeText main">手動調整中</div>
-                    <div class="sliderNoticeText sub">ブラウザサイズに変更があった場合は、表示崩れを防止するため手動調整を中止し自動調整が有効になります</div>
+                    <div class="sliderNoticeText sub">表示崩れを防止するため、手動調整中であってもブラウザサイズの変更を検知すると、手動調整を中止し自動調整が有効になりますのでご注意ください。</div>
                   </div>
                 </div>
               </div>
@@ -218,6 +252,11 @@ export default {
       required: false,
       default: undefined,
     },
+    contentswidth: {
+      type: Number,
+      required: false,
+      default: undefined,
+    },
   },
   data() {
     return {
@@ -244,6 +283,7 @@ export default {
       focus: false,
       /* selectedOr: true,
       selectedAnd: false, */
+      multideviceDisabled: false,
     };
   },
   computed: {
@@ -391,6 +431,12 @@ export default {
     getDeviceSpDisabled() {
       return this.$store.getters['devicePattern/getDisabledSP']
     },
+    getMultideviceDisabled() {
+      return this.multideviceDisabled
+    },
+    getMultideviceCancelLine() {
+      return { cancelLine : this.multideviceDisabled}
+    },
     getFavorited() {
       return function (key) {
         return this.$store.getters['favoriteTags/getInclusionFavoriteTags'](key)
@@ -419,37 +465,54 @@ export default {
       return function(key) {
         return this.tag.color.contents.includes(key)
       }
+    },
+    getPosition() {
+      const steps = this.$store.getters["slider/getSteps"]
+      return {
+        scale0: steps[0],
+        scale1: steps[1],
+        scale2: steps[2],
+        scale3: steps[3],
+        scale4: steps[4],
+        scale5: steps[5],
+        scale6: steps[6],
+        scale7: steps[7],
+        scale8: steps[8],
+        scale9: steps[9],
+        scale10: steps[10],
+      }
+    },
+    getScaleValue() {
+      const steps = this.$store.getters["slider/getSteps"]
+      return steps[0] ? 1 : steps[1] ? 2 : steps[2] ? 3 : steps[3] ? 4 : steps[4] ? 5 : steps[5] ? 6 : steps[6] ? 7 : steps[7] ? 8 : steps[8] ? 9 : steps[9] ? 10 : steps[10] ? 11 : ''
+    },
+    getSliderDownButtonDisabled() {
+      // 現在のスライダーステップが０だったら無効化
+      return { disabled: this.$store.getters["slider/getSteps"][0]}
+    },
+    getSliderUpButtonDisabled() {
+      // 現在のスライダーステップが最大値だったら無効化
+      return { disabled: this.$store.getters["slider/getValue"] === this.$store.getters["slider/getMaxValue"]}
+    },
+    gatMaxValue() {
+      return this.$store.getters["slider/getMaxSteps"]
     }
   },
   created() {
 
   },
   mounted() {
-
     const sliderElement = document.getElementById('slider');
-    /* sliderElement.addEventListener('input', this.sliderChange); */
-
-    /* const checkboxElement = document.getElementById('checkbox');
-    checkboxElement.addEventListener('input', this.sliderCheckboxChange); */
-
-    /* const sideMenuElement = document.getElementById('sideMenu');
-    sideMenuElement.addEventListener('scroll', () => {this.scrolledSideMenu(sideMenuElement)}) */
-    
     window.addEventListener('load', () => {this.sliderInitialSet(sliderElement);})
-    /* window.addEventListener('scroll', this.scrolledWindow) */
     
+    window.matchMedia("(min-width:576px)").addEventListener("change", this.changeMultideviceDisabled);
     
   },
   beforeDestroy() {
-    /* window.removeEventListener('resize', this.setInitialValue); */
     const sliderElement = document.getElementById('slider');
-    /* const checkboxElement = document.getElementById('checkbox');
-    const sideMenuElement = document.getElementById('sideMenu');
-    sliderElement.removeEventListener('input', this.sliderChange);
-    checkboxElement.removeEventListener('input', this.sliderCheckboxChange); */
     window.removeEventListener('load', () => {this.sliderInitialSet(sliderElement);})
-    /* window.removeEventListener('scroll', this.scrolledWindow) */
-    /* sideMenuElement.removeEventListener('scroll', () => {this.scrolledSideMenu(sideMenuElement)}) */
+
+    window.matchMedia("(min-width:576px)").removeEventListener("change", this.changeMultideviceDisabled);
   },
   methods: {
     /* setOpen(value) {
@@ -457,6 +520,7 @@ export default {
     }, */
     clickButton() {
       this.$store.dispatch('sideMenu/pushOpen');
+      this.$store.dispatch('slider/pushDecidedSteps');
     },
     clickTagButton() {
       this.$store.dispatch('sideMenu/pushOpen');
@@ -486,21 +550,30 @@ export default {
       }
     },
     sliderChange(event) {
-      /* if(this.$store.getters['slider/getStepData'].includes(Number(event.target.value))) {
-        this.$store.dispatch('slider/pushSlider',event.target.value)
-      }  */
 
       this.$store.dispatch('slider/pushSlider',event.target.value)
-      this.$emit('sliderChange')
-      
-      // 自動調整中の場合はチェックを外す
-      /* if(this.$store.getters['slider/getAutoSizing']) {
-        this.$store.dispatch('slider/pushAutoSizing')
-      } */
 
+      // 親コンポーネントでダミーコンテンツ作成関数を実行
+      this.$emit('sliderChange')
+
+    },
+    sliderUp() {
+      const nowValue = this.$store.getters["slider/getValue"]
+      if(nowValue < 1) {
+        this.$store.dispatch('slider/pushSlider',(nowValue*1000 + 0.075*1000)/1000)
+      }
+    },
+    sliderDown() {
+      const nowValue = this.$store.getters["slider/getValue"]
+      if(nowValue > 0.25) {
+        this.$store.dispatch('slider/pushSlider',(nowValue*1000 - 0.075*1000)/1000)
+      }
     },
     sliderInitialSet(data) {
       this.$store.dispatch('slider/pushSliderInitial',data)
+
+      // マルチデバイスの利用可否の初期値を設定
+      this.changeMultideviceDisabled();
     },
     clickDevicePc() {
       this.$store.dispatch('devicePattern/pushPC')
@@ -597,6 +670,24 @@ export default {
       });
       this.keywordContents = searchFuzzy;
     },
+    changeMultideviceDisabled() {
+      console.log('changeMultideviceDisabled')
+      const windowWidth = window.innerWidth // ウィンドウサイズ
+      if(windowWidth < 576) {
+        this.multideviceDisabled = true;
+        // マルチデバイスが有効になっている場合は解除する
+        if(this.$store.getters["devicePattern/getMultidevaice"]) {
+          // 手動調整中の場合は自動調整にする
+          if (!this.$store.getters["slider/getAutoSizing"]) {
+            this.$store.dispatch("slider/pushAutoSizing");
+          }
+          this.deviceCheckboxChange();
+          this.$emit('multideviceCancel')
+        }
+      }else {
+        this.multideviceDisabled = false;
+      }
+    },
 
   },
   
@@ -604,9 +695,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.sideMenuWrapper {
-  
-}
 
 .starButton {
   width: 32px;
@@ -620,19 +708,19 @@ export default {
   justify-content: center;
   border-radius: 20px;
   @include hover() {
-    background-color: var(--side-menu-favorate-button-hover);
+    background-color: var(--black-super-light);
   }
 }
 
 .starImage {
   width: 14px;
-  stroke: var(--side-menu-favorate-icon);
+  stroke: var(--black-ultra-light);
   transition: fill .2s,stroke .2s;
 }
 
 .favoriteTagsColor {
-  fill: var(--side-menu-favorate-icon-registered-fill);
-  stroke: var(--side-menu-favorate-icon-registered-stroke);
+  fill: var(--yellow);
+  stroke: var(--yellow);
 }
 
 /* .selectedButton {
@@ -645,22 +733,24 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-bottom: var(--side-menu-tab-overall-border) 1px solid;
+  border-bottom: var(--black-super-light) 1px solid;
   /* padding-right: 30px; */
 }
 
 .tabMenu {
   padding: 5px 2px;
-  color: var(--side-menu-tab-text);
+  color: var(--grey-super-light);
   &:not(:first-child) {
     margin-left: 26px;
   }
+  &.selectedTab {
+    color: var(--white);
+    font-weight: 400;
+    border-bottom: var(--color) 2px solid;
+  }
 }
 
-.selectedTab {
-  color: var(--side-menu-tab-text-selected);
-  border-bottom: var(--side-menu-tab-border-selected) 2px solid;
-}
+  
 
 .mask {
   position: fixed;
@@ -668,8 +758,36 @@ export default {
   left: 0;
   width: 100%;
   height: 100vh;
-  background-color: var(--side-menu-mask);
+  background-color: var(--black-transparent-low);
   z-index: 90;
+}
+.modalButton {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 30px;
+  height: 30px;
+  .modalBar {
+    background-color: var(--white);
+    width: 25px;
+    height: 2px;
+    position: absolute;
+    &:nth-child(1) {
+      top: 14px;
+      left: 2px;
+      transform: rotate(45deg);
+    }
+    &:nth-child(2) {
+      top: 14px;
+      left: 2px;
+      transform: rotate(135deg);
+    }
+  }
+  @include hover() {
+    .modalBar {
+      background-color: var(--grey-super-light);
+    }
+  }
 }
 
 .mask-enter-active {
@@ -689,9 +807,10 @@ export default {
   width: 100%;
   max-width: var(--sideMenuWidth);
   height: 100vh;
-  background-color: var(--side-menu-background);
+  background-color: var(--black);
   transition: transform .25s ease-out;
   z-index: 100;
+  color: var(--white);
   &.isClose {
     transform: translateX(calc(-1 * var(--sideMenuWidth)));
     transition: transform .25s ease-in;
@@ -708,11 +827,7 @@ export default {
     
   }
   @include responsive(md) {
-    /* width: var(--sideMenuWidth); */
-    /* &.isClose {
-      transform: translateX(calc(-1 * var(--sideMenuWidth)));
-    } */
-    padding: 100px 15px 15px 15px;
+    padding: 50px 15px 15px 15px;
   }
   @include responsive(lg) {
     
@@ -759,7 +874,7 @@ export default {
       width: 100%;
       height: 1px;
       /* margin: auto 0; */
-      background-color: rgba(255, 255, 255, 0.267);
+      background-color: var(--black-ultra-light);
       position: relative;
       /* left: -10px; */
       margin-bottom: 20px;
@@ -778,49 +893,6 @@ export default {
 
 
 
-/* .sideMenuLink {
-  color: var(--white);
-  text-decoration: none;
-  font-size: var(--font-size-md);
-} */
-
-/* .arrowButton {
-  width: 12px;
-  display: flex;
-  align-content: center;
-  justify-content: center;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-}
-
-.arrowButtonImage {
-  width: 100%;
-  transform: rotate(-90deg);
-  transition: transform .25s;
-}
-
-.arrowOpen {
-  transform: rotate(0);
-} */
-
-.controllerContents {
-  /* clip-path:inset(0 0 100% 0);
-  transition: clip-path .25s;
-  display: none; */
-  /* padding-bottom: 20px; */
-}
-
-/* .controllerContentsOpen {
-  clip-path:inset(0 0 0 0);
-  display: block;
-} */
-
-.tagContents {
-  /* clip-path:inset(0 0 100% 0);
-  transition: clip-path .25s;
-  display: none; */
-}
 
 .noFavoriteTagsComment {
   display: flex;
@@ -829,21 +901,24 @@ export default {
   margin-top: 40px;
 }
 
-.controllerContent {
-  &:not(:first-child) {
-    margin-top: 40px;
-  }
-}
-
 .sideMenuSubTitle {
   font-size: var(--font-size-xs);
+  color: var(--white);
+}
+.controllerTitleWrapper {
+  display: flex;
+  align-items: center;
 }
 
 .controllerTitle {
   font-size: var(--font-size-xs);
   font-weight: 500;
 }
-
+.warning {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  margin-left: 20px;
+}
 .controllerItems {
   /* font-size: var(--font-size-xs); */
   display: flex;
@@ -851,7 +926,7 @@ export default {
   justify-content: center;
   margin-top: 14px;
   width: 100%;
-  background-color: var(--side-menu-setting-button);
+  background-color: var(--black-super-light);
   border-radius: 5px;
 }
 
@@ -868,23 +943,126 @@ export default {
   &:last-child {
     border-radius: 0 5px 5px 0;
   }
+  &.active {
+    background-color: var(--white);
+  }
+
+  &.disabled {
+    pointer-events: none;
+  }
+}
+.slider {
+  margin: 0 10px;
+}
+.selectableRange {
+  border-radius: 3px;
+  background-color: var(--black-super-light);
+  font-size: var(--font-size-xs);
+  margin-left: 20px;
+  padding: 4px 6px;
 }
 
 .sliderStyle {
-  margin-top: 18px;
+  margin-top: 32px;
+  margin-left: 10px;
   background-color: transparent;
   justify-content: left;
+  position: relative;
+}
+.sliderButton {
+  width: 24px;
+  height: 24px;
+  border-radius: 3px;
+  background-color: var(--black-super-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color .2s;
+  @include hover() {
+    background-color: var(--black-hover);
+  }
+  &.disabled {
+    @include hover() {
+      background-color: var(--black-super-light);
+    }
+    pointer-events: none;
+  }
 }
 
-.sliderImageSmall {
+.sliderImageMinus {
   width: 12px;
-  margin-right: 10px;
+  fill: var(--grey-ultra-light)
 }
 
-.sliderImageLarge {
-  width: 17px;
-  margin-left: 10px;
+.sliderImagePlus {
+  width: 12px;
+  fill: var(--grey-ultra-light)
 }
+.scale {
+  position: absolute;
+  top: -22px;
+  width: 20px;
+  height: 20px;
+  background-color: var(--black-super-light);
+  border-radius: 2px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 1px;
+  &.scale0 {
+    left: 32px;
+  }
+  &.scale1 {
+    left: 54px;
+    left: calc(32px + (20.65px * 1));
+  }
+  &.scale2 {
+    left: calc(32px + (20.65px * 2));
+  }
+  &.scale3 {
+    left: calc(32px + (20.65px * 3));
+  }
+  &.scale4 {
+    left: calc(32px + (20.65px * 4));
+  }
+  &.scale5 {
+    left: calc(32px + (20.65px * 5));
+  }
+  &.scale6 {
+    left: calc(32px + (20.65px * 6));
+  }
+  &.scale7 {
+    left: calc(32px + (20.65px * 7));
+  }
+  &.scale8 {
+    left: calc(32px + (20.65px * 8));
+  }
+  &.scale9 {
+    left: calc(32px + (20.65px * 9));
+  }
+  &.scale10 {
+    left: calc(32px + (20.65px * 10));
+  }
+  @include responsive(xs) {
+    display: flex;
+  }
+  @include responsive(sm) {
+    
+  }
+  @include responsive(md) {
+    
+  }
+  @include responsive(lg) {
+    
+  }
+  @include responsive(xl) {
+    
+  }
+  @include responsive(xxl) {
+    
+  }
+}
+
 
 .sliderNotice {
   width: 100%;
@@ -898,7 +1076,7 @@ export default {
 }
 
 .sliderNoticeIcon {
-  width: 21px;
+  width: 16px;
   margin-right: 8px;
 }
 
@@ -915,6 +1093,8 @@ export default {
 }
 
 .checkboxStyle {
+  display: flex;
+  align-items: center;
   justify-content: left;
   background-color: transparent;
   margin-top: 22px;
@@ -935,7 +1115,7 @@ export default {
 
 .tagItems {
   border-radius: 5px;
-  background-color: var(--side-menu-category-group-background);
+  background-color: var(--black-light);
   padding: 10px 0;
   margin-top: 3px;
   
@@ -960,55 +1140,55 @@ export default {
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background-color: var(--white);
+  background-color: var(--white-forDarkMode);
   margin-right: 8px;
   &.red {
-    background: linear-gradient(to bottom, var(--side-menu-color-image-gradation-start) -150%, var(--side-menu-color-image-red) 100%);
+    background: linear-gradient(to bottom, var(--white) -150%, var(--color-image-red) 100%);
   }
   &.pink {
-    background: linear-gradient(to bottom, var(--side-menu-color-image-gradation-start) -150%, var(--side-menu-color-image-pink) 100%);
+    background: linear-gradient(to bottom, var(--white) -150%, var(--color-image-pink) 100%);
   }
   &.purple {
-    background: linear-gradient(to bottom, var(--side-menu-color-image-gradation-start) -150%, var(--side-menu-color-image-purple) 100%);
+    background: linear-gradient(to bottom, var(--white) -150%, var(--color-image-purple) 100%);
   }
   &.blue {
-    background: linear-gradient(to bottom, var(--side-menu-color-image-gradation-start) -150%, var(--side-menu-color-image-blue) 100%);
+    background: linear-gradient(to bottom, var(--white) -150%, var(--color-image-blue) 100%);
   }
   &.green {
-    background: linear-gradient(to bottom, var(--side-menu-color-image-gradation-start) -150%, var(--side-menu-color-image-green) 100%);
+    background: linear-gradient(to bottom, var(--white) -150%, var(--color-image-green) 100%);
   }
   &.yellow {
-    background: linear-gradient(to bottom, var(--side-menu-color-image-gradation-start) -150%, var(--side-menu-color-image-yellow) 100%);
+    background: linear-gradient(to bottom, var(--white) -150%, var(--color-image-yellow) 100%);
   }
   &.orange {
-    background: linear-gradient(to bottom, var(--side-menu-color-image-gradation-start) -150%, var(--side-menu-color-image-orange) 100%);
+    background: linear-gradient(to bottom, var(--white) -150%, var(--color-image-orange) 100%);
   }
   &.brown {
-    background: linear-gradient(to bottom, var(--side-menu-color-image-gradation-start) -150%, var(--side-menu-color-image-brown) 100%);
+    background: linear-gradient(to bottom, var(--white) -150%, var(--color-image-brown) 100%);
   }
   &.white {
-    background: linear-gradient(to bottom, var(--side-menu-color-image-gradation-start) -150%, var(--side-menu-color-image-white) 100%);
+    background: linear-gradient(to bottom, var(--white) -150%, var(--color-image-white) 100%);
   }
   &.beige {
-    background: linear-gradient(to bottom, var(--side-menu-color-image-gradation-start) -150%, var(--side-menu-color-image-beige) 100%);
+    background: linear-gradient(to bottom, var(--white) -150%, var(--color-image-beige) 100%);
   }
   &.grey {
-    background: linear-gradient(to bottom, var(--side-menu-color-image-gradation-start) -150%, var(--side-menu-color-image-grey) 100%);
+    background: linear-gradient(to bottom, var(--white) -150%, var(--color-image-grey) 100%);
   }
   &.black {
-    background: linear-gradient(to bottom, var(--side-menu-color-image-gradation-start) -150%, var(--side-menu-color-image-black) 100%);
+    background: linear-gradient(to bottom, var(--white) -150%, var(--color-image-black) 100%);
   }
   &.colorful {
-    background: linear-gradient(to right, var(--side-menu-color-image-red), var(--side-menu-color-image-yellow), var(--side-menu-color-image-blue));
+    background: linear-gradient(to right, var(--color-image-red), var(--color-image-yellow), var(--color-image-blue));
   }
   &.gradation {
-    background: linear-gradient(to right, var(--side-menu-color-image-blue), var(--side-menu-color-image-white));
+    background: linear-gradient(to right, var(--color-image-blue), var(--color-image-white));
   }
   &.pastel {
       background: linear-gradient(to right, #9796f0, #fbc7d4);
   }
   &.monotone {
-    background: linear-gradient(to right, var(--side-menu-color-image-white) 40%, var(--side-menu-color-image-black) 55%);
+    background: linear-gradient(to right, var(--color-image-white) 40%, var(--color-image-black) 55%);
   }
 }
 
@@ -1017,14 +1197,13 @@ export default {
   align-items: center;
   padding: 7px 15px;
   text-decoration: none;
-  color: var(--side-menu-category-text);
+  color: var(--white);
   width: 100%;
   @include hover() {
     background-color: var(--black-super-light);
   }
   .selected & {
-    /* color: var(--side-menu-category-text-selected); */
-    /* font-weight: 500; */
+    font-weight: 500;
     background-color: var(--black-super-light);
   }
   /* border-radius: 50px; */
@@ -1058,9 +1237,9 @@ export default {
 }
 
 .typeImage {
-  fill: var(--side-menu-setting-device-icon);
+  fill: var(--black-ultra-light);
   .active & {
-    fill: var(--side-menu-setting-device-icon-active);
+    fill: var(--black);
   }
 }
 
@@ -1082,9 +1261,10 @@ export default {
   justify-content: center;
   font-size: var(--font-size-xxs);
   margin-top: 3px;
-  color: var(--side-menu-setting-device-text);
+  color: var(--black-ultra-light);
+  font-weight: 400;
   .active & {
-    color: var(--side-menu-setting-device-text-active);
+    color: var(--black);
     font-weight: 500;
   }
 }
@@ -1093,13 +1273,7 @@ export default {
   font-size: var(--font-size-xs);
 }
 
-.active {
-  background-color: var(--side-menu-setting-button-selected);
-}
 
-.disabled {
-  pointer-events: none;
-}
 
 .itemImage {
   height: 100%;
@@ -1116,6 +1290,11 @@ export default {
 .checkbox {
   margin-right: 5px;
 }
+.multideviceText {
+  &.cancelLine {
+    text-decoration: line-through;
+  }
+}
 
 .hide {
   display: none;
@@ -1131,14 +1310,14 @@ input[type="range"] {
   appearance: none;                 // お決まり
   cursor: pointer;                  // カーソル
   outline: none;                    // スライダーのアウトライン
-  background: var(--side-menu-setting-slider-background);               // スライダーの背景色
+  background: var(--black-super-light);               // スライダーの背景色
   height: 3px;                      // スライダーの高さ
-  width: 60%;                      // スライダーの幅
+  width: 222px;                      // スライダーの幅
   border-radius: 10px;              // スライダーの端の丸み
   // -webkit-向けのつまみ
   &::-webkit-slider-thumb {
     -webkit-appearance: none;       // お決まり
-    background: var(--side-menu-setting-slider-button);     // 背景色
+    background: var(--white);     // 背景色
     width: 16px;                    // 幅
     height: 16px;                   // 高さ
     border-radius: 50%;             // 円形に
@@ -1146,7 +1325,7 @@ input[type="range"] {
   }
   // -moz-向けのつまみ
   &::-moz-range-thumb {
-    background: var(--side-menu-setting-slider-button);     // 背景色
+    background: var(--white);     // 背景色
     width: 18px;                    // 幅
     height: 18px;                   // 高さ
     border-radius: 50%;             // 円形に
@@ -1224,7 +1403,7 @@ input[type="range"] {
   width: 100%;
   height: 40px;
   border-radius: 50px;
-  background-color: var(--black-super-light);
+  background-color: var(--black-light);
   @include responsive(xs) {
     
   }
@@ -1249,7 +1428,7 @@ input[type="range"] {
   width: 16px;
   margin-right: 10px;
   margin-left: 10px;
-  fill: var(--white);
+  fill: var(--grey-light);
   @include responsive(xs) {
     
   }
@@ -1277,7 +1456,14 @@ input[type="range"] {
   color: var(--white);
 }
 ::placeholder {
-  color: var(--grey-super-light);;
+  color: var(--black-ultra-light);
+}
+
+.partitionLine {
+  width: 100%;
+  height: 1px;
+  margin: 30px auto 20px auto;
+  background-color: var(--black-ultra-light);
 }
 
 </style>

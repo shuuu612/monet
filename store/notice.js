@@ -31,7 +31,7 @@ export const mutations = {
   },
  }
 
- export const actions = {
+export const actions = {
   pushDisplay({commit},{id, text}) {
     commit('setType',id)
     commit('setText',text)
@@ -40,4 +40,4 @@ export const mutations = {
   pushClose({commit}) {
     commit('setClose')
   },
- }
+}

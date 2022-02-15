@@ -5,8 +5,23 @@ export const state = () => ({
   value: 0,
   myValue: 0,               // ローカルストレージ保存対象
   autoSizing: true,         // ローカルストレージ保存対象
+  maxValue: 0,
+  overFlag: false,
   stepData: [],
   steps: [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ],
+  decidedSteps: [
     false,
     false,
     false,
@@ -32,11 +47,23 @@ export const getters = {
   getAutoSizing: state => {
     return state.autoSizing
   },
+  getOverFlag: state => {
+    return state.overFlag
+  },
   getStepData: state => {
     return state.stepData
   },
   getSteps: state => {
     return state.steps
+  },
+  getDecidedSteps: state => {
+    return state.decidedSteps
+  },
+  getMaxValue: state => {
+    return state.maxValue
+  },
+  getMaxSteps: state => {
+    return ((state.maxValue*1000 - 0.25*1000) / (0.075*1000)) + 1
   },
  }
 
@@ -51,7 +78,13 @@ export const mutations = {
     state.step = inputData
   },
   setMyValue(state,inputData) {
-    state.myValue = Number(inputData)
+    if(state.maxValue >= Number(inputData)) {
+      state.myValue = Number(inputData)
+      state.overFlag = false
+    }else {
+      state.overFlag = true
+    }
+    
     if(state.autoSizing) {
       state.autoSizing = !state.autoSizing
     }
@@ -59,7 +92,11 @@ export const mutations = {
   setAptitudeValue(state,inputData) {
     if(state.autoSizing) {
       state.value = inputData
+      state.overFlag = false
     }
+  },
+  setMaxValue(state,inputData) {
+    state.maxValue = inputData
   },
   setAutoSizing(state) {
     state.autoSizing = !state.autoSizing
@@ -104,6 +141,9 @@ export const mutations = {
       state.steps = [false,false,false,false,false,false,false,false,false,false,true,]
     }
   },
+  setDecidedSteps(state) {
+    state.decidedSteps = state.steps
+  },
   setLocalStorage(state,key) {
     // 初回ロード時にローカルストレージからデータを取得
     state.myValue = key[0]
@@ -119,7 +159,7 @@ export const mutations = {
   },
  }
 
- export const actions = {
+export const actions = {
   pushSlider({commit},data) {
     commit('setMyValue',data)
     commit('setSteps')
@@ -129,22 +169,32 @@ export const mutations = {
     commit('setMin',data.min)
     commit('setMax',data.max)
     commit('setStep',data.step)
+    commit('setDecidedSteps')
     commit('setStepData')
     commit('setSteps')
   },
   pushAptitudeValue({commit},data) {
     commit('setAptitudeValue',data)
     commit('setSteps')
+    commit('setDecidedSteps')
     commit('updateLocalStorage')
+  },
+  pushMaxValue({commit},data) {
+    commit('setMaxValue',data)
   },
   pushAutoSizing({commit}) {
     commit('setAutoSizing')
     commit('setSteps')
+    commit('setDecidedSteps')
     commit('updateLocalStorage')
+  },
+  pushDecidedSteps({commit}) {
+    commit('setDecidedSteps')
   },
   pushLocalStorage({commit},data) {
     commit('setLocalStorage',data)
     commit('setStepData')
     commit('setSteps')
+    commit('setDecidedSteps')
   },
- }
+}

@@ -88,3 +88,7 @@ sw.*
 
 # Vim swap files
 *.swp
+
+# image
+static/images/site
+static/images/_site

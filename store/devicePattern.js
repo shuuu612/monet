@@ -212,7 +212,7 @@ export const mutations = {
   },
  }
 
- export const actions = {
+export const actions = {
   pushPC({commit}) {
     commit('setActivePC')
     commit('setPattern')
@@ -237,4 +237,4 @@ export const mutations = {
     commit('setLocalStorage',data)
     commit('setPattern')
   },
- }
+}

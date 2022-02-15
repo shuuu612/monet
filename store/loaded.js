@@ -1,6 +1,5 @@
 export const state = () => ({
   loaded: false,                // 初回読み込み完了フラグ
-  loadingDisplayed: false,      // ローディング画面表示済みフラグ
   loadedImage: false,           // 画像の読み込み完了フラグ
 })
 
@@ -28,7 +27,7 @@ export const mutations = {
   },
  }
 
- export const actions = {
+export const actions = {
   pushLoaded({commit}) {
     commit('setLoaded')
   },
@@ -38,4 +37,4 @@ export const mutations = {
   pushLoadedImage({commit}) {
     commit('setLoadedImage')
   },
- }
+}
