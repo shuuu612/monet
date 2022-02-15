@@ -34,6 +34,7 @@
   --blue-dark-transparent: #07578d7c;
   --blue-dark-transparent-high: #07578d18;
   --blue-dark-transparent-low: #07578dd7;
+  --blue-dark-transparent-low-hover: #0968a7d7;
 
   --green: #1d8a48;
   --green-light: #22a557;
@@ -103,6 +104,7 @@
   --color-dark-transparent: var(--blue-dark-transparent);
   --color-dark-transparent-high: var(--blue-dark-transparent-high);
   --color-dark-transparent-low: var(--blue-dark-transparent-low);
+  --color-dark-transparent-low-hover: var(--blue-dark-transparent-low-hover);
 
   --white-forDarkMode: var(--white);
   --white-dark-forDarkMode: var(--white-dark);

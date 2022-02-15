@@ -128,7 +128,7 @@ export default {
   z-index: 110;
   transition: background-color .2s, transform .25s ease-in;
   @include hover() {
-    background-color: var(--color-hover);
+    background-color: var(--color-dark-transparent-low-hover);
   }
   &.open {
     transform: translateX(var(--sideMenuWidth));
