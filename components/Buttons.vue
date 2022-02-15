@@ -125,14 +125,15 @@ export default {
   width: 70px;
   height: 100vh;
   background-color: var(--color-dark-transparent-low);
-  z-index: 110;
-  transition: background-color .2s, transform .25s ease-in;
+  z-index: 100;
+  /* transition: background-color .2s, transform .25s ease-in; */
+  transition: background-color .2s;
   @include hover() {
     background-color: var(--color-dark-transparent-low-hover);
   }
   &.open {
-    transform: translateX(var(--sideMenuWidth));
-    transition: background-color .2s, transform .25s ease-out;
+    /* transform: translateX(var(--sideMenuWidth));
+    transition: background-color .2s, transform .25s ease-out; */
   }
 }
 
@@ -238,7 +239,7 @@ export default {
     top: 16px;
     left: 0;
   }
-  .open & {
+  /* .open & {
     background-color: var(--white);
     &:nth-child(1) {
       top: 8px;
@@ -253,7 +254,7 @@ export default {
       left: 0;
       transform: rotate(-135deg);
     }
-  }
+  } */
 }
 
 .homeImage {

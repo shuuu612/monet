@@ -1,7 +1,12 @@
 <template>
   <div class="sideMenuWrapper">
     <transition name="mask">
-      <div v-if="$store.getters['sideMenu/getOpen']" class="mask" @click="clickButton"></div>
+      <div v-if="$store.getters['sideMenu/getOpen']" class="mask" @click="clickButton">
+        <button class="modalButton">
+          <span class="modalBar"></span>
+          <span class="modalBar"></span>
+        </button>
+      </div>
     </transition>
     <div id="sideMenu" class="sideMenu" :class="[getOpen,getClose]" @scroll="scrolledSideMenu">
       <div class="tabMenus">
@@ -755,6 +760,34 @@ export default {
   height: 100vh;
   background-color: var(--black-transparent-low);
   z-index: 90;
+}
+.modalButton {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 30px;
+  height: 30px;
+  .modalBar {
+    background-color: var(--white);
+    width: 25px;
+    height: 2px;
+    position: absolute;
+    &:nth-child(1) {
+      top: 14px;
+      left: 2px;
+      transform: rotate(45deg);
+    }
+    &:nth-child(2) {
+      top: 14px;
+      left: 2px;
+      transform: rotate(135deg);
+    }
+  }
+  @include hover() {
+    .modalBar {
+      background-color: var(--grey-super-light);
+    }
+  }
 }
 
 .mask-enter-active {
