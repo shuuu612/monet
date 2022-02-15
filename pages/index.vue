@@ -2391,8 +2391,7 @@ export default {
   width: 330px;
   max-width: 90%;
   height: 50px;
-  background-color: var(--color-dark);
-  /* background: linear-gradient(to right, var(--gradation-start), var(--gradation-end)); */
+  background-color: var(--color-dark-transparent-low);
   color: var(--white);
   border-radius: 3px;
   display: flex;
@@ -2400,9 +2399,7 @@ export default {
   align-items: center;
   padding-left: 6px;
   @include hover() {
-    background-color: var(--color);
-    /* background: linear-gradient(to right, var(--gradation-start-hover), var(--gradation-end-hover)); */
-    color: var(--white);
+    background-color: var(--color-dark-transparent-low-hover);
   }
   margin: 50px auto 0 auto;
 }
