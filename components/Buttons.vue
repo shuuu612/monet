@@ -124,7 +124,7 @@ export default {
   left: 0;
   width: 70px;
   height: 100vh;
-  background-color: var(--color);
+  background-color: var(--color-dark-transparent-low);
   z-index: 110;
   transition: background-color .2s, transform .25s ease-in;
   @include hover() {
