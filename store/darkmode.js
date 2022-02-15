@@ -77,7 +77,7 @@ export const mutations = {
   },
  }
 
- export const actions = {
+export const actions = {
   pushDarkmodeOn({commit}) {
     commit('setDarkmodeOn')
     commit('updateLocalStorage')
@@ -93,4 +93,4 @@ export const mutations = {
   pushLocalStorage({commit},data) {
     commit('setLocalStorage',data)
   },
- }
+}

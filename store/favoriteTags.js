@@ -34,7 +34,7 @@ export const mutations = {
   },
  }
 
- export const actions = {
+export const actions = {
   pushFavoriteTags({commit},data) {
     commit('setFavoriteTags',data)
     commit('updateLocalStorage')
@@ -42,4 +42,4 @@ export const mutations = {
   pushLocalStorage({commit},data) {
     commit('setLocalStorage',data)
   },
- }
+}

@@ -34,7 +34,7 @@ export const mutations = {
   },
  }
 
- export const actions = {
+export const actions = {
   pushButton({commit}) {
     commit('setActiveList')
     commit('setActiveGrid')
@@ -43,4 +43,4 @@ export const mutations = {
   pushLocalStorage({commit},data) {
     commit('setLocalStorage',data)
   },
- }
+}

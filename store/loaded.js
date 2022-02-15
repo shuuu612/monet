@@ -27,7 +27,7 @@ export const mutations = {
   },
  }
 
- export const actions = {
+export const actions = {
   pushLoaded({commit}) {
     commit('setLoaded')
   },
@@ -37,4 +37,4 @@ export const mutations = {
   pushLoadedImage({commit}) {
     commit('setLoadedImage')
   },
- }
+}

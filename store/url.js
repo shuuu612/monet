@@ -21,11 +21,11 @@ export const mutations = {
   },
  }
 
- export const actions = {
+export const actions = {
   pushTag({commit},data) {
     commit('setTag',data)
   },
   pushSort({commit},data) {
     commit('setSort',data)
   },
- }
+}

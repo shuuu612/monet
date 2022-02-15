@@ -159,7 +159,7 @@ export const mutations = {
   },
  }
 
- export const actions = {
+export const actions = {
   pushSlider({commit},data) {
     commit('setMyValue',data)
     commit('setSteps')
@@ -197,4 +197,4 @@ export const mutations = {
     commit('setSteps')
     commit('setDecidedSteps')
   },
- }
+}
