@@ -108,6 +108,7 @@ export default {
     }
   }
   @include responsive(lg) {
+    top: 40px;
     width: 250px;
     right: 100px;
   }

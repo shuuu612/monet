@@ -3,12 +3,9 @@
     <Loading />
     <Header
     @search="keywordSearchStart"
-    />
-    <Buttons 
-    :tag="selectedTag"
-    :sort="selectedSort"
     @update="update"
     />
+    <MenuButton />
     <MenuBar 
     :tag="selectedTag"
     :sort="selectedSort"
@@ -23,6 +20,7 @@
     @sliderChange="changeSliderSize"
     @multideviceCancel="monitorReturnToSingledevice"
     />
+    <ScrollMenu />
     <ScrollTop />
     <Notice />
     <div id="divider" class="divider">
@@ -524,6 +522,8 @@ export default {
         this.convertTagsToJapanese();
         // headを設定
         this.setHead();
+        // urlをstoreに退避
+        this.setUrl();
     },
     beforeMount() {
       console.log("beforeMount");
@@ -646,6 +646,18 @@ export default {
             // tagIDを日本語に変換
             this.meta.title = this.japaneseTags + ' | ' + this.meta.title;
             this.meta.keyword = this.japaneseTags + ',' + this.meta.keyword
+          }
+        },
+        setUrl() {
+          if(this.selectedTag !== undefined) {
+            this.$store.dispatch('url/pushTag',this.selectedTag)
+          }else {
+            this.$store.dispatch('url/pushTag','')
+          }
+          if(this.selectedSort !== undefined) {
+            this.$store.dispatch('url/pushSort',this.selectedSort)
+          }else {
+            this.$store.dispatch('url/pushSort','')
           }
         },
         setContentsElement() {

@@ -2,6 +2,9 @@
   <div>
     <header class="header">
       <div class="topMenu" :class="[getOpen]">
+        <MenuButtons
+        @update="passToTheTopUpdate"
+        />
         <h1 class="logo">
           <nuxt-link class="logoLink" to="/">
             <svg class="logoImg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 45.68 22.48" fill="url(#Gradient)">
@@ -24,7 +27,7 @@
           </nuxt-link>
         </h1>
         <Search
-        @search="passToTheTop"
+        @search="passToTheTopSearch"
         />
       </div>
     </header>
@@ -49,8 +52,11 @@ export default {
   beforeDestroy() {
   },
   methods: {
-    passToTheTop() {
+    passToTheTopSearch() {
       this.$emit('search')
+    },
+    passToTheTopUpdate() {
+      this.$emit('update')
     }
   },
   

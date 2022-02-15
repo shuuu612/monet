@@ -53,13 +53,13 @@ export default {
   box-shadow: 1px 1px 5px var(--grey);
   background-color: var(--white-forDarkMode);
   z-index: 50;
-  transition: transform .3s;
+  transition: transform .4s;
   transform: translateY(0);
   @include hover() {
     transform: translateY(2px);
   }
   &.hide {
-    transform: translateY(130px)
+    transform: translateY(280px);
   }
 }
 
