@@ -71,7 +71,7 @@ export default {
 
 .scrollTopImage {
   width: 40%;
-  fill: var(--color);
+  fill: var(--color-dark);
 }
 
 </style>
