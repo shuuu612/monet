@@ -142,15 +142,16 @@ export default {
     height: auto;
     border-radius: 0;
     border-bottom: var(--black-forDarkMode) 1px solid;
+    /* // グラデーション
     border-image: linear-gradient(to right, var(--gradation-start), var(--gradation-end));
-    border-image-slice: 1;
-    padding-left: 10px;
+    border-image-slice: 1; */
     background-color: transparent;
+    padding-left: 10px;
     border-top: 0;
     border-left: 0;
     border-right: 0;
     .searchWrapper.focus & {
-      border-bottom: var(--color) 2px solid;
+      border-bottom: var(--color-dark) 2px solid;
     }
   }
   @include responsive(lg) {
