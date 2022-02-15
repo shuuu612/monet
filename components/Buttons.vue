@@ -1,13 +1,13 @@
 <template>
   <div v-if="getDesktop" class="menuBtns">
-    <button class="menuBtn main" :class="[getScrollHideSide, getOpen]" aria-label="Menu Open" @click="clickButton">
+    <button class="menuBtn main" :class="getOpen" aria-label="Menu Open" @click="clickButton">
       <div class="bars">
         <span class="bar"></span>
         <span class="bar"></span>
         <span class="bar"></span>
       </div>
     </button>
-    <div class="menuBtn sub" :class="{selected: !getSelectedHome}">
+    <div class="menuBtn sub home" :class="{selected: !getSelectedHome}">
       <nuxt-link v-if="getSelectedHome" class="menuLink" to="/" @click="clickHome">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 508.67 457.62" class="homeImage">
           <title>ホーム</title>
@@ -23,7 +23,7 @@
         </svg>
       </div>
     </div>  
-    <div class="menuBtn sub" :class="{selected: !getSelectedBookmark}">
+    <div class="menuBtn sub bookmark" :class="{selected: !getSelectedBookmark}">
       <nuxt-link v-if="getSelectedBookmark" class="menuLink" to="/tag/bookmark" @click="clickFavorite">
         <svg class="buttonImage bookmarkImage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 451.61 428.07" fill="transparent" stroke="#231815">
           <title>お気に入り</title>
@@ -60,9 +60,9 @@ export default {
     };
   },
   computed: {
-    getScrollHideSide() {
+    /* getScrollHideSide() {
       return  { scrollHide: this.$store.getters['scroll/getSideMenuScroll'] > 50 && this.$store.getters['sideMenu/getOpen']}
-    },
+    }, */
     getOpen() {
       return  { open: this.$store.getters['sideMenu/getOpen']}
     },
@@ -112,37 +112,27 @@ export default {
 
 .menuBtn {
   position: fixed;
-  top: 30px;
-  left: 26px;
   display: flex;
   align-items: center;
   justify-content: center;
   user-select: none;
   cursor: pointer;
-  &:nth-child(2) {
-    top: 100px;
-  }
-  &:nth-child(3) {
-    top: 170px;
-  }
-
-  
 }
 
 .main {
-  width: 50px;
-  height: 50px;
-  border-radius: 30px;
+  top: 0;
+  left: 0;
+  width: 70px;
+  height: 100vh;
   background-color: var(--color);
-  background: linear-gradient(to top, var(--white) -150%, var(--color) 100%);
   z-index: 110;
-  transition: background-color .2s, opacity .2s;
-  opacity: 1;
+  transition: background-color .2s, transform .25s ease-in;
   @include hover() {
     background-color: var(--color-hover);
   }
-  &.scrollHide {
-    opacity: 0;
+  &.open {
+    transform: translateX(var(--sideMenuWidth));
+    transition: background-color .2s, transform .25s ease-out;
   }
 }
 
@@ -156,6 +146,15 @@ export default {
     background-color: var(--color-transparent-high);
   }
 }
+.home {
+  top: 40px;
+  left: 150px;
+}
+
+.bookmark {
+  top: 40px;
+  left: 230px;
+}
 
 .menuLink {
   width: inherit;
@@ -168,7 +167,8 @@ export default {
   font-size: var(--font-size-md);
 }
 
-.bars {
+// プラスメニュー
+/* .bars {
   position: relative;
   width: 22px;
   height: 18px;
@@ -209,10 +209,10 @@ export default {
       transform: rotate(-45deg);
     }
   }
-}
+} */
 
 // ハンバーガーメニュー
-/* .bars {
+.bars {
   position: relative;
   width: 22px;
   height: 18px;
@@ -223,7 +223,7 @@ export default {
   width: inherit;
   height: 2px;
   position: absolute;
-  transition: transform .3s;
+  /* transition: transform .3s; */
   display: block;
   border-radius: 5px;
   &:nth-child(1) {
@@ -254,7 +254,7 @@ export default {
       transform: rotate(-135deg);
     }
   }
-} */
+}
 
 .homeImage {
   height: 16px;

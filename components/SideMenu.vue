@@ -794,11 +794,7 @@ export default {
     
   }
   @include responsive(md) {
-    /* width: var(--sideMenuWidth); */
-    /* &.isClose {
-      transform: translateX(calc(-1 * var(--sideMenuWidth)));
-    } */
-    padding: 100px 15px 15px 15px;
+    padding: 50px 15px 15px 15px;
   }
   @include responsive(lg) {
     
