@@ -4,17 +4,12 @@
       <template v-for="(step, index) in stepsPc">
         <picture v-if="getDisplaySteps(index, 'pc')" :key="index" :class="getMargin('pc')">
           <source
-            class="image"
             :src="`${getPath(content.imagePC.url)}-${step}.webp`"
             :srcset="`
             ${getPath(content.imagePC.url)}-${step}.webp 1x,
             ${getPath(content.imagePC.url)}-${step*2}.webp 2x
             `"
-            :width="getWidth('pc')"
-            :height="getHeight"
-            :alt="`${content.name}`"
             type="image/webp"
-            @load="imageLoaded"
           />
           <img
             class="image"
@@ -43,17 +38,12 @@
       <template v-for="(step, index) in stepsTb">
         <picture v-if="getDisplaySteps(index, 'tb')" :key="index+100" :class="getMargin('tb')">
           <source
-            class="image"
             :src="`${getPath(content.imageTB.url)}-${step}.webp`"
             :srcset="`
             ${getPath(content.imageTB.url)}-${step}.webp 1x,
             ${getPath(content.imageTB.url)}-${step*2}.webp 2x
             `"
-            :width="getWidth('tb')"
-            :height="getHeight"
-            :alt="`${content.name}`"
             type="image/webp"
-            @load="imageLoaded"
           />
           <img
             class="image"
@@ -82,17 +72,12 @@
       <template v-for="(step, index) in stepsSp">
         <picture v-if="getDisplaySteps(index, 'sp')" :key="index+200" :class="getMargin('sp')">
           <source
-            class="image"
             :src="`${getPath(content.imageSP.url)}-${step}.webp`"
             :srcset="`
             ${getPath(content.imageSP.url)}-${step}.webp 1x,
             ${getPath(content.imageSP.url)}-${step*2}.webp 2x
             `"
-            :width="getWidth('sp')"
-            :height="getHeight"
-            :alt="`${content.name}`"
             type="image/webp"
-            @load="imageLoaded"
           />
           <img
             class="image"
@@ -359,8 +344,9 @@ export default {
 .image {
   max-width: 100%;
   @include responsive(xs) {
-    border-radius: 1.5%;
-    box-shadow: 1px 1px 5px var(--grey);
+    /* border-radius: 1.5%; */
+    /* box-shadow: 1px 1px 5px var(--grey); */
+    border: 1px var(--color-dark-transparent) solid;
   }
   @include responsive(sm) {
     
@@ -386,8 +372,9 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  box-shadow: none;
+  /* box-shadow: none; */
   /* filter: blur(2px); */
+  border: none;
   z-index: -1;
 }
 
