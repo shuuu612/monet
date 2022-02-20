@@ -8,7 +8,7 @@
         </button>
       </div>
     </transition>
-    <div id="sideMenu" class="sideMenu" :class="[getOpen,getClose]" @scroll="scrolledSideMenu">
+    <div id="sideMenu" class="sideMenu" :class="getOpen" @scroll="scrolledSideMenu">
       <div class="tabMenus">
         <div class="tabMenu button" :class="getSelectedTab('tag')" @click="clickTab('tag')">カテゴリー</div>
         <div class="tabMenu button" :class="getSelectedTab('search')" @click="clickTab('search')">カテゴリー検索</div>
@@ -696,62 +696,6 @@ export default {
 
 <style lang="scss" scoped>
 
-.starButton {
-  width: 32px;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  right: 0px;
-  border-radius: 3px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 20px;
-  @include hover() {
-    background-color: var(--black-super-light);
-  }
-}
-
-.starImage {
-  width: 14px;
-  stroke: var(--black-ultra-light);
-  transition: fill .2s,stroke .2s;
-}
-
-.favoriteTagsColor {
-  fill: var(--yellow);
-  stroke: var(--yellow);
-}
-
-/* .selectedButton {
-  fill: var(--blue);
-  stroke: var(--blue);
-} */
-
-.tabMenus {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-bottom: var(--black-super-light) 1px solid;
-  /* padding-right: 30px; */
-}
-
-.tabMenu {
-  padding: 5px 2px;
-  color: var(--grey-super-light);
-  &:not(:first-child) {
-    margin-left: 26px;
-  }
-  &.selectedTab {
-    color: var(--white);
-    font-weight: 400;
-    border-bottom: var(--color) 2px solid;
-  }
-}
-
-  
-
 .mask {
   position: fixed;
   top: 0;
@@ -760,6 +704,15 @@ export default {
   height: 100vh;
   background-color: var(--black-transparent-low);
   z-index: 90;
+}
+.mask-enter-active {
+  transition: opacity .25s ease-out;
+}
+.mask-leave-active {
+  transition: opacity .25s ease-in;
+}
+.mask-enter, .mask-leave-to {
+  opacity: 0;
 }
 .modalButton {
   position: fixed;
@@ -790,16 +743,6 @@ export default {
   }
 }
 
-.mask-enter-active {
-  transition: opacity .25s ease-out;
-}
-.mask-leave-active {
-  transition: opacity .25s ease-in;
-}
-.mask-enter, .mask-leave-to {
-  opacity: 0;
-}
-
 .sideMenu {
   position: fixed;
   top: 0;
@@ -808,12 +751,13 @@ export default {
   max-width: var(--sideMenuWidth);
   height: 100vh;
   background-color: var(--black);
-  transition: transform .25s ease-out;
+  transition: transform .25s ease-in;
   z-index: 100;
   color: var(--white);
-  &.isClose {
-    transform: translateX(calc(-1 * var(--sideMenuWidth)));
-    transition: transform .25s ease-in;
+  transform: translateX(calc(-1 * var(--sideMenuWidth)));
+  &.isOpen {
+    transform: translateX(0);
+    transition: transform .25s ease-out;
   }
   padding: 50px 15px 40px 15px;
   overflow-y: scroll;
@@ -843,6 +787,30 @@ export default {
   // スライドバー非表示
   display:none;
 }
+.tabMenus {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: var(--black-super-light) 1px solid;
+  /* padding-right: 30px; */
+}
+
+.tabMenu {
+  padding: 5px 2px;
+  color: var(--grey-super-light);
+  &:not(:first-child) {
+    margin-left: 26px;
+  }
+  &.selectedTab {
+    color: var(--white);
+    font-weight: 400;
+    border-bottom: var(--color) 2px solid;
+  }
+}
+
+
+
 
 .sideMenuContents {
   margin-top: 20px;
@@ -866,34 +834,6 @@ export default {
   width: 100%;
 }
 
-.partitionOpen {
-  &:nth-child(4) {
-    &::after {
-      content: '';
-      display: block;
-      width: 100%;
-      height: 1px;
-      /* margin: auto 0; */
-      background-color: var(--black-ultra-light);
-      position: relative;
-      /* left: -10px; */
-      margin-bottom: 20px;
-      margin-top: 20px
-    }
-  }
-}
-
-.sideMenuTitle {
-  display: flex;
-  position: relative;
-  font-size: var(--font-size-lg);
-  font-weight: 400;
-  margin-left: 10px;
-}
-
-
-
-
 .noFavoriteTagsComment {
   display: flex;
   align-items: center;
@@ -904,6 +844,32 @@ export default {
 .sideMenuSubTitle {
   font-size: var(--font-size-xs);
   color: var(--white);
+}
+.starButton {
+  width: 32px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  @include hover() {
+    background-color: var(--black-super-light);
+  }
+}
+
+.starImage {
+  width: 14px;
+  stroke: var(--black-ultra-light);
+  transition: fill .2s,stroke .2s;
+}
+
+.favoriteTagsColor {
+  fill: var(--yellow);
+  stroke: var(--yellow);
 }
 .controllerTitleWrapper {
   display: flex;
