@@ -183,6 +183,7 @@
   --more-button-hover: var(--color-dark-transparent-low-hover);
   --order-button: #afafaf;
   --order-button-hover: #999999;
+  --search-border: var(--color-dark);
 }
 
 :root.darkmode {
@@ -218,4 +219,5 @@
   --more-button-hover: #4b4b4b;
   --order-button: var(--black-super-light);
   --order-button-hover: #4b4b4b;
+  --search-border: var(--white);
 }

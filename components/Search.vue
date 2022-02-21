@@ -152,7 +152,7 @@ export default {
     border-left: 0;
     border-right: 0;
     .searchWrapper.focus & {
-      border-bottom: var(--color-dark) 2px solid;
+      border-bottom: var(--search-border) 2px solid;
     }
   }
   @include responsive(lg) {
