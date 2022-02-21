@@ -1901,7 +1901,7 @@ export default {
 }
 .contentsWrapper {
   position: relative;
-  padding-top: 60px;
+  padding-top: 30px;
 }
 
 .contents {

@@ -87,10 +87,10 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    position: absolute;
-    top: 30px;
+    position: static;
+    top: auto;
     left: auto;
-    right: 80px;
+    /* right: 80px; */
     width: 200px;
     height: 50px;
     z-index: 15;

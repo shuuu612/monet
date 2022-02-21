@@ -1,10 +1,13 @@
 <template>
   <div>
     <header class="header" :style="getWidth">
+      <MenuButtons
+      @update="passToTheTopUpdate"
+      />
       <div class="topMenu" :class="[getOpen]">
-        <MenuButtons
+        <!-- <MenuButtons
         @update="passToTheTopUpdate"
-        />
+        /> -->
         <h1 class="logo">
           <nuxt-link class="logoLink" to="/">
             <!-- <svg class="logoImg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 45.68 22.48" fill="url(#Gradient)">
@@ -100,7 +103,7 @@ export default {
   height: 80px;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   z-index: 15;
   transition: transform .25s ease-in;
   &.isOpen {
@@ -116,6 +119,7 @@ export default {
   @include responsive(md) {
     height: 120px;
     margin-left: 25px;
+    justify-content: space-between;
   }
   @include responsive(lg) {
     height: 140px;
