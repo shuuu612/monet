@@ -1,18 +1,7 @@
 <template>
-  <div class="orderOuter">
-    <div id="pulldown" class="pulldown">
-      <div class="button" @click="openList">
-        <!-- <svg class="image" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 456.33 425.69" stroke="#231815">
-          <line y1="70.95" x2="122.73" y2="70.95" style="fill:none;stroke-miterlimit:10;stroke-width:43px"/>
-          <line x1="110.35" x2="110.35" y2="141.9" style="fill:none;stroke-miterlimit:10;stroke-width:43px"/>
-          <line x1="194.91" y1="141.9" x2="194.91" y2="283.79" style="fill:none;stroke-miterlimit:10;stroke-width:43px"/>
-          <line x1="279.47" y1="283.79" x2="279.47" y2="425.69" style="fill:none;stroke-miterlimit:10;stroke-width:43px"/>
-          <line y1="212.84" x2="181.29" y2="212.84" style="fill:none;stroke-miterlimit:10;stroke-width:43px"/>
-          <line x1="260.2" y1="212.84" x2="456.33" y2="212.84" style="fill:none;stroke-miterlimit:10;stroke-width:43px"/>
-          <line x1="345.23" y1="354.74" x2="456.33" y2="354.74" style="fill:none;stroke-miterlimit:10;stroke-width:43px"/>
-          <line x1="176.46" y1="70.95" x2="456.33" y2="70.95" style="fill:none;stroke-miterlimit:10;stroke-width:43px"/>
-          <line y1="354.74" x2="260.2" y2="354.74" style="fill:none;stroke-miterlimit:10;stroke-width:43px"/>
-        </svg> -->
+  <div class="orderOuter" :style="getWidth">
+    <div class="buttonOuter">
+      <div class="button" @click.stop="openList">
         <svg class="image" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 456.33 425.69" fill="#231815">
           <polygon points="88.85 141.9 131.85 141.9 131.85 0 88.85 0 88.85 49.45 0 49.45 0 92.45 88.85 92.45 88.85 141.9"/>
           <polygon points="173.41 283.79 216.41 283.79 216.41 141.9 173.41 141.9 173.41 191.34 0 191.34 0 234.34 173.41 234.34 173.41 283.79"/>
@@ -21,8 +10,10 @@
           <rect x="345.23" y="333.24" width="111.1" height="43"/>
           <rect x="176.46" y="49.45" width="279.86" height="43"/>
         </svg>
-        <div class="title">並べ替え</div>
+        <!-- <div class="title">並べ替え</div> -->
       </div>
+    </div>
+    <div id="pulldown" class="pulldown">
       <ul class="lists" :class="getOpenList">
         <li class="list" :class="getSelectedNew">
           <nuxt-link :to="`/${tag !== undefined ? `tag/${tag}/` : ''}sort/new`" class="link" :class="getSelectedNew">
@@ -57,6 +48,11 @@ export default {
       required: false,
       default: undefined,
     },
+    width: {
+      type: Number,
+      required: false,
+      default: undefined,
+    },
   },
   data() {
     return {
@@ -76,6 +72,9 @@ export default {
     getOpenList() {
       return { open: this.open }
     },
+    getWidth() {
+      return { width: `${this.width}px`}
+    }
 
   },
   mounted() {
@@ -103,47 +102,73 @@ export default {
 <style lang="scss" scoped>
 .orderOuter {
   display: flex;
-  justify-content: flex-end;
+  justify-content: right;
+  flex-direction: column;
   z-index: 100;
   /* margin-bottom: 30px; */
+  /* position: absolute;
+  top: 0;
+  right: 50px; */
+  margin: 0 auto;
+  position: relative;
+  padding-bottom: 60px;
+}
+
+.buttonOuter {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
   position: absolute;
   top: 0;
   right: 0;
 }
-.pulldown {
-  width: 130px;
-  height: 30px;
-  margin-right: 30px;
-}
-
 .button {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  height: inherit;
+  justify-content: center;
   user-select: none;
   cursor: pointer;
-  padding-left: 10px;
+  /* padding-left: 10px; */
+  width: 40px;
+  height: 40px;
+  background-color: var(--order-button);
+  border-radius: 5px;
+  &:hover {
+    background-color: var(--order-button-hover);
+  }
 }
 
 .image {
-  width: 16px;
-  margin-right: 8px;
-  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  /* margin-right: 8px;
+  margin-top: 2px; */
   fill: var(--black-forDarkMode);
 }
 
 .title {
   color: var(--black-forDarkMode);
 }
+.pulldown {
+  /* width: 130px; */
+  /* height: 30px; */
+  /* margin-right: 30px; */
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  position: absolute;
+  top: 40px;
+  right: 0;
+}
 
 .lists {
   clip-path:inset(0 0 100% 0);
   transition: clip-path 0.2s;
-}
-
-.open {
-  clip-path:inset(0 0 0 0);
+  &.open {
+    clip-path:inset(0 0 0 0);
+  }
 }
 
 .list {

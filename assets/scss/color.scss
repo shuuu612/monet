@@ -181,6 +181,8 @@
   --menu-button-shadow: var(--grey);
   --more-button: var(--color-dark-transparent-low);
   --more-button-hover: var(--color-dark-transparent-low-hover);
+  --order-button: #afafaf;
+  --order-button-hover: #999999;
 }
 
 :root.darkmode {
@@ -214,4 +216,6 @@
   --menu-button-shadow: transparent;
   --more-button: var(--black-super-light);
   --more-button-hover: #4b4b4b;
+  --order-button: var(--black-super-light);
+  --order-button-hover: #4b4b4b;
 }

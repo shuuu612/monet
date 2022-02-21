@@ -30,6 +30,7 @@
           <Order
           :tag="selectedTag"
           :sort="selectedSort"
+          :width="orderWidth"
           />
           <div v-if="getNoContentComment.length > 0" class="noContent" style="white-space: pre-wrap;" v-text="getNoContentComment"></div>
           <div id="contents" class="contents">
@@ -394,6 +395,7 @@ export default {
               url: 'https://sugoi-design.com/',
               image: 'https://sugoi-design.com/images/ogp/logo.png',
             },
+            orderWidth: 0,
         };
     },
     head() {
@@ -812,6 +814,9 @@ export default {
               this.contentStyle.height = `${height}px`;
               console.log('ここはダメ')
             } */
+
+            // 並べ替えコンポーネント用
+            this.orderWidth = totalWidth * columnContent - (marginLeft + marginRight);
         },
         calculateAutoSizing() {
             console.log("calculateAutoSizingを起動");
