@@ -141,8 +141,8 @@ export default {
     left: 170px;
   } */
   &.bookmark {
-    top: 85px;
-    right: 170px;
+    top: 60px;
+    right: 40px;
   }
   @include responsive(xs) {
     
@@ -151,34 +151,13 @@ export default {
     
   }
   @include responsive(md) {
-    /* &.home {
-      top: 25px;
-      left: 140px;
-    } */
-    &.bookmark {
-      top: 70px;
-      right: 140px;
-    }
+
   }
   @include responsive(lg) {
-    /* &.home {
-      top: 35px;
-      left: 160px;
-    } */
-    &.bookmark {
-      top: 85px;
-      right: 160px;
-    }
+
   }
   @include responsive(xl) {
-    /* &.home {
-      top: 60px;
-      left: 170px;
-    } */
-    &.bookmark {
-      top: 60px;
-      right: 40px;
-    }
+
   }
   @include responsive(xxl) {
     
