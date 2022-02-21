@@ -18,7 +18,7 @@
       <div class="sideMenuContents">
         <!-- カテゴリー -->
         <transition name="tab">
-          <div v-show="selectedTag" key="tag" class="sideMenuContent">
+          <div v-if="selectedTag" key="tag" class="sideMenuContent">
             <div class="tagContents">
               <div v-for="name in tagname" :key="name" class="tagContent">
                 <div class="sideMenuSubTitle tagStyle">{{name.toUpperCase()}}</div>
@@ -50,7 +50,7 @@
         </transition>
         <!-- カテゴリー検索 -->
         <transition name="tab">
-          <div v-show="selectedSearch" key="search" class="sideMenuContent">
+          <div v-if="selectedSearch" key="search" class="sideMenuContent">
             <div class="searchBlock">
               <svg class="searchImage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 393.47 393.47" fill="#000000">
                 <path d="M383.52,335.43l-102-102c36.94-58.86,29.95-137.61-21.23-188.8-59.45-59.45-156.19-59.46-215.65,0s-59.45,156.19,0,215.65c51.19,51.17,129.94,58.18,188.81,21.24l102,102a34,34,0,1,0,48.08-48.09ZM232.77,232.76a113.64,113.64,0,1,1,0-160.71A113.77,113.77,0,0,1,232.77,232.76Z"/>
@@ -77,7 +77,7 @@
         </transition>
         <!-- お気に入り -->
         <transition name="tab">
-          <div v-show="selectedFavorite" key="favorite" class="sideMenuContent">
+          <div v-if="selectedFavorite" key="favorite" class="sideMenuContent">
             <div class="tagContents">
               <div v-if="getNoContent" class="noFavoriteTagsComment">お気に入りのタグは登録されていません</div>
               <template v-for="name in tagname">
@@ -110,7 +110,7 @@
         </transition>
         <!-- 設定 -->
         <transition name="tab">
-          <div v-show="selectedSetting" key="setting" class="sideMenuContent">
+          <div v-if="selectedSetting" key="setting" class="sideMenuContent">
             <div class="controllerContents">
               <div class="controllerContent">
                 <div class="controllerTitle">デバイス</div>
@@ -211,7 +211,7 @@
                   </div>
                 </div>
               </div>
-              <!-- <div class="controllerContent">
+              <div class="controllerContent">
                 <div class="controllerTitle">ダークモード</div>
                 <div class="controllerItems">
                   <button class="controllerItem" :class="getDarkmodeOn" :disabled="getDarkmodeOnDisabled" @click="clickDarkmode('on')">
@@ -224,7 +224,7 @@
                     <div class="typeTitle typeTitleDarkmode">OSの設定</div>
                   </button>
                 </div>
-              </div> -->
+              </div>
               <div class="controllerItems working">
                 <label class="checkboxWrapper">
                   <input id="checkbox" class="checkbox" type="checkbox" name="check" value="test" checked>リンク切れのサイトを表示しない
