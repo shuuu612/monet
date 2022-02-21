@@ -1,6 +1,6 @@
 <template>
   <div v-if="getDesktop" class="menuBtns">
-    <div class="menuBtn home" :class="{selected: !getSelectedHome}">
+    <!-- <div class="menuBtn home" :class="{selected: !getSelectedHome}">
       <nuxt-link v-if="getSelectedHome" class="menuLink" to="/" @click="clickHome">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 508.67 457.62" class="homeImage">
           <title>ホーム</title>
@@ -17,21 +17,21 @@
         </svg>
         <div class="title">ホーム</div>
       </div>
-    </div>  
+    </div>   -->
     <div class="menuBtn bookmark" :class="{selected: !getSelectedBookmark}">
       <nuxt-link v-if="getSelectedBookmark" class="menuLink" to="/tag/bookmark" @click="clickFavorite">
         <svg class="buttonImage bookmarkImage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 451.61 428.07" fill="transparent" stroke="#231815">
           <title>お気に入り</title>
           <path d="M328.66,20C282,20,244.47,43.3,225.55,83.13,206.7,43.3,169.53,20,123.42,20,66.39,20,20,65.5,20,121.42,20,186,57.06,233.7,95,277,132,319,203.44,390.25,220.41,406.24a6.76,6.76,0,0,0,4.62,1.83h1a6.76,6.76,0,0,0,4.62-1.83C248.93,389,320.58,317.9,356.53,277c38-43.35,75.08-91.08,75.08-155.59C431.61,64.56,386.4,20,328.66,20Z" style="stroke-miterlimit:10;stroke-width:40px"/>
         </svg>
-        <div class="title">お気に入り</div>
+        <!-- <div class="title">お気に入り</div> -->
       </nuxt-link>
       <div v-else class="menuLink" @click="update">
         <svg class="buttonImage bookmarkImage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 451.61 428.07" fill="transparent" stroke="#231815">
           <title>お気に入り</title>
           <path d="M328.66,20C282,20,244.47,43.3,225.55,83.13,206.7,43.3,169.53,20,123.42,20,66.39,20,20,65.5,20,121.42,20,186,57.06,233.7,95,277,132,319,203.44,390.25,220.41,406.24a6.76,6.76,0,0,0,4.62,1.83h1a6.76,6.76,0,0,0,4.62-1.83C248.93,389,320.58,317.9,356.53,277c38-43.35,75.08-91.08,75.08-155.59C431.61,64.56,386.4,20,328.66,20Z" style="stroke-miterlimit:10;stroke-width:40px"/>
         </svg>
-        <div class="title">お気に入り</div>
+        <!-- <div class="title">お気に入り</div> -->
       </div>
     </div>
   </div>
@@ -109,15 +109,19 @@ export default {
   }
 }
 .menuBtn {
-  position: absolute;
+  position: fixed;
   display: flex;
   align-items: center;
   justify-content: center;
   user-select: none;
   cursor: pointer;
-  background-color: transparent;
+  background-color: var(--menu-button);
+  box-shadow: 1px 1px 5px var(--menu-button-shadow);
   z-index: 40;
-  @include hover() {
+  width: 55px;
+  height: 55px;
+  border-radius: 50px;
+  /* @include hover() {
     &:after {
       width: 100%;
     }
@@ -131,14 +135,14 @@ export default {
     left: 0;
     background-color: var(--color);
     transition: width .25s;
-  }
-  &.home {
+  } */
+  /* &.home {
     top: 35px;
     left: 170px;
-  }
+  } */
   &.bookmark {
     top: 85px;
-    left: 170px;
+    right: 170px;
   }
   @include responsive(xs) {
     
@@ -147,33 +151,33 @@ export default {
     
   }
   @include responsive(md) {
-    &.home {
+    /* &.home {
       top: 25px;
       left: 140px;
-    }
+    } */
     &.bookmark {
       top: 70px;
-      left: 140px;
+      right: 140px;
     }
   }
   @include responsive(lg) {
-    &.home {
+    /* &.home {
       top: 35px;
       left: 160px;
-    }
+    } */
     &.bookmark {
       top: 85px;
-      left: 160px;
+      right: 160px;
     }
   }
   @include responsive(xl) {
-    &.home {
+    /* &.home {
       top: 60px;
       left: 170px;
-    }
+    } */
     &.bookmark {
       top: 60px;
-      left: 300px;
+      right: 40px;
     }
   }
   @include responsive(xxl) {

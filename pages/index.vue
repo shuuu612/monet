@@ -20,7 +20,7 @@
     @sliderChange="changeSliderSize"
     @multideviceCancel="monitorReturnToSingledevice"
     />
-    <ScrollMenu />
+    <!-- <ScrollMenu /> -->
     <ScrollTop />
     <Notice />
     <div id="divider" class="divider">

@@ -60,13 +60,13 @@ export default {
   left: 0;
   width: 70px;
   height: 100vh;
-  background-color: var(--menu-button);
+  background-color: var(--side-menu);
   z-index: 100;
   /* transition: background-color .2s, transform .25s ease-in; */
   transition: background-color .2s;
-  border-right: 2px var(--menu-button-borber) solid;
+  border-right: 2px var(--side-menu-borber) solid;
   @include hover() {
-    background-color: var(--menu-button-hover);
+    background-color: var(--side-menu-hover);
   }
   &.open {
     /* transform: translateX(var(--sideMenuWidth));

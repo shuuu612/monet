@@ -174,11 +174,11 @@
   // 要素（ダークモード用）
   --site-name: var(--color-ultra-dark);
   --site-border: var(--color-dark-transparent);
-  --menu-button: var(--color-dark-transparent-low);
-  --menu-button-hover: var(--color-dark-transparent-low-hover);
-  --menu-button-borber: transparent;
-  --scroll-top: var(--white);
-  --scroll-top-shadow: var(--grey);
+  --side-menu: var(--color-dark-transparent-low);
+  --side-menu-hover: var(--color-dark-transparent-low-hover);
+  --side-menu-borber: transparent;
+  --menu-button: var(--white);
+  --menu-button-shadow: var(--grey);
   --more-button: var(--color-dark-transparent-low);
   --more-button-hover: var(--color-dark-transparent-low-hover);
 }
@@ -207,11 +207,11 @@
 
   --site-name: var(--white);
   --site-border: transparent;
-  --menu-button: #000000;
-  --menu-button-hover: var(--black-super-light);
-  --menu-button-borber: var(--black-super-light);
-  --scroll-top: var(--black-super-light);
-  --scroll-top-shadow: transparent;
+  --side-menu: #000000;
+  --side-menu-hover: var(--black-super-light);
+  --side-menu-borber: var(--black-super-light);
+  --menu-button: var(--black-super-light);
+  --menu-button-shadow: transparent;
   --more-button: var(--black-super-light);
   --more-button-hover: #4b4b4b;
 }

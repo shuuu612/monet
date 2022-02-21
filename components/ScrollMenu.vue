@@ -97,8 +97,8 @@ export default {
   width: 60px;
   height: 120px;
   border-radius: 50px;
-  box-shadow: 1px 1px 5px var(--scroll-top-shadow);
-  background-color: var(--scroll-top);
+  box-shadow: 1px 1px 5px var(--menu-button-shadow);
+  background-color: var(--menu-button);
   z-index: 50;
   display: flex;
   align-items: center;
