@@ -2,6 +2,7 @@
   <div class="wrapper" :class="getSideMenuOpen">
     <Loading />
     <Header
+    :width="orderWidth"
     @search="keywordSearchStart"
     @update="update"
     />
