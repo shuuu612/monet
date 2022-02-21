@@ -502,15 +502,13 @@ export default {
 
   },
   mounted() {
-    const sliderElement = document.getElementById('slider');
-    window.addEventListener('load', () => {this.sliderInitialSet(sliderElement);})
+    window.addEventListener('load', this.sliderInitialSet)
     
     window.matchMedia("(min-width:576px)").addEventListener("change", this.changeMultideviceDisabled);
     
   },
   beforeDestroy() {
-    const sliderElement = document.getElementById('slider');
-    window.removeEventListener('load', () => {this.sliderInitialSet(sliderElement);})
+    window.removeEventListener('load', this.sliderInitialSet)
 
     window.matchMedia("(min-width:576px)").removeEventListener("change", this.changeMultideviceDisabled);
   },
@@ -569,8 +567,8 @@ export default {
         this.$store.dispatch('slider/pushSlider',(nowValue*1000 - 0.075*1000)/1000)
       }
     },
-    sliderInitialSet(data) {
-      this.$store.dispatch('slider/pushSliderInitial',data)
+    sliderInitialSet() {
+      this.$store.dispatch('slider/pushSliderInitial')
 
       // マルチデバイスの利用可否の初期値を設定
       this.changeMultideviceDisabled();

@@ -165,10 +165,10 @@ export const actions = {
     commit('setSteps')
     commit('updateLocalStorage')
   },
-  pushSliderInitial({commit},data) {
-    commit('setMin',data.min)
+  pushSliderInitial({commit}) {
+    /* commit('setMin',data.min)
     commit('setMax',data.max)
-    commit('setStep',data.step)
+    commit('setStep',data.step) */
     commit('setDecidedSteps')
     commit('setStepData')
     commit('setSteps')
