@@ -50,8 +50,8 @@ export default {
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  box-shadow: 1px 1px 5px var(--grey);
-  background-color: var(--white-forDarkMode);
+  box-shadow: 1px 1px 5px var(--scroll-top-shadow);
+  background-color: var(--scroll-top);
   z-index: 50;
   transition: transform .4s;
   transform: translateY(0);

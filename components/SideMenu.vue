@@ -755,6 +755,7 @@ export default {
   z-index: 100;
   color: var(--white);
   transform: translateX(calc(-1 * var(--sideMenuWidth)));
+  border-right: 2px var(--black-super-light) solid;
   &.isOpen {
     transform: translateX(0);
     transition: transform .25s ease-out;

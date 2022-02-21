@@ -1,5 +1,8 @@
 :root {
   --white: #f3f3f3;
+  --white-light: #ebebeb;
+  --white-super-light: #e2e2e2;
+  --white-ultra-light: #d6d6d6;
   --white-dark: #e7e7e7;
   --white-super-dark: #dbdbdb;
   --white-ultra-dark: #cccccc;
@@ -167,9 +170,48 @@
   --gradation-start-hover: #0f4d27;
   --gradation-end: var(--color);
   --gradation-end-hover: #14be14;
+
+  // 要素（ダークモード用）
+  --site-name: var(--color-ultra-dark);
+  --site-border: var(--color-dark-transparent);
+  --menu-button: var(--color-dark-transparent-low);
+  --menu-button-hover: var(--color-dark-transparent-low-hover);
+  --menu-button-borber: transparent;
+  --scroll-top: var(--white);
+  --scroll-top-shadow: var(--grey);
+  --more-button: var(--color-dark-transparent-low);
+  --more-button-hover: var(--color-dark-transparent-low-hover);
 }
 
 :root.darkmode {
   --white-forDarkMode: var(--black);
+  --white-dark-forDarkMode: var(--black-dark);
+  --white-super-dark-forDarkMode: var(--black-super-dark);
+  --white-ultra-dark-forDarkMode: var(--black-ultra-dark);
+  --white-hover-forDarkMode: var(--black-hover);
+  --white-transparent-forDarkMode: var(--black-transparent);
+  --white-transparent-high-forDarkMode: var(--black-transparent-high);
+  --white-transparent-low-forDarkMode: var(--black-transparent-low);
+
   --black-forDarkMode: var(--white);
+  --black-light-forDarkMode: var(--white-light);
+  --black-super-light-forDarkMode: var(--white-super-light);
+  --black-ultra-light-forDarkMode: var(--white-ultra-light);
+  --black-dark-forDarkMode: var(--white-dark);
+  --black-super-dark-forDarkMode: var(--white-super-dark);
+  --black-ultra-dark-forDarkMode: var(--white-ultra-dark);
+  --black-hover-forDarkMode: var(--white-hover);
+  --black-transparent-forDarkMode: var(--white-transparent);
+  --black-transparent-high-forDarkMode: var(--white-transparent-high);
+  --black-transparent-low-forDarkMode: var(--white-transparent-low);
+
+  --site-name: var(--white);
+  --site-border: transparent;
+  --menu-button: #000000;
+  --menu-button-hover: var(--black-super-light);
+  --menu-button-borber: var(--black-super-light);
+  --scroll-top: var(--black-super-light);
+  --scroll-top-shadow: transparent;
+  --more-button: var(--black-super-light);
+  --more-button-hover: #4b4b4b;
 }

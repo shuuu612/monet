@@ -97,8 +97,8 @@ export default {
   width: 60px;
   height: 120px;
   border-radius: 50px;
-  box-shadow: 1px 1px 5px var(--grey);
-  background-color: var(--white-forDarkMode);
+  box-shadow: 1px 1px 5px var(--scroll-top-shadow);
+  background-color: var(--scroll-top);
   z-index: 50;
   display: flex;
   align-items: center;

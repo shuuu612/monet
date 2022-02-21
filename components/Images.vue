@@ -346,7 +346,7 @@ export default {
   @include responsive(xs) {
     /* border-radius: 1.5%; */
     /* box-shadow: 1px 1px 5px var(--grey); */
-    border: 1px var(--color-dark-transparent) solid;
+    border: 1px var(--site-border) solid;
   }
   @include responsive(sm) {
     

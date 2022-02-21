@@ -2203,7 +2203,7 @@ export default {
 }
 
 .name {
-  font-weight: 500;
+  font-weight: 400;
   font-size: var(--font-size-md);
   /* // グラデーション
   background: linear-gradient(to right, var(--gradation-start), var(--gradation-end));
@@ -2213,7 +2213,7 @@ export default {
 
 .time {
   margin-top: 3px;
-  color: var(--black-super-light);
+  color: var(--black-super-light-forDarkMode);
   font-size: var(--font-size-xs);
   display: flex;
   align-items: center;
@@ -2230,7 +2230,7 @@ export default {
   text-decoration: none;
   /* // グラデーション
   color: transparent; */
-  color: var(--color-ultra-dark);
+  color: var(--site-name);
 }
 
 .infoButton {
@@ -2399,7 +2399,7 @@ export default {
   width: 330px;
   max-width: 90%;
   height: 50px;
-  background-color: var(--color-dark-transparent-low);
+  background-color: var(--more-button);
   color: var(--white);
   border-radius: 3px;
   display: flex;
@@ -2407,7 +2407,7 @@ export default {
   align-items: center;
   padding-left: 6px;
   @include hover() {
-    background-color: var(--color-dark-transparent-low-hover);
+    background-color: var(--more-button-hover);
   }
   margin: 50px auto 0 auto;
 }
