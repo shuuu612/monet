@@ -6,6 +6,7 @@
     @search="keywordSearchStart"
     @update="update"
     />
+    <DarkModeButton />
     <MenuButton />
     <MenuBar 
     :tag="selectedTag"
@@ -177,7 +178,7 @@ export default {
         if(selectedTag !== undefined && selectedTag !== 'bookmark') {
           apiFilters = `(type[contains]${selectedTag}[or]industry[contains]${selectedTag}[or]impression[contains]${selectedTag}[or]layout[contains]${selectedTag}[or]color[contains]${selectedTag}[or]pickup[contains]${selectedTag}[or]technique[contains]${selectedTag}[or]technology[contains]${selectedTag})[and]hide[equals]false[and]link[equals]false`
         }else {
-          apiFilters = "hide[equals]false[and]link[equals]false";
+            apiFilters = "hide[equals]false[and]link[equals]false";
         }
         // 並び替え用
         const selectedSort = params.sortId;
@@ -438,7 +439,6 @@ export default {
                 step10: steps[10],
             };
         },
-        
         getDummyContent() {
             return this.dummy;
         },
@@ -527,7 +527,7 @@ export default {
         this.setUrl();
     },
     beforeMount() {
-      console.log("beforeMount");
+        console.log("beforeMount");
     },
     mounted() {
         console.log("mounted");
@@ -549,16 +549,18 @@ export default {
         else {
             console.log("ブラウザのローカルストレージがオフになっています。");
         }
-        
+
         // ページ遷移時の処理
         if(this.$store.getters["loaded/getLoaded"]) {
           console.log('ページ遷移の時だけ')
-          // コンテンツ要素を取得
-          this.setContentsElement();
-          // ダミーコンテンツの作成
-          this.createDummyContent();
-          // コンテンツ初期表示
+            // コンテンツ要素を取得
+            this.setContentsElement();
+            // ダミーコンテンツの作成
+            this.createDummyContent();
+            // コンテンツ初期表示
             this.InitialDisplay();
+            // ダークモードボタンのクリックカウントをクリア
+            this.$store.dispatch("darkmode/pushClickCountClear")
         }
         // 読み込み完了を監視
         window.addEventListener("load", this.loadProcess);
@@ -729,14 +731,14 @@ export default {
             // コンテンツの折り返しをチェック
             const columnContent = Math.floor(this.contentsElement.clientWidth / this.totalWidth); // １カラム内のコンテンツ数
             if(this.columnContent !== columnContent) {
-              this.createDummyContent();
+                this.createDummyContent();
             }
         },
         clickMore() {
             this.setDisplayingContent();
         },
         createDummyContent() {
-          console.log("createDummyContentを起動");
+            console.log("createDummyContentを起動");
             // 実行タイミング：デバイスの変更、コンテンツサイズの変更
             // コンテンツの幅を計算
             const devicePattern = this.$store.getters["devicePattern/getStatePatternNumber"]; // 現在のデバイスパターン
@@ -880,7 +882,7 @@ export default {
                         bestStep = 3;
                         maxStep = 10;
                     }
-                    else if(windowWidth >= 1500) {
+                    else if (windowWidth >= 1500) {
                         bestStep = 3;
                         maxStep = 10;
                     }
@@ -947,7 +949,7 @@ export default {
                         bestStep = 4;
                         maxStep = 10;
                     }
-                    else if(windowWidth >= 1500) {
+                    else if (windowWidth >= 1500) {
                         bestStep = 5;
                         maxStep = 10;
                     }
@@ -998,7 +1000,7 @@ export default {
                         bestStep = 8;
                         maxStep = 10;
                     }
-                    else if(windowWidth >= 1500) {
+                    else if (windowWidth >= 1500) {
                         bestStep = 8;
                         maxStep = 10;
                     }
@@ -1087,7 +1089,7 @@ export default {
                         bestStep = 2;
                         maxStep = 9;
                     }
-                    else if(windowWidth >= 2100) {
+                    else if (windowWidth >= 2100) {
                         bestStep = 3;
                         maxStep = 10;
                     }
@@ -1168,7 +1170,7 @@ export default {
                         bestStep = 4;
                         maxStep = 10;
                     }
-                    else if(windowWidth >= 2100) {
+                    else if (windowWidth >= 2100) {
                         bestStep = 4;
                         maxStep = 10;
                     }
@@ -1249,7 +1251,7 @@ export default {
                         bestStep = 4;
                         maxStep = 10;
                     }
-                    else if(windowWidth >= 2100) {
+                    else if (windowWidth >= 2100) {
                         bestStep = 3;
                         maxStep = 10;
                     }
@@ -1342,11 +1344,12 @@ export default {
                         bestStep = 4;
                         maxStep = 10;
                     }
-                    else if(windowWidth >= 2200) {
+                    else if (windowWidth >= 2200) {
                         bestStep = 5;
                         maxStep = 10;
                     }
                     break;
+
             }
 
             // ステップを倍率に変換
@@ -1383,7 +1386,7 @@ export default {
             this.wrapChack();
         },
         setBookmark(id) {
-            if (!this.$storageAvailable('localStorage')) {
+            if(!this.$storageAvailable('localStorage')) {
                 alert("ブラウザのローカルストレージがOFFになっています。\nお気に入り機能を使用するため、ブラウザの設定でローカルストレージをONにしてください。");
                 return;
             }
@@ -1438,7 +1441,6 @@ export default {
             }
           }
         },
-        
         getLocalStorage() {
             // 初回読み込み時にローカルストレージのデータをstoreに取り込み
             // ブックマーク
@@ -1752,9 +1754,9 @@ export default {
             this.setDisplayingContent();
         },
         keywordSearchStart() {
-          // ステータスをキーワード検索に変更
-          this.$store.dispatch("status/pushSearchKeyword");
-          this.searchByKeyword();
+            // ステータスをキーワード検索に変更
+            this.$store.dispatch("status/pushSearchKeyword");
+            this.searchByKeyword();
         },
         pushAutoSizing() {
           if(this.$store.getters["slider/getAutoSizing"]) {
