@@ -21,6 +21,7 @@
             :width="getWidth('pc')"
             :height="getHeight"
             :alt="`${content.name}`"
+            loading="lazy"
             @load="imageLoaded"
           >
         </picture>
@@ -55,6 +56,7 @@
             :width="getWidth('tb')"
             :height="getHeight"
             :alt="`${content.name}`"
+            loading="lazy"
             @load="imageLoaded"
           >
         </picture>
@@ -89,6 +91,7 @@
             :width="getWidth('sp')"
             :height="getHeight"
             :alt="`${content.name}`"
+            loading="lazy"
             @load="imageLoaded"
           >
         </picture>
