@@ -184,6 +184,7 @@
   --order-button: #afafaf;
   --order-button-hover: #999999;
   --search-border: var(--color-dark);
+  --scroll-top-icon: var(--color-dark);
 }
 
 :root.darkmode {
@@ -220,4 +221,5 @@
   --order-button: var(--black-super-light);
   --order-button-hover: #4b4b4b;
   --search-border: var(--white);
+  --scroll-top-icon: var(--white-ultra-dark);
 }
