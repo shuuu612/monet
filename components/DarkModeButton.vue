@@ -3,8 +3,8 @@
     <div class="buttons" :class="[getDarkMode,getUnset]" :style="getStyle">
       <div class="button">
         <button class="darkButton" @click="clickDark">
-          <svg class="darkImage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 326.86 340.32" fill="#231815">
-            <path d="M202.61,0a173,173,0,0,1,20.62,82.16A173.82,173.82,0,0,1,0,248.74,173.76,173.76,0,1,0,202.61,0Z"/>
+          <svg class="darkImage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 255.29 347.47" fill="#231815">
+            <path d="M255.29,327.19a173.82,173.82,0,0,1-30-319.41,173.76,173.76,0,1,0,30,319.41Z"/>
           </svg>
         </button>
       </div>
@@ -89,6 +89,7 @@ export default {
   top: -100px;
   right: -15px;
   transition: transform 2.7s;
+  z-index: 50;
   &.unset {
     transition: unset;
   }
@@ -111,21 +112,34 @@ export default {
 
 .lightButton {
   margin-top: 60px;
+  .lightImage {
+    width: 18px;
+    fill: var(--black);
+    transition: transform .25s;
+  }
+  @include hover() {
+    .lightImage {
+      transform: scale(1.15);
+    }
+  }
 }
 
 .darkButton {
   margin-bottom: 60px;
+  .darkImage {
+    width: 13px;
+    fill: var(--white);
+    transition: transform .25s;
+  }
+  @include hover() {
+    .darkImage {
+      transform: scale(1.15);
+    }
+  }
 }
 
-.lightImage {
-  width: 18px;
-  fill: var(--black);
-}
-.darkImage {
-  width: 18px;
-  fill: var(--white);
-  transform: rotateZ(135deg);
-}
+
+
 
 .mask {
   width: 100%;
