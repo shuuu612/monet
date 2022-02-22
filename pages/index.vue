@@ -130,7 +130,9 @@
                 <div class="infoText" :style="infoButtonStyle">
                   <div class="name">
                     <a :href="`${content.url}`" target="_blank" rel="noopener noreferrer" class="nameLink">
-                      {{content.name}}
+                      <div class="nameText" :style="infoButtonStyle">
+                        {{content.name}}
+                      </div>
                     </a>
                   </div>
                   <div class="time">
@@ -802,7 +804,7 @@ export default {
             this.dummyStyle.marginRight = `${marginRight}px`;
             this.dummyStyle.marginLeft = `${marginLeft}px`;
             // info領域の大きさを設定
-            const infoWidth = width - 75;
+            const infoWidth = width - 40;
             this.infoButtonStyle.width = `${infoWidth}px`;
             this.infoStyle.width = `${width}px`;
             // コンテンツ領域の大きさを設定
@@ -2204,7 +2206,7 @@ export default {
 }
 
 .infoText {
-  max-width: calc(100% - 75px);
+  max-width: calc(100% - 40px);
   
 }
 
@@ -2215,6 +2217,7 @@ export default {
   background: linear-gradient(to right, var(--gradation-start), var(--gradation-end));
   background-clip: text; */
   display: inline-block;
+  width: 100%;
 }
 
 .time {
@@ -2237,6 +2240,14 @@ export default {
   /* // グラデーション
   color: transparent; */
   color: var(--site-name);
+  width: 100%;
+}
+.nameText {
+  overflow: hidden;
+  max-width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .infoButton {
