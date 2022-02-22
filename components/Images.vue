@@ -323,6 +323,7 @@ export default {
 .imageWrapper {
   position: relative;
   overflow: hidden;
+  box-sizing: content-box;
   @include responsive(xs) {
     overflow: visible;
   }
