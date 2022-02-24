@@ -559,18 +559,12 @@ export default {
         else {
             console.log("ブラウザのローカルストレージがオフになっています。");
         }
+        // ダークモードの初期設定
+        this.darkModeInitialSetting();
 
         // ページ遷移時の処理
         if(this.$store.getters["loaded/getLoaded"]) {
-          console.log('ページ遷移の時だけ')
-            // コンテンツ要素を取得
-            this.setContentsElement();
-            // ダミーコンテンツの作成
-            this.createDummyContent();
-            // コンテンツ初期表示
-            this.InitialDisplay();
-            // ダークモードボタンのクリックカウントをクリア
-            this.$store.dispatch("darkmode/pushClickCountClear")
+          this.pageTransitionProcess();
         }
         // 読み込み完了を監視
         window.addEventListener("load", this.loadProcess);
@@ -659,6 +653,13 @@ export default {
             // tagIDを日本語に変換
             this.meta.title = this.japaneseTags + ' | ' + this.meta.title;
             this.meta.keyword = this.japaneseTags + ',' + this.meta.keyword
+          }
+        },
+        darkModeInitialSetting() {
+          if(this.$store.getters["darkmode/getActive"]) {
+            this.darkmode = this.$store.getters["darkmode/getHtmlClass"];
+          }else {
+            this.darkmode = "";
           }
         },
         setUrl() {
@@ -1388,6 +1389,16 @@ export default {
             this.createDummyContent();
             // コンテンツ初期表示
             this.InitialDisplay();
+        },
+        pageTransitionProcess() {
+            // コンテンツ要素を取得
+            this.setContentsElement();
+            // ダミーコンテンツの作成
+            this.createDummyContent();
+            // コンテンツ初期表示
+            this.InitialDisplay();
+            // ダークモードボタンのクリックカウントをクリア
+            this.$store.dispatch("darkmode/pushClickCountClear")
         },
         resizeProcess() {
             this.setWindowSize();
