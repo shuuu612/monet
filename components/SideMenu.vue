@@ -151,11 +151,12 @@
                     </div>
                   </button>
                 </div>
-                <div class="controllerItems checkboxStyle">
-                  <label class="checkboxWrapper">
-                    <input id="checkbox" class="checkbox" type="checkbox" name="check" :checked="getDeviceCheckboxChecked" :disabled="getMultideviceDisabled" @input="deviceCheckboxChange">
-                    <div class="multideviceText" :class="getMultideviceCancelLine">マルチデバイスを有効にする</div>
-                  </label>
+                <div class="check" :class="[getDeviceCheckboxChecked,getMultideviceDisabled]">
+                  <div class="text">マルチデバイスを有効にする</div>
+                  <button class="checkboxOuter" @click="deviceCheckboxChange">
+                    <div class="switch"></div>
+                    <div class="background"></div>
+                  </button>
                 </div>
                 <div v-if="multideviceDisabled" class="sliderNotice">
                   <div>
@@ -192,10 +193,12 @@
                   </button>
                   <!-- {{$store.getters["slider/getSteps"].indexOf(true)}} -->
                 </div>
-                <div class="controllerItems checkboxStyle">
-                  <label class="checkboxWrapper">
-                    <input id="checkbox" class="checkbox" type="checkbox" name="check" :checked="getSliderCheckboxChecked" @input="sliderCheckboxChange">自動調整を有効にする
-                  </label>
+                <div class="check" :class="getSliderCheckboxChecked">
+                  <div class="text">自動調整を有効にする</div>
+                  <button class="checkboxOuter" @click="sliderCheckboxChange">
+                    <div class="switch"></div>
+                    <div class="background"></div>
+                  </button>
                 </div>
                 <div v-if="getNotice" class="sliderNotice">
                   <div>
@@ -211,6 +214,7 @@
                   </div>
                 </div>
               </div>
+              <div class="partitionLine"></div>
               <div class="controllerContent">
                 <div class="controllerTitle">ダークモード</div>
                 <div class="controllerItems">
@@ -348,10 +352,10 @@ export default {
       return  { auto: this.$store.getters['slider/getAutoSizing'] }
     }, */
     getDeviceCheckboxChecked() {
-      return  this.$store.getters['devicePattern/getMultidevaice']
+      return  { on: this.$store.getters['devicePattern/getMultidevaice'], off: !this.$store.getters['devicePattern/getMultidevaice'] }
     },
     getSliderCheckboxChecked() {
-      return  this.$store.getters['slider/getAutoSizing']
+      return  { on: this.$store.getters['slider/getAutoSizing'], off: !this.$store.getters['slider/getAutoSizing'] }
     },
     getOpen() {
       return { isOpen: this.$store.getters['sideMenu/getOpen'] }
@@ -432,7 +436,7 @@ export default {
       return this.$store.getters['devicePattern/getDisabledSP']
     },
     getMultideviceDisabled() {
-      return this.multideviceDisabled
+      return { disabled: this.multideviceDisabled }
     },
     getMultideviceCancelLine() {
       return { cancelLine : this.multideviceDisabled}
@@ -873,6 +877,8 @@ export default {
 .controllerTitleWrapper {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  padding-right: 10px;
 }
 
 .controllerTitle {
@@ -1064,6 +1070,63 @@ export default {
   background-color: transparent;
   margin-top: 22px;
 }
+.check {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 22px;
+  position: relative;
+  width: 100%;
+  padding-right: 10px;
+  .text {
+    font-size: var(--font-size-xs);
+  }
+  .checkboxOuter {
+    width: 32px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .switch {
+    width: 18px;
+    height: 18px;
+    border-radius: 10px;
+    position: absolute;
+    top: 0;
+  }
+  .background {
+    width: 32px;
+    height: 12px;
+    border-radius: 10px;
+  }
+  &.on {
+    .switch {
+      left: 15px;
+      background-color: var(--color-light);
+    }
+    .background {
+      background-color: var(--color-transparent);
+    }
+  }
+  &.off {
+    .switch {
+      left: 0;
+      background-color: var(--grey-ultra-light);
+    }
+    .background {
+      background-color: var(--white-transparent);
+    }
+  }
+  &.disabled {
+    .checkboxOuter {
+      /* cursor: default; */
+      pointer-events: none;
+    }
+  }
+}
+
 
 .tagContent {
   &:not(:first-child) {
