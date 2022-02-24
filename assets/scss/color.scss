@@ -177,12 +177,12 @@
   --side-menu: var(--color-dark-transparent-low);
   --side-menu-hover: var(--color-dark-transparent-low-hover);
   --side-menu-borber: transparent;
-  --menu-button: var(--white);
+  --menu-button: var(--black-transparent-high);
   --menu-button-shadow: var(--grey);
   --more-button: var(--color-dark-transparent-low);
   --more-button-hover: var(--color-dark-transparent-low-hover);
   --order-button: #afafaf;
-  --order-button-hover: #999999;
+  --order-button-hover: var(--black-transparent-high);
   --search-border: var(--color-dark);
   --scroll-top-icon: var(--color-dark);
 }
@@ -214,12 +214,12 @@
   --side-menu: #000000;
   --side-menu-hover: var(--black-super-light);
   --side-menu-borber: var(--black-super-light);
-  --menu-button: var(--black-super-light);
+  --menu-button: var(--black-light);
   --menu-button-shadow: transparent;
   --more-button: var(--black-super-light);
   --more-button-hover: #4b4b4b;
   --order-button: var(--black-super-light);
-  --order-button-hover: #4b4b4b;
+  --order-button-hover: var(--black-light);
   --search-border: var(--white);
   --scroll-top-icon: var(--white-ultra-dark);
 }

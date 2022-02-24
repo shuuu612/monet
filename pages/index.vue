@@ -2,9 +2,8 @@
   <div class="wrapper" :class="getSideMenuOpen">
     <Loading />
     <Header
-    :width="orderWidth"
+    :width="contentsWidth"
     @search="keywordSearchStart"
-    @update="update"
     />
     <DarkModeButton />
     <MenuButton />
@@ -29,12 +28,20 @@
       <div v-cloak class="container">
         
         <div class="contentsWrapper">
-          <Order
-          :tag="selectedTag"
-          :sort="selectedSort"
-          :width="orderWidth"
-          />
           <div v-if="getNoContentComment.length > 0" class="noContent" style="white-space: pre-wrap;" v-text="getNoContentComment"></div>
+          <div class="tool" :style="getToolWidth">
+            <div class="toolItem">
+              <MenuButtons
+              @update="update"
+              />
+            </div>
+            <div class="toolItem">
+              <Order
+              :tag="selectedTag"
+              :sort="selectedSort"
+              />
+            </div>
+          </div>
           <div id="contents" class="contents">
             <div v-for="content in getDisplayingContent" :key="content.id" class="content" :class="getStateSliderStep">
               <div class="contentImage">
@@ -399,7 +406,7 @@ export default {
               url: 'https://sugoi-design.com/',
               image: 'https://sugoi-design.com/images/ogp/logo.png',
             },
-            orderWidth: 0,
+            contentsWidth: 0,
         };
     },
     head() {
@@ -515,6 +522,9 @@ export default {
             const path2 = path1.substring(0, path1.indexOf(".png"))
             return path2
           }
+        },
+        getToolWidth() {
+          return { width: `${this.contentsWidth}px`}
         }
     },
     created() {
@@ -824,8 +834,8 @@ export default {
               console.log('ここはダメ')
             } */
 
-            // 並べ替えコンポーネント用
-            this.orderWidth = totalWidth * columnContent - (marginLeft + marginRight);
+            // コンテンツ領域の幅
+            this.contentsWidth = totalWidth * columnContent - (marginLeft + marginRight);
         },
         calculateAutoSizing() {
             console.log("calculateAutoSizingを起動");
@@ -1910,6 +1920,15 @@ export default {
 .contentsWrapper {
   position: relative;
   padding-top: 30px;
+}
+.tool {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  margin: 0 auto;
+}
+.toolItem {
+  width: 55px;
 }
 
 .contents {

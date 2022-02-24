@@ -1,5 +1,5 @@
 <template>
-  <div class="orderOuter" :style="getWidth">
+  <div class="orderOuter">
     <div class="buttonOuter">
       <div class="button" @click.stop="openList">
         <svg class="image" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 456.33 425.69" fill="#231815">
@@ -48,11 +48,6 @@ export default {
       required: false,
       default: undefined,
     },
-    width: {
-      type: Number,
-      required: false,
-      default: undefined,
-    },
   },
   data() {
     return {
@@ -72,9 +67,6 @@ export default {
     getOpenList() {
       return { open: this.open }
     },
-    getWidth() {
-      return { width: `${this.width}px`}
-    }
 
   },
   mounted() {
@@ -102,16 +94,15 @@ export default {
 <style lang="scss" scoped>
 .orderOuter {
   display: flex;
-  justify-content: right;
+  align-items: flex-start;
+  justify-content: flex-end;
   flex-direction: column;
   z-index: 100;
   /* margin-bottom: 30px; */
   /* position: absolute;
   top: 0;
   right: 50px; */
-  margin: 0 auto;
   position: relative;
-  padding-bottom: 60px;
 }
 
 .buttonOuter {
@@ -131,9 +122,8 @@ export default {
   /* padding-left: 10px; */
   width: 40px;
   height: 40px;
-  background-color: var(--order-button);
   border-radius: 5px;
-  &:hover {
+  @include hover() {
     background-color: var(--order-button-hover);
   }
 }
@@ -161,6 +151,7 @@ export default {
   position: absolute;
   top: 40px;
   right: 0;
+  width: 140px;
 }
 
 .lists {

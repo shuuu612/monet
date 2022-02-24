@@ -1,9 +1,6 @@
 <template>
   <div>
     <header class="header" :style="getWidth">
-      <MenuButtons
-      @update="passToTheTopUpdate"
-      />
       <div class="topMenu" :class="[getOpen]">
         <!-- <MenuButtons
         @update="passToTheTopUpdate"
@@ -84,9 +81,6 @@ export default {
     passToTheTopSearch() {
       this.$emit('search')
     },
-    passToTheTopUpdate() {
-      this.$emit('update')
-    }
   },
   
 };

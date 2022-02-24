@@ -109,18 +109,15 @@ export default {
   }
 }
 .menuBtn {
-  position: fixed;
   display: flex;
   align-items: center;
   justify-content: center;
   user-select: none;
   cursor: pointer;
-  background-color: var(--menu-button);
-  box-shadow: 1px 1px 5px var(--menu-button-shadow);
   z-index: 40;
-  width: 55px;
-  height: 55px;
-  border-radius: 50px;
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
   /* @include hover() {
     &:after {
       width: 100%;
@@ -140,27 +137,9 @@ export default {
     top: 35px;
     left: 170px;
   } */
-  &.bookmark {
-    top: 60px;
-    right: 40px;
-  }
-  @include responsive(xs) {
-    
-  }
-  @include responsive(sm) {
-    
-  }
-  @include responsive(md) {
-
-  }
-  @include responsive(lg) {
-
-  }
-  @include responsive(xl) {
-
-  }
-  @include responsive(xxl) {
-    
+  
+  @include hover() {
+    background-color: var(--menu-button);
   }
 }
 
@@ -190,6 +169,7 @@ export default {
 .bookmarkImage {
   height: 16px;
   stroke: var(--black-dark-forDarkMode);
+  transition: transform .25s;
   .selected & {
     fill: var(--black-dark-forDarkMode);
   }
