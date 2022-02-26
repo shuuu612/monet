@@ -118,28 +118,9 @@ export default {
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  /* @include hover() {
-    &:after {
-      width: 100%;
-    }
-  }
-  &:after {
-    content: '';
-    width: 0;
-    height: 2px;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    background-color: var(--color);
-    transition: width .25s;
-  } */
-  /* &.home {
-    top: 35px;
-    left: 170px;
-  } */
   
   @include hover() {
-    background-color: var(--menu-button);
+    background-color: var(--tool-button-hover);
   }
 }
 

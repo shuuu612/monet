@@ -67,14 +67,14 @@ export default {
       this.$store.dispatch("darkmode/pushCountUp")
       this.lightToDark = true;
       setTimeout(()=>{this.lightToDark = false},2500)
-      setTimeout(()=>{this.$store.dispatch("darkmode/pushDarkmodeOnForPage")},1250)
+      setTimeout(()=>{this.$store.dispatch("darkmode/pushDarkmodeOnForPage");this.$emit('colormodeChange');},1250)
       
     },
     clickDark(){
       this.$store.dispatch("darkmode/pushCountUp")
       this.darkToLight = true;
       setTimeout(()=>{this.darkToLight = false},2500)
-      setTimeout(()=>{this.$store.dispatch("darkmode/pushDarkmodeOffForPage")},1250)
+      setTimeout(()=>{this.$store.dispatch("darkmode/pushDarkmodeOffForPage");this.$emit('colormodeChange');},1250)
     },
   },
   
@@ -113,8 +113,8 @@ export default {
 .lightButton {
   margin-top: 60px;
   .lightImage {
-    width: 18px;
-    fill: var(--black);
+    width: 20px;
+    fill: var(--black-forDarkMode);
     transition: transform .25s;
   }
   @include hover() {
@@ -161,13 +161,13 @@ export default {
     
     @keyframes maskingLight {
       0% {
-        background-color: var(--white);
+        background-color: transparent;
         opacity: 0;
         visibility: visible;
         z-index: 999;
       }
       20% {
-        background-color: var(--white);
+        background-color: var(--darkmode-button-mask);
         opacity: 1;
         visibility: visible;
         z-index: 999;
@@ -179,7 +179,7 @@ export default {
         z-index: 999;
       }
       100% {
-        background-color: var(--black);
+        background-color: transparent;
         opacity: 0;
         visibility: visible;
         z-index: 999;
@@ -198,7 +198,7 @@ export default {
     
     @keyframes maskingDark {
       0% {
-        background-color: var(--black);
+        background-color: transparent;
         opacity: 0;
         visibility: visible;
         z-index: 999;
@@ -210,13 +210,13 @@ export default {
         z-index: 999;
       }
       60% {
-        background-color: var(--white);
+        background-color: var(--darkmode-button-mask);
         opacity: 1;
         visibility: visible;
         z-index: 999;
       }
       100% {
-        background-color: var(--white);
+        background-color: transparent;
         opacity: 0;
         visibility: visible;
         z-index: 999;

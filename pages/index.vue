@@ -5,7 +5,9 @@
     :width="contentsWidth"
     @search="keywordSearchStart"
     />
-    <DarkModeButton />
+    <DarkModeButton
+    @colormodeChange="darkModeSetting"
+    />
     <MenuButton />
     <MenuBar 
     :tag="selectedTag"
@@ -20,6 +22,7 @@
     @deviceChange="changeDevice"
     @sliderChange="changeSliderSize"
     @multideviceCancel="monitorReturnToSingledevice"
+    @colormodeChange="darkModeSetting"
     />
     <!-- <ScrollMenu /> -->
     <ScrollTop />
@@ -393,7 +396,7 @@ export default {
                 condition: "",
             },
             japaneseTags: '',
-            darkmode: "",
+            colormode: [],
             modalOpenElement: {},
             contentsElement: {},
             totalWidth: 0,
@@ -412,7 +415,7 @@ export default {
     head() {
         return {
             htmlAttrs: {
-                class: this.darkmode
+                class: this.colormode
             },
             title: this.meta.title,
             meta: [
@@ -543,15 +546,6 @@ export default {
         console.log("mounted");
         // ウィンドウサイズを取得
         this.setWindowSize();
-        // ダークモードの変更を監視
-        this.$store.watch(() => this.$store.getters["darkmode/getActive"], (value) => {
-            if (value) {
-                this.darkmode = this.$store.getters["darkmode/getHtmlClass"];
-            }
-            else {
-                this.darkmode = "";
-            }
-        });
         // ローカルストレージの取得
         if (this.$storageAvailable('localStorage')) {
             this.getLocalStorage();
@@ -560,7 +554,7 @@ export default {
             console.log("ブラウザのローカルストレージがオフになっています。");
         }
         // ダークモードの初期設定
-        this.darkModeInitialSetting();
+        this.darkModeSetting();
 
         // ページ遷移時の処理
         if(this.$store.getters["loaded/getLoaded"]) {
@@ -655,11 +649,11 @@ export default {
             this.meta.keyword = this.japaneseTags + ',' + this.meta.keyword
           }
         },
-        darkModeInitialSetting() {
+        darkModeSetting() {
           if(this.$store.getters["darkmode/getActive"]) {
-            this.darkmode = this.$store.getters["darkmode/getHtmlClass"];
+            this.colormode = [this.$store.getters["colormode/getColormode"],'darkmode']
           }else {
-            this.darkmode = "";
+            this.colormode = [this.$store.getters["colormode/getColormode"]];
           }
         },
         setUrl() {
@@ -1500,6 +1494,12 @@ export default {
             if (darkmode !== null) {
                 this.$store.dispatch("darkmode/pushLocalStorage", darkmode);
             }
+            // カラーモード
+            const colormodeJson = localStorage.getItem("colormode");
+            const colormode = JSON.parse(colormodeJson);
+            if (colormode !== null) {
+                this.$store.dispatch("colormode/pushLocalStorage", colormode);
+            }
             // 検索キーワード
             const searchJson = sessionStorage.getItem("search");
             const search = JSON.parse(searchJson);
@@ -2258,7 +2258,7 @@ export default {
 
 .time {
   margin-top: 3px;
-  color: var(--black-super-light-forDarkMode);
+  color: var(--site-time);
   font-size: var(--font-size-xs);
   display: flex;
   align-items: center;
@@ -2323,8 +2323,8 @@ export default {
     transition: stroke .25s, fill .25s;
   }
   .bookmarkRegistered {
-    stroke: var(--red);
-    fill: var(--red);
+    stroke: var(--favorite-icon);
+    fill: var(--favorite-icon);
     animation-name: like;
     animation-duration: .3s;
     animation-timing-function: ease-in-out;
@@ -2347,12 +2347,12 @@ export default {
     }
   }
   @include hover() {
-    background-color: var(--red-transparent-high);
+    background-color: var(--favorite-icon-hover);
     .bookmarkImage {
-      stroke: var(--red);
+      stroke: var(--favorite-icon);
     }
     .bookmarkRegistered {
-      fill: var(--red);
+      fill: var(--favorite-icon);
     }
   }
 }
@@ -2453,7 +2453,7 @@ export default {
   max-width: 90%;
   height: 50px;
   background-color: var(--more-button);
-  color: var(--white);
+  color: var(--more-button-text);
   border-radius: 3px;
   display: flex;
   justify-content: center;

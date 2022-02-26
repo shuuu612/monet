@@ -126,7 +126,7 @@ export default {
 }
 
 .bar {
-  background-color: var(--white);;
+  background-color: var(--side-menu-icon);
   width: inherit;
   height: 2px;
   position: absolute;

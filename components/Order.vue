@@ -124,7 +124,7 @@ export default {
   height: 40px;
   border-radius: 5px;
   @include hover() {
-    background-color: var(--order-button-hover);
+    background-color: var(--tool-button-hover);
   }
 }
 

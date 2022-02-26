@@ -229,6 +229,134 @@
                   </button>
                 </div>
               </div>
+              <div class="partitionLine"></div>
+              <div class="controllerContent">
+                <div class="controllerTitle">カラーモード</div>
+                <button class="check" :class="getColor1Checked" @click="colormodeChange(1)">
+                  <div class="textOuter">
+                    <div class="text color">赤色</div>
+                    <div class="sample color1"></div>
+                  </div>
+                  <div class="checkboxOuter">
+                    <div class="switch"></div>
+                    <div class="background"></div>
+                  </div>
+                </button>
+                <button class="check" :class="getColor2Checked" @click="colormodeChange(2)">
+                  <div class="textOuter">
+                    <div class="text color">桃色</div>
+                    <div class="sample color2"></div>
+                  </div>
+                  <div class="checkboxOuter">
+                    <div class="switch"></div>
+                    <div class="background"></div>
+                  </div>
+                </button>
+                <button class="check" :class="getColor3Checked" @click="colormodeChange(3)">
+                  <div class="textOuter">
+                    <div class="text color">青色</div>
+                    <div class="sample color3"></div>
+                  </div>
+                  <div class="checkboxOuter">
+                    <div class="switch"></div>
+                    <div class="background"></div>
+                  </div>
+                </button>
+                <button class="check" :class="getColor4Checked" @click="colormodeChange(4)">
+                  <div class="textOuter">
+                    <div class="text color">水色</div>
+                    <div class="sample color4"></div>
+                  </div>
+                  <div class="checkboxOuter">
+                    <div class="switch"></div>
+                    <div class="background"></div>
+                  </div>
+                </button>
+                <button class="check" :class="getColor5Checked" @click="colormodeChange(5)">
+                  <div class="textOuter">
+                    <div class="text color">橙色</div>
+                    <div class="sample color5"></div>
+                  </div>
+                  <div class="checkboxOuter">
+                    <div class="switch"></div>
+                    <div class="background"></div>
+                  </div>
+                </button>
+                <button class="check" :class="getColor6Checked" @click="colormodeChange(6)">
+                  <div class="textOuter">
+                    <div class="text color">黄色</div>
+                    <div class="sample color6"></div>
+                  </div>
+                  <div class="checkboxOuter">
+                    <div class="switch"></div>
+                    <div class="background"></div>
+                  </div>
+                </button>
+                <button class="check" :class="getColor7Checked" @click="colormodeChange(7)">
+                  <div class="textOuter">
+                    <div class="text color">緑色</div>
+                    <div class="sample color7"></div>
+                  </div>
+                  <div class="checkboxOuter">
+                    <div class="switch"></div>
+                    <div class="background"></div>
+                  </div>
+                </button>
+                <button class="check" :class="getColor9Checked" @click="colormodeChange(9)">
+                  <div class="textOuter">
+                    <div class="text color">紫色</div>
+                    <div class="sample color9"></div>
+                  </div>
+                  <div class="checkboxOuter">
+                    <div class="switch"></div>
+                    <div class="background"></div>
+                  </div>
+                </button>
+                <button class="check" :class="getColor11Checked" @click="colormodeChange(11)">
+                  <div class="textOuter">
+                    <div class="text color">茶色</div>
+                    <div class="sample color11"></div>
+                  </div>
+                  <div class="checkboxOuter">
+                    <div class="switch"></div>
+                    <div class="background"></div>
+                  </div>
+                </button>
+                <button class="check" :class="getColor12Checked" @click="colormodeChange(12)">
+                  <div class="textOuter">
+                    <div class="text color">薄茶色</div>
+                    <div class="sample color12"></div>
+                  </div>
+                  <div class="checkboxOuter">
+                    <div class="switch"></div>
+                    <div class="background"></div>
+                  </div>
+                </button>
+                <button class="check" :class="getColor8Checked" @click="colormodeChange(8)">
+                  <div class="textOuter">
+                    <div class="text color">灰色</div>
+                    <div class="sample color8"></div>
+                  </div>
+                  <div class="checkboxOuter">
+                    <div class="switch"></div>
+                    <div class="background"></div>
+                  </div>
+                </button>
+                <button class="check" :class="getColor10Checked" @click="colormodeChange(10)">
+                  <div class="textOuter">
+                    <div class="text color">白色</div>
+                    <div class="sample color10"></div>
+                  </div>
+                  <div class="checkboxOuter">
+                    <div class="switch"></div>
+                    <div class="background"></div>
+                  </div>
+                </button>
+                <div>
+                  <div class="comment">複数選択では、選択された色からランダムでの表示となります。</div>
+                  <div class="comment">選択なしでは、全ての色からランダムでの表示となります。</div>
+                </div>
+              </div>
               <div class="controllerItems working">
                 <label class="checkboxWrapper">
                   <input id="checkbox" class="checkbox" type="checkbox" name="check" value="test" checked>リンク切れのサイトを表示しない
@@ -356,6 +484,45 @@ export default {
     },
     getSliderCheckboxChecked() {
       return  { on: this.$store.getters['slider/getAutoSizing'], off: !this.$store.getters['slider/getAutoSizing'] }
+    },
+    getColor1Checked() {
+      return  { on: this.$store.getters['colormode/getColor1'], off: !this.$store.getters['colormode/getColor1'] }
+    },
+    getColor2Checked() {
+      return  { on: this.$store.getters['colormode/getColor2'], off: !this.$store.getters['colormode/getColor2'] }
+    },
+    getColor3Checked() {
+      return  { on: this.$store.getters['colormode/getColor3'], off: !this.$store.getters['colormode/getColor3'] }
+    },
+    getColor4Checked() {
+      return  { on: this.$store.getters['colormode/getColor4'], off: !this.$store.getters['colormode/getColor4'] }
+    },
+    getColor5Checked() {
+      return  { on: this.$store.getters['colormode/getColor5'], off: !this.$store.getters['colormode/getColor5'] }
+    },
+    getColor6Checked() {
+      return  { on: this.$store.getters['colormode/getColor6'], off: !this.$store.getters['colormode/getColor6'] }
+    },
+    getColor7Checked() {
+      return  { on: this.$store.getters['colormode/getColor7'], off: !this.$store.getters['colormode/getColor7'] }
+    },
+    getColor8Checked() {
+      return  { on: this.$store.getters['colormode/getColor8'], off: !this.$store.getters['colormode/getColor8'] }
+    },
+    getColor9Checked() {
+      return  { on: this.$store.getters['colormode/getColor9'], off: !this.$store.getters['colormode/getColor9'] }
+    },
+    getColor10Checked() {
+      return  { on: this.$store.getters['colormode/getColor10'], off: !this.$store.getters['colormode/getColor10'] }
+    },
+    getColor11Checked() {
+      return  { on: this.$store.getters['colormode/getColor11'], off: !this.$store.getters['colormode/getColor11'] }
+    },
+    getColor12Checked() {
+      return  { on: this.$store.getters['colormode/getColor12'], off: !this.$store.getters['colormode/getColor12'] }
+    },
+    getRandomChecked() {
+      return  { on: this.$store.getters['colormode/getRandom'], off: !this.$store.getters['colormode/getRandom'] }
     },
     getOpen() {
       return { isOpen: this.$store.getters['sideMenu/getOpen'] }
@@ -599,6 +766,37 @@ export default {
       this.$store.dispatch('slider/pushAutoSizing')
       this.$emit('autoSizing')
     },
+    colormodeChange(key) {
+      if(key === 1) {
+        this.$store.dispatch('colormode/pushColor1')
+      }else if(key === 2) {
+        this.$store.dispatch('colormode/pushColor2')
+      }else if(key === 3) {
+        this.$store.dispatch('colormode/pushColor3')
+      }else if(key === 4) {
+        this.$store.dispatch('colormode/pushColor4')
+      }else if(key === 5) {
+        this.$store.dispatch('colormode/pushColor5')
+      }else if(key === 6) {
+        this.$store.dispatch('colormode/pushColor6')
+      }else if(key === 7) {
+        this.$store.dispatch('colormode/pushColor7')
+      }else if(key === 8) {
+        this.$store.dispatch('colormode/pushColor8')
+      }else if(key === 9) {
+        this.$store.dispatch('colormode/pushColor9')
+      }else if(key === 10) {
+        this.$store.dispatch('colormode/pushColor10')
+      }else if(key === 11) {
+        this.$store.dispatch('colormode/pushColor11')
+      }else if(key === 12) {
+        this.$store.dispatch('colormode/pushColor12')
+      }else {
+        this.$store.dispatch('colormode/pushRandom')
+      }
+      this.$store.dispatch('darkmode/pushDarkmodeOff')
+      this.$emit('colormodeChange')
+    },
     /* setInitialValue() {
       this.initialValue = 0.625
       this.initialValue = this.$store.getters['slider/getValue']
@@ -629,6 +827,7 @@ export default {
       }else if(key === 'os') {
         this.$store.dispatch('darkmode/pushDarkmodeOs')
       }
+      this.$emit('colormodeChange')
     },
     setKeyword() {
       this.searchByKeyword();
@@ -1095,15 +1294,18 @@ export default {
     border-radius: 10px;
     position: absolute;
     top: 0;
+    left: 0;
+    transition: transform .2s, background-color .2s;
   }
   .background {
     width: 32px;
     height: 12px;
     border-radius: 10px;
+    transition: background-color .2s;
   }
   &.on {
     .switch {
-      left: 15px;
+      transform: translateX(15px);
       background-color: var(--color-light);
     }
     .background {
@@ -1112,7 +1314,6 @@ export default {
   }
   &.off {
     .switch {
-      left: 0;
       background-color: var(--grey-ultra-light);
     }
     .background {
@@ -1492,6 +1693,95 @@ input[type="range"] {
   height: 1px;
   margin: 30px auto 20px auto;
   background-color: var(--black-ultra-light);
+}
+.comment {
+  font-size: var(--font-size-xs);
+  color: var(--grey-ultra-light);
+  &:nth-child(1) {
+    margin-top: 20px;
+  }
+  &:not(:nth-child(1)) {
+    margin-top: 4px;
+  }
+}
+.textOuter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.text {
+  &.color {
+    width: 50px;
+    margin-bottom: 2px;
+  }
+}
+.sample {
+  width: 200px;
+  height: 14px;
+  /* margin-top: 3px; */
+  margin-left: 14px;
+  &.color1 {
+    background-color: var(--colormode1);
+  }
+  &.color2 {
+    background-color: var(--colormode2);
+  }
+  &.color3 {
+    background-color: var(--colormode3);
+  }
+  &.color4 {
+    background-color: var(--colormode4);
+  }
+  &.color5 {
+    background-color: var(--colormode5);
+  }
+  &.color6 {
+    background-color: var(--colormode6);
+  }
+  &.color7 {
+    background-color: var(--colormode7);
+  }
+  &.color8 {
+    background-color: var(--colormode8);
+  }
+  &.color9 {
+    background-color: var(--colormode9);
+  }
+  &.color10 {
+    background-color: var(--colormode10);
+  }
+  &.color11 {
+    background-color: var(--colormode11);
+  }
+  &.color12 {
+    background-color: var(--colormode12);
+  }
+  /* &.random {
+    background: linear-gradient(to right,
+                                var(--colormode1) calc(100% * (1/12)),
+                                var(--colormode2) calc(100% * (1/12)),
+                                var(--colormode2) calc(100% * (2/12)),
+                                var(--colormode3) calc(100% * (2/12)),
+                                var(--colormode3) calc(100% * (3/12)),
+                                var(--colormode4) calc(100% * (3/12)),
+                                var(--colormode4) calc(100% * (4/12)),
+                                var(--colormode5) calc(100% * (4/12)),
+                                var(--colormode5) calc(100% * (5/12)),
+                                var(--colormode6) calc(100% * (5/12)),
+                                var(--colormode6) calc(100% * (6/12)),
+                                var(--colormode7) calc(100% * (6/12)),
+                                var(--colormode7) calc(100% * (7/12)),
+                                var(--colormode8) calc(100% * (7/12)),
+                                var(--colormode8) calc(100% * (8/12)),
+                                var(--colormode9) calc(100% * (8/12)),
+                                var(--colormode9) calc(100% * (9/12)),
+                                var(--colormode10) calc(100% * (9/12)),
+                                var(--colormode10) calc(100% * (10/12)),
+                                var(--colormode11) calc(100% * (10/12)),
+                                var(--colormode11) calc(100% * (11/12)),
+                                var(--colormode12) calc(100% * (11/12)),
+                                );
+  } */
 }
 
 </style>

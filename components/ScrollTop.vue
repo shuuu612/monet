@@ -53,8 +53,8 @@ export default {
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  box-shadow: 1px 1px 5px var(--menu-button-shadow);
-  background-color: var(--menu-button);
+  box-shadow: 1px 1px 5px var(--scroll-top-button-shadow);
+  background-color: var(--scroll-top-button);
   z-index: 50;
   transition: transform .4s;
   transform: translateY(0);
@@ -62,7 +62,7 @@ export default {
   align-items: center;
   justify-content: center;
   @include hover() {
-    transform: translateY(2px);
+    background-color: var(--scroll-top-button-hover);
   }
   &.hide {
     transform: translateY(280px);

@@ -178,7 +178,7 @@ export default {
     
   }
   @include responsive(md) {
-    fill: var(--grey);
+    fill: var(--black-super-light-forDarkMode);
   }
   @include responsive(lg) {
     
@@ -195,6 +195,9 @@ export default {
   height: 36px;
   border-radius: 4px;
   font-size: var(--font-size-sm);
-  color: var(--black-forDarkMode);
+  color: var(--black-super-light-forDarkMode);
+}
+::placeholder {
+  color: var(--black-transparent-forDarkMode);
 }
 </style>

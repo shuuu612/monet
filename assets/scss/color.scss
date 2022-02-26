@@ -7,7 +7,7 @@
   --white-super-dark: #dbdbdb;
   --white-ultra-dark: #cccccc;
   --white-hover: #d4d4d4;
-  --white-transparent: #f3f3f383;
+  --white-transparent: #f3f3f356;
   --white-transparent-high: #f3f3f31e;
   --white-transparent-low: #f3f3f3e1;
 
@@ -109,26 +109,26 @@
   --color-dark-transparent-low: var(--blue-dark-transparent-low);
   --color-dark-transparent-low-hover: var(--blue-dark-transparent-low-hover);
 
-  --white-forDarkMode: var(--white);
-  --white-dark-forDarkMode: var(--white-dark);
-  --white-super-dark-forDarkMode: var(--white-super-dark);
-  --white-ultra-dark-forDarkMode: var(--white-ultra-dark);
-  --white-hover-forDarkMode: var(--white-hover);
-  --white-transparent-forDarkMode: var(--white-transparent);
-  --white-transparent-high-forDarkMode: var(--white-transparent-high);
-  --white-transparent-low-forDarkMode: var(--white-transparent-low);
+  --white-forDarkMode: var(--black);
+  --white-dark-forDarkMode: var(--black-dark);
+  --white-super-dark-forDarkMode: var(--black-super-dark);
+  --white-ultra-dark-forDarkMode: var(--black-ultra-dark);
+  --white-hover-forDarkMode: var(--black-hover);
+  --white-transparent-forDarkMode: var(--black-transparent);
+  --white-transparent-high-forDarkMode: var(--black-transparent-high);
+  --white-transparent-low-forDarkMode: var(--black-transparent-low);
 
-  --black-forDarkMode: var(--black);
-  --black-light-forDarkMode: var(--black-light);
-  --black-super-light-forDarkMode: var(--black-super-light);
-  --black-ultra-light-forDarkMode: var(--black-ultra-light);
-  --black-dark-forDarkMode: var(--black-dark);
-  --black-super-dark-forDarkMode: var(--black-super-dark);
-  --black-ultra-dark-forDarkMode: var(--black-ultra-dark);
-  --black-hover-forDarkMode: var(--black-hover);
-  --black-transparent-forDarkMode: var(--black-transparent);
-  --black-transparent-high-forDarkMode: var(--black-transparent-high);
-  --black-transparent-low-forDarkMode: var(--black-transparent-low);
+  --black-forDarkMode: var(--white);
+  --black-light-forDarkMode: var(--white-light);
+  --black-super-light-forDarkMode: var(--white-super-light);
+  --black-ultra-light-forDarkMode: var(--white-ultra-light);
+  --black-dark-forDarkMode: var(--white-dark);
+  --black-super-dark-forDarkMode: var(--white-super-dark);
+  --black-ultra-dark-forDarkMode: var(--white-ultra-dark);
+  --black-hover-forDarkMode: var(--white-hover);
+  --black-transparent-forDarkMode: var(--white-transparent);
+  --black-transparent-high-forDarkMode: var(--white-transparent-high);
+  --black-transparent-low-forDarkMode: var(--white-transparent-low);
 
   --red: #ed4956;
   --red-transparent-high: #ed495715;
@@ -155,6 +155,89 @@
   --color-image-grey: #636363;
   --color-image-black: #181818;
 
+  // カラーモード
+
+  --colormode1: #c84219;
+  --colormode1-dark: #ac3814;
+  --colormode1-super-dark: #972e0e;
+  --colormode1-ultra-dark: #802206;
+  --colormode1-white: #ffcbbd;
+
+  --colormode2: #cc6363;
+  --colormode2-dark: #c75656;
+  --colormode2-super-dark: #b64949;
+  --colormode2-ultra-dark: #a03b3b;
+  --colormode2-white: #ffc8c8;
+
+  --colormode3: #334b7c;
+  --colormode3-dark: #2c4370;
+  --colormode3-super-dark: #2a3a5a;
+  --colormode3-ultra-dark: #212f4b;
+  --colormode3-white: #cedfff;
+
+  --colormode4: #4891bb;
+  --colormode4-dark: #3a86b3;
+  --colormode4-super-dark: #2f76a0;
+  --colormode4-ultra-dark: #22678f;
+  --colormode4-white: #caebff;
+
+  --colormode5: #e2892f;
+  --colormode5-dark: #d87c20;
+  --colormode5-super-dark: #c76e16;
+  --colormode5-ultra-dark: #ad5d0d;
+  --colormode5-white: #ffe4ca;
+
+  --colormode6: #c99914;
+  --colormode6-dark: #b88b0f;
+  --colormode6-super-dark: #a37a09;
+  --colormode6-ultra-dark: #8d6906;
+  --colormode6-white: #fff4d4;
+
+  --colormode7: #4a7e4d;
+  --colormode7-dark: #3c773f;
+  --colormode7-super-dark: #316d34;
+  --colormode7-ultra-dark: #245c27;
+  --colormode7-white: #e0ffe1;
+
+  /* --colormode8: #63a367;
+  --colormode8-dark: #529456;
+  --colormode8-super-dark: #46834a;
+  --colormode8-ultra-dark: #46834a;
+  --colormode8-white: #dcffdf; */
+  --colormode8: #535353;
+  --colormode8-dark: #464646;
+  --colormode8-super-dark: #3a3a3a;
+  --colormode8-ultra-dark: #2e2e2e;
+  --colormode8-white: #dddddd;
+
+  --colormode9: #875b8b;
+  --colormode9-dark: #7a517e;
+  --colormode9-super-dark: #6d4470;
+  --colormode9-ultra-dark: #59385c;
+  --colormode9-white: #fde6ff;
+
+  /* --colormode10: #a483a7;
+  --colormode10-dark: #937196;
+  --colormode10-super-dark: #826485;
+  --colormode10-white: #fde6ff; */
+  --colormode10: #eeeeee;
+  --colormode10-dark: #d4d4d4;
+  --colormode10-super-dark: #bdbdbd;
+  --colormode10-ultra-dark: #a0a0a0;
+  --colormode10-white: #242424;
+
+  --colormode11: #9b6733;
+  --colormode11-dark: #86592c;
+  --colormode11-super-dark: #754d24;
+  --colormode11-ultra-dark: #614020;
+  --colormode11-white: #ffead4;
+
+  --colormode12: #9b8664;
+  --colormode12-dark: #8d7753;
+  --colormode12-super-dark: #7c6746;
+  --colormode12-ultra-dark: #6b583a;
+  --colormode12-white: #ffefd6;
+
   // グラデーション
   --gradation-start: #005c97;
   --gradation-start-hover: #247bb1;
@@ -172,54 +255,357 @@
   --gradation-end-hover: #14be14;
 
   // 要素（ダークモード用）
+  --background: var(--white);
+  --logo: var(--black);
   --site-name: var(--color-ultra-dark);
+  --site-time: var(--black-super-light);
   --site-border: var(--color-dark-transparent);
   --side-menu: var(--color-dark-transparent-low);
+  --side-menu-icon: var(--white);
   --side-menu-hover: var(--color-dark-transparent-low-hover);
   --side-menu-borber: transparent;
-  --menu-button: var(--black-transparent-high);
-  --menu-button-shadow: var(--grey);
+  --tool-button-hover: var(--black-transparent-high);
   --more-button: var(--color-dark-transparent-low);
   --more-button-hover: var(--color-dark-transparent-low-hover);
-  --order-button: #afafaf;
-  --order-button-hover: var(--black-transparent-high);
+  --more-button-text: var(--black);
   --search-border: var(--color-dark);
+  --scroll-top-button: var(--black-transparent-high);
+  --scroll-top-button-hover: var(--color-dark-transparent-low-hover);
+  --scroll-top-button-shadow: var(--grey);
   --scroll-top-icon: var(--color-dark);
+  --favorite-icon: var(--red);
+  --favorite-icon-hover: var(--red-transparent-high);
+  --darkmode-button-mask: var(--colormode1);
+}
+
+:root.color1 {
+  --background: var(--colormode1);
+  --logo: var(--white);
+  --site-name: var(--white);
+  --site-time: var(--colormode1-white);
+  --site-border: var(--colormode1);
+  --side-menu: var(--colormode1-super-dark);
+  --side-menu-icon: var(--colormode1-white);
+  --side-menu-hover: var(--colormode1-ultra-dark);
+  --side-menu-borber: transparent;
+  --tool-button-hover: var(--white-transparent-high);
+  --more-button: var(--colormode1-super-dark);
+  --more-button-hover: var(--colormode1-ultra-dark);
+  --more-button-text: var(--white);
+  --search-border: var(--colormode1-white);
+  --scroll-top-button: var(--colormode1-super-dark);
+  --scroll-top-button-hover: var(--colormode1-ultra-dark);
+  --scroll-top-button-shadow: transparent;
+  --scroll-top-icon: var(--colormode1-white);
+  --favorite-icon: var(--colormode1-white);
+  --favorite-icon-hover: var(--white-transparent-high);
+  --darkmode-button-mask: var(--colormode1);
+}
+
+:root.color2 {
+  --background: var(--colormode2);
+  --logo: var(--white);
+  --site-name: var(--white);
+  --site-time: var(--colormode2-white);
+  --site-border: var(--colormode2);
+  --side-menu: var(--colormode2-super-dark);
+  --side-menu-icon: var(--colormode2-white);
+  --side-menu-hover: var(--colormode2-ultra-dark);
+  --side-menu-borber: transparent;
+  --tool-button-hover: var(--white-transparent-high);
+  --more-button: var(--colormode2-super-dark);
+  --more-button-hover: var(--colormode2-ultra-dark);
+  --more-button-text: var(--white);
+  --search-border: var(--colormode2-white);
+  --scroll-top-button: var(--colormode2-super-dark);
+  --scroll-top-button-hover: var(--colormode2-ultra-dark);
+  --scroll-top-button-shadow: transparent;
+  --scroll-top-icon: var(--colormode2-white);
+  --favorite-icon: var(--colormode2-white);
+  --favorite-icon-hover: var(--white-transparent-high);
+  --darkmode-button-mask: var(--colormode2);
+}
+
+:root.color3 {
+  --background: var(--colormode3);
+  --logo: var(--white);
+  --site-name: var(--white);
+  --site-time: var(--colormode3-white);
+  --site-border: var(--colormode3);
+  --side-menu: var(--colormode3-super-dark);
+  --side-menu-icon: var(--colormode3-white);
+  --side-menu-hover: var(--colormode3-ultra-dark);
+  --side-menu-borber: transparent;
+  --tool-button-hover: var(--white-transparent-high);
+  --more-button: var(--colormode3-super-dark);
+  --more-button-hover: var(--colormode3-ultra-dark);
+  --more-button-text: var(--white);
+  --search-border: var(--colormode3-white);
+  --scroll-top-button: var(--colormode3-super-dark);
+  --scroll-top-button-hover: var(--colormode3-ultra-dark);
+  --scroll-top-button-shadow: transparent;
+  --scroll-top-icon: var(--colormode3-white);
+  --favorite-icon: var(--colormode3-white);
+  --favorite-icon-hover: var(--white-transparent-high);
+  --darkmode-button-mask: var(--colormode3);
+}
+
+:root.color4 {
+  --background: var(--colormode4);
+  --logo: var(--white);
+  --site-name: var(--white);
+  --site-time: var(--colormode4-white);
+  --site-border: var(--colormode4);
+  --side-menu: var(--colormode4-super-dark);
+  --side-menu-icon: var(--colormode4-white);
+  --side-menu-hover: var(--colormode4-ultra-dark);
+  --side-menu-borber: transparent;
+  --tool-button-hover: var(--white-transparent-high);
+  --more-button: var(--colormode4-super-dark);
+  --more-button-hover: var(--colormode4-ultra-dark);
+  --more-button-text: var(--white);
+  --search-border: var(--colormode4-white);
+  --scroll-top-button: var(--colormode4-super-dark);
+  --scroll-top-button-hover: var(--colormode4-ultra-dark);
+  --scroll-top-button-shadow: transparent;
+  --scroll-top-icon: var(--colormode4-white);
+  --favorite-icon: var(--colormode4-white);
+  --favorite-icon-hover: var(--white-transparent-high);
+  --darkmode-button-mask: var(--colormode4);
+}
+
+:root.color5 {
+  --background: var(--colormode5);
+  --logo: var(--white);
+  --site-name: var(--white);
+  --site-time: var(--colormode5-white);
+  --site-border: var(--colormode5);
+  --side-menu: var(--colormode5-super-dark);
+  --side-menu-icon: var(--colormode5-white);
+  --side-menu-hover: var(--colormode5-ultra-dark);
+  --side-menu-borber: transparent;
+  --tool-button-hover: var(--white-transparent-high);
+  --more-button: var(--colormode5-super-dark);
+  --more-button-hover: var(--colormode5-ultra-dark);
+  --more-button-text: var(--white);
+  --search-border: var(--colormode5-white);
+  --scroll-top-button: var(--colormode5-super-dark);
+  --scroll-top-button-hover: var(--colormode5-ultra-dark);
+  --scroll-top-button-shadow: transparent;
+  --scroll-top-icon: var(--colormode5-white);
+  --favorite-icon: var(--colormode5-white);
+  --favorite-icon-hover: var(--white-transparent-high);
+  --darkmode-button-mask: var(--colormode5);
+}
+
+:root.color6 {
+  --background: var(--colormode6);
+  --logo: var(--white);
+  --site-name: var(--white);
+  --site-time: var(--colormode6-white);
+  --site-border: var(--colormode6);
+  --side-menu: var(--colormode6-super-dark);
+  --side-menu-icon: var(--colormode6-white);
+  --side-menu-hover: var(--colormode6-ultra-dark);
+  --side-menu-borber: transparent;
+  --tool-button-hover: var(--white-transparent-high);
+  --more-button: var(--colormode6-super-dark);
+  --more-button-hover: var(--colormode6-ultra-dark);
+  --more-button-text: var(--white);
+  --search-border: var(--colormode6-white);
+  --scroll-top-button: var(--colormode6-super-dark);
+  --scroll-top-button-hover: var(--colormode6-ultra-dark);
+  --scroll-top-button-shadow: transparent;
+  --scroll-top-icon: var(--colormode6-white);
+  --favorite-icon: var(--colormode6-white);
+  --favorite-icon-hover: var(--white-transparent-high);
+  --darkmode-button-mask: var(--colormode6);
+}
+
+:root.color7 {
+  --background: var(--colormode7);
+  --logo: var(--white);
+  --site-name: var(--white);
+  --site-time: var(--colormode7-white);
+  --site-border: var(--colormode7);
+  --side-menu: var(--colormode7-super-dark);
+  --side-menu-icon: var(--colormode7-white);
+  --side-menu-hover: var(--colormode7-ultra-dark);
+  --side-menu-borber: transparent;
+  --tool-button-hover: var(--white-transparent-high);
+  --more-button: var(--colormode7-super-dark);
+  --more-button-hover: var(--colormode7-ultra-dark);
+  --more-button-text: var(--white);
+  --search-border: var(--colormode7-white);
+  --scroll-top-button: var(--colormode7-super-dark);
+  --scroll-top-button-hover: var(--colormode7-ultra-dark);
+  --scroll-top-button-shadow: transparent;
+  --scroll-top-icon: var(--colormode7-white);
+  --favorite-icon: var(--colormode7-white);
+  --favorite-icon-hover: var(--white-transparent-high);
+  --darkmode-button-mask: var(--colormode7);
+}
+
+:root.color8 {
+  --background: var(--colormode8);
+  --logo: var(--white);
+  --site-name: var(--white);
+  --site-time: var(--colormode8-white);
+  --site-border: var(--colormode8);
+  --side-menu: var(--colormode8-super-dark);
+  --side-menu-icon: var(--colormode8-white);
+  --side-menu-hover: var(--colormode8-ultra-dark);
+  --side-menu-borber: transparent;
+  --tool-button-hover: var(--white-transparent-high);
+  --more-button: var(--colormode8-super-dark);
+  --more-button-hover: var(--colormode8-ultra-dark);
+  --more-button-text: var(--white);
+  --search-border: var(--colormode8-white);
+  --scroll-top-button: var(--colormode8-super-dark);
+  --scroll-top-button-hover: var(--colormode8-ultra-dark);
+  --scroll-top-button-shadow: transparent;
+  --scroll-top-icon: var(--colormode8-white);
+  --favorite-icon: var(--colormode8-white);
+  --favorite-icon-hover: var(--white-transparent-high);
+  --darkmode-button-mask: var(--colormode8);
+}
+
+:root.color9 {
+  --background: var(--colormode9);
+  --logo: var(--white);
+  --site-name: var(--white);
+  --site-time: var(--colormode9-white);
+  --site-border: var(--colormode9);
+  --side-menu: var(--colormode9-super-dark);
+  --side-menu-icon: var(--colormode9-white);
+  --side-menu-hover: var(--colormode9-ultra-dark);
+  --side-menu-borber: transparent;
+  --tool-button-hover: var(--white-transparent-high);
+  --more-button: var(--colormode9-super-dark);
+  --more-button-hover: var(--colormode9-ultra-dark);
+  --more-button-text: var(--white);
+  --search-border: var(--colormode9-white);
+  --scroll-top-button: var(--colormode9-super-dark);
+  --scroll-top-button-hover: var(--colormode9-ultra-dark);
+  --scroll-top-button-shadow: transparent;
+  --scroll-top-icon: var(--colormode9-white);
+  --favorite-icon: var(--colormode9-white);
+  --favorite-icon-hover: var(--white-transparent-high);
+  --darkmode-button-mask: var(--colormode9);
+}
+
+:root.color10 {
+  --white-forDarkMode: var(--white);
+  --white-dark-forDarkMode: var(--white-dark);
+  --white-super-dark-forDarkMode: var(--white-super-dark);
+  --white-ultra-dark-forDarkMode: var(--white-ultra-dark);
+  --white-hover-forDarkMode: var(--white-hover);
+  --white-transparent-forDarkMode: var(--white-transparent);
+  --white-transparent-high-forDarkMode: var(--white-transparent-high);
+  --white-transparent-low-forDarkMode: var(--white-transparent-low);
+
+  --black-forDarkMode: var(--black);
+  --black-light-forDarkMode: var(--black-light);
+  --black-super-light-forDarkMode: var(--black-super-light);
+  --black-ultra-light-forDarkMode: var(--black-ultra-light);
+  --black-dark-forDarkMode: var(--black-dark);
+  --black-super-dark-forDarkMode: var(--black-super-dark);
+  --black-ultra-dark-forDarkMode: var(--black-ultra-dark);
+  --black-hover-forDarkMode: var(--black-hover);
+  --black-transparent-forDarkMode: var(--black-transparent);
+  --black-transparent-high-forDarkMode: var(--black-transparent-high);
+  --black-transparent-low-forDarkMode: var(--black-transparent-low);
+
+  --background: var(--colormode10);
+  --logo: var(--black);
+  --site-name: var(--black);
+  --site-time: var(--colormode10-white);
+  --site-border: var(--colormode10);
+  --side-menu: var(--colormode10-super-dark);
+  --side-menu-icon: var(--colormode10-white);
+  --side-menu-hover: var(--colormode10-ultra-dark);
+  --side-menu-borber: transparent;
+  --tool-button-hover: var(--white-transparent-high);
+  --more-button: var(--colormode10-super-dark);
+  --more-button-hover: var(--colormode10-ultra-dark);
+  --more-button-text: var(--black);
+  --search-border: var(--colormode10-white);
+  --scroll-top-button: var(--colormode10-super-dark);
+  --scroll-top-button-hover: var(--colormode10-ultra-dark);
+  --scroll-top-button-shadow: transparent;
+  --scroll-top-icon: var(--colormode10-white);
+  --favorite-icon: var(--red);
+  --favorite-icon-hover: var(--white-transparent-high);
+  --darkmode-button-mask: var(--colormode10);
+}
+
+:root.color11 {
+  --background: var(--colormode11);
+  --logo: var(--white);
+  --site-name: var(--white);
+  --site-time: var(--colormode11-white);
+  --site-border: var(--colormode11);
+  --side-menu: var(--colormode11-super-dark);
+  --side-menu-icon: var(--colormode11-white);
+  --side-menu-hover: var(--colormode11-ultra-dark);
+  --side-menu-borber: transparent;
+  --tool-button-hover: var(--white-transparent-high);
+  --more-button: var(--colormode11-super-dark);
+  --more-button-hover: var(--colormode11-ultra-dark);
+  --more-button-text: var(--white);
+  --search-border: var(--colormode11-white);
+  --scroll-top-button: var(--colormode11-super-dark);
+  --scroll-top-button-hover: var(--colormode11-ultra-dark);
+  --scroll-top-button-shadow: transparent;
+  --scroll-top-icon: var(--colormode11-white);
+  --favorite-icon: var(--colormode11-white);
+  --favorite-icon-hover: var(--white-transparent-high);
+  --darkmode-button-mask: var(--colormode11);
+}
+
+:root.color12 {
+  --background: var(--colormode12);
+  --logo: var(--white);
+  --site-name: var(--white);
+  --site-time: var(--colormode12-white);
+  --site-border: var(--colormode12);
+  --side-menu: var(--colormode12-super-dark);
+  --side-menu-icon: var(--colormode12-white);
+  --side-menu-hover: var(--colormode12-ultra-dark);
+  --side-menu-borber: transparent;
+  --tool-button-hover: var(--white-transparent-high);
+  --more-button: var(--colormode12-super-dark);
+  --more-button-hover: var(--colormode12-ultra-dark);
+  --more-button-text: var(--white);
+  --search-border: var(--colormode12-white);
+  --scroll-top-button: var(--colormode12-super-dark);
+  --scroll-top-button-hover: var(--colormode12-ultra-dark);
+  --scroll-top-button-shadow: transparent;
+  --scroll-top-icon: var(--colormode12-white);
+  --favorite-icon: var(--colormode12-white);
+  --favorite-icon-hover: var(--white-transparent-high);
+  --darkmode-button-mask: var(--colormode12);
 }
 
 :root.darkmode {
-  --white-forDarkMode: var(--black);
-  --white-dark-forDarkMode: var(--black-dark);
-  --white-super-dark-forDarkMode: var(--black-super-dark);
-  --white-ultra-dark-forDarkMode: var(--black-ultra-dark);
-  --white-hover-forDarkMode: var(--black-hover);
-  --white-transparent-forDarkMode: var(--black-transparent);
-  --white-transparent-high-forDarkMode: var(--black-transparent-high);
-  --white-transparent-low-forDarkMode: var(--black-transparent-low);
-
-  --black-forDarkMode: var(--white);
-  --black-light-forDarkMode: var(--white-light);
-  --black-super-light-forDarkMode: var(--white-super-light);
-  --black-ultra-light-forDarkMode: var(--white-ultra-light);
-  --black-dark-forDarkMode: var(--white-dark);
-  --black-super-dark-forDarkMode: var(--white-super-dark);
-  --black-ultra-dark-forDarkMode: var(--white-ultra-dark);
-  --black-hover-forDarkMode: var(--white-hover);
-  --black-transparent-forDarkMode: var(--white-transparent);
-  --black-transparent-high-forDarkMode: var(--white-transparent-high);
-  --black-transparent-low-forDarkMode: var(--white-transparent-low);
-
+  --background: var(--black);
+  --logo: var(--white);
   --site-name: var(--white);
+  --site-time: var(--white-super-light);
   --site-border: var(--black);
   --side-menu: #000000;
+  --side-menu-icon: var(--white);
   --side-menu-hover: var(--black-super-light);
   --side-menu-borber: var(--black-super-light);
-  --menu-button: var(--black-light);
-  --menu-button-shadow: transparent;
+  --tool-button-hover: var(--black-light);
   --more-button: var(--black-super-light);
   --more-button-hover: #4b4b4b;
-  --order-button: var(--black-super-light);
-  --order-button-hover: var(--black-light);
+  --more-button-text: var(--white);
   --search-border: var(--white);
+  --scroll-top-button: var(--black-super-light);
+  --scroll-top-button-hover: var(--black-super-light);
+  --scroll-top-button-shadow: transparent;
   --scroll-top-icon: var(--white-ultra-dark);
+  --favorite-icon: var(--red);
+  --favorite-icon-hover: var(--red-transparent-high);
 }
