@@ -210,7 +210,7 @@
                   </div>
                   <div class="sliderNoticeTexts">
                     <div class="sliderNoticeText main">手動調整中</div>
-                    <div class="sliderNoticeText sub">表示崩れを防止するため、手動調整中であってもブラウザサイズの変更を検知すると、手動調整を中止し自動調整が有効になりますのでご注意ください。</div>
+                    <div class="sliderNoticeText sub">表示崩れを防止するため、手動調整中であってもブラウザのサイズ変更を検知すると、手動調整を中止し自動調整が有効になります。</div>
                   </div>
                 </div>
               </div>
