@@ -6,7 +6,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'Picasso | Webデザインギャラリー',
+    title: 'Monet | Webデザインギャラリー',
     htmlAttrs: {
       lang: 'ja',
       prefix: 'og: http://ogp.me/ns#'
@@ -20,10 +20,10 @@ export default {
       { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
       
       // OGP設定
-      { hid: 'og:site_name', property: 'og:site_name', content: 'Picasso' },
+      { hid: 'og:site_name', property: 'og:site_name', content: 'Monet' },
       { hid: 'og:type', property: 'og:type', content: 'website' },
       { hid: 'og:url', property: 'og:url', content: 'https://mitsukaru-design.com/' },
-      { hid: 'og:title', property: 'og:title', content: 'Picasso | Webデザインギャラリー' },
+      { hid: 'og:title', property: 'og:title', content: 'Monet | Webデザインギャラリー' },
       { hid: 'og:description', property: 'og:description', content: 'サイトの説明' },
       { hid: 'og:image', property: 'og:image', content: 'サイトURL' },
 
@@ -99,9 +99,9 @@ export default {
   // @nuxtjs/pwa Configuration
   manifest: {
     lang: 'ja',
-    name: 'Picasso | Webデザインギャラリー',
-    short_name: 'Picasso',
-    description: 'PicassoはWeb制作の参考になるWebサイトを集めたギャラリー･リンク集です。日本国内の優れたWebデザインを厳選してご紹介しています。Webデザインの参考にぜひご活用ください。',
+    name: 'Monet | Webデザインギャラリー',
+    short_name: 'Monet',
+    description: 'MonetはWeb制作の参考になるWebサイトを集めたギャラリー･リンク集です。日本国内の優れたWebデザインを厳選してご紹介しています。Webデザインの参考にぜひご活用ください。',
     display: 'standalone',
     theme_color: '#000',
     background_color: '#fff',

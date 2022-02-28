@@ -402,9 +402,9 @@ export default {
             totalWidth: 0,
             columnContent: 0,
             meta: {
-              title: 'Picasso | Webデザインギャラリー',
+              title: 'Monet | Webデザインギャラリー',
               keyword: 'デザイン,Webデザイン,Web design,参考,Webデザインギャラリー,ギャラリー,Webサイト',
-              description: 'PicassoはWeb制作の参考になるWebサイトを集めたギャラリー･リンク集です。日本国内の優れたWebデザインを厳選してご紹介しています。Webデザインの参考にぜひご活用ください。',
+              description: 'MonetはWeb制作の参考になるWebサイトを集めたギャラリー･リンク集です。日本国内の優れたWebデザインを厳選してご紹介しています。Webデザインの参考にぜひご活用ください。',
               type: 'website',
               url: 'https://mitsukaru-design.com/',
               image: 'https://mitsukaru-design.com/images/ogp/logo.png',
