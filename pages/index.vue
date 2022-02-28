@@ -351,7 +351,7 @@ export default {
             keywordContents: [],
             bookmarkContents: [],
             displayingContent: [],
-            displayingLimit: 30,
+            displayingLimit: 60,
             displayingPageOriginal: 0,
             displayingPageKeyword: 0,
             displayingPageBookmark: 0,
@@ -880,23 +880,23 @@ export default {
                         maxStep = 9;
                     }
                     else if (windowWidth >= 1100 && windowWidth < 1200) {
-                        bestStep = 3;
+                        bestStep = 2;
                         maxStep = 10;
                     }
                     else if (windowWidth >= 1200 && windowWidth < 1300) {
-                        bestStep = 3;
+                        bestStep = 2;
                         maxStep = 10;
                     }
                     else if (windowWidth >= 1300 && windowWidth < 1400) {
-                        bestStep = 3;
+                        bestStep = 2;
                         maxStep = 10;
                     }
                     else if (windowWidth >= 1400 && windowWidth < 1500) {
-                        bestStep = 3;
+                        bestStep = 2;
                         maxStep = 10;
                     }
                     else if (windowWidth >= 1500) {
-                        bestStep = 3;
+                        bestStep = 2;
                         maxStep = 10;
                     }
                     break;
