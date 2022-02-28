@@ -186,7 +186,7 @@ export default {
         const selectedTag = params.tagId;
         let apiFilters
         if(selectedTag !== undefined && selectedTag !== 'bookmark') {
-          apiFilters = `(type[contains]${selectedTag}[or]industry[contains]${selectedTag}[or]impression[contains]${selectedTag}[or]layout[contains]${selectedTag}[or]color[contains]${selectedTag}[or]pickup[contains]${selectedTag}[or]technique[contains]${selectedTag}[or]technology[contains]${selectedTag})[and]hide[equals]false[and]link[equals]false`
+          apiFilters = `(type[contains]${selectedTag}[or]industry[contains]${selectedTag}[or]impression[contains]${selectedTag}[or]layout[contains]${selectedTag}[or]color[contains]${selectedTag}[or]pickup[contains]${selectedTag}[or]technique[contains]${selectedTag}[or]technology[contains]${selectedTag}[or]scheme[contains]${selectedTag})[and]hide[equals]false[and]link[equals]false`
         }else {
             apiFilters = "hide[equals]false[and]link[equals]false";
         }
@@ -320,6 +320,12 @@ export default {
                 limit: 100,
             },
         });
+        const scheme = await $microcms.get({
+            endpoint: "scheme",
+            queries: {
+                limit: 100,
+            },
+        });
         const tag = {
             type,
             industry,
@@ -329,6 +335,7 @@ export default {
             pickup,
             technique,
             technology,
+            scheme,
         };
         return {
             ...data,
@@ -392,6 +399,7 @@ export default {
                 pickup: [],
                 technique: [],
                 technology: [],
+                scheme: [],
                 bookmark: false,
                 condition: "",
             },
@@ -1454,6 +1462,10 @@ export default {
             if(technology !== undefined) {
               this.japaneseTags = technology.name;
             }
+            const scheme = this.tag.scheme.contents.find(function(item) {return item.id === selectedTag})
+            if(scheme !== undefined) {
+              this.japaneseTags = scheme.name;
+            }
           }
         },
         getLocalStorage() {
@@ -1627,6 +1639,15 @@ export default {
                 const technologyKeyword = content.technology.map(function (item) {
                     return item.keyword !== undefined ? item.keyword.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96)) : '';
                 });
+                const schemeId = content.scheme.map(function (item) {
+                    return item.id.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
+                });
+                const schemeName = content.scheme.map(function (item) {
+                    return item.name.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
+                });
+                const schemeKeyword = content.scheme.map(function (item) {
+                    return item.keyword !== undefined ? item.keyword.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96)) : '';
+                });
                 const keyword = content.keyword !== undefined ? content.keyword.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96)) : "";
 
                 // ブックマークに登録されている場合は、ブックマーク関連のキーワードも対象にする
@@ -1673,6 +1694,9 @@ export default {
                                  (technologyId.length !== 0 ? (technologyId.find(value => value.match(regExp)) !== undefined) : false) ||
                                  (technologyName.length !== 0 ? (technologyName.find(value => value.match(regExp)) !== undefined) : false) ||
                                  (technologyKeyword.length !== 0 ? (technologyKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
+                                 (schemeId.length !== 0 ? (schemeId.find(value => value.match(regExp)) !== undefined) : false) ||
+                                 (schemeName.length !== 0 ? (schemeName.find(value => value.match(regExp)) !== undefined) : false) ||
+                                 (schemeKeyword.length !== 0 ? (schemeKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
                                  (keyword.length !== 0 ? keyword.includes(lowerKey) : false) ||
                                  (bookmark.length !== 0 ? (bookmark.find(value => value.match(regExp)) !== undefined) : false);
   
@@ -1714,6 +1738,9 @@ export default {
                                    (technologyId.length !== 0 ? (technologyId.find(value => value.match(regExp)) !== undefined) : false) ||
                                    (technologyName.length !== 0 ? (technologyName.find(value => value.match(regExp)) !== undefined) : false) ||
                                    (technologyKeyword.length !== 0 ? (technologyKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
+                                   (schemeId.length !== 0 ? (schemeId.find(value => value.match(regExp)) !== undefined) : false) ||
+                                   (schemeName.length !== 0 ? (schemeName.find(value => value.match(regExp)) !== undefined) : false) ||
+                                   (schemeKeyword.length !== 0 ? (schemeKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
                                    (keyword.length !== 0 ? keyword.includes(key) : false) ||
                                    (bookmark.length !== 0 ? (bookmark.find(value => value.match(regExp)) !== undefined) : false);
                     // 検索キーワードに一致した場合はマッチングカウントをUP

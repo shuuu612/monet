@@ -252,26 +252,6 @@
                     <div class="background"></div>
                   </div>
                 </button>
-                <button class="check" :class="getColor3Checked" @click="colormodeChange(3)">
-                  <div class="textOuter">
-                    <div class="text color">青色</div>
-                    <div class="sample color3"></div>
-                  </div>
-                  <div class="checkboxOuter">
-                    <div class="switch"></div>
-                    <div class="background"></div>
-                  </div>
-                </button>
-                <button class="check" :class="getColor4Checked" @click="colormodeChange(4)">
-                  <div class="textOuter">
-                    <div class="text color">水色</div>
-                    <div class="sample color4"></div>
-                  </div>
-                  <div class="checkboxOuter">
-                    <div class="switch"></div>
-                    <div class="background"></div>
-                  </div>
-                </button>
                 <button class="check" :class="getColor5Checked" @click="colormodeChange(5)">
                   <div class="textOuter">
                     <div class="text color">橙色</div>
@@ -296,6 +276,26 @@
                   <div class="textOuter">
                     <div class="text color">緑色</div>
                     <div class="sample color7"></div>
+                  </div>
+                  <div class="checkboxOuter">
+                    <div class="switch"></div>
+                    <div class="background"></div>
+                  </div>
+                </button>
+                <button class="check" :class="getColor4Checked" @click="colormodeChange(4)">
+                  <div class="textOuter">
+                    <div class="text color">水色</div>
+                    <div class="sample color4"></div>
+                  </div>
+                  <div class="checkboxOuter">
+                    <div class="switch"></div>
+                    <div class="background"></div>
+                  </div>
+                </button>
+                <button class="check" :class="getColor3Checked" @click="colormodeChange(3)">
+                  <div class="textOuter">
+                    <div class="text color">青色</div>
+                    <div class="sample color3"></div>
                   </div>
                   <div class="checkboxOuter">
                     <div class="switch"></div>
@@ -398,12 +398,13 @@ export default {
       /* scrollAmountSideMenu: 0, */
       tagname: [
         'type',
-        'industry',
         'impression',
-        'layout',
-        'color',
+        'industry',
         'pickup',
         'technique',
+        'layout',
+        'color',
+        'scheme',
         'technology',
       ],
       selectedTag: true,
@@ -849,6 +850,7 @@ export default {
         ...this.tag.pickup.contents,
         ...this.tag.technique.contents,
         ...this.tag.technology.contents,
+        ...this.tag.scheme.contents,
       ]
       // キーワードを一度入力してから削除したとき
       if (!key) {
@@ -1408,10 +1410,17 @@ export default {
     background: linear-gradient(to bottom, var(--white) -150%, var(--color-image-black) 100%);
   }
   &.colorful {
-    background: linear-gradient(to right, var(--color-image-red), var(--color-image-yellow), var(--color-image-blue));
+    background: linear-gradient(to right,
+                                var(--color-image-red),
+                                var(--color-image-orange),
+                                var(--color-image-yellow),
+                                var(--color-image-green),
+                                var(--color-image-blue),
+                                var(--color-image-purple)
+                                );
   }
   &.gradation {
-    background: linear-gradient(to right, var(--color-image-blue), var(--color-image-white));
+    background: linear-gradient(to right, var(--color-image-black), var(--color-image-grey), var(--color-image-white));
   }
   &.pastel {
       background: linear-gradient(to right, #9796f0, #fbc7d4);
