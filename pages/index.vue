@@ -148,8 +148,8 @@
                   </div>
                   <div class="time">
                     <div class="published">{{content.publishedAtJST}}</div>
-                    <div class="elapsed">{{content.elapsedDate}}</div>
-                    <div class="updated">{{content.updatedAtJST !== undefined &&  content.updatedAtJST !== content.publishedAtJST? '更新日 '+content.updatedAtJST : ''}}</div>
+                    <!-- <div class="elapsed">{{content.elapsedDate}}</div> -->
+                    <!-- <div class="updated">{{content.updatedAtJST !== undefined &&  content.updatedAtJST !== content.publishedAtJST? '更新日 '+content.updatedAtJST : ''}}</div> -->
                   </div>
                 </div>
                 <!-- <button class="infoButton detail" aria-label="Detail Open" @click="openModal(content.id)">
