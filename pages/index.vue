@@ -472,7 +472,7 @@ export default {
             if (this.$store.getters["status/getSearchKeyword"]) {
                 // キーワード検索
                 if (this.keywordContents.length === 0) {
-                    return "一致する検索結果はありません";
+                    return "一致するコンテンツがありません";
                 }
                 else {
                     return "";
