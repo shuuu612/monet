@@ -1648,7 +1648,7 @@ export default {
                 const schemeKeyword = content.scheme.map(function (item) {
                     return item.keyword !== undefined ? item.keyword.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96)) : '';
                 });
-                const keyword = content.keyword !== undefined ? content.keyword.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96)) : "";
+                const keyword = (content.keyword !== undefined && content.keyword !== null) ? content.keyword.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96)) : "";
 
                 // ブックマークに登録されている場合は、ブックマーク関連のキーワードも対象にする
                 let bookmark;
