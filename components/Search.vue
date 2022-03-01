@@ -92,9 +92,9 @@ export default {
     left: auto;
     /* right: 80px; */
     width: 200px;
-    height: 50px;
+    height: 40px;
     z-index: 15;
-    padding: 10px;
+    padding: 0;
     
     background-color: transparent;
     border-bottom: 0;
@@ -140,20 +140,20 @@ export default {
     align-items: center;
     justify-content: center;
     width: 100%; */
-    height: auto;
-    border-radius: 0;
-    border-bottom: var(--black-forDarkMode) 1px solid;
+    height: 100%;
+    border-radius: 50px;
+    /* border-bottom: var(--black-forDarkMode) 1px solid; */
     /* // グラデーション
     border-image: linear-gradient(to right, var(--gradation-start), var(--gradation-end));
     border-image-slice: 1; */
-    background-color: transparent;
+    background-color: var(--white);
     padding-left: 10px;
     border-top: 0;
     border-left: 0;
     border-right: 0;
-    .searchWrapper.focus & {
+    /* .searchWrapper.focus & {
       border-bottom: var(--search-border) 2px solid;
-    }
+    } */
   }
   @include responsive(lg) {
     
@@ -178,7 +178,7 @@ export default {
     
   }
   @include responsive(md) {
-    fill: var(--black-super-light-forDarkMode);
+    fill: var(--search-icon);
   }
   @include responsive(lg) {
     
@@ -195,9 +195,9 @@ export default {
   height: 36px;
   border-radius: 4px;
   font-size: var(--font-size-sm);
-  color: var(--black-super-light-forDarkMode);
+  color: var(--search-text);
 }
 ::placeholder {
-  color: var(--black-transparent-forDarkMode);
+  color: var(--search-placeholder);
 }
 </style>

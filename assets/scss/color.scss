@@ -269,6 +269,9 @@
   --more-button-hover: var(--color-dark-transparent-low-hover);
   --more-button-text: var(--black);
   --search-border: var(--color-dark);
+  --search-icon: var(--black-super-light-forDarkMode);
+  --search-text: var(--black-super-light-forDarkMode);
+  --search-placeholder: var(--black-transparent-forDarkMode);
   --scroll-top-button: var(--black-transparent-high);
   --scroll-top-button-hover: var(--color-dark-transparent-low-hover);
   --scroll-top-button-shadow: var(--grey);
@@ -293,6 +296,9 @@
   --more-button-hover: var(--colormode1-ultra-dark);
   --more-button-text: var(--white);
   --search-border: var(--colormode1-white);
+  --search-icon: var(--colormode1);
+  --search-text: var(--colormode1);
+  --search-placeholder: var(--colormode1);
   --scroll-top-button: var(--colormode1-super-dark);
   --scroll-top-button-hover: var(--colormode1-ultra-dark);
   --scroll-top-button-shadow: transparent;
@@ -317,6 +323,9 @@
   --more-button-hover: var(--colormode2-ultra-dark);
   --more-button-text: var(--white);
   --search-border: var(--colormode2-white);
+  --search-icon: var(--colormode2);
+  --search-text: var(--colormode2);
+  --search-placeholder: var(--colormode2);
   --scroll-top-button: var(--colormode2-super-dark);
   --scroll-top-button-hover: var(--colormode2-ultra-dark);
   --scroll-top-button-shadow: transparent;
@@ -341,6 +350,9 @@
   --more-button-hover: var(--colormode3-ultra-dark);
   --more-button-text: var(--white);
   --search-border: var(--colormode3-white);
+  --search-icon: var(--colormode3);
+  --search-text: var(--colormode3);
+  --search-placeholder: var(--colormode3);
   --scroll-top-button: var(--colormode3-super-dark);
   --scroll-top-button-hover: var(--colormode3-ultra-dark);
   --scroll-top-button-shadow: transparent;
@@ -365,6 +377,9 @@
   --more-button-hover: var(--colormode4-ultra-dark);
   --more-button-text: var(--white);
   --search-border: var(--colormode4-white);
+  --search-icon: var(--colormode4);
+  --search-text: var(--colormode4);
+  --search-placeholder: var(--colormode4);
   --scroll-top-button: var(--colormode4-super-dark);
   --scroll-top-button-hover: var(--colormode4-ultra-dark);
   --scroll-top-button-shadow: transparent;
@@ -389,6 +404,9 @@
   --more-button-hover: var(--colormode5-ultra-dark);
   --more-button-text: var(--white);
   --search-border: var(--colormode5-white);
+  --search-icon: var(--colormode5);
+  --search-text: var(--colormode5);
+  --search-placeholder: var(--colormode5);
   --scroll-top-button: var(--colormode5-super-dark);
   --scroll-top-button-hover: var(--colormode5-ultra-dark);
   --scroll-top-button-shadow: transparent;
@@ -413,6 +431,9 @@
   --more-button-hover: var(--colormode6-ultra-dark);
   --more-button-text: var(--white);
   --search-border: var(--colormode6-white);
+  --search-icon: var(--colormode6);
+  --search-text: var(--colormode6);
+  --search-placeholder: var(--colormode6);
   --scroll-top-button: var(--colormode6-super-dark);
   --scroll-top-button-hover: var(--colormode6-ultra-dark);
   --scroll-top-button-shadow: transparent;
@@ -437,6 +458,9 @@
   --more-button-hover: var(--colormode7-ultra-dark);
   --more-button-text: var(--white);
   --search-border: var(--colormode7-white);
+  --search-icon: var(--colormode7);
+  --search-text: var(--colormode7);
+  --search-placeholder: var(--colormode7);
   --scroll-top-button: var(--colormode7-super-dark);
   --scroll-top-button-hover: var(--colormode7-ultra-dark);
   --scroll-top-button-shadow: transparent;
@@ -461,6 +485,9 @@
   --more-button-hover: var(--colormode8-ultra-dark);
   --more-button-text: var(--white);
   --search-border: var(--colormode8-white);
+  --search-icon: var(--colormode8);
+  --search-text: var(--colormode8);
+  --search-placeholder: var(--colormode8);
   --scroll-top-button: var(--colormode8-super-dark);
   --scroll-top-button-hover: var(--colormode8-ultra-dark);
   --scroll-top-button-shadow: transparent;
@@ -485,6 +512,9 @@
   --more-button-hover: var(--colormode9-ultra-dark);
   --more-button-text: var(--white);
   --search-border: var(--colormode9-white);
+  --search-icon: var(--colormode9);
+  --search-text: var(--colormode9);
+  --search-placeholder: var(--colormode9);
   --scroll-top-button: var(--colormode9-super-dark);
   --scroll-top-button-hover: var(--colormode9-ultra-dark);
   --scroll-top-button-shadow: transparent;
@@ -530,6 +560,9 @@
   --more-button-hover: var(--colormode10-ultra-dark);
   --more-button-text: var(--black);
   --search-border: var(--colormode10-white);
+  --search-icon: var(--colormode10);
+  --search-text: var(--colormode10);
+  --search-placeholder: var(--colormode10);
   --scroll-top-button: var(--colormode10-super-dark);
   --scroll-top-button-hover: var(--colormode10-ultra-dark);
   --scroll-top-button-shadow: transparent;
@@ -554,6 +587,9 @@
   --more-button-hover: var(--colormode11-ultra-dark);
   --more-button-text: var(--white);
   --search-border: var(--colormode11-white);
+  --search-icon: var(--colormode11);
+  --search-text: var(--colormode11);
+  --search-placeholder: var(--colormode11);
   --scroll-top-button: var(--colormode11-super-dark);
   --scroll-top-button-hover: var(--colormode11-ultra-dark);
   --scroll-top-button-shadow: transparent;
@@ -578,6 +614,9 @@
   --more-button-hover: var(--colormode12-ultra-dark);
   --more-button-text: var(--white);
   --search-border: var(--colormode12-white);
+  --search-icon: var(--colormode12);
+  --search-text: var(--colormode12);
+  --search-placeholder: var(--colormode12);
   --scroll-top-button: var(--colormode12-super-dark);
   --scroll-top-button-hover: var(--colormode12-ultra-dark);
   --scroll-top-button-shadow: transparent;
@@ -602,6 +641,9 @@
   --more-button-hover: #4b4b4b;
   --more-button-text: var(--white);
   --search-border: var(--white);
+  --search-icon: var(--black);
+  --search-text: var(--black);
+  --search-placeholder: var(--black);
   --scroll-top-button: var(--black-super-light);
   --scroll-top-button-hover: var(--black-super-light);
   --scroll-top-button-shadow: transparent;
