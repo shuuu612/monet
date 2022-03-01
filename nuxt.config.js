@@ -66,11 +66,12 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     '@nuxtjs/style-resources',
-    ['@nuxtjs/google-gtag', {
-      id: 'G-JC3657GR7F',
-      debug: true,
-    }]
+    '@nuxtjs/google-gtag', 
   ],
+  'google-gtag': {
+    id: 'G-QDLBX51TVH',
+    debug: true,
+  },
 
   styleResources: {
     scss: [
