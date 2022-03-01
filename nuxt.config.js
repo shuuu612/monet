@@ -70,7 +70,6 @@ export default {
   ],
   'google-gtag': {
     id: 'G-QDLBX51TVH',
-    debug: true,
   },
 
   styleResources: {
