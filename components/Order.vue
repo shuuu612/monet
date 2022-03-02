@@ -103,6 +103,7 @@ export default {
   top: 0;
   right: 50px; */
   position: relative;
+  height: 40px;
 }
 
 .buttonOuter {

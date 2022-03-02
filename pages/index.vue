@@ -1972,10 +1972,12 @@ export default {
 .contents {
   
   width: 100%;
+  margin-top: 16px;
   @include responsive(xs) {
     
   }
   @include responsive(sm) {
+    margin-top: 0;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
