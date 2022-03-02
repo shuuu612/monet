@@ -232,129 +232,72 @@
               <div class="partitionLine"></div>
               <div class="controllerContent">
                 <div class="controllerTitle">カラーモード</div>
-                <button class="check" :class="getColor1Checked" @click="colormodeChange(1)">
-                  <div class="textOuter">
-                    <div class="text color">赤色</div>
-                    <div class="sample color1"></div>
-                  </div>
-                  <div class="checkboxOuter">
-                    <div class="switch"></div>
-                    <div class="background"></div>
-                  </div>
-                </button>
-                <button class="check" :class="getColor2Checked" @click="colormodeChange(2)">
-                  <div class="textOuter">
-                    <div class="text color">桃色</div>
-                    <div class="sample color2"></div>
-                  </div>
-                  <div class="checkboxOuter">
-                    <div class="switch"></div>
-                    <div class="background"></div>
-                  </div>
-                </button>
-                <button class="check" :class="getColor5Checked" @click="colormodeChange(5)">
-                  <div class="textOuter">
-                    <div class="text color">橙色</div>
-                    <div class="sample color5"></div>
-                  </div>
-                  <div class="checkboxOuter">
-                    <div class="switch"></div>
-                    <div class="background"></div>
-                  </div>
-                </button>
-                <button class="check" :class="getColor6Checked" @click="colormodeChange(6)">
-                  <div class="textOuter">
-                    <div class="text color">黄色</div>
-                    <div class="sample color6"></div>
-                  </div>
-                  <div class="checkboxOuter">
-                    <div class="switch"></div>
-                    <div class="background"></div>
-                  </div>
-                </button>
-                <button class="check" :class="getColor7Checked" @click="colormodeChange(7)">
-                  <div class="textOuter">
-                    <div class="text color">緑色</div>
-                    <div class="sample color7"></div>
-                  </div>
-                  <div class="checkboxOuter">
-                    <div class="switch"></div>
-                    <div class="background"></div>
-                  </div>
-                </button>
-                <button class="check" :class="getColor4Checked" @click="colormodeChange(4)">
-                  <div class="textOuter">
-                    <div class="text color">水色</div>
-                    <div class="sample color4"></div>
-                  </div>
-                  <div class="checkboxOuter">
-                    <div class="switch"></div>
-                    <div class="background"></div>
-                  </div>
-                </button>
-                <button class="check" :class="getColor3Checked" @click="colormodeChange(3)">
-                  <div class="textOuter">
-                    <div class="text color">青色</div>
-                    <div class="sample color3"></div>
-                  </div>
-                  <div class="checkboxOuter">
-                    <div class="switch"></div>
-                    <div class="background"></div>
-                  </div>
-                </button>
-                <button class="check" :class="getColor9Checked" @click="colormodeChange(9)">
-                  <div class="textOuter">
-                    <div class="text color">紫色</div>
-                    <div class="sample color9"></div>
-                  </div>
-                  <div class="checkboxOuter">
-                    <div class="switch"></div>
-                    <div class="background"></div>
-                  </div>
-                </button>
-                <button class="check" :class="getColor11Checked" @click="colormodeChange(11)">
-                  <div class="textOuter">
-                    <div class="text color">茶色</div>
-                    <div class="sample color11"></div>
-                  </div>
-                  <div class="checkboxOuter">
-                    <div class="switch"></div>
-                    <div class="background"></div>
-                  </div>
-                </button>
-                <button class="check" :class="getColor12Checked" @click="colormodeChange(12)">
-                  <div class="textOuter">
-                    <div class="text color">薄茶色</div>
-                    <div class="sample color12"></div>
-                  </div>
-                  <div class="checkboxOuter">
-                    <div class="switch"></div>
-                    <div class="background"></div>
-                  </div>
-                </button>
-                <button class="check" :class="getColor8Checked" @click="colormodeChange(8)">
-                  <div class="textOuter">
-                    <div class="text color">灰色</div>
-                    <div class="sample color8"></div>
-                  </div>
-                  <div class="checkboxOuter">
-                    <div class="switch"></div>
-                    <div class="background"></div>
-                  </div>
-                </button>
-                <button class="check" :class="getColor10Checked" @click="colormodeChange(10)">
-                  <div class="textOuter">
-                    <div class="text color">白色</div>
-                    <div class="sample color10"></div>
-                  </div>
-                  <div class="checkboxOuter">
-                    <div class="switch"></div>
-                    <div class="background"></div>
-                  </div>
-                </button>
+                <div class="colors">
+                  <button class="color color1" :class="getColor1Checked" @click="colormodeChange(1)">
+                    <svg class="invalid" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 435.35 435.35" fill="#231815">
+                      <path d="M371.59,63.76A217.67,217.67,0,1,0,63.76,371.59,217.67,217.67,0,1,0,371.59,63.76ZM42,217.67A174.8,174.8,0,0,1,79,110L325.34,356.4a174.85,174.85,0,0,1-107.66,37C120.81,393.35,42,314.54,42,217.67ZM355.2,326.86,108.49,80.15A174.82,174.82,0,0,1,217.68,42c96.86,0,175.67,78.81,175.67,175.67A174.8,174.8,0,0,1,355.2,326.86Z"/>
+                    </svg>
+                  </button>
+                  <button class="color color2" :class="getColor2Checked" @click="colormodeChange(2)">
+                    <svg class="invalid" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 435.35 435.35" fill="#231815">
+                      <path d="M371.59,63.76A217.67,217.67,0,1,0,63.76,371.59,217.67,217.67,0,1,0,371.59,63.76ZM42,217.67A174.8,174.8,0,0,1,79,110L325.34,356.4a174.85,174.85,0,0,1-107.66,37C120.81,393.35,42,314.54,42,217.67ZM355.2,326.86,108.49,80.15A174.82,174.82,0,0,1,217.68,42c96.86,0,175.67,78.81,175.67,175.67A174.8,174.8,0,0,1,355.2,326.86Z"/>
+                    </svg>
+                  </button>
+                  <button class="color color5" :class="getColor5Checked" @click="colormodeChange(5)">
+                    <svg class="invalid" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 435.35 435.35" fill="#231815">
+                      <path d="M371.59,63.76A217.67,217.67,0,1,0,63.76,371.59,217.67,217.67,0,1,0,371.59,63.76ZM42,217.67A174.8,174.8,0,0,1,79,110L325.34,356.4a174.85,174.85,0,0,1-107.66,37C120.81,393.35,42,314.54,42,217.67ZM355.2,326.86,108.49,80.15A174.82,174.82,0,0,1,217.68,42c96.86,0,175.67,78.81,175.67,175.67A174.8,174.8,0,0,1,355.2,326.86Z"/>
+                    </svg>
+                  </button>
+                  <button class="color color6" :class="getColor6Checked" @click="colormodeChange(6)">
+                    <svg class="invalid" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 435.35 435.35" fill="#231815">
+                      <path d="M371.59,63.76A217.67,217.67,0,1,0,63.76,371.59,217.67,217.67,0,1,0,371.59,63.76ZM42,217.67A174.8,174.8,0,0,1,79,110L325.34,356.4a174.85,174.85,0,0,1-107.66,37C120.81,393.35,42,314.54,42,217.67ZM355.2,326.86,108.49,80.15A174.82,174.82,0,0,1,217.68,42c96.86,0,175.67,78.81,175.67,175.67A174.8,174.8,0,0,1,355.2,326.86Z"/>
+                    </svg>
+                  </button>
+                  <button class="color color7" :class="getColor7Checked" @click="colormodeChange(7)">
+                    <svg class="invalid" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 435.35 435.35" fill="#231815">
+                      <path d="M371.59,63.76A217.67,217.67,0,1,0,63.76,371.59,217.67,217.67,0,1,0,371.59,63.76ZM42,217.67A174.8,174.8,0,0,1,79,110L325.34,356.4a174.85,174.85,0,0,1-107.66,37C120.81,393.35,42,314.54,42,217.67ZM355.2,326.86,108.49,80.15A174.82,174.82,0,0,1,217.68,42c96.86,0,175.67,78.81,175.67,175.67A174.8,174.8,0,0,1,355.2,326.86Z"/>
+                    </svg>
+                  </button>
+                  <button class="color color4" :class="getColor4Checked" @click="colormodeChange(4)">
+                    <svg class="invalid" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 435.35 435.35" fill="#231815">
+                      <path d="M371.59,63.76A217.67,217.67,0,1,0,63.76,371.59,217.67,217.67,0,1,0,371.59,63.76ZM42,217.67A174.8,174.8,0,0,1,79,110L325.34,356.4a174.85,174.85,0,0,1-107.66,37C120.81,393.35,42,314.54,42,217.67ZM355.2,326.86,108.49,80.15A174.82,174.82,0,0,1,217.68,42c96.86,0,175.67,78.81,175.67,175.67A174.8,174.8,0,0,1,355.2,326.86Z"/>
+                    </svg>
+                  </button>
+                  <button class="color color3" :class="getColor3Checked" @click="colormodeChange(3)">
+                    <svg class="invalid" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 435.35 435.35" fill="#231815">
+                      <path d="M371.59,63.76A217.67,217.67,0,1,0,63.76,371.59,217.67,217.67,0,1,0,371.59,63.76ZM42,217.67A174.8,174.8,0,0,1,79,110L325.34,356.4a174.85,174.85,0,0,1-107.66,37C120.81,393.35,42,314.54,42,217.67ZM355.2,326.86,108.49,80.15A174.82,174.82,0,0,1,217.68,42c96.86,0,175.67,78.81,175.67,175.67A174.8,174.8,0,0,1,355.2,326.86Z"/>
+                    </svg>
+                  </button>
+                  <button class="color color9" :class="getColor9Checked" @click="colormodeChange(9)">
+                    <svg class="invalid" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 435.35 435.35" fill="#231815">
+                      <path d="M371.59,63.76A217.67,217.67,0,1,0,63.76,371.59,217.67,217.67,0,1,0,371.59,63.76ZM42,217.67A174.8,174.8,0,0,1,79,110L325.34,356.4a174.85,174.85,0,0,1-107.66,37C120.81,393.35,42,314.54,42,217.67ZM355.2,326.86,108.49,80.15A174.82,174.82,0,0,1,217.68,42c96.86,0,175.67,78.81,175.67,175.67A174.8,174.8,0,0,1,355.2,326.86Z"/>
+                    </svg>
+                  </button>
+                  <button class="color color11" :class="getColor11Checked" @click="colormodeChange(11)">
+                    <svg class="invalid" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 435.35 435.35" fill="#231815">
+                      <path d="M371.59,63.76A217.67,217.67,0,1,0,63.76,371.59,217.67,217.67,0,1,0,371.59,63.76ZM42,217.67A174.8,174.8,0,0,1,79,110L325.34,356.4a174.85,174.85,0,0,1-107.66,37C120.81,393.35,42,314.54,42,217.67ZM355.2,326.86,108.49,80.15A174.82,174.82,0,0,1,217.68,42c96.86,0,175.67,78.81,175.67,175.67A174.8,174.8,0,0,1,355.2,326.86Z"/>
+                    </svg>
+                  </button>
+                  <button class="color color12" :class="getColor12Checked" @click="colormodeChange(12)">
+                    <svg class="invalid" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 435.35 435.35" fill="#231815">
+                      <path d="M371.59,63.76A217.67,217.67,0,1,0,63.76,371.59,217.67,217.67,0,1,0,371.59,63.76ZM42,217.67A174.8,174.8,0,0,1,79,110L325.34,356.4a174.85,174.85,0,0,1-107.66,37C120.81,393.35,42,314.54,42,217.67ZM355.2,326.86,108.49,80.15A174.82,174.82,0,0,1,217.68,42c96.86,0,175.67,78.81,175.67,175.67A174.8,174.8,0,0,1,355.2,326.86Z"/>
+                    </svg>
+                  </button>
+                  <button class="color color8" :class="getColor8Checked" @click="colormodeChange(8)">
+                    <svg class="invalid" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 435.35 435.35" fill="#231815">
+                      <path d="M371.59,63.76A217.67,217.67,0,1,0,63.76,371.59,217.67,217.67,0,1,0,371.59,63.76ZM42,217.67A174.8,174.8,0,0,1,79,110L325.34,356.4a174.85,174.85,0,0,1-107.66,37C120.81,393.35,42,314.54,42,217.67ZM355.2,326.86,108.49,80.15A174.82,174.82,0,0,1,217.68,42c96.86,0,175.67,78.81,175.67,175.67A174.8,174.8,0,0,1,355.2,326.86Z"/>
+                    </svg>
+                  </button>
+                  <button class="color color10" :class="getColor10Checked" @click="colormodeChange(10)">
+                    <svg class="invalid" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 435.35 435.35" fill="#231815">
+                      <path d="M371.59,63.76A217.67,217.67,0,1,0,63.76,371.59,217.67,217.67,0,1,0,371.59,63.76ZM42,217.67A174.8,174.8,0,0,1,79,110L325.34,356.4a174.85,174.85,0,0,1-107.66,37C120.81,393.35,42,314.54,42,217.67ZM355.2,326.86,108.49,80.15A174.82,174.82,0,0,1,217.68,42c96.86,0,175.67,78.81,175.67,175.67A174.8,174.8,0,0,1,355.2,326.86Z"/>
+                    </svg>
+                  </button>
+                </div>
                 <div>
-                  <div class="comment">複数選択では、選択された色からランダムでの表示となります。</div>
-                  <div class="comment">選択なしでは、全ての色からランダムでの表示となります。</div>
+                  <div class="comment">ダークモードOFF時のテーマカラーを選択できます。</div>
+                  <div class="comment">複数チェックは、選択された色をランダムで表示します。</div>
+                  <div class="comment">チェックなしは、全ての色をランダムで表示します。</div>
                 </div>
               </div>
               <div class="controllerItems working">
@@ -1724,46 +1667,92 @@ input[type="range"] {
     margin-bottom: 2px;
   }
 }
-.sample {
-  width: 200px;
-  height: 14px;
-  /* margin-top: 3px; */
-  margin-left: 14px;
-  &.color1 {
-    background-color: var(--colormode1);
+.colors {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.color {
+  width: 24px;
+  height: 24px;
+  border-radius: 12px;
+  margin-top: 10px;
+  
+  &.on {
+    &.color1 {
+      background-color: var(--colormode1);
+    }
+    &.color2 {
+      background-color: var(--colormode2);
+    }
+    &.color3 {
+      background-color: var(--colormode3);
+    }
+    &.color4 {
+      background-color: var(--colormode4);
+    }
+    &.color5 {
+      background-color: var(--colormode5);
+    }
+    &.color6 {
+      background-color: var(--colormode6);
+    }
+    &.color7 {
+      background-color: var(--colormode7);
+    }
+    &.color8 {
+      background-color: var(--colormode8);
+    }
+    &.color9 {
+      background-color: var(--colormode9);
+    }
+    &.color10 {
+      background-color: var(--colormode10);
+    }
+    &.color11 {
+      background-color: var(--colormode11);
+    }
+    &.color12 {
+      background-color: var(--colormode12);
+    }
   }
-  &.color2 {
-    background-color: var(--colormode2);
-  }
-  &.color3 {
-    background-color: var(--colormode3);
-  }
-  &.color4 {
-    background-color: var(--colormode4);
-  }
-  &.color5 {
-    background-color: var(--colormode5);
-  }
-  &.color6 {
-    background-color: var(--colormode6);
-  }
-  &.color7 {
-    background-color: var(--colormode7);
-  }
-  &.color8 {
-    background-color: var(--colormode8);
-  }
-  &.color9 {
-    background-color: var(--colormode9);
-  }
-  &.color10 {
-    background-color: var(--colormode10);
-  }
-  &.color11 {
-    background-color: var(--colormode11);
-  }
-  &.color12 {
-    background-color: var(--colormode12);
+  &.off {
+    &.color1 {
+      background-color: var(--colormode1-transparent);
+    }
+    &.color2 {
+      background-color: var(--colormode2-transparent);
+    }
+    &.color3 {
+      background-color: var(--colormode3-transparent);
+    }
+    &.color4 {
+      background-color: var(--colormode4-transparent);
+    }
+    &.color5 {
+      background-color: var(--colormode5-transparent);
+    }
+    &.color6 {
+      background-color: var(--colormode6-transparent);
+    }
+    &.color7 {
+      background-color: var(--colormode7-transparent);
+    }
+    &.color8 {
+      background-color: var(--colormode8-transparent);
+    }
+    &.color9 {
+      background-color: var(--colormode9-transparent);
+    }
+    &.color10 {
+      background-color: var(--colormode10-transparent);
+    }
+    &.color11 {
+      background-color: var(--colormode11-transparent);
+    }
+    &.color12 {
+      background-color: var(--colormode12-transparent);
+    }
   }
   /* &.random {
     background: linear-gradient(to right,
@@ -1791,6 +1780,48 @@ input[type="range"] {
                                 var(--colormode12) calc(100% * (11/12)),
                                 );
   } */
+}
+.invalid {
+
+  .on & {
+    fill: transparent;
+  }
+  .off.color1 & {
+    fill: var(--colormode1);
+  }
+  .off.color2 & {
+    fill: var(--colormode2);
+  }
+  .off.color3 & {
+    fill: var(--colormode3);
+  }
+  .off.color4 & {
+    fill: var(--colormode4);
+  }
+  .off.color5 & {
+    fill: var(--colormode5);
+  }
+  .off.color6 & {
+    fill: var(--colormode6);
+  }
+  .off.color7 & {
+    fill: var(--colormode7);
+  }
+  .off.color8 & {
+    fill: var(--colormode8);
+  }
+  .off.color9 & {
+    fill: var(--colormode9);
+  }
+  .off.color10 & {
+    fill: var(--colormode10);
+  }
+  .off.color11 & {
+    fill: var(--colormode11);
+  }
+  .off.color12 & {
+    fill: var(--colormode12);
+  }
 }
 
 </style>
