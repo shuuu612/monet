@@ -152,7 +152,7 @@ export default {
   position: fixed;
   bottom: 0;
   left: 0;
-  background-color: var(--color-dark-transparent-low);
+  background-color: var(--menu-bar);
   z-index: 110;
   display: flex;
   align-items: center;
@@ -169,10 +169,10 @@ export default {
   height: 100%;
   padding: 4px 0;
   @include hover() {
-    background-color: var(--white-transparent-high);
+    background-color: var(--menu-bar-hover);
   }
   &.selected {
-    background-color: var(--white-transparent-high);
+    background-color: var(--menu-bar-hover);
   }
   &.link {
     padding: 0;
