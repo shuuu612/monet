@@ -115,7 +115,7 @@
               <div class="controllerContent">
                 <div class="controllerTitle">デバイス</div>
                 <div class="controllerItems">
-                  <button class="controllerItem" :class="getStatePC" :disabled="getDevicePcDisabled" @click="clickDevicePc">
+                  <button class="controllerItem threeItems" :class="getStatePC" :disabled="getDevicePcDisabled" @click="clickDevicePc">
                     <div>
                       <div class="typeImageWrapper">
                         <!-- <img class="typeImagePC" src="/images/PC.svg" alt=""> -->
@@ -127,7 +127,7 @@
                       <div class="typeTitle">デスクトップ</div>
                     </div>
                   </button>
-                  <button class="controllerItem" :class="getStateTB" :disabled="getDeviceTbDisabled" @click="clickDeviceTb">
+                  <button class="controllerItem threeItems" :class="getStateTB" :disabled="getDeviceTbDisabled" @click="clickDeviceTb">
                     <div>
                       <div class="typeImageWrapper">
                         <!-- <img class="typeImageTB" src="/images/TB.svg" alt=""> -->
@@ -138,7 +138,7 @@
                       <div class="typeTitle">タブレット</div>
                     </div>
                   </button>
-                  <button class="controllerItem" :class="getStateSP" :disabled="getDeviceSpDisabled" @click="clickDeviceSp">
+                  <button class="controllerItem threeItems" :class="getStateSP" :disabled="getDeviceSpDisabled" @click="clickDeviceSp">
                     <div>
                       <div class="typeImageWrapper">
                         <!-- <img class="typeImageSP" src="/images/SP.svg" alt=""> -->
@@ -158,7 +158,7 @@
                     <div class="background"></div>
                   </button>
                 </div>
-                <div v-if="multideviceDisabled" class="sliderNotice">
+                <!-- <div v-if="multideviceDisabled" class="sliderNotice">
                   <div>
                     <svg class="sliderNoticeIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400.94 400.94">
                       <circle cx="200.47" cy="117.76" r="28.42"/>
@@ -170,6 +170,9 @@
                     <div class="sliderNoticeText sub">ご使用の端末ではマルチデバイスはご利用いただくことができません。</div>
                     <div class="sliderNoticeText sub">マルチデバイスのご利用にはウィンドウ幅が576px以上の端末が必要です。</div>
                   </div>
+                </div> -->
+                <div>
+                  <div class="comment">マルチデバイスは画面の横幅が576px以上の端末でご利用いただけます。</div>
                 </div>
               </div>
               <div class="partitionLine"></div>
@@ -200,7 +203,7 @@
                     <div class="background"></div>
                   </button>
                 </div>
-                <div v-if="getNotice" class="sliderNotice">
+                <!-- <div v-if="getNotice" class="sliderNotice">
                   <div>
                     <svg class="sliderNoticeIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400.94 400.94">
                       <circle cx="200.47" cy="117.76" r="28.42"/>
@@ -212,26 +215,29 @@
                     <div class="sliderNoticeText main">手動調整中</div>
                     <div class="sliderNoticeText sub">表示崩れを防止するため、手動調整中であってもブラウザのサイズ変更を検知すると、手動調整を中止し自動調整が有効になります。</div>
                   </div>
+                </div> -->
+                <div>
+                  <div class="comment">表示崩れを防止するため、自動調整が無効のときにブラウザのサイズ変更を検知すると自動調整が有効になります。</div>
                 </div>
               </div>
               <div class="partitionLine"></div>
               <div class="controllerContent">
                 <div class="controllerTitle">ダークモード</div>
                 <div class="controllerItems">
-                  <button class="controllerItem" :class="getDarkmodeOn" :disabled="getDarkmodeOnDisabled" @click="clickDarkmode('on')">
-                    <div class="typeTitle typeTitleDarkmode">ON</div>
+                  <button class="controllerItem threeItems" :class="getDarkmodeOn" :disabled="getDarkmodeOnDisabled" @click="clickDarkmode('on')">
+                    <div class="typeTitle darkmode">ON</div>
                   </button>
-                  <button class="controllerItem" :class="getDarkmodeOff" :disabled="getDarkmodeOffDisabled" @click="clickDarkmode('off')">
-                    <div class="typeTitle typeTitleDarkmode">OFF</div>
+                  <button class="controllerItem threeItems" :class="getDarkmodeOff" :disabled="getDarkmodeOffDisabled" @click="clickDarkmode('off')">
+                    <div class="typeTitle darkmode">OFF</div>
                   </button>
-                  <button class="controllerItem" :class="getDarkmodeOs" :disabled="getDarkmodeOsDisabled" @click="clickDarkmode('os')">
-                    <div class="typeTitle typeTitleDarkmode">OSの設定</div>
+                  <button class="controllerItem threeItems" :class="getDarkmodeOs" :disabled="getDarkmodeOsDisabled" @click="clickDarkmode('os')">
+                    <div class="typeTitle darkmode">OSの設定</div>
                   </button>
                 </div>
               </div>
               <div class="partitionLine"></div>
               <div class="controllerContent">
-                <div class="controllerTitle">カラーモード</div>
+                <div class="controllerTitle">テーマカラー</div>
                 <div class="colors">
                   <button class="color color1" :class="getColor1Checked" @click="colormodeChange(1)">
                     <svg class="invalid" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 435.35 435.35" fill="#231815">
@@ -573,9 +579,9 @@ export default {
     /* getDevice() {
       return { mobile: this.$store.getters['windowSize/getWindowWidth'] < 768, desktop: this.$store.getters['windowSize/getWindowWidth'] >= 768}
     } */
-    getNotice() {
+    /* getNotice() {
       return !this.$store.getters["slider/getAutoSizing"]
-    },
+    }, */
     getColorMark() {
       return function(key) {
         return this.tag.color.contents.includes(key)
@@ -1065,6 +1071,9 @@ export default {
   &.disabled {
     pointer-events: none;
   }
+  &.threeItems {
+    width: 33.3%
+  }
 }
 .slider {
   margin: 0 10px;
@@ -1242,13 +1251,13 @@ export default {
     position: absolute;
     top: 0;
     left: 0;
-    transition: transform .2s, background-color .2s;
+    transition: transform .1s, background-color .1s;
   }
   .background {
     width: 32px;
     height: 12px;
     border-radius: 10px;
-    transition: background-color .2s;
+    transition: background-color .1s;
   }
   &.on {
     .switch {
@@ -1450,10 +1459,9 @@ export default {
     color: var(--black);
     font-weight: 500;
   }
-}
-
-.typeTitleDarkmode {
-  font-size: var(--font-size-xs);
+  &.darkmode {
+    font-size: var(--font-size-sm);
+  }
 }
 
 
@@ -1644,9 +1652,9 @@ input[type="range"] {
 
 .partitionLine {
   width: 100%;
-  height: 1px;
+  height: 2px;
   margin: 30px auto 20px auto;
-  background-color: var(--black-ultra-light);
+  background-color: var(--black-super-light);
 }
 .comment {
   font-size: var(--font-size-xs);
@@ -1673,12 +1681,12 @@ input[type="range"] {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding-top: 16px;
 }
 .color {
   width: 24px;
   height: 24px;
   border-radius: 12px;
-  margin-top: 10px;
   
   &.on {
     &.color1 {
