@@ -2,8 +2,7 @@ name: Production Deploy
 
 on:
   release:
-    branches:
-      - main
+    types: [published]
 
 jobs:
   deploy:
