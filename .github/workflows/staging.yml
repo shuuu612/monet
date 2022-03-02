@@ -7,28 +7,39 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node: [14]
+
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout 🛎
+        uses: actions/checkout@master
 
-      - name: setup node
-        uses: actions/setup-node@v2
+      - name: Setup node env 🏗
+        uses: actions/setup-node@v2.1.5
         with:
-          node-version: "15"
+          node-version: ${{ matrix.node }}
+          check-latest: true
 
-      - name: Cache dependencies
-        uses: actions/cache@v2
+      - name: Cache node_modules 📦
+        uses: actions/cache@v2.1.4
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - run: npm run generate
+      - name: Build module
+        run: npm ci --prefer-offline --no-audit
+        run: npm run generate
 
-      - name: ssh key generate
+      - name: SSH key generate
         run: echo "$SSH_PRIVATE_KEY" > key && chmod 600 key
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-      - name: rsync deploy
+
+      - name: Rsync deploy
         run: rsync -auzrv -e "ssh -i key -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p 10022" --delete ./dist/* twor@sv13219.xserver.jp:/home/xs875751/monet-design.com/public_html/test.monet-design.com/ --exclude .htaccess
