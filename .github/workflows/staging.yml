@@ -9,6 +9,10 @@ jobs:
   deploy:
     runs-on: ${{ matrix.os }}
 
+    env:
+    API_KEY: ${{ secrets.MICROCMS_API_KEY }}
+    SERVICE_ID: ${{ secrets.MICROCMS_SERVICE_ID }}
+
     strategy:
       matrix:
         os: [ubuntu-latest]
@@ -34,6 +38,12 @@ jobs:
 
       - name: Install dependencies 👨🏻‍💻
         run: npm ci --prefer-offline --no-audit
+
+      - name: Create dot env file
+        shell: bash
+        run: |
+          touch .env
+          echo "FOO=${{ secrets.FOO }}" >> .env
 
       - name: Build module
         run: npm run generate
