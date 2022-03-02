@@ -35,10 +35,12 @@ jobs:
       - name: Install dependencies 👨🏻‍💻
         run: npm ci --prefer-offline --no-audit
 
-      - name: Create dot env file
-        env:
-          API_KEY: ${{ secrets.MICROCMS_API_KEY }}
-          SERVICE_ID: ${{ secrets.MICROCMS_SERVICE_ID }}
+      - name: Create env file
+        run: |
+          touch .env
+          echo API_KEY=${{ secrets.MICROCMS_API_KEY }} >> .env
+          echo SERVICE_ID=${{ secrets.MICROCMS_SERVICE_ID }} >> .env
+          cat .env
 
       - name: Build module
         run: npm run generate
