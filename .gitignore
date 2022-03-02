@@ -90,5 +90,5 @@ sw.*
 *.swp
 
 # image
-static/images/site
-static/images/_site
+# static/images/site
+
