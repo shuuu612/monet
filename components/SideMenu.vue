@@ -179,7 +179,6 @@
                   <div class="selectableRange">現在の選択可能範囲：{{`1 〜 ${gatMaxValue}`}}</div>
                 </div>
                 <div class="controllerItems sliderStyle">
-                  <div class="scale" :class="getPosition">{{getScaleValue}}</div>
                   <button class="sliderButton" :class="getSliderDownButtonDisabled" @click="sliderDown">
                     <svg class="sliderImageMinus" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 425.2 68.03" fill="#fff">
                       <rect width="425.2" height="68.03" rx="8.5"/>
@@ -191,6 +190,7 @@
                       <path d="M416.69,178.58H246.61V8.5a8.5,8.5,0,0,0-8.5-8.5h-51a8.51,8.51,0,0,0-8.51,8.5V178.58H8.5A8.51,8.51,0,0,0,0,187.09v51a8.5,8.5,0,0,0,8.5,8.5H178.58V416.69a8.51,8.51,0,0,0,8.51,8.51h51a8.5,8.5,0,0,0,8.5-8.51V246.61H416.69a8.5,8.5,0,0,0,8.51-8.5v-51A8.51,8.51,0,0,0,416.69,178.58Z"/>
                     </svg>
                   </button>
+                  <div class="scale">{{getScaleValue}}</div>
                   <!-- {{$store.getters["slider/getSteps"].indexOf(true)}} -->
                 </div>
                 <div class="check" :class="getSliderCheckboxChecked">
@@ -581,7 +581,7 @@ export default {
         return this.tag.color.contents.includes(key)
       }
     },
-    getPosition() {
+    /* getPosition() {
       const steps = this.$store.getters["slider/getSteps"]
       return {
         scale0: steps[0],
@@ -596,7 +596,7 @@ export default {
         scale9: steps[9],
         scale10: steps[10],
       }
-    },
+    }, */
     getScaleValue() {
       const steps = this.$store.getters["slider/getSteps"]
       return steps[0] ? 1 : steps[1] ? 2 : steps[2] ? 3 : steps[3] ? 4 : steps[4] ? 5 : steps[5] ? 6 : steps[6] ? 7 : steps[7] ? 8 : steps[8] ? 9 : steps[9] ? 10 : steps[10] ? 11 : ''
@@ -1078,7 +1078,7 @@ export default {
 }
 
 .sliderStyle {
-  margin-top: 32px;
+  margin-top: 28px;
   margin-left: 10px;
   background-color: transparent;
   justify-content: left;
@@ -1114,17 +1114,19 @@ export default {
   fill: var(--grey-ultra-light)
 }
 .scale {
-  position: absolute;
-  top: -22px;
-  width: 20px;
-  height: 20px;
+  /* position: absolute;
+  top: 0;
+  right: 20px; */
+  width: 24px;
+  height: 24px;
   background-color: var(--black-super-light);
   border-radius: 2px;
   display: none;
   align-items: center;
   justify-content: center;
   padding-bottom: 1px;
-  &.scale0 {
+  margin-left: 16px;
+  /* &.scale0 {
     left: 32px;
   }
   &.scale1 {
@@ -1157,7 +1159,7 @@ export default {
   }
   &.scale10 {
     left: calc(32px + (20.65px * 10));
-  }
+  } */
   @include responsive(xs) {
     display: flex;
   }
