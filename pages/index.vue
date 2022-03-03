@@ -789,8 +789,8 @@ export default {
                     break;
             }
             // 画像にボーダーをつけて、"box-sizing: content-box;"としたため
-            const border = 1;
-            width = width + (border * 2);
+            /* const border = 1;
+            width = width + (border * 2); */
 
             // 左右マージンを計算
             const marginLeftRight = [10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30];
