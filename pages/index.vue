@@ -1963,7 +1963,7 @@ export default {
 }
 .contentsWrapper {
   position: relative;
-  padding-top: 30px;
+  /* padding-top: 30px; */
 }
 .tool {
   display: flex;
