@@ -187,7 +187,7 @@ export default {
 }
 .title {
   height: 35%;
-  font-size: var(--font-size-xxs);
+  font-size: var(--font-size-xs);
   color: var(--white);
 }
 

@@ -2406,7 +2406,7 @@ export default {
   align-items: center;
   justify-content: center;
   opacity: 0;
-  font-size: var(--font-size-xxs);
+  font-size: var(--font-size-xs);
   
   @keyframes comment-open {
     100% {
