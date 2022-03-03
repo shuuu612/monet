@@ -49,5 +49,5 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Rsync deploy
-        run: rsync -auzrv -e "ssh -i key -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p 10022" --delete ./dist/* xs875751@sv13219.xserver.jp:/home/xs875751/monet-design.com/public_html/ --exclude .htaccess
+#      - name: Rsync deploy
+#        run: rsync -auzrv -e "ssh -i key -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p 10022" --delete ./dist/* xs875751@sv13219.xserver.jp:/home/xs875751/monet-design.com/public_html/ --exclude .htaccess
