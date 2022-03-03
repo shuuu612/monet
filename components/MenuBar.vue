@@ -148,7 +148,7 @@ export default {
 <style lang="scss" scoped>
 .menuBtns {
   width: 100%;
-  height: 45px;
+  height: 70px;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -157,7 +157,6 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  
 }
 
 .menuBtn {
@@ -167,7 +166,7 @@ export default {
   flex-direction: column;
   flex-grow: 1;
   height: 100%;
-  padding: 4px 0;
+  padding: 4px 0 25px 0;
   @include hover() {
     background-color: var(--menu-bar-hover);
   }
@@ -201,7 +200,7 @@ export default {
   flex-direction: column;
   text-decoration: none;
   font-size: var(--font-size-md);
-  padding: 4px 0;
+  padding: 4px 0 25px 0;
 }
 
 .homeImage {
