@@ -72,7 +72,7 @@
 export default {
   props: {
     width: {
-      type: Number,
+      type: Object,
       required: false,
       default: undefined,
     },
@@ -86,7 +86,7 @@ export default {
       return { isOpen: this.$store.getters['sideMenu/getOpen'] }
     },
     getWidth() {
-      return { width: `${this.width}px`}
+      return this.width
     }
   },
   created() {

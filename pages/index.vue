@@ -417,7 +417,7 @@ export default {
               url: 'https://mitsukaru-design.com/',
               image: 'https://mitsukaru-design.com/images/ogp/logo.png',
             },
-            contentsWidth: 0,
+            contentsWidth: {},
         };
     },
     head() {
@@ -535,7 +535,7 @@ export default {
           }
         },
         getToolWidth() {
-          return { width: `${this.contentsWidth}px`}
+          return this.contentsWidth
         }
     },
     created() {
@@ -838,7 +838,13 @@ export default {
             } */
 
             // コンテンツ領域の幅
-            this.contentsWidth = totalWidth * columnContent - (marginLeft + marginRight);
+            const contentWidth = totalWidth * columnContent - (marginLeft + marginRight);
+            const windowSize =this.$store.getters["windowSize/getWindowWidth"];
+            if(windowSize >= 768) {
+              this.contentsWidth = { width: `${contentWidth}px`}
+            }else {
+              this.contentsWidth = { width: '100%'}
+            }
         },
         calculateAutoSizing() {
             console.log("calculateAutoSizingを起動");
