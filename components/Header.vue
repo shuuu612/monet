@@ -107,15 +107,33 @@ export default {
 <style lang="scss" scoped>
 .header {
   margin: 0 auto;
+  @include responsive(xs) {
+    
+  }
+  @include responsive(sm) {
+    
+  }
+  @include responsive(md) {
+    min-width: 450px;
+  }
+  @include responsive(lg) {
+    min-width: 600px;
+  }
+  @include responsive(xl) {
+    
+  }
+  @include responsive(xxl) {
+    
+  }
 }
 
 .topMenu {
   position: relative;
   width: 100%;
-  height: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   z-index: 15;
   transition: transform .25s ease-in;
   &.isOpen {
@@ -126,12 +144,12 @@ export default {
     
   }
   @include responsive(sm) {
-    height: 100px;
   }
   @include responsive(md) {
-    height: 120px;
+    height: 100px;
     margin-left: 25px;
     justify-content: space-between;
+    flex-direction: row;
   }
   @include responsive(lg) {
     height: 140px;
@@ -147,15 +165,17 @@ export default {
 
 .logo {
   width: 100px;
-  padding-top: 5px;
   @include responsive(xs) {
     width:110px;
+    margin-top: 26px;
   }
   @include responsive(sm) {
     width:120px;
+    margin-top: 30px;
   }
   @include responsive(md) {
     width: 130px;
+    margin-top: 0;
   }
   @include responsive(lg) {
     width: 140px;

@@ -1,5 +1,5 @@
 <template>
-  <div class="searchWrapper" :class="[getFocus,getSearchOpen,getDevice]">
+  <div class="searchWrapper" :class="getFocus">
     <div class="searchBlock">
       <svg class="searchImage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 393.47 393.47" fill="#000000">
         <path d="M383.52,335.43l-102-102c36.94-58.86,29.95-137.61-21.23-188.8-59.45-59.45-156.19-59.46-215.65,0s-59.45,156.19,0,215.65c51.19,51.17,129.94,58.18,188.81,21.24l102,102a34,34,0,1,0,48.08-48.09ZM232.77,232.76a113.64,113.64,0,1,1,0-160.71A113.77,113.77,0,0,1,232.77,232.76Z"/>
@@ -20,12 +20,6 @@ export default {
   computed: {
     getFocus() {
       return { focus: this.focus}
-    },
-    getSearchOpen() {
-      return { open: this.$store.getters['search/getOpen'] && this.$store.getters['windowSize/getWindowWidth'] < 768}
-    },
-    getDevice() {
-      return { mobile: this.$store.getters['windowSize/getWindowWidth'] < 768, desktop: this.$store.getters['windowSize/getWindowWidth'] >= 768}
     },
   },
   mounted() {
@@ -62,62 +56,33 @@ export default {
 
 <style lang="scss" scoped>
 .searchWrapper {
-  position: fixed;
-  top: 0;
-  left: 0;
   width: 100%;
-  height: 70px;
-  background-color: var(--white-transparent-low-forDarkMode);
-  padding: 14px 10px;
-  transform: translateY(-70px);
-  border-bottom: 2px var(--black-transparent-high) solid;
-  &.open {
-    transform: translateY(0);
-  }
-  &.mobile {
-    transition: transform .2s;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 40px;
+  z-index: 15;
+
   @include responsive(xs) {
-    
+    margin-top: 16px;
+    width: 280px;
   }
   @include responsive(sm) {
-    
+    margin-top: 20px;
+    width: 350px;
   }
   @include responsive(md) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: static;
-    top: auto;
-    left: auto;
-    /* right: 80px; */
-    width: 200px;
-    height: 40px;
-    z-index: 15;
-    padding: 0;
-    
-    background-color: transparent;
-    border-bottom: 0;
-
-    &.focus {
-      /* width: 450px; */
-    }
-    &.desktop {
-      transition: width .2s;
-      transform: translateY(0);
-    }
+    width: 250px;
+    margin-top: 0;
   }
   @include responsive(lg) {
-    top: 40px;
-    width: 250px;
-    right: 100px;
+    width: 300px;
   }
   @include responsive(xl) {
-    width: 300px;
-    right: 110px;
+    width: 350px;
   }
   @include responsive(xxl) {
-    right: 120px;
   }
 }
 
@@ -126,9 +91,14 @@ export default {
   align-items: center;
   justify-content: center;
   width: 100%;
+  border-radius: 50px;
   height: 100%;
   border-radius: 50px;
-  background-color: var(--black-transparent-high);
+  background-color: var(--white);
+  padding-left: 10px;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
   @include responsive(xs) {
     
   }
@@ -136,24 +106,8 @@ export default {
     
   }
   @include responsive(md) {
-    /* display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%; */
-    height: 100%;
-    border-radius: 50px;
-    /* border-bottom: var(--black-forDarkMode) 1px solid; */
-    /* // グラデーション
-    border-image: linear-gradient(to right, var(--gradation-start), var(--gradation-end));
-    border-image-slice: 1; */
-    background-color: var(--white);
-    padding-left: 10px;
-    border-top: 0;
-    border-left: 0;
-    border-right: 0;
-    /* .searchWrapper.focus & {
-      border-bottom: var(--search-border) 2px solid;
-    } */
+
+    
   }
   @include responsive(lg) {
     
@@ -170,7 +124,7 @@ export default {
   width: 16px;
   margin-right: 10px;
   margin-left: 10px;
-  fill: var(--black-ultra-light);
+  fill: var(--search-icon);
   @include responsive(xs) {
     
   }
@@ -178,7 +132,7 @@ export default {
     
   }
   @include responsive(md) {
-    fill: var(--search-icon);
+    
   }
   @include responsive(lg) {
     

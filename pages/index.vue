@@ -874,11 +874,11 @@ export default {
                         maxStep = 4;
                     }
                     else if (windowWidth >= 768 && windowWidth < 900) {
-                        bestStep = 5;
+                        bestStep = 4;
                         maxStep = 6;
                     }
                     else if (windowWidth >= 900 && windowWidth < 992) {
-                        bestStep = 2;
+                        bestStep = 1;
                         maxStep = 8;
                     }
                     else if (windowWidth >= 992 && windowWidth < 1100) {
@@ -1045,11 +1045,11 @@ export default {
                         maxStep = 1;
                     }
                     else if (windowWidth >= 768 && windowWidth < 900) {
-                        bestStep = 1;
+                        bestStep = 0;
                         maxStep = 1;
                     }
                     else if (windowWidth >= 900 && windowWidth < 992) {
-                        bestStep = 2;
+                        bestStep = 1;
                         maxStep = 2;
                     }
                     else if (windowWidth >= 992 && windowWidth < 1100) {
@@ -1134,15 +1134,15 @@ export default {
                         maxStep = 2;
                     }
                     else if (windowWidth >= 768 && windowWidth < 900) {
-                        bestStep = 2;
+                        bestStep = 1;
                         maxStep = 2;
                     }
                     else if (windowWidth >= 900 && windowWidth < 992) {
-                        bestStep = 3;
+                        bestStep = 2;
                         maxStep = 3;
                     }
                     else if (windowWidth >= 992 && windowWidth < 1100) {
-                        bestStep = 4;
+                        bestStep = 3;
                         maxStep = 4;
                     }
                     else if (windowWidth >= 1100 && windowWidth < 1200) {
@@ -1215,7 +1215,7 @@ export default {
                         maxStep = 3;
                     }
                     else if (windowWidth >= 768 && windowWidth < 830) {
-                        bestStep = 3;
+                        bestStep = 2;
                         maxStep = 3;
                     }
                     else if (windowWidth >= 830 && windowWidth < 900) {
@@ -1223,7 +1223,7 @@ export default {
                         maxStep = 4;
                     }
                     else if (windowWidth >= 900 && windowWidth < 992) {
-                        bestStep = 4;
+                        bestStep = 3;
                         maxStep = 4;
                     }
                     else if (windowWidth >= 992 && windowWidth < 1100) {
@@ -1300,15 +1300,15 @@ export default {
                         maxStep = 5;
                     }
                     else if (windowWidth >= 768 && windowWidth < 830) {
-                        bestStep = 5;
+                        bestStep = 4;
                         maxStep = 5;
                     }
                     else if (windowWidth >= 830 && windowWidth < 900) {
-                        bestStep = 5;
+                        bestStep = 4;
                         maxStep = 6;
                     }
                     else if (windowWidth >= 900 && windowWidth < 992) {
-                        bestStep = 6;
+                        bestStep = 5;
                         maxStep = 7;
                     }
                     else if (windowWidth >= 992 && windowWidth < 1030) {
@@ -1969,7 +1969,27 @@ export default {
   display: flex;
   align-items: flex-start;
   justify-content: flex-end;
-  margin: 0 auto;
+  margin: 12px auto 0;
+  padding-right: 50px;
+  @include responsive(xs) {
+    
+  }
+  @include responsive(sm) {
+    
+  }
+  @include responsive(md) {
+    padding-right: 0;
+    margin: auto;
+  }
+  @include responsive(lg) {
+    
+  }
+  @include responsive(xl) {
+    
+  }
+  @include responsive(xxl) {
+    
+  }
 }
 .toolItem {
   width: 55px;
