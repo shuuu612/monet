@@ -154,6 +154,7 @@ export default {
   flex-grow: 1;
   height: 100%;
   padding: 4px 0 25px 0;
+  width: 33.3%;
   @include hover() {
     background-color: var(--menu-bar-hover);
   }
