@@ -680,12 +680,16 @@ export default {
       const nowValue = this.$store.getters["slider/getValue"]
       if(nowValue < 1) {
         this.$store.dispatch('slider/pushSlider',(nowValue*1000 + 0.075*1000)/1000)
+        // 親コンポーネントでダミーコンテンツ作成関数を実行
+        this.$emit('sliderChange')
       }
     },
     sliderDown() {
       const nowValue = this.$store.getters["slider/getValue"]
       if(nowValue > 0.25) {
         this.$store.dispatch('slider/pushSlider',(nowValue*1000 - 0.075*1000)/1000)
+        // 親コンポーネントでダミーコンテンツ作成関数を実行
+        this.$emit('sliderChange')
       }
     },
     sliderInitialSet() {
