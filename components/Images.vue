@@ -4,19 +4,19 @@
       <template v-for="(step, index) in stepsPc">
         <picture v-if="getDisplaySteps(index, 'pc')" :key="index" :class="getMargin('pc')">
           <source
-            :src="`${getPath(content.imagePC.url)}-${step}.webp`"
+            :src="`${getPath(content.url)}-pc-${step}.webp`"
             :srcset="`
-            ${getPath(content.imagePC.url)}-${step}.webp 1x,
-            ${getPath(content.imagePC.url)}-${step*2}.webp 2x
+            ${getPath(content.url)}-pc-${step}.webp 1x,
+            ${getPath(content.url)}-pc-${step*2}.webp 2x
             `"
             type="image/webp"
           />
           <img
             class="image"
-            :src="`${getPath(content.imagePC.url)}-${step}.jpg`"
+            :src="`${getPath(content.url)}-pc-${step}.jpg`"
             :srcset="`
-            ${getPath(content.imagePC.url)}-${step}.jpg 1x,
-            ${getPath(content.imagePC.url)}-${step*2}.jpg 2x
+            ${getPath(content.url)}-pc-${step}.jpg 1x,
+            ${getPath(content.url)}-pc-${step*2}.jpg 2x
             `"
             :width="getWidth('pc')"
             :height="getHeight"
@@ -29,7 +29,7 @@
       <img
         v-if="getPcHide"
         class="image loading"
-        :src="`${getPath(content.imagePC.url)}-50.jpg`"
+        :src="`${getPath(content.url)}-pc-50.jpg`"
         :width="getWidth('pc')"
         :height="getHeight"
         alt="loading-image"
@@ -39,19 +39,19 @@
       <template v-for="(step, index) in stepsTb">
         <picture v-if="getDisplaySteps(index, 'tb')" :key="index+100" :class="getMargin('tb')">
           <source
-            :src="`${getPath(content.imageTB.url)}-${step}.webp`"
+            :src="`${getPath(content.url)}-tb-${step}.webp`"
             :srcset="`
-            ${getPath(content.imageTB.url)}-${step}.webp 1x,
-            ${getPath(content.imageTB.url)}-${step*2}.webp 2x
+            ${getPath(content.url)}-tb-${step}.webp 1x,
+            ${getPath(content.url)}-tb-${step*2}.webp 2x
             `"
             type="image/webp"
           />
           <img
             class="image"
-            :src="`${getPath(content.imageTB.url)}-${step}.jpg`"
+            :src="`${getPath(content.url)}-tb-${step}.jpg`"
             :srcset="`
-            ${getPath(content.imageTB.url)}-${step}.jpg 1x,
-            ${getPath(content.imageTB.url)}-${step*2}.jpg 2x
+            ${getPath(content.url)}-tb-${step}.jpg 1x,
+            ${getPath(content.url)}-tb-${step*2}.jpg 2x
             `"
             :width="getWidth('tb')"
             :height="getHeight"
@@ -64,7 +64,7 @@
       <img
         v-if="getTbHide"
         class="image loading"
-        :src="`${getPath(content.imageTB.url)}-50.jpg`"
+        :src="`${getPath(content.url)}-tb-50.jpg`"
         :width="getWidth('tb')"
         :height="getHeight"
         alt="loading-image"
@@ -74,19 +74,19 @@
       <template v-for="(step, index) in stepsSp">
         <picture v-if="getDisplaySteps(index, 'sp')" :key="index+200" :class="getMargin('sp')">
           <source
-            :src="`${getPath(content.imageSP.url)}-${step}.webp`"
+            :src="`${getPath(content.url)}-sp-${step}.webp`"
             :srcset="`
-            ${getPath(content.imageSP.url)}-${step}.webp 1x,
-            ${getPath(content.imageSP.url)}-${step*2}.webp 2x
+            ${getPath(content.url)}-sp-${step}.webp 1x,
+            ${getPath(content.url)}-sp-${step*2}.webp 2x
             `"
             type="image/webp"
           />
           <img
             class="image"
-            :src="`${getPath(content.imageSP.url)}-${step}.jpg`"
+            :src="`${getPath(content.url)}-sp-${step}.jpg`"
             :srcset="`
-            ${getPath(content.imageSP.url)}-${step}.jpg 1x,
-            ${getPath(content.imageSP.url)}-${step*2}.jpg 2x
+            ${getPath(content.url)}-sp-${step}.jpg 1x,
+            ${getPath(content.url)}-sp-${step*2}.jpg 2x
             `"
             :width="getWidth('sp')"
             :height="getHeight"
@@ -99,7 +99,7 @@
       <img
         v-if="getSpHide"
         class="image loading"
-        :src="`${getPath(content.imageSP.url)}-50.jpg`"
+        :src="`${getPath(content.url)}-sp-50.jpg`"
         :width="getWidth('sp')"
         :height="getHeight"
         alt="loading-image"
@@ -266,11 +266,20 @@ export default {
     },
     getPath() {
       return function(url) {
-        // 前半の不要部分を切り取り
+        // '//'以降を切り出し
+        const parts1 = url.substr(url.indexOf('//') + 2);
+        // 最後が'/'だったら削除
+        const parts2 = parts1.slice(-1) === '/' ? parts1.slice(0,-1) : parts1;
+        // '/'を'_'に置換
+        const parts3 = parts2.replace(/\//g, '_');
+        // ファイルパスを追加
+        const parts4 = `/images/site/${parts3}`
+
+        /* // 前半の不要部分を切り取り
         const path1 = `/images/site/${url.substr(url.lastIndexOf('/') + 1)}`
         // .pngを切り取り
-        const path2 = path1.substring(0, path1.indexOf(".png"))
-        return path2
+        const path2 = path1.substring(0, path1.indexOf(".png")) */
+        return parts4
       }
     }
     
