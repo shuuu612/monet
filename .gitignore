@@ -92,3 +92,5 @@ sw.*
 # image
 # static/images/site
 
+# VScode
+.vscode
