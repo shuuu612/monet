@@ -916,7 +916,7 @@ export default {
     transform: translateX(0);
     transition: transform .25s ease-out;
   }
-  padding: 50px 15px 40px 15px;
+  padding: 0 15px 40px 15px;
   overflow-y: scroll;
   // スライドバー非表示
   -ms-overflow-style: none;
@@ -928,7 +928,7 @@ export default {
     
   }
   @include responsive(md) {
-    padding: 50px 15px 15px 15px;
+    padding: 0 15px 15px 15px;
   }
   @include responsive(lg) {
     
@@ -951,6 +951,21 @@ export default {
   justify-content: center;
   border-bottom: var(--black-super-light) 1px solid;
   /* padding-right: 30px; */
+  position: sticky;
+  top: 0;
+  left: 0;
+  padding-top: 50px;
+  background-color: var(--black);
+  z-index: 110;
+  &::after {
+    content: '';
+    width: 100%;
+    height: 24px;
+    background-color: var(--black);
+    position: absolute;
+    top: 82px;
+    left: 0;
+  }
 }
 
 .tabMenu {
@@ -970,7 +985,7 @@ export default {
 
 
 .sideMenuContents {
-  margin-top: 20px;
+  margin-top: 30px;
   position: relative;
 }
 
@@ -996,7 +1011,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 40px;
+  margin-top: 20px;
 }
 
 .sideMenuSubTitle {
