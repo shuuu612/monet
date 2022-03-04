@@ -1471,7 +1471,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-xxs);
   margin-top: 3px;
   color: var(--black-ultra-light);
   font-weight: 400;
