@@ -23,7 +23,7 @@
               <div v-for="name in tagname" :key="name" class="tagContent">
                 <div class="sideMenuSubTitle tagStyle">{{name.toUpperCase()}}</div>
                 <div class="tagItems">
-                  <div v-for="item in tag[name].contents" :key="item.id" class="tagItem" :class="getSelectedTag(item.id)">
+                  <div v-for="(item, index) in tag[name].contents" :key="index" class="tagItem" :class="getSelectedTag(item.id)">
                     <div class="tagLinks" @click="clickTagButton">
                       <nuxt-link :to="`/tag/${item.id}`" class="tagLink button">
                         <div v-if="name === 'color'" class="colorImage" :class="`${item.id}`"></div>
@@ -57,7 +57,7 @@
               </svg>
               <input id="categorySearch" v-model="keyword" class="search" type="text" placeholder="カテゴリーを検索" autocomplete="off" @input="setKeyword" @focus="setFocus" @blur="setBlur">
             </div>
-            <div v-for="item in keywordContents" :key="item.id" class="tagItem">
+            <div v-for="(item, index) in keywordContents" :key="index" class="tagItem">
                 <div class="tagLinks" @click="clickTagButton">
                   <nuxt-link :to="`/tag/${item.id}`" class="tagLink button">
                     <div v-if="getColorMark(item)" class="colorImage" :class="`${item.id}`"></div>
