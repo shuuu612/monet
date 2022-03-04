@@ -114,7 +114,7 @@ export default {
   margin-top: 60px;
   .lightImage {
     width: 20px;
-    fill: var(--black-forDarkMode);
+    fill: var(--barkmode-light-icon);
     transition: transform .25s;
   }
   @include hover() {

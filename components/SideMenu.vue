@@ -1737,7 +1737,7 @@ input[type="range"] {
       background-color: var(--colormode9);
     }
     &.color10 {
-      background-color: var(--colormode10);
+      background-color: var(--white);
     }
     &.color11 {
       background-color: var(--colormode11);
@@ -1775,7 +1775,7 @@ input[type="range"] {
       background-color: var(--colormode9-transparent);
     }
     &.color10 {
-      background-color: var(--colormode10-transparent);
+      background-color: var(--white-transparent);
     }
     &.color11 {
       background-color: var(--colormode11-transparent);
@@ -1844,7 +1844,7 @@ input[type="range"] {
     fill: var(--colormode9);
   }
   .off.color10 & {
-    fill: var(--colormode10);
+    fill: var(--white);
   }
   .off.color11 & {
     fill: var(--colormode11);

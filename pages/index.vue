@@ -1941,6 +1941,7 @@ export default {
   align-items: center;
   line-height: 2em;
   text-align: center;
+  color: var(--category-name);
   @include responsive(xs) {
     
   }
@@ -2374,7 +2375,7 @@ export default {
   transition: background-color .25s;
   .bookmarkImage {
     width: 15px;
-    stroke: var(--black-super-light-forDarkMode);
+    stroke: var(--favorite-icon-stroke);
     transition: stroke .25s, fill .25s;
   }
   .bookmarkRegistered {
@@ -2426,7 +2427,7 @@ export default {
   align-items: center;
   justify-content: center;
   opacity: 0;
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-xxs);
   
   @keyframes comment-open {
     100% {

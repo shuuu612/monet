@@ -94,7 +94,7 @@ export default {
   border-radius: 50px;
   height: 100%;
   border-radius: 50px;
-  background-color: var(--white);
+  background-color: var(--search-background);
   padding-left: 10px;
   border-top: 0;
   border-left: 0;

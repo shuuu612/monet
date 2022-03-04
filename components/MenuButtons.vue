@@ -149,10 +149,10 @@ export default {
 }
 .bookmarkImage {
   height: 16px;
-  stroke: var(--black-dark-forDarkMode);
+  stroke: var(--favorite-icon-stroke);
   transition: transform .25s;
   .selected & {
-    fill: var(--black-dark-forDarkMode);
+    fill: var(--favorite-icon-selected);
   }
 }
 

@@ -136,7 +136,7 @@ export default {
   width: 20px;
   /* margin-right: 8px;
   margin-top: 2px; */
-  fill: var(--black-forDarkMode);
+  fill: var(--favorite-icon-stroke);
 }
 
 .title {
