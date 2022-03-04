@@ -1639,7 +1639,7 @@ input[type="range"] {
   width: 16px;
   margin-right: 10px;
   margin-left: 10px;
-  fill: var(--grey-light);
+  fill: var(--white);
   @include responsive(xs) {
     
   }
@@ -1667,7 +1667,7 @@ input[type="range"] {
   color: var(--white);
 }
 ::placeholder {
-  color: var(--black-ultra-light);
+  color: var(--white-ultra-dark);
 }
 
 .partitionLine {
