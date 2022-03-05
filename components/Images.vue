@@ -303,7 +303,7 @@ export default {
       const today = new Date();
       const year = today.getFullYear();
       const month = (today.getMonth() + 1).toString().padStart(2, "0");
-      const date = (today.getDate() + 4).toString().padStart(2, "0");
+      const date = (today.getDate() + 5).toString().padStart(2, "0");
       this.date = year+month+date;
     }
   },
