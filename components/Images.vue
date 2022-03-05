@@ -4,19 +4,19 @@
       <template v-for="(step, index) in stepsPc">
         <picture v-if="getDisplaySteps(index, 'pc')" :key="index" :class="getMargin('pc')">
           <source
-            :src="`${getPath(content.url)}-pc-${step}.webp?ver=${date}`"
+            :src="`${getPath(content.url)}-pc-${step}.webp`"
             :srcset="`
-            ${getPath(content.url)}-pc-${step}.webp?ver=${date} 1x,
-            ${getPath(content.url)}-pc-${step*2}.webp?ver=${date} 2x
+            ${getPath(content.url)}-pc-${step}.webp 1x,
+            ${getPath(content.url)}-pc-${step*2}.webp 2x
             `"
             type="image/webp"
           />
           <img
             class="image"
-            :src="`${getPath(content.url)}-pc-${step}.jpg?ver=${date}`"
+            :src="`${getPath(content.url)}-pc-${step}.jpg`"
             :srcset="`
-            ${getPath(content.url)}-pc-${step}.jpg?ver=${date} 1x,
-            ${getPath(content.url)}-pc-${step*2}.jpg?ver=${date} 2x
+            ${getPath(content.url)}-pc-${step}.jpg 1x,
+            ${getPath(content.url)}-pc-${step*2}.jpg 2x
             `"
             :width="getWidth('pc')"
             :height="getHeight"
@@ -29,7 +29,7 @@
       <img
         v-if="getPcHide"
         class="image loading"
-        :src="`${getPath(content.url)}-pc-50.jpg?ver=${date}`"
+        :src="`${getPath(content.url)}-pc-50.jpg`"
         :width="getWidth('pc')"
         :height="getHeight"
         alt="loading-image"
@@ -39,19 +39,19 @@
       <template v-for="(step, index) in stepsTb">
         <picture v-if="getDisplaySteps(index, 'tb')" :key="index+100" :class="getMargin('tb')">
           <source
-            :src="`${getPath(content.url)}-tb-${step}.webp?ver=${date}`"
+            :src="`${getPath(content.url)}-tb-${step}.webp`"
             :srcset="`
-            ${getPath(content.url)}-tb-${step}.webp?ver=${date} 1x,
-            ${getPath(content.url)}-tb-${step*2}.webp?ver=${date} 2x
+            ${getPath(content.url)}-tb-${step}.webp 1x,
+            ${getPath(content.url)}-tb-${step*2}.webp 2x
             `"
             type="image/webp"
           />
           <img
             class="image"
-            :src="`${getPath(content.url)}-tb-${step}.jpg?ver=${date}`"
+            :src="`${getPath(content.url)}-tb-${step}.jpg`"
             :srcset="`
-            ${getPath(content.url)}-tb-${step}.jpg?ver=${date} 1x,
-            ${getPath(content.url)}-tb-${step*2}.jpg?ver=${date} 2x
+            ${getPath(content.url)}-tb-${step}.jpg 1x,
+            ${getPath(content.url)}-tb-${step*2}.jpg 2x
             `"
             :width="getWidth('tb')"
             :height="getHeight"
@@ -64,7 +64,7 @@
       <img
         v-if="getTbHide"
         class="image loading"
-        :src="`${getPath(content.url)}-tb-50.jpg?ver=${date}`"
+        :src="`${getPath(content.url)}-tb-50.jpg`"
         :width="getWidth('tb')"
         :height="getHeight"
         alt="loading-image"
@@ -74,19 +74,19 @@
       <template v-for="(step, index) in stepsSp">
         <picture v-if="getDisplaySteps(index, 'sp')" :key="index+200" :class="getMargin('sp')">
           <source
-            :src="`${getPath(content.url)}-sp-${step}.webp?ver=${date}`"
+            :src="`${getPath(content.url)}-sp-${step}.webp`"
             :srcset="`
-            ${getPath(content.url)}-sp-${step}.webp?ver=${date} 1x,
-            ${getPath(content.url)}-sp-${step*2}.webp?ver=${date} 2x
+            ${getPath(content.url)}-sp-${step}.webp 1x,
+            ${getPath(content.url)}-sp-${step*2}.webp 2x
             `"
             type="image/webp"
           />
           <img
             class="image"
-            :src="`${getPath(content.url)}-sp-${step}.jpg?ver=${date}`"
+            :src="`${getPath(content.url)}-sp-${step}.jpg`"
             :srcset="`
-            ${getPath(content.url)}-sp-${step}.jpg?ver=${date} 1x,
-            ${getPath(content.url)}-sp-${step*2}.jpg?ver=${date} 2x
+            ${getPath(content.url)}-sp-${step}.jpg 1x,
+            ${getPath(content.url)}-sp-${step*2}.jpg 2x
             `"
             :width="getWidth('sp')"
             :height="getHeight"
@@ -99,7 +99,7 @@
       <img
         v-if="getSpHide"
         class="image loading"
-        :src="`${getPath(content.url)}-sp-50.jpg?ver=${date}`"
+        :src="`${getPath(content.url)}-sp-50.jpg`"
         :width="getWidth('sp')"
         :height="getHeight"
         alt="loading-image"
@@ -123,7 +123,6 @@ export default {
       stepsTb: [150, 195, 240, 285, 330, 375, 420, 465, 510, 555, 600],
       stepsSp: [92, 120, 148, 175, 203, 231, 258, 286, 314, 341, 369],
       currentStep: 0,
-      date: '',
     };
   },
   computed: {
@@ -289,7 +288,7 @@ export default {
 
   },
   mounted() {
-    this.setDate();
+    
   },
   beforeDestroy() {
 
@@ -299,13 +298,6 @@ export default {
       // 画像ロード済みフラグの設定
       this.$store.dispatch("loaded/pushLoadedImage");
     },
-    setDate() {
-      const today = new Date();
-      const year = today.getFullYear();
-      const month = (today.getMonth() + 1).toString().padStart(2, "0");
-      const date = (today.getDate() + 5).toString().padStart(2, "0");
-      this.date = year+month+date;
-    }
   },
   
 };
