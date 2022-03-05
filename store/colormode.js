@@ -12,7 +12,7 @@ export const state = () => ({
   color10: false,        // ローカルストレージ保存対象
   color11: true,        // ローカルストレージ保存対象
   color12: true,        // ローカルストレージ保存対象
-  random: false,
+  random: true,
   empty: false,
 })
 
