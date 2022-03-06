@@ -4,7 +4,6 @@
       <template v-for="(step, index) in stepsPc">
         <picture v-if="getDisplaySteps(index, 'pc')" :key="index" :class="getMargin('pc')">
           <source
-            :src="`${getPath(content.url)}-pc-${step}.webp`"
             :srcset="`
             ${getPath(content.url)}-pc-${step}.webp 1x,
             ${getPath(content.url)}-pc-${step*2}.webp 2x
@@ -38,7 +37,6 @@
       <template v-for="(step, index) in stepsTb">
         <picture v-if="getDisplaySteps(index, 'tb')" :key="index+100" :class="getMargin('tb')">
           <source
-            :src="`${getPath(content.url)}-tb-${step}.webp`"
             :srcset="`
             ${getPath(content.url)}-tb-${step}.webp 1x,
             ${getPath(content.url)}-tb-${step*2}.webp 2x
@@ -72,7 +70,6 @@
       <template v-for="(step, index) in stepsSp">
         <picture v-if="getDisplaySteps(index, 'sp')" :key="index+200" :class="getMargin('sp')">
           <source
-            :src="`${getPath(content.url)}-sp-${step}.webp`"
             :srcset="`
             ${getPath(content.url)}-sp-${step}.webp 1x,
             ${getPath(content.url)}-sp-${step*2}.webp 2x
