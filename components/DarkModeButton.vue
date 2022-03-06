@@ -1,6 +1,6 @@
 <template>
   <div v-if="getDesktop">
-    <div class="buttons" :class="[getDarkMode,getUnset]" :style="getStyle">
+    <div class="buttons" :class="[getDarkMode,getUnset]" :style="getStyle" aria-label="darkmode">
       <div class="button">
         <button class="darkButton" @click="clickDark">
           <svg class="darkImage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 255.29 347.47" fill="#231815">
