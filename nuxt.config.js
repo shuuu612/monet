@@ -93,21 +93,7 @@ export default {
 
   buildModules: [
     'nuxt-microcms-module',
-    /* '@nuxtjs/pwa' */
   ],
-
-  // @nuxtjs/c Configuration
-  /* manifest: {
-    lang: 'ja',
-    name: 'Monet | Webデザインギャラリー',
-    short_name: 'Monet',
-    description: 'MonetはWeb制作の参考になるWebサイトを集めたギャラリー･リンク集です。日本国内の優れたWebデザインを厳選してご紹介しています。Webデザインの参考にぜひご活用ください。',
-    display: 'standalone',
-    theme_color: '#000',
-    background_color: '#fff',
-    scope: '/',
-    start_url: '/',
-  }, */
 
   microcms: {
     options: {
