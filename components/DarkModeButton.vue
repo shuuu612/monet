@@ -1,15 +1,15 @@
 <template>
   <div v-if="getDesktop">
-    <div class="buttons" :class="[getDarkMode,getUnset]" :style="getStyle" aria-label="darkmode">
+    <div class="buttons" :class="[getDarkMode,getUnset]" :style="getStyle">
       <div class="button">
-        <button class="darkButton" @click="clickDark">
+        <button class="darkButton" aria-label="lightmode" @click="clickDark">
           <svg class="darkImage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 255.29 347.47" fill="#231815">
             <path d="M255.29,327.19a173.82,173.82,0,0,1-30-319.41,173.76,173.76,0,1,0,30,319.41Z"/>
           </svg>
         </button>
       </div>
       <div class="button">
-        <button class="lightButton" @click="clickLight">
+        <button class="lightButton" aria-label="darkmode" @click="clickLight">
           <svg class="lightImage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 402.86 393.73" fill="#231815">
             <path d="M201,308.11A111.25,111.25,0,1,1,312.19,196.86,111.37,111.37,0,0,1,201,308.11Zm0-199.49a88.25,88.25,0,1,0,88.24,88.24A88.34,88.34,0,0,0,201,108.62Z"/>
             <path d="M201,61.22a10.5,10.5,0,0,1-10.5-10.5V10.5a10.5,10.5,0,0,1,21,0V50.72A10.5,10.5,0,0,1,201,61.22Z"/>
