@@ -29,13 +29,8 @@
                         <div v-if="name === 'color'" class="colorImage" :class="`${item.id}`"></div>
                         <div class="tagLinkText">
                           <div>{{item.name}}</div>
-                          <!-- <div class="tagLinkTextLine"></div> -->
                         </div>
                       </nuxt-link>
-                      <!-- <div v-else class="tagLink button" @click="$moveTop">
-                        <div v-if="name === 'color'" class="colorImage"></div>
-                        <div>{{item.name}}</div>
-                      </div> -->
                       <div class="starButton button" @click.stop="setFavoriteTags(item.id)">
                         <svg class="starImage" :class="getAddedFavoriteTags(item.id)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 567.13 539.38" fill="transparent" stroke="#ffffff">
                           <polygon points="283.57 45.19 357.91 195.83 524.15 219.99 403.86 337.25 432.26 502.81 283.57 424.64 134.88 502.81 163.27 337.25 42.98 219.99 209.22 195.83 283.57 45.19" style="stroke-miterlimit:10;stroke-width:40px"/>
@@ -63,7 +58,6 @@
                     <div v-if="getColorMark(item)" class="colorImage" :class="`${item.id}`"></div>
                     <div class="tagLinkText">
                       <div>{{item.name}}</div>
-                      <!-- <div class="tagLinkTextLine"></div> -->
                     </div>
                   </nuxt-link>
                   <div class="starButton button" @click.stop="setFavoriteTags(item.id)">
@@ -90,10 +84,8 @@
                           <nuxt-link :to="`/tag/${item.id}`" class="tagLink button">
                             <div class="tagLinkText">
                               <div>{{item.name}}</div>
-                              <!-- <div class="tagLinkTextLine"></div> -->
                             </div>
                           </nuxt-link>
-                          <!-- <div v-else class="tagLink button" @click="$moveTop">{{item.name}}</div> -->
                           <div class="starButton button" @click.stop="setFavoriteTags(item.id)">
                             <svg class="starImage" :class="getAddedFavoriteTags(item.id)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 567.13 539.38" fill="transparent" stroke="#ffffff">
                               <polygon points="283.57 45.19 357.91 195.83 524.15 219.99 403.86 337.25 432.26 502.81 283.57 424.64 134.88 502.81 163.27 337.25 42.98 219.99 209.22 195.83 283.57 45.19" style="stroke-miterlimit:10;stroke-width:40px"/>
@@ -118,7 +110,6 @@
                   <button class="controllerItem threeItems" :class="getStatePC" :disabled="getDevicePcDisabled" @click="clickDevicePc">
                     <div>
                       <div class="typeImageWrapper">
-                        <!-- <img class="typeImagePC" src="/images/PC.svg" alt=""> -->
                         <svg class="typeImage typeImagePC" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 357 299" fill="#ffffff">
                           <path d="M348.44,0H8.56A8.56,8.56,0,0,0,0,8.56V240.44A8.56,8.56,0,0,0,8.56,249H348.44a8.56,8.56,0,0,0,8.56-8.56V8.56A8.56,8.56,0,0,0,348.44,0ZM331,219.12a4.87,4.87,0,0,1-4.88,4.88H29.88A4.87,4.87,0,0,1,25,219.12V29.88A4.87,4.87,0,0,1,29.88,25H326.12A4.87,4.87,0,0,1,331,29.88Z"/>
                           <rect class="cls-1" x="66" y="274" width="225" height="25" rx="2.6"/>
@@ -130,7 +121,6 @@
                   <button class="controllerItem threeItems" :class="getStateTB" :disabled="getDeviceTbDisabled" @click="clickDeviceTb">
                     <div>
                       <div class="typeImageWrapper">
-                        <!-- <img class="typeImageTB" src="/images/TB.svg" alt=""> -->
                         <svg class="typeImage typeImageTB" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 315.88 374.1" fill="#ffffff">
                           <path d="M304.56,0H11.32A11.32,11.32,0,0,0,0,11.32V362.78A11.32,11.32,0,0,0,11.32,374.1H304.56a11.32,11.32,0,0,0,11.32-11.32V11.32A11.32,11.32,0,0,0,304.56,0Zm-17.8,340.3a9.06,9.06,0,0,1-9.05,9.06H37a9.06,9.06,0,0,1-9.06-9.06V37.87a9.06,9.06,0,0,1,9.06-9H277.71a9,9,0,0,1,9.05,9Z"/>
                         </svg>
@@ -141,7 +131,6 @@
                   <button class="controllerItem threeItems" :class="getStateSP" :disabled="getDeviceSpDisabled" @click="clickDeviceSp">
                     <div>
                       <div class="typeImageWrapper">
-                        <!-- <img class="typeImageSP" src="/images/SP.svg" alt=""> -->
                         <svg class="typeImage typeImageSP" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 216.45 386.3" fill="#ffffff">
                           <path d="M207.69,0H8.76A8.76,8.76,0,0,0,0,8.76V377.54a8.76,8.76,0,0,0,8.76,8.76H207.69a8.76,8.76,0,0,0,8.76-8.76V8.76A8.76,8.76,0,0,0,207.69,0Zm-19.8,351a8.21,8.21,0,0,1-8.22,8.21H35.57A8.21,8.21,0,0,1,27.35,351V36.77a8.22,8.22,0,0,1,8.22-8.21h144.1a8.22,8.22,0,0,1,8.22,8.21Z"/>
                           <rect x="75.16" y="9.02" width="63.13" height="37.58" rx="4.34"/>
@@ -158,19 +147,6 @@
                     <div class="background"></div>
                   </button>
                 </div>
-                <!-- <div v-if="multideviceDisabled" class="sliderNotice">
-                  <div>
-                    <svg class="sliderNoticeIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400.94 400.94">
-                      <circle cx="200.47" cy="117.76" r="28.42"/>
-                      <path d="M200.47,188.35c-12.32,0-22.32,7.6-22.32,17v93.22c0,9.38,10,17,22.32,17s22.32-7.61,22.32-17V205.34C222.79,196,212.8,188.35,200.47,188.35Z"/>
-                      <circle cx="200.47" cy="200.47" r="180.47" style="fill:none;stroke:#231815;stroke-miterlimit:10;stroke-width:40px"/>
-                    </svg>
-                  </div>
-                  <div class="sliderNoticeTexts">
-                    <div class="sliderNoticeText sub">ご使用の端末ではマルチデバイスはご利用いただくことができません。</div>
-                    <div class="sliderNoticeText sub">マルチデバイスのご利用にはウィンドウ幅が576px以上の端末が必要です。</div>
-                  </div>
-                </div> -->
                 <div>
                   <div class="comment">マルチデバイスは画面の横幅が576px以上の端末でご利用いただけます。</div>
                 </div>
@@ -194,7 +170,6 @@
                     </svg>
                   </button>
                   <div class="scale">{{getScaleValue}}</div>
-                  <!-- {{$store.getters["slider/getSteps"].indexOf(true)}} -->
                 </div>
                 <div class="check" :class="getSliderCheckboxChecked">
                   <div class="text">自動調整を有効にする</div>
@@ -203,19 +178,6 @@
                     <div class="background"></div>
                   </button>
                 </div>
-                <!-- <div v-if="getNotice" class="sliderNotice">
-                  <div>
-                    <svg class="sliderNoticeIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400.94 400.94">
-                      <circle cx="200.47" cy="117.76" r="28.42"/>
-                      <path d="M200.47,188.35c-12.32,0-22.32,7.6-22.32,17v93.22c0,9.38,10,17,22.32,17s22.32-7.61,22.32-17V205.34C222.79,196,212.8,188.35,200.47,188.35Z"/>
-                      <circle cx="200.47" cy="200.47" r="180.47" style="fill:none;stroke:#231815;stroke-miterlimit:10;stroke-width:40px"/>
-                    </svg>
-                  </div>
-                  <div class="sliderNoticeTexts">
-                    <div class="sliderNoticeText main">手動調整中</div>
-                    <div class="sliderNoticeText sub">表示崩れを防止するため、手動調整中であってもブラウザのサイズ変更を検知すると、手動調整を中止し自動調整が有効になります。</div>
-                  </div>
-                </div> -->
                 <div>
                   <div class="comment">表示崩れを防止するため、自動調整が無効のときにブラウザのサイズ変更を検知すると自動調整が有効になります。</div>
                 </div>
@@ -314,7 +276,6 @@
             </div>
           </div>
         </transition>
-          
       </div>
     </div>
   </div>
@@ -341,10 +302,6 @@ export default {
   },
   data() {
     return {
-      /* open: false, */
-      /* controllerOpen: false, */
-      /* scrollAmount: 0, */
-      /* scrollAmountSideMenu: 0, */
       tagname: [
         'type',
         'impression',
@@ -363,8 +320,6 @@ export default {
       keyword: '',
       keywordContents: [],
       focus: false,
-      /* selectedOr: true,
-      selectedAnd: false, */
       multideviceDisabled: false,
     };
   },
@@ -411,24 +366,9 @@ export default {
     getDarkmodeOsDisabled() {
       return this.$store.getters['darkmode/getSelectedOs']
     },
-    getStateList() {
-      return {
-        active: this.$store.getters['viewPattern/getActiveList'],
-        disabled: this.$store.getters['viewPattern/getActiveList'],
-      };
-    },
-    getStateGrid() {
-      return {
-        active: this.$store.getters['viewPattern/getActiveGrid'],
-        disabled: this.$store.getters['viewPattern/getActiveGrid'],
-      };
-    },
     getSliderValue() {
       return  this.$store.getters['slider/getValue']
     },
-    /* getCheckboxValue() {
-      return  { auto: this.$store.getters['slider/getAutoSizing'] }
-    }, */
     getDeviceCheckboxChecked() {
       return  { on: this.$store.getters['devicePattern/getMultidevaice'], off: !this.$store.getters['devicePattern/getMultidevaice'] }
     },
@@ -471,60 +411,14 @@ export default {
     getColor12Checked() {
       return  { on: this.$store.getters['colormode/getColor12'], off: !this.$store.getters['colormode/getColor12'] }
     },
-    getRandomChecked() {
-      return  { on: this.$store.getters['colormode/getRandom'], off: !this.$store.getters['colormode/getRandom'] }
-    },
     getOpen() {
       return { isOpen: this.$store.getters['sideMenu/getOpen'] }
     },
-    getClose() {
-      return { isClose: !this.$store.getters['sideMenu/getOpen'] }
-    },
-    /* getSelectedTag() {
-      return function(name, id) {
-        if(name === 'type') {
-          return { selected: this.selectedtag.type.includes(id)}
-        }else if(name === 'industry') {
-          return { selected: this.selectedtag.industry.includes(id)}
-        }else if(name === 'impression') {
-          return { selected: this.selectedtag.impression.includes(id)}
-        }else if(name === 'layout') {
-          return { selected: this.selectedtag.layout.includes(id)}
-        }else if(name === 'color') {
-          return { selected: this.selectedtag.color.includes(id)}
-        }else if(name === 'pickup') {
-          return { selected: this.selectedtag.pickup.includes(id)}
-        }else if(name === 'technique') {
-          return { selected: this.selectedtag.technique.includes(id)}
-        }else if(name === 'technology') {
-          return { selected: this.selectedtag.technology.includes(id)}
-        }
-        
-      }
-    }, */
     getSelectedTag() {
       return function(id) {
         return { selected: this.selectedtag === id}
       }
     },
-    /* getSelectedButton() {
-      return function(key) {
-        if(key === 'home') {
-          return { selectedButton: this.$store.getters['sideMenu/getSelectedHome']}
-        }else if(key === 'tag') {
-          return { selectedButton: this.$store.getters['sideMenu/getSelectedTag']}
-        }else if(key === 'search') {
-          return { selectedButton: this.$store.getters['sideMenu/getSelectedSearch']}
-        }else if(key === 'bookmark') {
-          return { selectedButton: this.$store.getters['sideMenu/getSelectedBookmark']}
-        }else if(key === 'setting') {
-          return { selectedButton: this.$store.getters['sideMenu/getSelectedSetting']}
-        }
-      }
-    }, */
-    /* getHide() { 
-      return { hide: this.$store.getters['sideMenu/getOpen'] }
-    }, */
     getAddedFavoriteTags() {
       return function (id) {
         return { favoriteTagsColor: this.$store.getters['favoriteTags/getInclusionFavoriteTags'](id) }
@@ -555,9 +449,6 @@ export default {
     getMultideviceDisabled() {
       return { disabled: this.multideviceDisabled }
     },
-    getMultideviceCancelLine() {
-      return { cancelLine : this.multideviceDisabled}
-    },
     getFavorited() {
       return function (key) {
         return this.$store.getters['favoriteTags/getInclusionFavoriteTags'](key)
@@ -576,33 +467,11 @@ export default {
       const favorite = this.$store.getters['favoriteTags/getFavoriteTags']
       return favorite.length === 0
     },
-    /* getDevice() {
-      return { mobile: this.$store.getters['windowSize/getWindowWidth'] < 768, desktop: this.$store.getters['windowSize/getWindowWidth'] >= 768}
-    } */
-    /* getNotice() {
-      return !this.$store.getters["slider/getAutoSizing"]
-    }, */
     getColorMark() {
       return function(key) {
         return this.tag.color.contents.includes(key)
       }
     },
-    /* getPosition() {
-      const steps = this.$store.getters["slider/getSteps"]
-      return {
-        scale0: steps[0],
-        scale1: steps[1],
-        scale2: steps[2],
-        scale3: steps[3],
-        scale4: steps[4],
-        scale5: steps[5],
-        scale6: steps[6],
-        scale7: steps[7],
-        scale8: steps[8],
-        scale9: steps[9],
-        scale10: steps[10],
-      }
-    }, */
     getScaleValue() {
       const steps = this.$store.getters["slider/getSteps"]
       return steps[0] ? 1 : steps[1] ? 2 : steps[2] ? 3 : steps[3] ? 4 : steps[4] ? 5 : steps[5] ? 6 : steps[6] ? 7 : steps[7] ? 8 : steps[8] ? 9 : steps[9] ? 10 : steps[10] ? 11 : ''
@@ -634,9 +503,6 @@ export default {
     window.matchMedia("(min-width:576px)").removeEventListener("change", this.changeMultideviceDisabled);
   },
   methods: {
-    /* setOpen(value) {
-      this.open = value;
-    }, */
     clickButton() {
       this.$store.dispatch('sideMenu/pushOpen');
       this.$store.dispatch('slider/pushDecidedSteps');
@@ -669,12 +535,10 @@ export default {
       }
     },
     sliderChange(event) {
-
       this.$store.dispatch('slider/pushSlider',event.target.value)
 
       // 親コンポーネントでダミーコンテンツ作成関数を実行
       this.$emit('sliderChange')
-
     },
     sliderUp() {
       const nowValue = this.$store.getters["slider/getValue"]
@@ -751,17 +615,6 @@ export default {
       this.$store.dispatch('darkmode/pushDarkmodeOff')
       this.$emit('colormodeChange')
     },
-    /* setInitialValue() {
-      this.initialValue = 0.625
-      this.initialValue = this.$store.getters['slider/getValue']
-    } */
-    /* openController() {
-      this.controllerOpen = !this.controllerOpen
-    }, */
-    /* scrolledWindow() {
-      const scroll = window.pageYOffset
-      this.scrollAmount = scroll
-    }, */
     scrolledSideMenu(element) {
       const scroll = element.srcElement.scrollTop
       this.$store.dispatch('scroll/pushSideMenuScroll',scroll)
@@ -844,14 +697,11 @@ export default {
         this.multideviceDisabled = false;
       }
     },
-
   },
-  
 };
 </script>
 
 <style lang="scss" scoped>
-
 .mask {
   position: fixed;
   top: 0;
@@ -861,15 +711,19 @@ export default {
   background-color: var(--black-transparent-low);
   z-index: 90;
 }
+
 .mask-enter-active {
   transition: opacity .25s ease-out;
 }
+
 .mask-leave-active {
   transition: opacity .25s ease-in;
 }
+
 .mask-enter, .mask-leave-to {
   opacity: 0;
 }
+
 .modalButton {
   position: fixed;
   top: 20px;
@@ -940,17 +794,18 @@ export default {
     
   }
 }
+
 .sideMenu::-webkit-scrollbar {
   // スライドバー非表示
   display:none;
 }
+
 .tabMenus {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   border-bottom: var(--black-super-light) 1px solid;
-  /* padding-right: 30px; */
   position: sticky;
   top: 0;
   left: 0;
@@ -981,9 +836,6 @@ export default {
   }
 }
 
-
-
-
 .sideMenuContents {
   margin-top: 30px;
   position: relative;
@@ -992,9 +844,11 @@ export default {
 .tab-enter-active {
   transition: opacity .15s .15s ease-out;
 }
+
 .tab-leave-active {
   transition: opacity .1s ease-in;
 }
+
 .tab-enter, .tab-leave-to {
   opacity: 0;
 }
@@ -1018,6 +872,7 @@ export default {
   font-size: var(--font-size-xs);
   color: var(--white);
 }
+
 .starButton {
   width: 32px;
   height: 100%;
@@ -1044,6 +899,7 @@ export default {
   fill: var(--yellow);
   stroke: var(--yellow);
 }
+
 .controllerTitleWrapper {
   display: flex;
   align-items: center;
@@ -1055,13 +911,14 @@ export default {
   font-size: var(--font-size-xs);
   font-weight: 500;
 }
+
 .warning {
   font-size: var(--font-size-sm);
   font-weight: 500;
   margin-left: 20px;
 }
+
 .controllerItems {
-  /* font-size: var(--font-size-xs); */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1072,7 +929,6 @@ export default {
 }
 
 .controllerItem {
-  /* border-radius: 5px; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1095,9 +951,11 @@ export default {
     width: 33.3%
   }
 }
+
 .slider {
   margin: 0 10px;
 }
+
 .selectableRange {
   border-radius: 3px;
   background-color: var(--black-super-light);
@@ -1113,6 +971,7 @@ export default {
   justify-content: left;
   position: relative;
 }
+
 .sliderButton {
   width: 24px;
   height: 24px;
@@ -1143,9 +1002,6 @@ export default {
   fill: var(--grey-ultra-light)
 }
 .scale {
-  /* position: absolute;
-  top: 0;
-  right: 20px; */
   width: 24px;
   height: 24px;
   background-color: var(--black-super-light);
@@ -1155,40 +1011,6 @@ export default {
   justify-content: center;
   padding-bottom: 1px;
   margin-left: 16px;
-  /* &.scale0 {
-    left: 32px;
-  }
-  &.scale1 {
-    left: 54px;
-    left: calc(32px + (20.65px * 1));
-  }
-  &.scale2 {
-    left: calc(32px + (20.65px * 2));
-  }
-  &.scale3 {
-    left: calc(32px + (20.65px * 3));
-  }
-  &.scale4 {
-    left: calc(32px + (20.65px * 4));
-  }
-  &.scale5 {
-    left: calc(32px + (20.65px * 5));
-  }
-  &.scale6 {
-    left: calc(32px + (20.65px * 6));
-  }
-  &.scale7 {
-    left: calc(32px + (20.65px * 7));
-  }
-  &.scale8 {
-    left: calc(32px + (20.65px * 8));
-  }
-  &.scale9 {
-    left: calc(32px + (20.65px * 9));
-  }
-  &.scale10 {
-    left: calc(32px + (20.65px * 10));
-  } */
   @include responsive(xs) {
     display: flex;
   }
@@ -1208,7 +1030,6 @@ export default {
     
   }
 }
-
 
 .sliderNotice {
   width: 100%;
@@ -1245,6 +1066,7 @@ export default {
   background-color: transparent;
   margin-top: 22px;
 }
+
 .check {
   display: flex;
   align-items: center;
@@ -1309,7 +1131,6 @@ export default {
   &:not(:first-child) {
     margin-top: 30px;
   }
-  
 }
 
 .tagStyle {
@@ -1323,7 +1144,6 @@ export default {
   background-color: var(--black-light);
   padding: 10px 0;
   margin-top: 3px;
-  
 }
 
 .tagItem {
@@ -1338,7 +1158,6 @@ export default {
 .tagLinks {
   position: relative;
   width: 100%;
-
 }
 
 .colorImage {
@@ -1418,7 +1237,6 @@ export default {
     font-weight: 500;
     background-color: var(--black-super-light);
   }
-  /* border-radius: 50px; */
 }
 
 .button {
@@ -1484,11 +1302,8 @@ export default {
   }
 }
 
-
-
 .itemImage {
   height: 100%;
-  
 }
 
 .checkboxWrapper {
@@ -1584,7 +1399,6 @@ input[type="range"] {
   justify-content: center;
   width: 100px;
   padding: 5px 0;
-  /* border-bottom: var(--grey) 1px solid; */
   margin-right: 20px;
   font-size: var(--font-size-lg);
   @include responsive(xs) {
@@ -1615,24 +1429,6 @@ input[type="range"] {
   height: 40px;
   border-radius: 50px;
   background-color: var(--black-light);
-  @include responsive(xs) {
-    
-  }
-  @include responsive(sm) {
-    
-  }
-  @include responsive(md) {
-
-  }
-  @include responsive(lg) {
-    
-  }
-  @include responsive(xl) {
-    
-  }
-  @include responsive(xxl) {
-    
-  }
 }
 
 .searchImage {
@@ -1640,24 +1436,6 @@ input[type="range"] {
   margin-right: 10px;
   margin-left: 10px;
   fill: var(--white);
-  @include responsive(xs) {
-    
-  }
-  @include responsive(sm) {
-    
-  }
-  @include responsive(md) {
-
-  }
-  @include responsive(lg) {
-    
-  }
-  @include responsive(xl) {
-    
-  }
-  @include responsive(xxl) {
-    
-  }
 }
 .search {
   width: calc(100% - 20px);
@@ -1676,6 +1454,7 @@ input[type="range"] {
   margin: 30px auto 20px auto;
   background-color: var(--black-super-light);
 }
+
 .comment {
   font-size: var(--font-size-xs);
   color: var(--grey-ultra-light);
@@ -1686,28 +1465,31 @@ input[type="range"] {
     margin-top: 4px;
   }
 }
+
 .textOuter {
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 .text {
   &.color {
     width: 50px;
     margin-bottom: 2px;
   }
 }
+
 .colors {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding-top: 16px;
 }
+
 .color {
   width: 24px;
   height: 24px;
   border-radius: 12px;
-  
   &.on {
     &.color1 {
       background-color: var(--colormode1);
@@ -1784,32 +1566,6 @@ input[type="range"] {
       background-color: var(--colormode12-transparent);
     }
   }
-  /* &.random {
-    background: linear-gradient(to right,
-                                var(--colormode1) calc(100% * (1/12)),
-                                var(--colormode2) calc(100% * (1/12)),
-                                var(--colormode2) calc(100% * (2/12)),
-                                var(--colormode3) calc(100% * (2/12)),
-                                var(--colormode3) calc(100% * (3/12)),
-                                var(--colormode4) calc(100% * (3/12)),
-                                var(--colormode4) calc(100% * (4/12)),
-                                var(--colormode5) calc(100% * (4/12)),
-                                var(--colormode5) calc(100% * (5/12)),
-                                var(--colormode6) calc(100% * (5/12)),
-                                var(--colormode6) calc(100% * (6/12)),
-                                var(--colormode7) calc(100% * (6/12)),
-                                var(--colormode7) calc(100% * (7/12)),
-                                var(--colormode8) calc(100% * (7/12)),
-                                var(--colormode8) calc(100% * (8/12)),
-                                var(--colormode9) calc(100% * (8/12)),
-                                var(--colormode9) calc(100% * (9/12)),
-                                var(--colormode10) calc(100% * (9/12)),
-                                var(--colormode10) calc(100% * (10/12)),
-                                var(--colormode11) calc(100% * (10/12)),
-                                var(--colormode11) calc(100% * (11/12)),
-                                var(--colormode12) calc(100% * (11/12)),
-                                );
-  } */
 }
 .invalid {
 
@@ -1853,5 +1609,4 @@ input[type="range"] {
     fill: var(--colormode12);
   }
 }
-
 </style>

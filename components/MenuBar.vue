@@ -7,9 +7,6 @@
           <span class="bar"></span>
           <span class="bar"></span>
         </div>
-        <!-- <svg class="openImage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 485.26 289.43"  fill="#231815">
-          <polygon points="485.26 144.71 292.33 0 292.33 92.26 0 92.26 0 197.16 292.33 197.16 292.33 289.43 485.26 144.71"/>
-        </svg> -->
       </div>
       <div class="title">メニュー</div>
     </button>
@@ -70,7 +67,6 @@ export default {
   },
   data() {
     return {
-
     };
   },
   computed: {
@@ -102,13 +98,10 @@ export default {
     }
   },
   created() {
-
   },
   mounted() {
-    
   },
   beforeDestroy() {
-
   },
   methods: {
     clickButton() {
@@ -128,7 +121,6 @@ export default {
       }
     },
   },
-  
 };
 </script>
 
@@ -165,6 +157,7 @@ export default {
     padding: 0;
   }
 }
+
 .icon {
   height: 65%;
   display: flex;
@@ -172,12 +165,12 @@ export default {
   justify-content: center;
   margin-bottom: 3px;
 }
+
 .title {
   height: 35%;
   font-size: var(--font-size-xs);
   color: var(--white);
 }
-
 
 .menuLink {
   width: 100%;
@@ -194,14 +187,17 @@ export default {
 .homeImage {
   height: 16px;
 }
+
 .homeImageInner {
   .selected & {
     fill: var(--white);
   }
 }
+
 .homeImageOuter {
   fill: var(--white);
 }
+
 .bookmarkImage {
   height: 16px;
   stroke: var(--white);
@@ -268,5 +264,4 @@ export default {
     }
   }
 }
-
 </style>

@@ -60,7 +60,6 @@ export default {
     setTimeout(()=>{this.unset = false},10)
   },
   beforeDestroy() {
-    
   },
   methods: {
     clickLight() {
@@ -68,7 +67,6 @@ export default {
       this.lightToDark = true;
       setTimeout(()=>{this.lightToDark = false},2500)
       setTimeout(()=>{this.$store.dispatch("darkmode/pushDarkmodeOnForPage");this.$emit('colormodeChange');},1250)
-      
     },
     clickDark(){
       this.$store.dispatch("darkmode/pushCountUp")
@@ -77,7 +75,6 @@ export default {
       setTimeout(()=>{this.$store.dispatch("darkmode/pushDarkmodeOffForPage");this.$emit('colormodeChange');},1250)
     },
   },
-  
 };
 </script>
 
@@ -94,6 +91,7 @@ export default {
     transition: unset;
   }
 }
+
 .button {
   width: 100%;
   height: 50%;
@@ -101,6 +99,7 @@ export default {
   align-items: center;
   justify-content: center;
 }
+
 .lightButton,.darkButton {
   width: 30px;
   height: 30px;
@@ -137,9 +136,6 @@ export default {
     }
   }
 }
-
-
-
 
 .mask {
   width: 100%;
@@ -224,5 +220,4 @@ export default {
     }
   }
 }
-
 </style>

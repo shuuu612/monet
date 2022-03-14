@@ -14,7 +14,6 @@
 export default {
   data() {
     return {
-
     };
   },
   computed: {
@@ -26,13 +25,10 @@ export default {
     },
   },
   created() {
-
   },
   mounted() {
-    
   },
   beforeDestroy() {
-
   },
   methods: {
     clickButton() {
@@ -40,12 +36,10 @@ export default {
       this.$store.dispatch('slider/pushDecidedSteps');
     },
   },
-  
 };
 </script>
 
 <style lang="scss" scoped>
-
 .menuBtn {
   position: fixed;
   display: flex;
@@ -62,61 +56,12 @@ export default {
   height: 100vh;
   background-color: var(--side-menu);
   z-index: 100;
-  /* transition: background-color .2s, transform .25s ease-in; */
   transition: background-color .2s;
   border-right: 2px var(--side-menu-borber) solid;
   @include hover() {
     background-color: var(--side-menu-hover);
   }
-  &.open {
-    /* transform: translateX(var(--sideMenuWidth));
-    transition: background-color .2s, transform .25s ease-out; */
-  }
 }
-
-// プラスメニュー
-/* .bars {
-  position: relative;
-  width: 22px;
-  height: 18px;
-}
-
-.bar {
-  background-color: var(--white);
-  width: inherit;
-  height: 2px;
-  position: absolute;
-  transition: transform .3s;
-  display: block;
-  border-radius: 5px;
-  &:nth-child(1) {
-    top: 8px;
-    left: 0;
-    transform: rotate(90deg)
-  }
-  &:nth-child(2) {
-    display: none;
-  }
-  &:nth-child(3) {
-    top: 8px;
-    left: 0;
-  }
-  .open & {
-    &:nth-child(1) {
-      top: 8px;
-      left: 0;
-      transform: rotate(45deg);
-    }
-    &:nth-child(2) {
-      display: none;
-    }
-    &:nth-child(3) {
-      top: 8px;
-      left: 0;
-      transform: rotate(-45deg);
-    }
-  }
-} */
 
 // ハンバーガーメニュー
 .bars {
@@ -130,7 +75,6 @@ export default {
   width: inherit;
   height: 2px;
   position: absolute;
-  /* transition: transform .3s; */
   display: block;
   border-radius: 5px;
   &:nth-child(1) {
@@ -145,22 +89,5 @@ export default {
     top: 16px;
     left: 0;
   }
-  /* .open & {
-    background-color: var(--white);
-    &:nth-child(1) {
-      top: 8px;
-      left: 0;
-      transform: rotate(135deg);
-    }
-    &:nth-child(2) {
-      display: none;
-    }
-    &:nth-child(3) {
-      top: 8px;
-      left: 0;
-      transform: rotate(-135deg);
-    }
-  } */
 }
-
 </style>

@@ -99,25 +99,6 @@ export default {
   border-top: 0;
   border-left: 0;
   border-right: 0;
-  @include responsive(xs) {
-    
-  }
-  @include responsive(sm) {
-    
-  }
-  @include responsive(md) {
-
-    
-  }
-  @include responsive(lg) {
-    
-  }
-  @include responsive(xl) {
-    
-  }
-  @include responsive(xxl) {
-    
-  }
 }
 
 .searchImage {
@@ -125,25 +106,8 @@ export default {
   margin-right: 10px;
   margin-left: 10px;
   fill: var(--search-icon);
-  @include responsive(xs) {
-    
-  }
-  @include responsive(sm) {
-    
-  }
-  @include responsive(md) {
-    
-  }
-  @include responsive(lg) {
-    
-  }
-  @include responsive(xl) {
-    
-  }
-  @include responsive(xxl) {
-    
-  }
 }
+
 .search {
   width: calc(100% - 20px);
   height: 36px;
@@ -151,6 +115,7 @@ export default {
   font-size: var(--font-size-sm);
   color: var(--search-text);
 }
+
 ::placeholder {
   color: var(--search-placeholder);
 }

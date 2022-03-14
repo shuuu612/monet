@@ -34,7 +34,7 @@
           <div v-if="getNoContentComment.length > 0" class="noContent" style="white-space: pre-wrap;" v-text="getNoContentComment"></div>
           <div class="tool" :style="getToolWidth">
             <div class="toolItem">
-              <MenuButtons
+              <FavoriteButton
               @update="update"
               />
             </div>
@@ -52,91 +52,6 @@
                 :content="content"
                 />
               </div>
-              <!-- <transition name="modal">
-                <div v-if="getActiveModal(content.id)" class="modal" :class="getModalOpen" @click="closeModal">
-                  <button class="modalButton" @click="closeModal">
-                    <span class="modalBar"></span>
-                    <span class="modalBar"></span>
-                  </button>
-                  <div class="modalContent" @click.stop>
-                    <div class="modalImageWrapper">
-                      <a :href="`${content.url}`" target="_blank" rel="noopener noreferrer" class="modalImages">
-                        <img
-                          id="modalImage"
-                          class="modalImage"
-                          :src="`${getPath(content.imagePC.url)}-1200.jpg`"
-                          :srcset="`
-                          ${getPath(content.imagePC.url)}-1200.jpg 1x,
-                          ${getPath(content.imagePC.url)}-2400.jpg 2x
-                          `"
-                          :alt="`${content.name}`"
-                          @load="modalInfoSizing"
-                        >
-                      </a>
-                    </div>
-                    <div class="modalInfoWrapper" :style="modalInfoStyle">
-                      <div class="modalName">
-                        <a :href="`${content.url}`" target="_blank" rel="noopener noreferrer" class="nameLink">{{content.name}}</a>
-                      </div>
-                      <div class="modalTimes">
-                        <div class="modalTime">
-                          <img class="modalTimeImage" src="/images/published.svg" alt="published">
-                          <div>{{content.publishedAtJST}}</div>
-                        </div>
-                        <div v-if="content.updatedAtJST !== undefined &&  content.updatedAtJST !== content.publishedAtJST" class="modalTime">
-                          <img class="modalTimeImage" src="/images/updated.svg" alt="updated">
-                          <div>{{content.updatedAtJST}}</div>
-                        </div>
-                      </div>
-                      <div class="modalTag">
-                        <div class="modalTagTitle">タグ</div>
-                        <div class="modalTagContents">
-                          <div v-for="item in content.type" :key="item.id" class="modalTagContent">
-                            <nuxt-link :to="`/tag/type=${item.id}*and`" class="modalTagLink button">
-                              <div class="modalTagName">#{{item.name}}</div>
-                            </nuxt-link>
-                          </div>
-                          <div v-for="item in content.industry" :key="item.id" class="modalTagContent">
-                            <nuxt-link :to="`/tag/industry=${item.id}*and`" class="modalTagLink button">
-                              <div class="modalTagName">#{{item.name}}</div>
-                            </nuxt-link>
-                          </div>
-                          <div v-for="item in content.impression" :key="item.id" class="modalTagContent">
-                            <nuxt-link :to="`/tag/impression=${item.id}*and`" class="modalTagLink button">
-                              <div class="modalTagName">#{{item.name}}</div>
-                            </nuxt-link>
-                          </div>
-                          <div v-for="item in content.layout" :key="item.id" class="modalTagContent">
-                            <nuxt-link :to="`/tag/layout=${item.id}*and`" class="modalTagLink button">
-                              <div class="modalTagName">#{{item.name}}</div>
-                            </nuxt-link>
-                          </div>
-                          <div v-for="item in content.color" :key="item.id" class="modalTagContent">
-                            <nuxt-link :to="`/tag/color=${item.id}*and`" class="modalTagLink button">
-                              <div class="modalTagName">#{{item.name}}</div>
-                            </nuxt-link>
-                          </div>
-                          <div v-for="item in content.pickup" :key="item.id" class="modalTagContent">
-                            <nuxt-link :to="`/tag/pickup=${item.id}*and`" class="modalTagLink button">
-                              <div class="modalTagName">#{{item.name}}</div>
-                            </nuxt-link>
-                          </div>
-                          <div v-for="item in content.technique" :key="item.id" class="modalTagContent">
-                            <nuxt-link :to="`/tag/technique=${item.id}*and`" class="modalTagLink button">
-                              <div class="modalTagName">#{{item.name}}</div>
-                            </nuxt-link>
-                          </div>
-                          <div v-for="item in content.technology" :key="item.id" class="modalTagContent">
-                            <nuxt-link :to="`/tag/technology=${item.id}*and`" class="modalTagLink button">
-                              <div class="modalTagName">#{{item.name}}</div>
-                            </nuxt-link>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </transition> -->
               <div class="info" :style="infoStyle">
                 <div class="infoText" :style="infoButtonStyle">
                   <div class="name">
@@ -148,17 +63,8 @@
                   </div>
                   <div class="time">
                     <div class="published">{{content.publishedAtJST}}</div>
-                    <!-- <div class="elapsed">{{content.elapsedDate}}</div> -->
-                    <!-- <div class="updated">{{content.updatedAtJST !== undefined &&  content.updatedAtJST !== content.publishedAtJST? '更新日 '+content.updatedAtJST : ''}}</div> -->
                   </div>
                 </div>
-                <!-- <button class="infoButton detail" aria-label="Detail Open" @click="openModal(content.id)">
-                  <svg class="detailImage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 425.69 425.69" fill="#333333">
-                    <path d="M255.61,165.44H203.18V113a18.88,18.88,0,0,0-37.75,0v52.44H113a18.88,18.88,0,1,0,0,37.75h52.42v52.43a18.88,18.88,0,0,0,37.75,0V203.19h52.43a18.88,18.88,0,1,0,0-37.75Z"/>
-                    <path d="M416.48,372l-81.67-81.66a183.05,183.05,0,0,0,33.8-106C368.61,82.69,285.93,0,184.31,0S0,82.69,0,184.31,82.68,368.62,184.31,368.62a183.13,183.13,0,0,0,106-33.8L372,416.47A31.46,31.46,0,1,0,416.48,372ZM37.75,184.31c0-80.82,65.75-146.56,146.56-146.56s146.55,65.74,146.55,146.56S265.12,330.87,184.31,330.87,37.75,265.13,37.75,184.31Z"/>
-                  </svg>
-                  <div class="comment">詳細</div>
-                </button> -->
                 <button class="infoButton bookmark" aria-label="Add To Favorites" @click="setBookmark(content.id)">
                   <svg class="bookmarkImage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 451.61 428.07" fill="transparent" stroke="#231815" :class="getAddedBookmark(content.id)">
                     <path d="M328.66,20C282,20,244.47,43.3,225.55,83.13,206.7,43.3,169.53,20,123.42,20,66.39,20,20,65.5,20,121.42,20,186,57.06,233.7,95,277,132,319,203.44,390.25,220.41,406.24a6.76,6.76,0,0,0,4.62,1.83h1a6.76,6.76,0,0,0,4.62-1.83C248.93,389,320.58,317.9,356.53,277c38-43.35,75.08-91.08,75.08-155.59C431.61,64.56,386.4,20,328.66,20Z" style="stroke-miterlimit:10;stroke-width:40px"/>
@@ -179,7 +85,6 @@
 </template>
 
 <script>
-import { backfaceFixed } from '../utils/backfaceFixed';
 export default {
     async asyncData({ params, $microcms }) {
         // タグページ用
@@ -358,54 +263,14 @@ export default {
             remainingContent: 0,
             displayingJpName: "",
             tagsJpName: "",
-            contentStyle: {
-                width: "",
-                height: "",
-            },
             infoButtonStyle: {
                 width: "",
             },
             infoStyle: {
                 width: "",
             },
-            imageStyle: {
-                width: "",
-            },
-            imagePcStyle: {
-                maxWidth: "",
-            },
-            imageTbStyle: {
-                maxWidth: "",
-            },
-            imageSpStyle: {
-                maxWidth: "",
-            },
-            modalStyle: {
-                width: "",
-            },
-            modalInfoStyle: {
-                height: "",
-            },
-            activeModal: [],
-            modalOpen: false,
-            updatedFlg: false,
-            visit: "",
-            analyzedSelectedTag: {
-                type: [],
-                industry: [],
-                impression: [],
-                layout: [],
-                color: [],
-                pickup: [],
-                technique: [],
-                technology: [],
-                scheme: [],
-                bookmark: false,
-                condition: "",
-            },
             japaneseTags: '',
             colormode: [],
-            modalOpenElement: {},
             contentsElement: {},
             totalWidth: 0,
             columnContent: 0,
@@ -438,9 +303,6 @@ export default {
         };
     },
     computed: {
-        getStateSliderSize() {
-            return this.$store.getters["slider/getValue"];
-        },
         getStateSliderStep() {
             const steps = this.$store.getters["slider/getSteps"];
             return {
@@ -498,41 +360,11 @@ export default {
               return '';
             }
         },
-        getActiveModal() {
-            return function (id) {
-                return this.activeModal.includes(id)
-            };
-        },
         getSideMenuOpen() {
             return { sideMenuOpen: this.$store.getters["sideMenu/getOpen"] };
         },
         getDisplayingContent() {
             return this.displayingContent;
-        },
-        
-        getContentStyle() {
-          console.log('getContentStyle',this.contentStyle)
-          return this.contentStyle
-        },
-        getModalOpen() {
-          return { open: this.modalOpen}
-        },
-        getUrl() {
-          return function(url) {
-            // 最後のスラッシュより後を切り出す
-            const cutUrl = require(`~/static/images/site/${url.substr(url.lastIndexOf('/') + 1)}?resize&sizes[]=349&sizes[]=415&sizes[]=546&sizes[]=${349*2}&sizes[]=${415*2}&sizes[]=${546*2}&format=webp`);
-            console.log(cutUrl)
-            return cutUrl
-          }
-        },
-        getPath() {
-          return function(url) {
-            // 前半の不要部分を切り取り
-            const path1 = `/images/site/${url.substr(url.lastIndexOf('/') + 1)}`
-            // .pngを切り取り
-            const path2 = path1.substring(0, path1.indexOf(".png"))
-            return path2
-          }
         },
         getToolWidth() {
           return this.contentsWidth
@@ -718,7 +550,6 @@ export default {
                 this.displayingContent = this.keywordContents.slice(start, end);
                 this.remainingContent = this.keywordContents.length - this.displayingContent.length;
                 this.displayingJpName = "";
-                /* this.$store.dispatch("status/pushSearchKeyword"); */
             }else if(this.selectedTag === 'bookmark') {
                 // ブックマークを表示
                 this.displayingPageBookmark = this.displayingPageBookmark + 1;
@@ -727,7 +558,6 @@ export default {
                 this.displayingContent = this.bookmarkContents.slice(start, end);
                 this.remainingContent = this.bookmarkContents.length - this.displayingContent.length;
                 this.displayingJpName = this.japaneseTags;
-                /* this.$store.dispatch("status/pushSearchTag"); */
             }else {
                 // オリジナルの結果を表示
                 this.displayingPageOriginal = this.displayingPageOriginal + 1;
@@ -736,7 +566,6 @@ export default {
                 this.displayingContent = this.contents.slice(start, end);
                 this.remainingContent = this.contents.length - this.displayingContent.length;
                 this.displayingJpName = this.japaneseTags;
-                /* this.$store.dispatch("status/pushSearchTag"); */
             }
             this.createDummyContent();
         },
@@ -757,8 +586,7 @@ export default {
             const devicePattern = this.$store.getters["devicePattern/getStatePatternNumber"]; // 現在のデバイスパターン
             const value = this.$store.getters["slider/getValue"];
 
-            let width
-            /* const height = Math.round(800 * value); */
+            let width;
             switch(devicePattern) {
                 case 1:
                     width = Math.round(873 * value);
@@ -826,16 +654,6 @@ export default {
             const infoWidth = width - 40;
             this.infoButtonStyle.width = `${infoWidth}px`;
             this.infoStyle.width = `${width}px`;
-            // コンテンツ領域の大きさを設定
-            /* this.contentStyle.width = `${width}px`;
-            const windowWidth = this.$store.getters["windowSize/getWindowWidth"]; // ウィンドウサイズ
-            if (windowWidth < 576 && this.$store.getters["slider/getAutoSizing"] && (devicePattern === 4 || devicePattern === 5 || devicePattern === 6 || devicePattern === 7)) {
-              this.contentStyle.height = 'auto';
-              console.log('ここ')
-            }else {
-              this.contentStyle.height = `${height}px`;
-              console.log('ここはダメ')
-            } */
 
             // コンテンツ領域の幅
             const contentWidth = totalWidth * columnContent - (marginLeft + marginRight);
@@ -850,8 +668,7 @@ export default {
             console.log("calculateAutoSizingを起動");
             const devicePattern = this.$store.getters["devicePattern/getStatePatternNumber"]; // 現在のデバイスパターン
             const windowWidth = this.$store.getters["windowSize/getWindowWidth"]; // ウィンドウサイズ
-            /* if (!this.$store.getters["slider/getAutoSizing"])
-                return; */
+
             // コンテンツサイズ自動調整用の値を算出
             let bestStep;
             let maxStep;
@@ -1411,7 +1228,6 @@ export default {
         resizeProcess() {
             this.setWindowSize();
             this.monitorReturnToAuto();
-            this.modalInfoSizing();
             this.wrapChack();
         },
         setBookmark(id) {
@@ -1530,18 +1346,6 @@ export default {
             if (status !== null) {
                 this.$store.dispatch("status/pushLocalStorage", status);
             }
-        },
-        openModal(id) {
-            this.activeModal.push(id);
-            /* this.$store.dispatch("modal/pushOpen"); */
-            backfaceFixed(true);
-        },
-        closeModal() {
-            this.activeModal.length = 0;
-            this.activeModal.splice();
-            this.modalOpenElement = {};
-            this.modalOpen = false;
-            setTimeout(()=>{backfaceFixed(false)},200);
         },
         searchByKeyword() {
             // 検索キーワードを取得
@@ -1762,7 +1566,6 @@ export default {
             if(this.displayingPageKeyword !== 0) {
               this.displayingPageKeyword = this.displayingPageKeyword - 1;
             }
-            /* this.displayingPageKeyword = this.displayingPageKeyword - 1; */
             this.setDisplayingContent();
         },
         setWindowScroll() {
@@ -1772,28 +1575,6 @@ export default {
         setWindowSize() {
             const width = window.innerWidth;
             this.$store.dispatch("windowSize/pushWindowWidth", width);
-        },
-        modalInfoSizing() {
-            // モーダルが開いていない時は処理終了
-            if (this.activeModal.length === 0)  return;
-
-            // 初回だけ要素取得
-            if(Object.keys(this.modalOpenElement).length === 0) {
-              const modalImage = document.getElementById("modalImage")
-              this.modalOpenElement = modalImage;
-            }
-            const windowWidth = this.$store.getters["windowSize/getWindowWidth"]; // ウィンドウサイズ
-            if(windowWidth >= 992) {
-              const style = getComputedStyle(this.modalOpenElement, '');
-              const height = style.height;
-              this.modalInfoStyle.height = height;
-            }else {
-              this.modalInfoStyle.height = ""
-            }
-            
-            // モーダルの透過を解除して表示する
-            this.modalOpen = true;
-            
         },
         update() {
             this.filterByBookmarks();
@@ -1856,25 +1637,6 @@ export default {
 }
 .wrapper {
   overflow-x: hidden;
-
-  @include responsive(xs) {
-    
-  }
-  @include responsive(sm) {
-    
-  }
-  @include responsive(md) {
-    
-  }
-  @include responsive(lg) {
-    
-  }
-  @include responsive(xl) {
-    
-  }
-  @include responsive(xxl) {
-    
-  }
 }
 
 .divider {
@@ -1962,10 +1724,11 @@ export default {
     
   }
 }
+
 .contentsWrapper {
   position: relative;
-  /* padding-top: 30px; */
 }
+
 .tool {
   display: flex;
   align-items: flex-start;
@@ -1992,12 +1755,12 @@ export default {
     
   }
 }
+
 .toolItem {
   width: 55px;
 }
 
 .contents {
-  
   width: 100%;
   margin-top: 16px;
   @include responsive(xs) {
@@ -2022,6 +1785,7 @@ export default {
     
   }
 }
+
 .content {
   width: 100%;
   max-width: 100%;
@@ -2051,243 +1815,6 @@ export default {
   max-width: 100%;
   margin: 0 auto;
 }
-.modal {
-  width: 100vw;
-  height: 100vh;
-  background-color: var(--black-transparent-low);
-  z-index: 120;
-  position: fixed;
-  top: 0;
-  right: 0;
-  padding: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity .2s;
-  @include responsive(xs) {
-    
-  }
-  @include responsive(sm) {
-    
-  }
-  @include responsive(md) {
-    
-  }
-  @include responsive(lg) {
-    padding: 100px;
-  }
-  @include responsive(xl) {
-    
-  }
-  @include responsive(xxl) {
-    
-  }
-  &.open {
-    opacity: 1;
-  }
-}
-
-.modal-leave-active {
-  transition: opacity .2s;
-}
-.modal-leave-to {
-  opacity: 0 !important;
-}
-
-.modalButton {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  width: 30px;
-  height: 30px;
-  .modalBar {
-    background-color: var(--white);
-    width: 25px;
-    height: 2px;
-    position: absolute;
-    &:nth-child(1) {
-      top: 14px;
-      left: 2px;
-      transform: rotate(45deg);
-    }
-    &:nth-child(2) {
-      top: 14px;
-      left: 2px;
-      transform: rotate(135deg);
-    }
-  }
-  @include hover() {
-    .modalBar {
-      background-color: var(--grey-super-light);
-    }
-  }
-}
-
-  
-
-.modalContent {
-  background-color: transparent;
-  position: relative;
-  width: 100%;
-  max-height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  @include responsive(xs) {
-    
-  }
-  @include responsive(sm) {
-    
-  }
-  @include responsive(md) {
-    
-  }
-  @include responsive(lg) {
-    flex-direction: row;
-    max-width: 1600px;
-  }
-  @include responsive(xl) {
-    
-  }
-  @include responsive(xxl) {
-    
-  }
-
-}
-
-.modalImageWrapper {
-  @include responsive(xs) {
-    
-  }
-  @include responsive(sm) {
-    
-  }
-  @include responsive(md) {
-    
-  }
-  @include responsive(lg) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-  }
-  @include responsive(xl) {
-    
-  }
-  @include responsive(xxl) {
-    
-  }
-}
-
-.modalImage {
-  height: 100%;
-  width: 100%;
-  max-width: 1200px;
-  max-height: 100%;
-  object-fit: contain;
-}
-
-.modalInfoWrapper {
-  background-color: var(--white-forDarkMode);
-  overflow-x: hidden;
-  overflow-y: auto;
-  padding: 10px;
-  border-radius: 0 0 5px 5px;
-  margin-top: -2px;
-  @include responsive(xs) {
-    
-  }
-  @include responsive(sm) {
-    
-  }
-  @include responsive(md) {
-    
-  }
-  @include responsive(lg) {
-    width: 40%;
-    margin-top: -3px;
-    border-radius: 0 5px 5px 0;
-    max-height: 100%;
-    min-width: 350px;
-  }
-  @include responsive(xl) {
-    margin-top: -4px;
-  }
-  @include responsive(xxl) {
-    
-  }
-}
-.modalName {
-  margin-top: 5px;
-  font-weight: 500;
-  font-size: var(--font-size-md);
-  background: linear-gradient(to right, var(--gradation-start), var(--gradation-end));
-  background-clip: text;
-  display: inline-block;
-}
-.modalTimes {
-  display: flex;
-  margin-top: 3px;
-}
-.modalTime {
-  display: flex;
-  &:first-child {
-    margin-right: 10px;
-  }
-}
-.modalTimeImage {
-  width: 12px;
-  margin-right: 3px;
-  padding-top: 1px;
-}
-
-.modalTag {
-  position: relative;
-  margin-top: 25px;
-  &::before {
-    content: '';
-    width: 120%;
-    height: 1px;
-    position: absolute;
-    top: -10px;
-    left: -10px;
-    background-color: var(--grey-super-light);
-  }
-}
-.modalTagTitle {
-  margin-top: 10px;
-  font-weight: 500;
-  font-size: var(--font-size-md);
-}
-.modalTagContents {
-  display: flex;
-  align-items: center;
-  justify-content: left;
-  flex-wrap: wrap;
-}
-.modalTagContent {
-  margin: 1px;
-}
-.modalTagLink {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  color: var(--black-forDarkMode);
-  padding: 3px;
-}
-.modalTagName {
-  margin-left: 5px;
-}
-
-.activeModal {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  clip-path:inset(0 0 0 0);
-}
 
 .info {
   width: 100%;
@@ -2305,9 +1832,6 @@ export default {
 .name {
   font-weight: 400;
   font-size: var(--font-size-md);
-  /* // グラデーション
-  background: linear-gradient(to right, var(--gradation-start), var(--gradation-end));
-  background-clip: text; */
   display: inline-block;
   width: 100%;
 }
@@ -2319,21 +1843,21 @@ export default {
   display: flex;
   align-items: center;
 }
+
 .published {
-  /* display: none; */
   margin-right: 10px;
 }
+
 .updated {
   display: none;
 }
 
 .nameLink {
   text-decoration: none;
-  /* // グラデーション
-  color: transparent; */
   color: var(--site-name);
   width: 100%;
 }
+
 .nameText {
   overflow: hidden;
   max-width: 100%;
@@ -2353,6 +1877,7 @@ export default {
   justify-content: center;
   transition: background-color .25s;
 }
+
 .detail {
   right: 40px;
   .detailImage {
@@ -2367,8 +1892,6 @@ export default {
     }
   }
 }
-
-  
 
 .bookmark {
   right: 3px;
@@ -2412,8 +1935,6 @@ export default {
     }
   }
 }
-
-  
 
 .comment {
   position: absolute;
@@ -2461,8 +1982,6 @@ export default {
   }
 }
 
-
-
 // 注意：createDummyContent関数内で以下のmarginの値をハードコーディングで使用しているため、
 //      ここの値を変更する場合は、一緒にcreateDummyContentも変更必要（あとで直す）
 
@@ -2501,9 +2020,6 @@ export default {
     margin: 36px 30px;
   }
 }
-  
-
-
 .moreButton {
   width: 330px;
   max-width: 90%;
@@ -2525,7 +2041,6 @@ export default {
   width: 0;
   height: 0;
   display: none;
-  
 }
 
 .button {

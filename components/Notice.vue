@@ -17,7 +17,6 @@
 export default {
   data() {
     return {
-
     };
   },
   computed: {
@@ -47,15 +46,11 @@ export default {
   created() {
   },
   mounted() {
-
   },
   beforeDestroy() {
-
   },
   methods: {
-
   },
-  
 };
 </script>
 
@@ -115,5 +110,4 @@ export default {
   margin-left: 5px;
   margin-bottom: 2px;
 }
-
 </style>

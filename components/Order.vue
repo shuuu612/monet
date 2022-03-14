@@ -10,7 +10,6 @@
           <rect x="345.23" y="333.24" width="111.1" height="43"/>
           <rect x="176.46" y="49.45" width="279.86" height="43"/>
         </svg>
-        <!-- <div class="title">並べ替え</div> -->
       </div>
     </div>
     <div id="pulldown" class="pulldown">
@@ -67,11 +66,8 @@ export default {
     getOpenList() {
       return { open: this.open }
     },
-
   },
   mounted() {
-    /* const selectElement = document.getElementById('order');
-    selectElement.addEventListener('change', this.orderChange); */
     window.addEventListener('click', this.closeList);
   },
   beforeDestroy() {
@@ -98,10 +94,6 @@ export default {
   justify-content: flex-end;
   flex-direction: column;
   z-index: 100;
-  /* margin-bottom: 30px; */
-  /* position: absolute;
-  top: 0;
-  right: 50px; */
   position: relative;
   height: 40px;
 }
@@ -114,13 +106,13 @@ export default {
   top: 0;
   right: 0;
 }
+
 .button {
   display: flex;
   align-items: center;
   justify-content: center;
   user-select: none;
   cursor: pointer;
-  /* padding-left: 10px; */
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -134,18 +126,14 @@ export default {
   align-items: center;
   justify-content: center;
   width: 20px;
-  /* margin-right: 8px;
-  margin-top: 2px; */
   fill: var(--favorite-icon-stroke);
 }
 
 .title {
   color: var(--black-forDarkMode);
 }
+
 .pulldown {
-  /* width: 130px; */
-  /* height: 30px; */
-  /* margin-right: 30px; */
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -185,7 +173,6 @@ export default {
   }
 }
 
-
 .link {
   display: flex;
   align-items: center;
@@ -200,9 +187,4 @@ export default {
     color: var(--white);
   }
 }
-
-.working {
-  display: none;
-}
-
 </style>

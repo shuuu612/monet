@@ -187,58 +187,6 @@ export default {
             }
         };
     },
-    /* getMaxWidth() {
-        return function (key) {
-            // コンテンツのmax-widthを設定
-            const devicePattern = this.$store.getters["devicePattern/getStatePatternNumber"]; // 現在のデバイスパターン
-            const windowWidth = this.$store.getters["windowSize/getWindowWidth"]; // ウィンドウサイズ
-            let maxWidthPc;
-            let maxWidthTb;
-            let maxWidthSp;
-            if (windowWidth < 375 && this.$store.getters["slider/getAutoSizing"]) {
-                switch (devicePattern) {
-                    case 1:
-                    case 2:
-                    case 3:
-                        maxWidthPc = "";
-                        maxWidthTb = "";
-                        maxWidthSp = "";
-                        break;
-                    case 4: // PC & TB & SP
-                        maxWidthPc = `${873 / (873 + 10 + 600 + 10 + 369) * 100 * 0.97}%`;
-                        maxWidthTb = `${600 / (873 + 10 + 600 + 10 + 369) * 100 * 0.97}%`;
-                        maxWidthSp = `${369 / (873 + 10 + 600 + 10 + 369) * 100 * 0.97}%`;
-                        break;
-                    case 5: // PC & TB
-                        maxWidthPc = `${873 / (873 + 10 + 600) * 100 * 0.978}%`;
-                        maxWidthTb = `${600 / (873 + 10 + 600) * 100 * 0.978}%`;
-                        maxWidthSp = "";
-                        break;
-                    case 6: // PC & SP
-                        maxWidthPc = `${873 / (873 + 10 + 369) * 100 * 0.975}%`;
-                        maxWidthTb = "";
-                        maxWidthSp = `${369 / (873 + 10 + 369) * 100 * 0.975}%`;
-                        break;
-                    case 7: // TB & SP
-                        maxWidthPc = "";
-                        maxWidthTb = `${600 / (600 + 10 + 369) * 100 * 0.97}%`;
-                        maxWidthSp = `${369 / (600 + 10 + 369) * 100 * 0.97}%`;
-                        break;
-                }
-            }
-            else {
-                maxWidthPc = "";
-                maxWidthTb = "";
-                maxWidthSp = "";
-            }
-            if (key === "pc")
-                return { maxWidth: maxWidthPc };
-            else if (key === "tb")
-                return { maxWidth: maxWidthTb };
-            else if (key === "sp")
-                return { maxWidth: maxWidthSp };
-        };
-    }, */
     getWidth() {
         return function (key) {
           if(key === 'pc') {
@@ -269,23 +217,15 @@ export default {
         // ファイルパスを追加
         const parts4 = `/images/site/${parts3}`
 
-        /* // 前半の不要部分を切り取り
-        const path1 = `/images/site/${url.substr(url.lastIndexOf('/') + 1)}`
-        // .pngを切り取り
-        const path2 = path1.substring(0, path1.indexOf(".png")) */
         return parts4
       }
     }
-    
   },
   created() {
-
   },
   mounted() {
-    
   },
   beforeDestroy() {
-
   },
   methods: {
     imageLoaded() {
@@ -293,7 +233,6 @@ export default {
       this.$store.dispatch("loaded/pushLoadedImage");
     },
   },
-  
 };
 </script>
 
@@ -323,10 +262,10 @@ export default {
     
   }
 }
+
 .imageWrapper {
   position: relative;
   overflow: hidden;
-  /* box-sizing: content-box; */
   @include responsive(xs) {
     overflow: visible;
   }
@@ -346,14 +285,13 @@ export default {
     
   }
 }
+
 // 注意：createDummyContent関数内で以下のborderの値をハードコーディングで使用しているため、
 //      ここの値を変更する場合は、一緒にcreateDummyContentも変更必要（あとで直す）
 .image {
   max-width: 100%;
   @include responsive(xs) {
-    /* border-radius: 1.5%; */
-    /* box-shadow: 1px 1px 5px var(--grey); */
-    /* border: 1px var(--site-border) solid; */
+
   }
   @include responsive(sm) {
     
@@ -371,6 +309,7 @@ export default {
     
   }
 }
+
 .marginRight {
   margin-right: 10px;
 }
@@ -379,8 +318,6 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  /* box-shadow: none; */
-  /* filter: blur(2px); */
   border: none;
   z-index: -1;
 }
@@ -388,8 +325,8 @@ export default {
 .image-leave-active {
   transition: opacity .5s;
 }
-.image-leave-to /* .fade-leave-active below version 2.1.8 */ {
+
+.image-leave-to {
   opacity: 0;
 }
-
 </style>
