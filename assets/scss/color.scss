@@ -39,21 +39,6 @@
   --blue-dark-transparent-low: #07578dd7;
   --blue-dark-transparent-low-hover: #0968a7d7;
 
-  --green: #1d8a48;
-  --green-light: #22a557;
-  --green-super-light: #4ebd7a;
-  --green-ultra-light: #66bb88;
-  --green-dark: #156635;
-  --green-super-dark: #11512b;
-  --green-ultra-dark: #0a3119;
-  --green-hover: #267a48;
-  --green-transparent: #1d8a496c;
-  --green-transparent-high: #1d8a491c;
-  --green-transparent-low: #1d8a49e0;
-  --green-dark-transparent: #11512b7a;
-  --green-dark-transparent-high: #11512b23;
-  --green-dark-transparent-low: #11512bd7;
-
   --yellow: #f0e21d;
   --yellow-light: #fcf268;
   --yellow-super-light: #fffab6;
@@ -77,21 +62,6 @@
   --grey-transparent: #55555577;
   --grey-transparent-high: #55555534;
   --grey-transparent-low: #555555c9;
-
-  /* --color: var(--green);
-  --color-light: var(--green-light);
-  --color-super-light: var(--green-super-light);
-  --color-ultra-light: var(--green-ultra-light);
-  --color-dark: var(--green-dark);
-  --color-super-dark: var(--green-super-dark);
-  --color-ultra-dark: var(--green-ultra-dark);
-  --color-hover: var(--green-hover);
-  --color-transparent: var(--green-transparent);
-  --color-transparent-high: var(--green-transparent-high);
-  --color-transparent-low: var(--green-transparent-low);
-  --color-dark-transparent: var(--green-dark-transparent);
-  --color-dark-transparent-high: var(--green-dark-transparent-high);
-  --color-dark-transparent-low: var(--green-dark-transparent-low); */
 
   --color: var(--blue);
   --color-light: var(--blue-light);
@@ -158,6 +128,7 @@
   // カラーモード
 
   --colormode1: #c84219;
+  --colormode1-light: #df5e37;
   --colormode1-dark: #ac3814;
   --colormode1-super-dark: #972e0e;
   --colormode1-ultra-dark: #802206;
@@ -167,6 +138,7 @@
   --colormode1-ultra-dark-transparent-low: #802206ee;
 
   --colormode2: #cc6363;
+  --colormode2-light: #df8282;
   --colormode2-dark: #c75656;
   --colormode2-super-dark: #b64949;
   --colormode2-ultra-dark: #a03b3b;
@@ -176,6 +148,7 @@
   --colormode2-ultra-dark-transparent-low: #a03b3bee;
 
   --colormode3: #334b7c;
+  --colormode3-light: #506796;
   --colormode3-dark: #2c4370;
   --colormode3-super-dark: #2a3a5a;
   --colormode3-ultra-dark: #212f4b;
@@ -185,6 +158,7 @@
   --colormode3-ultra-dark-transparent-low: #212f4be8;
 
   --colormode4: #4891bb;
+  --colormode4-light: #63abd4;
   --colormode4-dark: #3a86b3;
   --colormode4-super-dark: #2f76a0;
   --colormode4-ultra-dark: #22678f;
@@ -194,6 +168,7 @@
   --colormode4-ultra-dark-transparent-low: #22678fee;
 
   --colormode5: #e2892f;
+  --colormode5-light: #f5af69;
   --colormode5-dark: #d87c20;
   --colormode5-super-dark: #c76e16;
   --colormode5-ultra-dark: #ad5d0d;
@@ -203,6 +178,7 @@
   --colormode5-ultra-dark-transparent-low: #ad5d0df1;
 
   --colormode6: #c99914;
+  --colormode6-light: #dbb241;
   --colormode6-dark: #b88b0f;
   --colormode6-super-dark: #a37a09;
   --colormode6-ultra-dark: #8d6906;
@@ -212,6 +188,7 @@
   --colormode6-ultra-dark-transparent-low: #8d6906ef;
 
   --colormode7: #4a7e4d;
+  --colormode7-light: #6f9971;
   --colormode7-dark: #3c773f;
   --colormode7-super-dark: #316d34;
   --colormode7-ultra-dark: #245c27;
@@ -226,6 +203,7 @@
   --colormode8-ultra-dark: #46834a;
   --colormode8-white: #dcffdf; */
   --colormode8: #535353;
+  --colormode8-light: #7e7e7e;
   --colormode8-dark: #464646;
   --colormode8-super-dark: #3a3a3a;
   --colormode8-ultra-dark: #2e2e2e;
@@ -235,6 +213,7 @@
   --colormode8-ultra-dark-transparent-low: #2e2e2eea;
 
   --colormode9: #875b8b;
+  --colormode9-light: #a585a8;
   --colormode9-dark: #7a517e;
   --colormode9-super-dark: #6d4470;
   --colormode9-ultra-dark: #59385c;
@@ -256,6 +235,7 @@
   --colormode10-super-dark-transparent-low: #bdbdbdef;
   --colormode10-ultra-dark-transparent-low: #a0a0a0ef; */
   --colormode10: #9b8664;
+  --colormode10-light: #b6a68d;
   --colormode10-dark: #8d7753;
   --colormode10-super-dark: #7c6746;
   --colormode10-ultra-dark: #6b583a;
@@ -266,6 +246,7 @@
   --colormode10-ultra-dark-transparent-low: #6b583aec;
 
   --colormode11: #9b6733;
+  --colormode11-light: #b48657;
   --colormode11-dark: #86592c;
   --colormode11-super-dark: #754d24;
   --colormode11-ultra-dark: #614020;
@@ -275,6 +256,7 @@
   --colormode11-ultra-dark-transparent-low: #614020ee;
 
   --colormode12: #9b8664;
+  --colormode12-light: #ac9d85;
   --colormode12-dark: #8d7753;
   --colormode12-super-dark: #7c6746;
   --colormode12-ultra-dark: #6b583a;
@@ -331,6 +313,51 @@
   --menu-bar-hover: var(--white-transparent-high);
   --category-name: var(--black-forDarkMode);
   --barkmode-light-icon: var(--black-forDarkMode);
+  --menu-background: var(--white);
+  --menu-border: var(--gray3);
+  --menu-text: var(--black);
+  --menu-comment: var(--grey);
+  --menu-button-background: var(--grey-ultra-light);
+  --menu-button-selected: var(--grey-super-light);
+  --menu-item-text: var(--gray12);
+  --menu-item-selected: var(--gray2);
+
+  --white-transparent0: #f3f3f311;
+  --white-transparent1: #f3f3f322;
+  --white-transparent2: #f3f3f333;
+  --white-transparent3: #f3f3f344;
+  --white-transparent4: #f3f3f355;
+  --white-transparent5: #f3f3f366;
+  --white-transparent6: #f3f3f377;
+  --white-transparent7: #f3f3f388;
+  --white-transparent8: #f3f3f399;
+  --white-transparent9: #f3f3f3aa;
+  --white-transparent10: #f3f3f3bb;
+  --white-transparent11: #f3f3f3cc;
+  --white-transparent12: #f3f3f3dd;
+  --white-transparent13: #f3f3f3ee;
+
+  --gray0: #eeeeee;
+  --gray1: #dddddd;
+  --gray2: #cccccc;
+  --gray3: #bbbbbb;
+  --gray4: #aaaaaa;
+  --gray5: #999999;
+  --gray6: #888888;
+  --gray7: #777777;
+  --gray8: #666666;
+  --gray9: #555555;
+  --gray10: #444444;
+  --gray11: #333333;
+  --gray12: #222222;
+
+  --search-red: #e03131;
+  --search-orange: #e07131;
+  --search-yellow: #e0c631;
+  --search-green: #059600;
+  --search-blue: #2469d1;
+  --search-purple: #7a20c4;
+  --search-brown: #693809;
 }
 
 :root.color1 {
@@ -342,7 +369,7 @@
   --side-menu: var(--colormode1-super-dark);
   --side-menu-icon: var(--colormode1-white);
   --side-menu-hover: var(--colormode1-ultra-dark);
-  --side-menu-borber: transparent;
+  --side-menu-borber: var(--colormode1-light);
   --tool-button-hover: var(--white-transparent-high);
   --more-button: var(--colormode1-super-dark);
   --more-button-hover: var(--colormode1-ultra-dark);
@@ -365,6 +392,14 @@
   --menu-bar-hover: var(--colormode1-ultra-dark-transparent-low);
   --category-name: var(--black-forDarkMode);
   --barkmode-light-icon: var(--black-forDarkMode);
+  --menu-background: var(--white);
+  --menu-border: var(--gray3);
+  --menu-text: var(--black);
+  --menu-comment: var(--grey);
+  --menu-button-background: var(--grey-ultra-light);
+  --menu-button-selected: var(--grey-super-light);
+  --menu-item-text: var(--gray12);
+  --menu-item-selected: var(--gray2);
 }
 
 :root.color2 {
@@ -376,7 +411,7 @@
   --side-menu: var(--colormode2-super-dark);
   --side-menu-icon: var(--colormode2-white);
   --side-menu-hover: var(--colormode2-ultra-dark);
-  --side-menu-borber: transparent;
+  --side-menu-borber: var(--colormode2-light);
   --tool-button-hover: var(--white-transparent-high);
   --more-button: var(--colormode2-super-dark);
   --more-button-hover: var(--colormode2-ultra-dark);
@@ -399,6 +434,14 @@
   --menu-bar-hover: var(--colormode2-ultra-dark-transparent-low);
   --category-name: var(--black-forDarkMode);
   --barkmode-light-icon: var(--black-forDarkMode);
+  --menu-background: var(--white);
+  --menu-border: var(--gray3);
+  --menu-text: var(--black);
+  --menu-comment: var(--grey);
+  --menu-button-background: var(--grey-ultra-light);
+  --menu-button-selected: var(--grey-super-light);
+  --menu-item-text: var(--gray12);
+  --menu-item-selected: var(--gray2);
 }
 
 :root.color3 {
@@ -410,7 +453,7 @@
   --side-menu: var(--colormode3-super-dark);
   --side-menu-icon: var(--colormode3-white);
   --side-menu-hover: var(--colormode3-ultra-dark);
-  --side-menu-borber: transparent;
+  --side-menu-borber: var(--colormode3-light);
   --tool-button-hover: var(--white-transparent-high);
   --more-button: var(--colormode3-super-dark);
   --more-button-hover: var(--colormode3-ultra-dark);
@@ -433,6 +476,14 @@
   --menu-bar-hover: var(--colormode3-ultra-dark-transparent-low);
   --category-name: var(--black-forDarkMode);
   --barkmode-light-icon: var(--black-forDarkMode);
+  --menu-background: var(--white);
+  --menu-border: var(--gray3);
+  --menu-text: var(--black);
+  --menu-comment: var(--grey);
+  --menu-button-background: var(--grey-ultra-light);
+  --menu-button-selected: var(--grey-super-light);
+  --menu-item-text: var(--gray12);
+  --menu-item-selected: var(--gray2);
 }
 
 :root.color4 {
@@ -444,7 +495,7 @@
   --side-menu: var(--colormode4-super-dark);
   --side-menu-icon: var(--colormode4-white);
   --side-menu-hover: var(--colormode4-ultra-dark);
-  --side-menu-borber: transparent;
+  --side-menu-borber: var(--colormode4-light);
   --tool-button-hover: var(--white-transparent-high);
   --more-button: var(--colormode4-super-dark);
   --more-button-hover: var(--colormode4-ultra-dark);
@@ -467,6 +518,14 @@
   --menu-bar-hover: var(--colormode4-ultra-dark-transparent-low);
   --category-name: var(--black-forDarkMode);
   --barkmode-light-icon: var(--black-forDarkMode);
+  --menu-background: var(--white);
+  --menu-border: var(--gray3);
+  --menu-text: var(--black);
+  --menu-comment: var(--grey);
+  --menu-button-background: var(--grey-ultra-light);
+  --menu-button-selected: var(--grey-super-light);
+  --menu-item-text: var(--gray12);
+  --menu-item-selected: var(--gray2);
 }
 
 :root.color5 {
@@ -478,7 +537,7 @@
   --side-menu: var(--colormode5-super-dark);
   --side-menu-icon: var(--colormode5-white);
   --side-menu-hover: var(--colormode5-ultra-dark);
-  --side-menu-borber: transparent;
+  --side-menu-borber: var(--colormode5-light);
   --tool-button-hover: var(--white-transparent-high);
   --more-button: var(--colormode5-super-dark);
   --more-button-hover: var(--colormode5-ultra-dark);
@@ -501,6 +560,14 @@
   --menu-bar-hover: var(--colormode5-ultra-dark-transparent-low);
   --category-name: var(--black-forDarkMode);
   --barkmode-light-icon: var(--black-forDarkMode);
+  --menu-background: var(--white);
+  --menu-border: var(--gray3);
+  --menu-text: var(--black);
+  --menu-comment: var(--grey);
+  --menu-button-background: var(--grey-ultra-light);
+  --menu-button-selected: var(--grey-super-light);
+  --menu-item-text: var(--gray12);
+  --menu-item-selected: var(--gray2);
 }
 
 :root.color6 {
@@ -512,7 +579,7 @@
   --side-menu: var(--colormode6-super-dark);
   --side-menu-icon: var(--colormode6-white);
   --side-menu-hover: var(--colormode6-ultra-dark);
-  --side-menu-borber: transparent;
+  --side-menu-borber: var(--colormode6-light);
   --tool-button-hover: var(--white-transparent-high);
   --more-button: var(--colormode6-super-dark);
   --more-button-hover: var(--colormode6-ultra-dark);
@@ -535,6 +602,14 @@
   --menu-bar-hover: var(--colormode6-ultra-dark-transparent-low);
   --category-name: var(--black-forDarkMode);
   --barkmode-light-icon: var(--black-forDarkMode);
+  --menu-background: var(--white);
+  --menu-border: var(--gray3);
+  --menu-text: var(--black);
+  --menu-comment: var(--grey);
+  --menu-button-background: var(--grey-ultra-light);
+  --menu-button-selected: var(--grey-super-light);
+  --menu-item-text: var(--gray12);
+  --menu-item-selected: var(--gray2);
 }
 
 :root.color7 {
@@ -546,7 +621,7 @@
   --side-menu: var(--colormode7-super-dark);
   --side-menu-icon: var(--colormode7-white);
   --side-menu-hover: var(--colormode7-ultra-dark);
-  --side-menu-borber: transparent;
+  --side-menu-borber: var(--colormode7-light);
   --tool-button-hover: var(--white-transparent-high);
   --more-button: var(--colormode7-super-dark);
   --more-button-hover: var(--colormode7-ultra-dark);
@@ -569,6 +644,14 @@
   --menu-bar-hover: var(--colormode7-ultra-dark-transparent-low);
   --category-name: var(--black-forDarkMode);
   --barkmode-light-icon: var(--black-forDarkMode);
+  --menu-background: var(--white);
+  --menu-border: var(--gray3);
+  --menu-text: var(--black);
+  --menu-comment: var(--grey);
+  --menu-button-background: var(--grey-ultra-light);
+  --menu-button-selected: var(--grey-super-light);
+  --menu-item-text: var(--gray12);
+  --menu-item-selected: var(--gray2);
 }
 
 :root.color8 {
@@ -580,7 +663,7 @@
   --side-menu: var(--colormode8-super-dark);
   --side-menu-icon: var(--colormode8-white);
   --side-menu-hover: var(--colormode8-ultra-dark);
-  --side-menu-borber: transparent;
+  --side-menu-borber: var(--colormode8-light);
   --tool-button-hover: var(--white-transparent-high);
   --more-button: var(--colormode8-super-dark);
   --more-button-hover: var(--colormode8-ultra-dark);
@@ -603,6 +686,14 @@
   --menu-bar-hover: var(--colormode8-ultra-dark-transparent-low);
   --category-name: var(--black-forDarkMode);
   --barkmode-light-icon: var(--black-forDarkMode);
+  --menu-background: var(--white);
+  --menu-border: var(--gray3);
+  --menu-text: var(--black);
+  --menu-comment: var(--grey);
+  --menu-button-background: var(--grey-ultra-light);
+  --menu-button-selected: var(--grey-super-light);
+  --menu-item-text: var(--gray12);
+  --menu-item-selected: var(--gray2);
 }
 
 :root.color9 {
@@ -614,7 +705,7 @@
   --side-menu: var(--colormode9-super-dark);
   --side-menu-icon: var(--colormode9-white);
   --side-menu-hover: var(--colormode9-ultra-dark);
-  --side-menu-borber: transparent;
+  --side-menu-borber: var(--colormode9-light);
   --tool-button-hover: var(--white-transparent-high);
   --more-button: var(--colormode9-super-dark);
   --more-button-hover: var(--colormode9-ultra-dark);
@@ -637,6 +728,14 @@
   --menu-bar-hover: var(--colormode9-ultra-dark-transparent-low);
   --category-name: var(--black-forDarkMode);
   --barkmode-light-icon: var(--black-forDarkMode);
+  --menu-background: var(--white);
+  --menu-border: var(--gray3);
+  --menu-text: var(--black);
+  --menu-comment: var(--grey);
+  --menu-button-background: var(--grey-ultra-light);
+  --menu-button-selected: var(--grey-super-light);
+  --menu-item-text: var(--gray12);
+  --menu-item-selected: var(--gray2);
 }
 
 :root.color10 {
@@ -669,7 +768,7 @@
   --side-menu: var(--colormode10);
   --side-menu-icon: var(--colormode10-white);
   --side-menu-hover: var(--colormode10-super-dark);
-  --side-menu-borber: transparent;
+  --side-menu-borber: var(--colormode10-light);
   --tool-button-hover: var(--colormode10-transparent-high);
   --more-button: var(--colormode10);
   --more-button-hover: var(--colormode10-super-dark);
@@ -692,6 +791,14 @@
   --menu-bar-hover: var(--colormode10-ultra-dark-transparent-low);
   --category-name: var(--colormode10-ultra-dark);
   --barkmode-light-icon: var(--colormode10-ultra-dark);
+  --menu-background: var(--white);
+  --menu-border: var(--gray3);
+  --menu-text: var(--black);
+  --menu-comment: var(--grey);
+  --menu-button-background: var(--grey-ultra-light);
+  --menu-button-selected: var(--grey-super-light);
+  --menu-item-text: var(--gray12);
+  --menu-item-selected: var(--gray2);
 }
 
 :root.color11 {
@@ -703,7 +810,7 @@
   --side-menu: var(--colormode11-super-dark);
   --side-menu-icon: var(--colormode11-white);
   --side-menu-hover: var(--colormode11-ultra-dark);
-  --side-menu-borber: transparent;
+  --side-menu-borber: var(--colormode11-light);
   --tool-button-hover: var(--white-transparent-high);
   --more-button: var(--colormode11-super-dark);
   --more-button-hover: var(--colormode11-ultra-dark);
@@ -726,6 +833,14 @@
   --menu-bar-hover: var(--colormode11-ultra-dark-transparent-low);
   --category-name: var(--black-forDarkMode);
   --barkmode-light-icon: var(--black-forDarkMode);
+  --menu-background: var(--white);
+  --menu-border: var(--gray3);
+  --menu-text: var(--black);
+  --menu-comment: var(--grey);
+  --menu-button-background: var(--grey-ultra-light);
+  --menu-button-selected: var(--grey-super-light);
+  --menu-item-text: var(--gray12);
+  --menu-item-selected: var(--gray2);
 }
 
 :root.color12 {
@@ -737,7 +852,7 @@
   --side-menu: var(--colormode12-super-dark);
   --side-menu-icon: var(--colormode12-white);
   --side-menu-hover: var(--colormode12-ultra-dark);
-  --side-menu-borber: transparent;
+  --side-menu-borber: var(--colormode12-light);
   --tool-button-hover: var(--white-transparent-high);
   --more-button: var(--colormode12-super-dark);
   --more-button-hover: var(--colormode12-ultra-dark);
@@ -760,6 +875,14 @@
   --menu-bar-hover: var(--colormode12-ultra-dark-transparent-low);
   --category-name: var(--black-forDarkMode);
   --barkmode-light-icon: var(--black-forDarkMode);
+  --menu-background: var(--white);
+  --menu-border: var(--gray3);
+  --menu-text: var(--black);
+  --menu-comment: var(--grey);
+  --menu-button-background: var(--grey-ultra-light);
+  --menu-button-selected: var(--grey-super-light);
+  --menu-item-text: var(--gray12);
+  --menu-item-selected: var(--gray2);
 }
 
 :root.darkmode {
@@ -814,4 +937,12 @@
   --menu-bar-hover: var(--white-transparent-high);
   --category-name: var(--black-forDarkMode);
   --barkmode-light-icon: var(--black-forDarkMode);
+  --menu-background: var(--black);
+  --menu-border: var(--gray9);
+  --menu-text: var(--white);
+  --menu-comment: var(--gray4);
+  --menu-button-background: var(--gray10);
+  --menu-button-selected: var(--gray8);
+  --menu-item-text: var(--gray3);
+  --menu-item-selected: var(--gray9);
 }

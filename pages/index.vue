@@ -1,30 +1,18 @@
 <template>
-  <div class="wrapper" :class="getSideMenuOpen">
+  <div class="wrapper">
     <Loading />
     <Header
-    :width="contentsWidth"
-    @search="keywordSearchStart"
-    />
-    <DarkModeButton
-    @colormodeChange="darkModeSetting"
-    />
-    <MenuButton />
-    <MenuBar 
-    :tag="selectedTag"
-    :sort="selectedSort"
-    @update="update"
-    />
-    <SideMenu
+    :contents="contents"
     :tag="tag"
-    :selectedtag="selectedTag"
-    :contentswidth="contentsElement.clientWidth"
+    :width="contentsWidth"
+    @search="searchByKeyword"
     @autoSizing="pushAutoSizing"
     @deviceChange="changeDevice"
     @sliderChange="changeSliderSize"
     @multideviceCancel="monitorReturnToSingledevice"
     @colormodeChange="darkModeSetting"
+    @update="searchByKeyword"
     />
-    <!-- <ScrollMenu /> -->
     <ScrollTop />
     <Notice />
     <div id="divider" class="divider">
@@ -32,19 +20,6 @@
         
         <div class="contentsWrapper">
           <div v-if="getNoContentComment.length > 0" class="noContent" style="white-space: pre-wrap;" v-text="getNoContentComment"></div>
-          <div class="tool" :style="getToolWidth">
-            <div class="toolItem">
-              <FavoriteButton
-              @update="update"
-              />
-            </div>
-            <div class="toolItem">
-              <Order
-              :tag="selectedTag"
-              :sort="selectedSort"
-              />
-            </div>
-          </div>
           <div id="contents" class="contents">
             <div v-for="content in getDisplayingContent" :key="content.id" class="content" :class="getStateSliderStep">
               <div class="contentImage">
@@ -86,35 +61,11 @@
 
 <script>
 export default {
-    async asyncData({ params, $microcms }) {
-        // タグページ用
-        const selectedTag = params.tagId;
-        let apiFilters
-        if(selectedTag !== undefined && selectedTag !== 'bookmark') {
-          apiFilters = `(type[contains]${selectedTag}[or]industry[contains]${selectedTag}[or]impression[contains]${selectedTag}[or]layout[contains]${selectedTag}[or]color[contains]${selectedTag}[or]pickup[contains]${selectedTag}[or]technique[contains]${selectedTag}[or]technology[contains]${selectedTag}[or]scheme[contains]${selectedTag})[and]hide[equals]false[and]link[equals]false`
-        }else {
-            apiFilters = "hide[equals]false[and]link[equals]false";
-        }
-        // 並び替え用
-        const selectedSort = params.sortId;
-        let order = "";
-        if (selectedSort === "new") {
-            order = "-publishedAt";
-        }
-        else if (selectedSort === "old") {
-            order = "publishedAt";
-        }
-        else if (selectedSort === "popular") {
-            order = "view";
-        }
-        else if (selectedSort === "update") {
-            order = "-updatedAt";
-        }
-        else {
-            order = "-publishedAt";
-        }
-        const apiOrder = order;
-        // 取得するデータ数（全データを取得できること）
+    async asyncData({ $microcms }) {
+        const apiFilters = "hide[equals]false[and]link[equals]false";
+        const apiOrderNew = "-publishedAt";
+        const apiOrderOld = "publishedAt";
+        const apiOrderUpdate = "-updatedAt";
         const apiLimit = 1000;
         // API通信
         console.log("Start API communication");
@@ -122,7 +73,23 @@ export default {
             endpoint: "site",
             queries: {
                 limit: apiLimit,
-                orders: apiOrder,
+                orders: apiOrderNew,
+                filters: apiFilters,
+            }
+        });
+        const dataOld = await $microcms.get({
+            endpoint: "site",
+            queries: {
+                limit: apiLimit,
+                orders: apiOrderOld,
+                filters: apiFilters,
+            }
+        });
+        const dataUpdate = await $microcms.get({
+            endpoint: "site",
+            queries: {
+                limit: apiLimit,
+                orders: apiOrderUpdate,
                 filters: apiFilters,
             }
         });
@@ -135,47 +102,22 @@ export default {
             const day = publishedDate.getDate();
             const formatDate = year + "/" + month.toString().padStart(2, "0") + "/" + day.toString().padStart(2, "0");
             content.publishedAtJST = formatDate;
-            const updatedDate = new Date(content.updatedAt);
-            if (String(publishedDate) === String(updatedDate)) {
-                content.updatedAtJST = undefined;
-            }
-            else {
-                const year = updatedDate.getFullYear();
-                const month = updatedDate.getMonth() + 1;
-                const day = updatedDate.getDate();
-                const formatDate = year + "/" + month.toString().padStart(2, "0") + "/" + day.toString().padStart(2, "0");
-                content.updatedAtJST = formatDate;
-            }
-            const nowDate = new Date();
-            const elapsedDate = nowDate.getTime() - publishedDate.getTime();
-            const elapsedSeconds = Math.floor(elapsedDate / 1000);
-            const elapsedMinites = Math.floor(elapsedDate / 60000);
-            const elapsedHour = Math.floor(elapsedDate / 3600000);
-            const elapsedDay = Math.floor(elapsedDate / 86400000);
-            const elapsedWeek = Math.floor(elapsedDate / 86400000 / (365 / 12 / 4));
-            const elapsedMonth = Math.floor(elapsedDate / 86400000 / (365 / 12));
-            const elapsedYear = Math.floor(elapsedDate / 86400000 / 365);
-            if (Math.floor(elapsedSeconds < 60)) {
-                content.elapsedDate = elapsedSeconds + "秒前";
-            }
-            else if (elapsedMinites < 60) {
-                content.elapsedDate = elapsedMinites + "分前";
-            }
-            else if (elapsedHour < 24) {
-                content.elapsedDate = elapsedHour + "時間前";
-            }
-            else if (elapsedDay < 14) {
-                content.elapsedDate = elapsedDay + "日前";
-            }
-            else if (elapsedWeek < 5) {
-                content.elapsedDate = elapsedWeek + "週間前";
-            }
-            else if (elapsedMonth < 12) {
-                content.elapsedDate = elapsedMonth + "か月前";
-            }
-            else {
-                content.elapsedDate = elapsedYear + "年前";
-            }
+        });
+        dataOld.contents.forEach(function (content) {
+            const publishedDate = new Date(content.publishedAt);
+            const year = publishedDate.getFullYear();
+            const month = publishedDate.getMonth() + 1;
+            const day = publishedDate.getDate();
+            const formatDate = year + "/" + month.toString().padStart(2, "0") + "/" + day.toString().padStart(2, "0");
+            content.publishedAtJST = formatDate;
+        });
+        dataUpdate.contents.forEach(function (content) {
+            const publishedDate = new Date(content.publishedAt);
+            const year = publishedDate.getFullYear();
+            const month = publishedDate.getMonth() + 1;
+            const day = publishedDate.getDate();
+            const formatDate = year + "/" + month.toString().padStart(2, "0") + "/" + day.toString().padStart(2, "0");
+            content.publishedAtJST = formatDate;
         });
         const type = await $microcms.get({
             endpoint: "type",
@@ -242,26 +184,27 @@ export default {
             technology,
             scheme,
         };
+        const contents = data.contents;
+        const contentsOld = dataOld.contents;
+        const contentsUpdate = dataUpdate.contents;
         return {
-            ...data,
+            contents,
+            contentsOld,
+            contentsUpdate,
             tag,
-            selectedTag,
-            selectedSort,
         };
     },
     data() {
         return {
             dummy: [],
             dummyStyle: {},
-            keywordContents: [],
-            bookmarkContents: [],
+            displayingContents: [],
             displayingContent: [],
             displayingLimit: 60,
             displayingPageOriginal: 0,
             displayingPageKeyword: 0,
             displayingPageBookmark: 0,
             remainingContent: 0,
-            displayingJpName: "",
             tagsJpName: "",
             infoButtonStyle: {
                 width: "",
@@ -276,7 +219,7 @@ export default {
             columnContent: 0,
             meta: {
               title: 'Monet | Webデザインギャラリー',
-              keyword: 'デザイン,Webデザイン,Web design,参考,Webデザインギャラリー,ギャラリー,Webサイト',
+              keywords: 'デザイン,Webデザイン,Web design,参考,Webデザインギャラリー,ギャラリー,Webサイト',
               description: 'MonetはWeb制作の参考になるWebサイトを集めたギャラリー･リンク集です。日本国内の優れたWebデザインを厳選してご紹介しています。Webデザインの参考にぜひご活用ください。',
               type: 'website',
               url: 'https://mitsukaru-design.com/',
@@ -290,10 +233,10 @@ export default {
             htmlAttrs: {
                 class: this.colormode
             },
-            title: this.meta.title,
+            title: this.japaneseTags === '' ? this.meta.title : this.japaneseTags + ' | ' + this.meta.title,
             meta: [
               { hid: 'description', name: 'description', content: this.meta.description },
-              { hid: 'keyword', name: 'keyword', content: this.meta.keyword },
+              { hid: 'keywords', name: 'keywords', content: this.meta.keywords },
               { hid: 'og:type', property: 'og:type', content: this.meta.type },
               { hid: 'og:title', property: 'og:title', content: this.meta.title },
               { hid: 'og:description', property: 'og:description', content: this.meta.description },
@@ -331,53 +274,27 @@ export default {
             return { hide: this.remainingContent === 0 };
         },
         getNoContentComment() {
-            if (this.$store.getters["status/getSearchKeyword"]) {
-                // キーワード検索
-                if (this.keywordContents.length === 0) {
-                    return "一致するコンテンツがありません";
-                }
-                else {
-                    return "";
-                }
-            }else if (this.$store.getters["status/getSearchTag"]) {
-                // 通常検索
-                if(this.selectedTag === 'bookmark') {
-                  if(this.bookmarkContents.length === 0) {
-                    return "お気に入りは登録されていません";
-                  }else {
-                    return this.displayingJpName;
-                  }
-                }else if(this.selectedTag !== 'bookmark') {
-                  if(this.contents.length === 0) {
-                    return `「${this.displayingJpName}」はただいま準備中です。\n公開まで今しばらくお待ちください。`;
-                  }else {
-                    return this.displayingJpName;
-                  }
-                }else {
-                  return ''
-                }
+          if (this.displayingContents.length === 0) {
+            if(this.$route.query.bookmark === '1') {
+              return "お気に入りは登録されていません";
             }else {
-              return '';
+              return "一致するコンテンツがありません";
             }
-        },
-        getSideMenuOpen() {
-            return { sideMenuOpen: this.$store.getters["sideMenu/getOpen"] };
+          }else if(this.$route.query.bookmark === '1') {
+              return "お気に入り";
+          }else {
+            return "";
+          }
         },
         getDisplayingContent() {
             return this.displayingContent;
         },
-        getToolWidth() {
-          return this.contentsWidth
-        }
+    },
+    watch: {
+      $route: 'searchByKeyword'
     },
     created() {
         console.log("created");
-        // タグの日本語名を設定
-        this.convertTagsToJapanese();
-        // headを設定
-        this.setHead();
-        // urlをstoreに退避
-        this.setUrl();
     },
     beforeMount() {
         console.log("beforeMount");
@@ -473,39 +390,13 @@ export default {
         window.matchMedia("(min-width:2000px)").removeEventListener("change", this.matchMediaProcess);
         window.matchMedia("(min-width:2100px)").removeEventListener("change", this.matchMediaProcess);
         window.matchMedia("(min-width:2200px)").removeEventListener("change", this.matchMediaProcess);
-
-        // 検索キーワードを削除
-        this.$store.dispatch('search/pushKeyword',this.keyword)
-        this.$store.dispatch("status/pushSearchTag");
     },
     methods: {
-        setHead() {
-          // トップページ
-          if(this.selectedTag === undefined) {
-            // ベース設定のまま
-          }else {
-            // tagIDを日本語に変換
-            this.meta.title = this.japaneseTags + ' | ' + this.meta.title;
-            this.meta.keyword = this.japaneseTags + ',' + this.meta.keyword
-          }
-        },
         darkModeSetting() {
           if(this.$store.getters["darkmode/getActive"]) {
             this.colormode = [this.$store.getters["colormode/getColormode"],'darkmode']
           }else {
             this.colormode = [this.$store.getters["colormode/getColormode"]];
-          }
-        },
-        setUrl() {
-          if(this.selectedTag !== undefined) {
-            this.$store.dispatch('url/pushTag',this.selectedTag)
-          }else {
-            this.$store.dispatch('url/pushTag','')
-          }
-          if(this.selectedSort !== undefined) {
-            this.$store.dispatch('url/pushSort',this.selectedSort)
-          }else {
-            this.$store.dispatch('url/pushSort','')
           }
         },
         setContentsElement() {
@@ -514,60 +405,35 @@ export default {
         },
         InitialDisplay() {
           // コンテンツ初期表示
-
-          this.filterByBookmarks();
-          
-          if(this.$store.getters["status/getSearchKeyword"]) {
-            // キーワード検索中
-            console.log('キーワード検索中で復帰')
-            this.searchByKeyword();
+          // クエリパラメーターが存在するか確認
+          if(Object.keys(this.$route.query).length === 0) {
+            this.displayingContents = this.contents;
+            this.updateDisplayingContent();
           }else {
-            console.log('通常表示')
-            /* this.filterByBookmarks(); */
-            this.setDisplayingContent();
+            this.searchByKeyword();
           }
-        },
-        filterByBookmarks() {
-            if(this.selectedTag !== 'bookmark') return;
-
-            // store取得
-            const bookmark = this.$store.getters["bookmark/getBookmark"];
-
-            // ブックマークでフィルター
-            const filterContents = this.contents.filter(function (value) {
-                return bookmark.includes(value.id);
-            });
-            
-            this.bookmarkContents = filterContents;
         },
         setDisplayingContent() {
             // 表示件数を増やす
-            if (this.$store.getters["status/getSearchKeyword"]) {
-                // キーワードで検索した結果を表示
-                this.displayingPageKeyword = this.displayingPageKeyword + 1;
-                const start = 0;
-                const end = start + (this.displayingPageKeyword * this.displayingLimit);
-                this.displayingContent = this.keywordContents.slice(start, end);
-                this.remainingContent = this.keywordContents.length - this.displayingContent.length;
-                this.displayingJpName = "";
-            }else if(this.selectedTag === 'bookmark') {
-                // ブックマークを表示
-                this.displayingPageBookmark = this.displayingPageBookmark + 1;
-                const start = 0;
-                const end = start + (this.displayingPageBookmark * this.displayingLimit);
-                this.displayingContent = this.bookmarkContents.slice(start, end);
-                this.remainingContent = this.bookmarkContents.length - this.displayingContent.length;
-                this.displayingJpName = this.japaneseTags;
-            }else {
-                // オリジナルの結果を表示
-                this.displayingPageOriginal = this.displayingPageOriginal + 1;
-                const start = 0;
-                const end = start + (this.displayingPageOriginal * this.displayingLimit);
-                this.displayingContent = this.contents.slice(start, end);
-                this.remainingContent = this.contents.length - this.displayingContent.length;
-                this.displayingJpName = this.japaneseTags;
-            }
+            this.displayingPageOriginal = this.displayingPageOriginal + 1;
+            const start = 0;
+            const end = start + (this.displayingPageOriginal * this.displayingLimit);
+            this.displayingContent = this.displayingContents.slice(start, end);
+            this.remainingContent = this.displayingContents.length - this.displayingContent.length;
+
             this.createDummyContent();
+        },
+        updateDisplayingContent() {
+            // 表示コンテンツを更新する（１ページ目から表示）
+            this.displayingPageOriginal = 1;
+            const start = 0;
+            const end = start + (this.displayingPageOriginal * this.displayingLimit);
+            this.displayingContent = this.displayingContents.slice(start, end);
+            this.remainingContent = this.displayingContents.length - this.displayingContent.length;
+
+            this.createDummyContent();
+            // headを設定
+            this.convertTagsToJapanese();
         },
         wrapChack() {
             // コンテンツの折り返しをチェック
@@ -1239,54 +1105,105 @@ export default {
         },
         convertTagsToJapanese() {
           // タグIDを日本語に変換する
-          if(this.selectedTag === undefined) {
-            this.japaneseTags = '';
-          }else if (this.selectedTag === 'bookmark') {
+          if (this.$route.query.bookmark === '1') {
             this.japaneseTags = 'お気に入り';
           }else {
-            const selectedTag = this.selectedTag
-            const type = this.tag.type.contents.find(function(item) {return item.id === selectedTag})
-            if(type !== undefined) {
-              this.japaneseTags = type.name;
-              return
+            const selectedTags = [];
+            let count = 0;
+            const site = this.contents;
+            const type = this.tag.type.contents;
+            const impression = this.tag.impression.contents;
+            const industry = this.tag.industry.contents;
+            const pickup = this.tag.pickup.contents;
+            const technique = this.tag.technique.contents;
+            const layout = this.tag.layout.contents;
+            const color = this.tag.color.contents;
+            const scheme = this.tag.scheme.contents;
+            const technology = this.tag.technology.contents;
+            if(this.$route.query.site !== undefined) {
+              const query = this.$route.query.site.split('_');
+              query.forEach(function(item) {
+                const tag = site.find(key => key.id === item);
+                selectedTags.push(tag.name);
+                count++;
+              })
             }
-            const industry = this.tag.industry.contents.find(function(item) {return item.id === selectedTag})
-            if(industry !== undefined) {
-              this.japaneseTags = industry.name;
-              return
+            if(this.$route.query.type !== undefined) {
+              const query = this.$route.query.type.split('_');
+              query.forEach(function(item) {
+                const tag = type.find(key => key.id === item);
+                selectedTags.push(tag.name);
+                count++;
+              })
             }
-            const impression = this.tag.impression.contents.find(function(item) {return item.id === selectedTag})
-            if(impression !== undefined) {
-              this.japaneseTags = impression.name;
-              return
+            if(this.$route.query.impression !== undefined) {
+              const query = this.$route.query.impression.split('_');
+              query.forEach(function(item) {
+                const tag = impression.find(key => key.id === item);
+                selectedTags.push(tag.name);
+                count++;
+              })
             }
-            const layout = this.tag.layout.contents.find(function(item) {return item.id === selectedTag})
-            if(layout !== undefined) {
-              this.japaneseTags = layout.name;
-              return
+            if(this.$route.query.industry !== undefined) {
+              const query = this.$route.query.industry.split('_');
+              query.forEach(function(item) {
+                const tag = industry.find(key => key.id === item);
+                selectedTags.push(tag.name);
+                count++;
+              })
             }
-            const color = this.tag.color.contents.find(function(item) {return item.id === selectedTag})
-            if(color !== undefined) {
-              this.japaneseTags = color.name;
-              return
+            if(this.$route.query.pickup !== undefined) {
+              const query = this.$route.query.pickup.split('_');
+              query.forEach(function(item) {
+                const tag = pickup.find(key => key.id === item);
+                selectedTags.push(tag.name);
+                count++;
+              })
             }
-            const pickup = this.tag.pickup.contents.find(function(item) {return item.id === selectedTag})
-            if(pickup !== undefined) {
-              this.japaneseTags = pickup.name;
-              return
+            if(this.$route.query.technique !== undefined) {
+              const query = this.$route.query.technique.split('_');
+              query.forEach(function(item) {
+                const tag = technique.find(key => key.id === item);
+                selectedTags.push(tag.name);
+                count++;
+              })
             }
-            const technique = this.tag.technique.contents.find(function(item) {return item.id === selectedTag})
-            if(technique !== undefined) {
-              this.japaneseTags = technique.name;
-              return
+            if(this.$route.query.layout !== undefined) {
+              const query = this.$route.query.layout.split('_');
+              query.forEach(function(item) {
+                const tag = layout.find(key => key.id === item);
+                selectedTags.push(tag.name);
+                count++;
+              })
             }
-            const technology = this.tag.technology.contents.find(function(item) {return item.id === selectedTag})
-            if(technology !== undefined) {
-              this.japaneseTags = technology.name;
+            if(this.$route.query.color !== undefined) {
+              const query = this.$route.query.color.split('_');
+              query.forEach(function(item) {
+                const tag = color.find(key => key.id === item);
+                selectedTags.push(tag.name);
+                count++;
+              })
             }
-            const scheme = this.tag.scheme.contents.find(function(item) {return item.id === selectedTag})
-            if(scheme !== undefined) {
-              this.japaneseTags = scheme.name;
+            if(this.$route.query.scheme !== undefined) {
+              const query = this.$route.query.scheme.split('_');
+              query.forEach(function(item) {
+                const tag = scheme.find(key => key.id === item);
+                selectedTags.push(tag.name);
+                count++;
+              })
+            }
+            if(this.$route.query.technology !== undefined) {
+              const query = this.$route.query.technology.split('_');
+              query.forEach(function(item) {
+                const tag = technology.find(key => key.id === item);
+                selectedTags.push(tag.name);
+                count++;
+              })
+            }
+            if(count > 0) {
+              this.japaneseTags = selectedTags.join('+');
+            }else {
+              this.japaneseTags = '';
             }
           }
         },
@@ -1334,239 +1251,127 @@ export default {
             if (colormode !== null) {
                 this.$store.dispatch("colormode/pushLocalStorage", colormode);
             }
-            // 検索キーワード
-            const searchJson = sessionStorage.getItem("search");
-            const search = JSON.parse(searchJson);
-            if (search !== null) {
-                this.$store.dispatch("search/pushLocalStorage", search);
-            }
-            // 検索ステータス
-            const statusJson = sessionStorage.getItem("status");
-            const status = JSON.parse(statusJson);
-            if (status !== null) {
-                this.$store.dispatch("status/pushLocalStorage", status);
-            }
         },
         searchByKeyword() {
-            // 検索キーワードを取得
-            const key = this.$store.getters["search/getKeyword"];
-            // キーワードを一度入力してから削除したとき
-            if (!key) {
-                this.$store.dispatch("status/pushSearchTag");
-                // 想定外の動きをしてもページをマイナスにしないための予防策
-                if(this.displayingPageOriginal !== 0) {
-                  this.displayingPageOriginal = this.displayingPageOriginal - 1;
-                }
-                this.setDisplayingContent();
-                return;
+            // クエリパラメーターから検索キーワードを取得
+            const site = this.$route.query.site !== undefined ? this.$route.query.site.split('_') : [];
+            const type = this.$route.query.type !== undefined ? this.$route.query.type.split('_') : [];
+            const impression = this.$route.query.impression !== undefined ? this.$route.query.impression.split('_') : [];
+            const industry = this.$route.query.industry !== undefined ? this.$route.query.industry.split('_') : [];
+            const pickup = this.$route.query.pickup !== undefined ? this.$route.query.pickup.split('_') : [];
+            const technique = this.$route.query.technique !== undefined ? this.$route.query.technique.split('_') : [];
+            const layout = this.$route.query.layout !== undefined ? this.$route.query.layout.split('_') : [];
+            const color = this.$route.query.color !== undefined ? this.$route.query.color.split('_') : [];
+            const scheme = this.$route.query.scheme !== undefined ? this.$route.query.scheme.split('_') : [];
+            const technology = this.$route.query.technology !== undefined ? this.$route.query.technology.split('_') : [];
+            const order = this.$route.query.order;
+            const bookmark = this.$route.query.bookmark;
+
+            // ブックマークページ用
+            if(bookmark !== undefined) {
+              // store取得
+              const bookmark = this.$store.getters["bookmark/getBookmark"];
+
+              // ブックマークでフィルター
+              const bookmarkContents = this.contents.filter(function (value) {
+                  return bookmark.includes(value.id);
+              });
+
+              // ブックマークコンテンツを設定
+              this.displayingContents = bookmarkContents;
+              this.updateDisplayingContent();
+              return;
             }
-            // キーワードをスペースで分割
-            let keySplit
-            if(key.includes('　') || key.includes(' ')) {
-              keySplit = key.split(/\s/)
-              // 最後スペースの場合に作成される空文字（''）を削除
-              keySplit = keySplit.filter(function(item) {return item !== ''})
+
+            // ソート処理
+            let sortContents;
+            const sort = this.$route.query.sort !== undefined ? this.$route.query.sort : 'new';
+            if(sort === 'new') {
+              sortContents = this.contents;
+            }else if(sort === 'old') {
+              sortContents = this.contentsOld;
+            }else if(sort === 'update') {
+              sortContents = this.contentsUpdate;
+            }
+
+            const allNum =
+              site.length +
+              type.length +
+              impression.length +
+              industry.length +
+              pickup.length +
+              technique.length +
+              layout.length +
+              color.length +
+              scheme.length +
+              technology.length;
+
+            // キーワードを一度入力してから削除したとき
+            if (allNum === 0) {
+                // すべてのコンテンツを設定
+                this.displayingContents = sortContents;
+                this.updateDisplayingContent();
+                return;
             }
 
             // 検索対象のコンテンツを取得
-            const contents = this.selectedTag === 'bookmark' ? this.bookmarkContents : this.contents;
-            const bookmarkContents = this.$store.getters["bookmark/getBookmark"]
+            const contents = sortContents;
 
             // キーワードでフィルター（大文字・小文字・ひらがな・カタカナを区別しない）
             const searchFuzzy = contents.filter(function (content) {
-                // 検索対象を抽出
-                const name = content.name !== undefined ? content.name.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96)) : "";
-                const url = content.url !== undefined ? content.url.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96)) : "";
-                const typeId = content.type.map(function (item) {
-                    return item.id.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
-                });
-                const typeName = content.type.map(function (item) {
-                    return item.name.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
-                });
-                const typeKeyword = content.type.map(function (item) {
-                    return item.keyword !== undefined ? item.keyword.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96)) : '';
-                });
-                const industryId = content.industry.map(function (item) {
-                    return item.id.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
-                });
-                const industryName = content.industry.map(function (item) {
-                    return item.name.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
-                });
-                const industryKeyword = content.industry.map(function (item) {
-                    return item.keyword !== undefined ? item.keyword.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96)) : '';
-                });
-                const impressionId = content.impression.map(function (item) {
-                    return item.id.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
-                });
-                const impressionName = content.impression.map(function (item) {
-                    return item.name.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
-                });
-                const impressionKeyword = content.impression.map(function (item) {
-                    return item.keyword !== undefined ? item.keyword.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96)) : '';
-                });
-                const layoutId = content.layout.map(function (item) {
-                    return item.id.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
-                });
-                const layoutName = content.layout.map(function (item) {
-                    return item.name.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
-                });
-                const layoutKeyword = content.layout.map(function (item) {
-                    return item.keyword !== undefined ? item.keyword.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96)) : '';
-                });
-                const colorId = content.color.map(function (item) {
-                    return item.id.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
-                });
-                const colorName = content.color.map(function (item) {
-                    return item.name.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
-                });
-                const colorKeyword = content.color.map(function (item) {
-                    return item.keyword !== undefined ? item.keyword.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96)) : '';
-                });
-                const pickupId = content.pickup.map(function (item) {
-                    return item.id.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
-                });
-                const pickupName = content.pickup.map(function (item) {
-                    return item.name.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
-                });
-                const pickupKeyword = content.pickup.map(function (item) {
-                    return item.keyword !== undefined ? item.keyword.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96)) : '';
-                });
-                const techniqueId = content.technique.map(function (item) {
-                    return item.id.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
-                });
-                const techniqueName = content.technique.map(function (item) {
-                    return item.name.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
-                });
-                const techniqueKeyword = content.technique.map(function (item) {
-                    return item.keyword !== undefined ? item.keyword.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96)) : '';
-                });
-                const technologyId = content.technology.map(function (item) {
-                    return item.id.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
-                });
-                const technologyName = content.technology.map(function (item) {
-                    return item.name.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
-                });
-                const technologyKeyword = content.technology.map(function (item) {
-                    return item.keyword !== undefined ? item.keyword.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96)) : '';
-                });
-                const schemeId = content.scheme.map(function (item) {
-                    return item.id.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
-                });
-                const schemeName = content.scheme.map(function (item) {
-                    return item.name.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
-                });
-                const schemeKeyword = content.scheme.map(function (item) {
-                    return item.keyword !== undefined ? item.keyword.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96)) : '';
-                });
-                const keyword = (content.keyword !== undefined && content.keyword !== null) ? content.keyword.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96)) : "";
-
-                // ブックマークに登録されている場合は、ブックマーク関連のキーワードも対象にする
-                let bookmark;
-                if(bookmarkContents.includes(content.id)) {
-                  const bookmarkKeyword = ['bookmark','ブックマーク','お気に入り','favorite']
-                  bookmark = bookmarkKeyword.map(function (item) {
-                    return item.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
-                  });
-                }else {
-                  bookmark = [];
-                }
 
                 // フィルター処理
-                if(keySplit === undefined) {
-                  // 検索キーワードの書式を統一する
-                  const lowerKey = key.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
-                  // 検索キーワードを正規表現に変換
-                  const regExp = new RegExp(String.raw`${lowerKey}`);
-                  // 一致判定
-                  const result = (name.length !== 0 ? name.includes(lowerKey) : false) ||
-                                 (url.length !== 0 ? url.includes(lowerKey) : false) ||
-                                 (typeId.length !== 0 ? (typeId.find(value => value.match(regExp)) !== undefined) : false) ||
-                                 (typeName.length !== 0 ? (typeName.find(value => value.match(regExp)) !== undefined) : false) ||
-                                 (typeKeyword.length !== 0 ? (typeKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
-                                 (industryId.length !== 0 ? (industryId.find(value => value.match(regExp)) !== undefined) : false) ||
-                                 (industryName.length !== 0 ? (industryName.find(value => value.match(regExp)) !== undefined) : false) ||
-                                 (industryKeyword.length !== 0 ? (industryKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
-                                 (impressionId.length !== 0 ? (impressionId.find(value => value.match(regExp)) !== undefined) : false) ||
-                                 (impressionName.length !== 0 ? (impressionName.find(value => value.match(regExp)) !== undefined) : false) ||
-                                 (impressionKeyword.length !== 0 ? (impressionKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
-                                 (layoutId.length !== 0 ? (layoutId.find(value => value.match(regExp)) !== undefined) : false) ||
-                                 (layoutName.length !== 0 ? (layoutName.find(value => value.match(regExp)) !== undefined) : false) ||
-                                 (layoutKeyword.length !== 0 ? (layoutKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
-                                 (colorId.length !== 0 ? (colorId.find(value => value.match(regExp)) !== undefined) : false) ||
-                                 (colorName.length !== 0 ? (colorName.find(value => value.match(regExp)) !== undefined) : false) ||
-                                 (colorKeyword.length !== 0 ? (colorKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
-                                 (pickupId.length !== 0 ? (pickupId.find(value => value.match(regExp)) !== undefined) : false) ||
-                                 (pickupName.length !== 0 ? (pickupName.find(value => value.match(regExp)) !== undefined) : false) ||
-                                 (pickupKeyword.length !== 0 ? (pickupKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
-                                 (techniqueId.length !== 0 ? (techniqueId.find(value => value.match(regExp)) !== undefined) : false) ||
-                                 (techniqueName.length !== 0 ? (techniqueName.find(value => value.match(regExp)) !== undefined) : false) ||
-                                 (techniqueKeyword.length !== 0 ? (techniqueKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
-                                 (technologyId.length !== 0 ? (technologyId.find(value => value.match(regExp)) !== undefined) : false) ||
-                                 (technologyName.length !== 0 ? (technologyName.find(value => value.match(regExp)) !== undefined) : false) ||
-                                 (technologyKeyword.length !== 0 ? (technologyKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
-                                 (schemeId.length !== 0 ? (schemeId.find(value => value.match(regExp)) !== undefined) : false) ||
-                                 (schemeName.length !== 0 ? (schemeName.find(value => value.match(regExp)) !== undefined) : false) ||
-                                 (schemeKeyword.length !== 0 ? (schemeKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
-                                 (keyword.length !== 0 ? keyword.includes(lowerKey) : false) ||
-                                 (bookmark.length !== 0 ? (bookmark.find(value => value.match(regExp)) !== undefined) : false);
-  
-                  return result;
+                let matchingCount = 0
+                site.forEach(function(key) {
+                  const result = (content.id === key);
+                  if(result) matchingCount++;
+                })
+                type.forEach(function(key) {
+                  const result = (content.type.length !== 0 ? content.type.some(value => value.id === key) : false);
+                  if(result) matchingCount++;
+                })
+                industry.forEach(function(key) {
+                  const result = (content.industry.length !== 0 ? content.industry.some(value => value.id === key) : false);
+                  if(result) matchingCount++;
+                })
+                impression.forEach(function(key) {
+                  const result = (content.impression.length !== 0 ? content.impression.some(value => value.id === key) : false);
+                  if(result) matchingCount++;
+                })
+                layout.forEach(function(key) {
+                  const result = (content.layout.length !== 0 ? content.layout.some(value => value.id === key) : false);
+                  if(result) matchingCount++;
+                })
+                color.forEach(function(key) {
+                  const result = (content.color.length !== 0 ? content.color.some(value => value.id === key) : false);
+                  if(result) matchingCount++;
+                })
+                pickup.forEach(function(key) {
+                  const result = (content.pickup.length !== 0 ? content.pickup.some(value => value.id === key) : false);
+                  if(result) matchingCount++;
+                })
+                technique.forEach(function(key) {
+                  const result = (content.technique.length !== 0 ? content.technique.some(value => value.id === key) : false);
+                  if(result) matchingCount++;
+                })
+                technology.forEach(function(key) {
+                  const result = (content.technology.length !== 0 ? content.technology.some(value => value.id === key) : false);
+                  if(result) matchingCount++;
+                })
+                scheme.forEach(function(key) {
+                  const result = (content.scheme.length !== 0 ? content.scheme.some(value => value.id === key) : false);
+                  if(result) matchingCount++;
+                })
+
+                if(order === undefined || order === 'and') {
+                  return allNum === matchingCount;
                 }else {
-                  // 検索キーワードの書式を統一する
-                  const lowerKey = keySplit.map(function (item) {
-                      return item.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
-                  });
-
-                  let matchingCount = 0
-                  lowerKey.forEach(function(key) {
-                    // 検索キーワードを正規表現に変換
-                    const regExp = new RegExp(String.raw`${key}`);
-                    // 一致判定
-                    const result = (name.length !== 0 ? name.includes(key) : false) ||
-                                   (url.length !== 0 ? url.includes(key) : false) ||
-                                   (typeId.length !== 0 ? (typeId.find(value => value.match(regExp)) !== undefined) : false) ||
-                                   (typeName.length !== 0 ? (typeName.find(value => value.match(regExp)) !== undefined) : false) ||
-                                   (typeKeyword.length !== 0 ? (typeKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
-                                   (industryId.length !== 0 ? (industryId.find(value => value.match(regExp)) !== undefined) : false) ||
-                                   (industryName.length !== 0 ? (industryName.find(value => value.match(regExp)) !== undefined) : false) ||
-                                   (industryKeyword.length !== 0 ? (industryKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
-                                   (impressionId.length !== 0 ? (impressionId.find(value => value.match(regExp)) !== undefined) : false) ||
-                                   (impressionName.length !== 0 ? (impressionName.find(value => value.match(regExp)) !== undefined) : false) ||
-                                   (impressionKeyword.length !== 0 ? (impressionKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
-                                   (layoutId.length !== 0 ? (layoutId.find(value => value.match(regExp)) !== undefined) : false) ||
-                                   (layoutName.length !== 0 ? (layoutName.find(value => value.match(regExp)) !== undefined) : false) ||
-                                   (layoutKeyword.length !== 0 ? (layoutKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
-                                   (colorId.length !== 0 ? (colorId.find(value => value.match(regExp)) !== undefined) : false) ||
-                                   (colorName.length !== 0 ? (colorName.find(value => value.match(regExp)) !== undefined) : false) ||
-                                   (colorKeyword.length !== 0 ? (colorKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
-                                   (pickupId.length !== 0 ? (pickupId.find(value => value.match(regExp)) !== undefined) : false) ||
-                                   (pickupName.length !== 0 ? (pickupName.find(value => value.match(regExp)) !== undefined) : false) ||
-                                   (pickupKeyword.length !== 0 ? (pickupKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
-                                   (techniqueId.length !== 0 ? (techniqueId.find(value => value.match(regExp)) !== undefined) : false) ||
-                                   (techniqueName.length !== 0 ? (techniqueName.find(value => value.match(regExp)) !== undefined) : false) ||
-                                   (techniqueKeyword.length !== 0 ? (techniqueKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
-                                   (technologyId.length !== 0 ? (technologyId.find(value => value.match(regExp)) !== undefined) : false) ||
-                                   (technologyName.length !== 0 ? (technologyName.find(value => value.match(regExp)) !== undefined) : false) ||
-                                   (technologyKeyword.length !== 0 ? (technologyKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
-                                   (schemeId.length !== 0 ? (schemeId.find(value => value.match(regExp)) !== undefined) : false) ||
-                                   (schemeName.length !== 0 ? (schemeName.find(value => value.match(regExp)) !== undefined) : false) ||
-                                   (schemeKeyword.length !== 0 ? (schemeKeyword.find(value => value.match(regExp)) !== undefined) : false) ||
-                                   (keyword.length !== 0 ? keyword.includes(key) : false) ||
-                                   (bookmark.length !== 0 ? (bookmark.find(value => value.match(regExp)) !== undefined) : false);
-                    // 検索キーワードに一致した場合はマッチングカウントをUP
-                    if(result) matchingCount++
-                  })
-
-                  return lowerKey.length === matchingCount
+                  return matchingCount > 0;
                 }
                   
             });
-            this.keywordContents = searchFuzzy;
-            // 想定外の動きをしてもページをマイナスにしないための予防策
-            if(this.displayingPageKeyword !== 0) {
-              this.displayingPageKeyword = this.displayingPageKeyword - 1;
-            }
-            this.setDisplayingContent();
+            this.displayingContents = searchFuzzy;
+            this.updateDisplayingContent();
         },
         setWindowScroll() {
             const scroll = window.pageYOffset;
@@ -1575,23 +1380,6 @@ export default {
         setWindowSize() {
             const width = window.innerWidth;
             this.$store.dispatch("windowSize/pushWindowWidth", width);
-        },
-        update() {
-            this.filterByBookmarks();
-            // 検索フォームを空にする
-            this.$nuxt.$emit('clearKeyword');
-            // ステータスをオリジナルに変更
-            this.$store.dispatch("status/pushSearchTag");
-            // 想定外の動きをしてもページをマイナスにしないための予防策
-            if(this.displayingPageOriginal !== 0) {
-              this.displayingPageOriginal = this.displayingPageOriginal - 1;
-            }
-            this.setDisplayingContent();
-        },
-        keywordSearchStart() {
-            // ステータスをキーワード検索に変更
-            this.$store.dispatch("status/pushSearchKeyword");
-            this.searchByKeyword();
         },
         pushAutoSizing() {
           if(this.$store.getters["slider/getAutoSizing"]) {
@@ -1637,16 +1425,13 @@ export default {
 }
 .wrapper {
   overflow-x: hidden;
+  min-height: 100vh;
 }
 
 .divider {
   position: relative;
   transition: transform .25s ease-in;
   padding: 0px 0px 150px 0px;
-  .sideMenuOpen & {
-    transform: translateX(calc(0.5 * var(--sideMenuWidth)));
-    transition: transform .25s ease-out;
-  }
   @include responsive(xs) {
 
   }
@@ -1669,29 +1454,7 @@ export default {
 
 .container {
   margin: 0 auto;
-}
-
-.selectedTag {
-  display: inline-block;
-}
-
-.selectedTagButton {
-  width: 15px;
-  height: 15px;
-  margin-right: 7px;
-}
-
-.selectedTagName {
-  user-select: none;
-}
-
-.selectedTagTitle {
-  font-size: var(--font-size-3xl);
-  font-weight: 400;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 160px;
+  max-width: 1600px;
 }
 
 .noContent {
@@ -1727,37 +1490,6 @@ export default {
 
 .contentsWrapper {
   position: relative;
-}
-
-.tool {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-end;
-  margin: 12px auto 0;
-  padding-right: 50px;
-  @include responsive(xs) {
-    
-  }
-  @include responsive(sm) {
-    
-  }
-  @include responsive(md) {
-    padding-right: 0;
-    margin: auto;
-  }
-  @include responsive(lg) {
-    
-  }
-  @include responsive(xl) {
-    
-  }
-  @include responsive(xxl) {
-    
-  }
-}
-
-.toolItem {
-  width: 55px;
 }
 
 .contents {
@@ -1878,21 +1610,6 @@ export default {
   transition: background-color .25s;
 }
 
-.detail {
-  right: 40px;
-  .detailImage {
-    width: 16px;
-    transition: fill .25s;
-    fill: var(--black-super-light-forDarkMode);
-  }
-  @include hover() {
-    background-color: var(--color-transparent-high);
-    .detailImage {
-      fill: var(--color);
-    }
-  }
-}
-
 .bookmark {
   right: 3px;
   transition: background-color .25s;
@@ -1956,17 +1673,13 @@ export default {
       
     }
   }
-  .detail &{
-    left: 0;
-    width: 32px;
-  }
   .bookmark &{
     left: -10px;
     width: 60px;
   }
 }
 
-.detail,.bookmark {
+.bookmark {
   @include hover() {
     .comment {
       display: flex;
@@ -2046,9 +1759,5 @@ export default {
 .button {
   user-select: none;
   cursor: pointer;
-}
-
-.working {
-  display: none;
 }
 </style>

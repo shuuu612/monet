@@ -1,14 +1,14 @@
 <template>
-  <div v-if="getDesktop">
-    <div class="buttons" :class="[getDarkMode,getUnset]" :style="getStyle">
-      <div class="button">
+  <div class="buttons">
+    <transition name="dark" mode="out-in">
+      <div v-if="getDarkMode" key="dark" class="button">
         <button class="darkButton" aria-label="lightmode" @click="clickDark">
           <svg class="darkImage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 255.29 347.47" fill="#231815">
             <path d="M255.29,327.19a173.82,173.82,0,0,1-30-319.41,173.76,173.76,0,1,0,30,319.41Z"/>
           </svg>
         </button>
       </div>
-      <div class="button">
+      <div v-else key="light" class="button">
         <button class="lightButton" aria-label="darkmode" @click="clickLight">
           <svg class="lightImage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 402.86 393.73" fill="#231815">
             <path d="M201,308.11A111.25,111.25,0,1,1,312.19,196.86,111.37,111.37,0,0,1,201,308.11Zm0-199.49a88.25,88.25,0,1,0,88.24,88.24A88.34,88.34,0,0,0,201,108.62Z"/>
@@ -23,8 +23,7 @@
           </svg>
         </button>
       </div>
-    </div>
-    <div class="mask" :class="getDarkModeChanging"></div>
+    </transition>
   </div>
 </template>
 
@@ -32,47 +31,28 @@
 export default {
   data() {
     return {
-      lightToDark: false,
-      darkToLight: false,
-      unset: true,
     };
   },
   computed: {
-    getDesktop() {
-      return this.$store.getters['windowSize/getWindowWidth'] >= 768
-    },
     getDarkMode() {
-      return { light: !this.$store.getters['darkmode/getActive'], dark: this.$store.getters['darkmode/getActive'] }
-    },
-    getDarkModeChanging() {
-      return { lightToDark: this.lightToDark, darkToLight: this.darkToLight }
-    },
-    getStyle() {
-      return { transform: `rotateZ(${180*this.$store.getters['darkmode/getClickCount']+45}deg)`}
-    },
-    getUnset() {
-      return { unset: this.unset }
+      return this.$store.getters['darkmode/getActive'];
     },
   },
   created() {
   },
   mounted() {
-    setTimeout(()=>{this.unset = false},10)
+
   },
   beforeDestroy() {
   },
   methods: {
     clickLight() {
-      this.$store.dispatch("darkmode/pushCountUp")
-      this.lightToDark = true;
-      setTimeout(()=>{this.lightToDark = false},2500)
-      setTimeout(()=>{this.$store.dispatch("darkmode/pushDarkmodeOnForPage");this.$emit('colormodeChange');},1250)
+      this.$store.dispatch("darkmode/pushDarkmodeOnForPage");
+      this.$emit('colormodeChange');
     },
     clickDark(){
-      this.$store.dispatch("darkmode/pushCountUp")
-      this.darkToLight = true;
-      setTimeout(()=>{this.darkToLight = false},2500)
-      setTimeout(()=>{this.$store.dispatch("darkmode/pushDarkmodeOffForPage");this.$emit('colormodeChange');},1250)
+      this.$store.dispatch("darkmode/pushDarkmodeOffForPage");
+      this.$emit('colormodeChange');
     },
   },
 };
@@ -80,144 +60,50 @@ export default {
 
 <style lang="scss" scoped>
 .buttons {
-  width: 30px;
-  height: 200px;
-  position: fixed;
-  top: -100px;
-  right: -15px;
-  transition: transform 2.7s;
-  z-index: 50;
-  &.unset {
-    transition: unset;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .button {
-  width: 100%;
-  height: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .lightButton,.darkButton {
-  width: 30px;
-  height: 30px;
-  border-radius: 30px;
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.lightButton {
-  margin-top: 60px;
-  .lightImage {
-    width: 20px;
-    fill: var(--barkmode-light-icon);
-    transition: transform .25s;
-  }
   @include hover() {
-    .lightImage {
-      transform: scale(1.15);
-    }
+    background-color: var(--tool-button-hover);
   }
 }
 
-.darkButton {
-  margin-bottom: 60px;
-  .darkImage {
-    width: 13px;
-    fill: var(--white);
-    transition: transform .25s;
-  }
-  @include hover() {
-    .darkImage {
-      transform: scale(1.15);
-    }
-  }
+.lightImage {
+  width: 20px;
+  fill: var(--barkmode-light-icon);
 }
 
-.mask {
-  width: 100%;
-  height: 100vh;
+.darkImage {
+  width: 13px;
+  fill: var(--white);
+  transform: rotate(225deg);
+  margin-top: 1px;
+}
+
+.dark-enter-active {
+  transition: opacity .25s ease-out;
+}
+
+.dark-leave-active {
+  transition: opacity .25s ease-in;
+}
+
+.dark-enter, .dark-leave-to {
   opacity: 0;
-  visibility: hidden;
-  position: fixed;
-  top: 0;
-  left: 0;
-  &.lightToDark {
-    animation-name: maskingLight;
-    animation-duration: 2.5s;
-    animation-timing-function: ease;
-    animation-delay: 0s;
-    animation-iteration-count: 1;
-    animation-direction: normal;
-    animation-fill-mode: forwards;
-    animation-play-state: running;
-    
-    @keyframes maskingLight {
-      0% {
-        background-color: transparent;
-        opacity: 0;
-        visibility: visible;
-        z-index: 999;
-      }
-      20% {
-        background-color: var(--darkmode-button-mask);
-        opacity: 1;
-        visibility: visible;
-        z-index: 999;
-      }
-      60% {
-        background-color: var(--black);
-        opacity: 1;
-        visibility: visible;
-        z-index: 999;
-      }
-      100% {
-        background-color: transparent;
-        opacity: 0;
-        visibility: visible;
-        z-index: 999;
-      }
-    }
-  }
-  &.darkToLight {
-    animation-name: maskingDark;
-    animation-duration: 2.5s;
-    animation-timing-function: ease;
-    animation-delay: 0s;
-    animation-iteration-count: 1;
-    animation-direction: normal;
-    animation-fill-mode: forwards;
-    animation-play-state: running;
-    
-    @keyframes maskingDark {
-      0% {
-        background-color: transparent;
-        opacity: 0;
-        visibility: visible;
-        z-index: 999;
-      }
-      20% {
-        background-color: var(--black);
-        opacity: 1;
-        visibility: visible;
-        z-index: 999;
-      }
-      60% {
-        background-color: var(--darkmode-button-mask);
-        opacity: 1;
-        visibility: visible;
-        z-index: 999;
-      }
-      100% {
-        background-color: transparent;
-        opacity: 0;
-        visibility: visible;
-        z-index: 999;
-      }
-    }
-  }
 }
 </style>

@@ -1,7 +1,11 @@
 <template>
   <div class="orderOuter">
+    <transition name="mask">
+      <div v-if="open" class="mask" @click="closeList">
+      </div>
+    </transition>
     <div class="buttonOuter">
-      <div class="button" @click.stop="openList">
+      <div class="button" :class="{selected: openDelay}" @click.stop="openList">
         <svg class="image" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 456.33 425.69" fill="#231815">
           <polygon points="88.85 141.9 131.85 141.9 131.85 0 88.85 0 88.85 49.45 0 49.45 0 92.45 88.85 92.45 88.85 141.9"/>
           <polygon points="173.41 283.79 216.41 283.79 216.41 141.9 173.41 141.9 173.41 191.34 0 191.34 0 234.34 173.41 234.34 173.41 283.79"/>
@@ -15,19 +19,19 @@
     <div id="pulldown" class="pulldown">
       <ul class="lists" :class="getOpenList">
         <li class="list" :class="getSelectedNew">
-          <nuxt-link :to="`/${tag !== undefined ? `tag/${tag}/` : ''}sort/new`" class="link" :class="getSelectedNew">
+          <button class="link" :class="getSelectedNew" @click="clickButton('new')">
               追加日（新しい順）
-          </nuxt-link>
+          </button>
         </li>
         <li class="list" :class="getSelectedOld">
-          <nuxt-link :to="`/${tag !== undefined ? `tag/${tag}/` : ''}sort/old`" class="link" :class="getSelectedOld">
+          <button class="link" :class="getSelectedOld" @click="clickButton('old')">
               追加日（古い順）
-          </nuxt-link>
+          </button>
         </li>
         <li class="list" :class="getSelectedUpdate">
-          <nuxt-link :to="`/${tag !== undefined ? `tag/${tag}/` : ''}sort/update`" class="link" :class="getSelectedUpdate">
+          <button class="link" :class="getSelectedUpdate" @click="clickButton('update')">
               更新日（新しい順）
-          </nuxt-link>
+          </button>
         </li>
       </ul>
     </div>
@@ -36,32 +40,21 @@
 
 <script>
 export default {
-  props: {
-    tag: {
-      type: String,
-      required: false,
-      default: undefined,
-    },
-    sort: {
-      type: String,
-      required: false,
-      default: undefined,
-    },
-  },
   data() {
     return {
-      open: false
+      open: false,
+      openDelay: false,
     };
   },
   computed: {
     getSelectedNew() {
-      return { selected: this.sort === 'new' || this.sort === undefined}
+      return { selected: this.$route.query.sort === 'new' || this.$route.query.sort === undefined}
     },
     getSelectedOld() {
-      return { selected: this.sort === 'old' }
+      return { selected: this.$route.query.sort === 'old' }
     },
     getSelectedUpdate() {
-      return { selected: this.sort === 'update' }
+      return { selected: this.$route.query.sort === 'update' }
     },
     getOpenList() {
       return { open: this.open }
@@ -75,25 +68,56 @@ export default {
   },
   methods: {
     openList() {
-      this.open = !this.open
-    },
-    closeList(event) {
-      const targetElement = document.getElementById('pulldown')
-      if(!targetElement.contains(event.target)) {
-        this.open = false
+      this.open = !this.open;
+      if(this.openDelay) {
+        setTimeout(()=>{this.openDelay = false},260);
+      }else {
+        this.openDelay = true;
       }
+    },
+    closeList() {
+      this.open = false;
+      setTimeout(()=>{this.openDelay = false},260);
+    },
+    clickButton(key) {
+      // クエリパラメーターを付加
+      const query = { ...this.$route.query};
+      query.sort = key;
+      
+      this.$router.push({ path: '/', query: { ...query} });
     }
   },
 }
 </script>
 
 <style lang="scss" scoped>
+.mask {
+  background-color: var(--black-transparent);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
+}
+
+.mask-enter-active {
+  transition: opacity .25s ease-out;
+}
+
+.mask-leave-active {
+  transition: opacity .25s ease-in;
+}
+
+.mask-enter, .mask-leave-to {
+  opacity: 0;
+}
 .orderOuter {
   display: flex;
   align-items: flex-start;
   justify-content: flex-end;
   flex-direction: column;
-  z-index: 100;
+  z-index: 50;
   position: relative;
   height: 40px;
 }
@@ -119,13 +143,16 @@ export default {
   @include hover() {
     background-color: var(--tool-button-hover);
   }
+  &.selected {
+    z-index: 150;
+  }
 }
 
 .image {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 20px;
+  width: 18px;
   fill: var(--favorite-icon-stroke);
 }
 
@@ -144,10 +171,16 @@ export default {
 }
 
 .lists {
-  clip-path:inset(0 0 100% 0);
-  transition: clip-path 0.2s;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: opacity .2s, transform .2s;
+  border: 1px var(--menu-border) solid;
+  z-index: 150;
   &.open {
-    clip-path:inset(0 0 0 0);
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
   }
 }
 
@@ -156,20 +189,14 @@ export default {
   display: flex;
   align-items: center;
   user-select: none;
-  background-color: var(--grey-ultra-light);
+  background-color: var(--menu-background);
   cursor: pointer;
   padding-left: 10px;
   @include hover() {
-    background-color: var(--grey-light);
+    background-color: var(--menu-item-selected);
   }
   &.selected {
-    background-color: var(--grey-light);
-  }
-  &:first-child {
-    border-radius: 4px 4px 0 0;
-  }
-  &:last-child {
-    border-radius: 0 0 4px 4px;
+    background-color: var(--menu-item-selected);
   }
 }
 
@@ -179,12 +206,7 @@ export default {
   width: 100%;
   height: 100%;
   text-decoration: none;
-  color: var(--black);
-  @include hover() {
-    color: var(--white);
-  }
-  &.selected {
-    color: var(--white);
-  }
+  color: var(--menu-text);
 }
+
 </style>

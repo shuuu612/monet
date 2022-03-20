@@ -103,26 +103,6 @@ export default {
     mode: process.env.NODE_ENV === "production" ? "server" : "all",
   },
 
-  router: {
-    extendRoutes(routes, resolve) {
-      routes.push({
-        path: '/tag/:tagId',
-        component: resolve(__dirname, 'pages/index.vue'),
-        name: 'tags',
-      });
-      routes.push({
-        path: '/sort/:sortId',
-        component: resolve(__dirname, 'pages/index.vue'),
-        name: 'sorts',
-      });
-      routes.push({
-        path: '/tag/:tagId/sort/:sortId',
-        component: resolve(__dirname, 'pages/index.vue'),
-        name: 'tag-sort',
-      });
-    },
-  },
-
   generate: {
     interval: 300,
   }

@@ -8,6 +8,7 @@ body {
   font-weight: 300;
   color: var(--black-forDarkMode);
   background-color: var(--background);
+  transition: background-color 0.5s;
 }
 
 h3 {
