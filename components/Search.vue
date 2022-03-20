@@ -30,7 +30,7 @@
         <div class="title">SITE</div>
         <div class="items">
           <button v-for="(item, index) in site.slice(0, 5)" :key="index" class="item" :class="getSelectedTag(item.id)" @click="clickTag(item.id, item.name, 'site')">{{item.name}}</button>
-          <div v-if="!keyword" class="comment">キーワードを入力してサイト名を検索できます。</div>
+          <div v-if="!keyword" class="comment">キーワードを入力してサイト名での検索ができます。</div>
           <div v-if="keyword && site.length === 0" class="comment">一致するサイトがありません。</div>
         </div>
       </div>
