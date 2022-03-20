@@ -1,7 +1,7 @@
 <template>
   <div class="headerWrapper">
     <header class="header">
-      <div v-if="getDesktop" class="topMenu">
+      <div class="topMenu desktop">
         <h1 class="logo">
           <nuxt-link class="logoLink" to="/">
             <svg class="logoImg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 45.69 11.84" fill="#ffffff">
@@ -52,7 +52,7 @@
           </div>
         </div>
       </div>
-      <div v-else class="topMenu">
+      <div class="topMenu mobile">
         <h1 class="logo">
           <nuxt-link class="logoLink" to="/">
             <svg class="logoImg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 45.69 11.84" fill="#ffffff">
@@ -141,9 +141,6 @@ export default {
     };
   },
   computed: {
-    getDesktop() {
-      return this.$store.getters['windowSize/getWindowWidth'] >= 992
-    },
   },
   created() {
   },
@@ -238,6 +235,48 @@ export default {
   }
   @include responsive(xxl) {
 
+  }
+}
+.desktop {
+  display: none;
+  @include responsive(xs) {
+    
+  }
+  @include responsive(sm) {
+    
+  }
+  @include responsive(md) {
+    
+  }
+  @include responsive(lg) {
+    display: flex;
+  }
+  @include responsive(xl) {
+    
+  }
+  @include responsive(xxl) {
+    
+  }
+}
+.mobile {
+  display: flex;
+  @include responsive(xs) {
+    
+  }
+  @include responsive(sm) {
+    
+  }
+  @include responsive(md) {
+    
+  }
+  @include responsive(lg) {
+    display: none;
+  }
+  @include responsive(xl) {
+    
+  }
+  @include responsive(xxl) {
+    
   }
 }
 
