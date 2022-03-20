@@ -62,7 +62,7 @@ export default {
   top: 8px;
   right: 8px;
   padding: 20px;
-  z-index: 90;
+  z-index: 150;
   display: flex;
   align-items: center;
   justify-content: left;
