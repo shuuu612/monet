@@ -179,7 +179,7 @@ export default {
 
 <style lang="scss" scoped>
 .headerWrapper {
-  border-bottom: 1px var(--side-menu-borber) solid;
+  padding-top: 12px;
 }
 .header {
   margin: 0 auto;

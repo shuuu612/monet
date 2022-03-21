@@ -684,7 +684,7 @@ export default {
   width: 100%;
   border-radius: 50px;
   height: 100%;
-  border: 1px var(--gray3) solid;
+  border: 1px var(--search-border) solid;
   padding-left: 10px;
   overflow-x: hidden;
   background-color: var(--white);
@@ -721,7 +721,7 @@ export default {
   width: 17px;
   margin-right: 10px;
   margin-left: 6px;
-  fill: var(--gray7);
+  fill: var(--search-icon);
   @include responsive(xs) {
     
   }
@@ -746,10 +746,10 @@ export default {
   height: 36px;
   border-radius: 4px;
   font-size: var(--font-size-sm);
-  color: var(--gray12);
+  color: var(--search-text);
 }
 ::placeholder {
-  color: var(--gray7);
+  color: var(--search-placeholder);
 }
 .tags {
   width: 100%;

@@ -17,7 +17,7 @@
         <div class="controllerTitle">デバイス</div>
         <div class="controllerItems">
           <button class="controllerItem threeItems" :class="getStatePC" :disabled="getDevicePcDisabled" @click="clickDevicePc">
-            <div>
+            <div class="controllerButton">
               <div class="typeImageWrapper">
                 <svg class="typeImage typeImagePC" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 357 299" fill="#ffffff">
                   <path d="M348.44,0H8.56A8.56,8.56,0,0,0,0,8.56V240.44A8.56,8.56,0,0,0,8.56,249H348.44a8.56,8.56,0,0,0,8.56-8.56V8.56A8.56,8.56,0,0,0,348.44,0ZM331,219.12a4.87,4.87,0,0,1-4.88,4.88H29.88A4.87,4.87,0,0,1,25,219.12V29.88A4.87,4.87,0,0,1,29.88,25H326.12A4.87,4.87,0,0,1,331,29.88Z"/>
@@ -26,9 +26,10 @@
               </div>
               <div class="typeTitle">デスクトップ</div>
             </div>
+            <div class="activeButton" :class="getStatePC"></div>
           </button>
           <button class="controllerItem threeItems" :class="getStateTB" :disabled="getDeviceTbDisabled" @click="clickDeviceTb">
-            <div>
+            <div class="controllerButton">
               <div class="typeImageWrapper">
                 <svg class="typeImage typeImageTB" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 315.88 374.1" fill="#ffffff">
                   <path d="M304.56,0H11.32A11.32,11.32,0,0,0,0,11.32V362.78A11.32,11.32,0,0,0,11.32,374.1H304.56a11.32,11.32,0,0,0,11.32-11.32V11.32A11.32,11.32,0,0,0,304.56,0Zm-17.8,340.3a9.06,9.06,0,0,1-9.05,9.06H37a9.06,9.06,0,0,1-9.06-9.06V37.87a9.06,9.06,0,0,1,9.06-9H277.71a9,9,0,0,1,9.05,9Z"/>
@@ -36,9 +37,10 @@
               </div>
               <div class="typeTitle">タブレット</div>
             </div>
+            <div class="activeButton" :class="getStateTB"></div>
           </button>
           <button class="controllerItem threeItems" :class="getStateSP" :disabled="getDeviceSpDisabled" @click="clickDeviceSp">
-            <div>
+            <div class="controllerButton">
               <div class="typeImageWrapper">
                 <svg class="typeImage typeImageSP" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 216.45 386.3" fill="#ffffff">
                   <path d="M207.69,0H8.76A8.76,8.76,0,0,0,0,8.76V377.54a8.76,8.76,0,0,0,8.76,8.76H207.69a8.76,8.76,0,0,0,8.76-8.76V8.76A8.76,8.76,0,0,0,207.69,0Zm-19.8,351a8.21,8.21,0,0,1-8.22,8.21H35.57A8.21,8.21,0,0,1,27.35,351V36.77a8.22,8.22,0,0,1,8.22-8.21h144.1a8.22,8.22,0,0,1,8.22,8.21Z"/>
@@ -47,6 +49,7 @@
               </div>
               <div class="typeTitle">スマートフォン</div>
             </div>
+            <div class="activeButton" :class="getStateSP"></div>
           </button>
         </div>
         <div class="check" :class="[getDeviceCheckboxChecked,getMultideviceDisabled]">
@@ -96,13 +99,16 @@
         <div class="controllerTitle">ダークモード</div>
         <div class="controllerItems">
           <button class="controllerItem threeItems" :class="getDarkmodeOn" :disabled="getDarkmodeOnDisabled" @click="clickDarkmode('on')">
-            <div class="typeTitle darkmode">ON</div>
+            <div class="typeTitle darkmode controllerButton">ON</div>
+            <div class="activeButton" :class="getDarkmodeOn"></div>
           </button>
           <button class="controllerItem threeItems" :class="getDarkmodeOff" :disabled="getDarkmodeOffDisabled" @click="clickDarkmode('off')">
-            <div class="typeTitle darkmode">OFF</div>
+            <div class="typeTitle darkmode controllerButton">OFF</div>
+            <div class="activeButton" :class="getDarkmodeOff"></div>
           </button>
           <button class="controllerItem threeItems" :class="getDarkmodeOs" :disabled="getDarkmodeOsDisabled" @click="clickDarkmode('os')">
-            <div class="typeTitle darkmode">OSの設定</div>
+            <div class="typeTitle darkmode controllerButton">OSの設定</div>
+            <div class="activeButton" :class="getDarkmodeOs"></div>
           </button>
         </div>
       </div>
@@ -601,21 +607,36 @@ export default {
   justify-content: center;
   flex-grow:1;
   height: 50px;
+  position: relative;
   &:first-child {
     border-radius: 5px 0 0 5px;
   }
   &:last-child {
     border-radius: 0 5px 5px 0;
   }
-  &.active {
-    background-color: var(--menu-button-selected);
-  }
-
   &.disabled {
     pointer-events: none;
   }
   &.threeItems {
     width: 33.3%
+  }
+}
+.controllerButton {
+  z-index: 10;
+}
+.activeButton {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 93.1%;
+  height: 42px;
+  margin: 4px;
+  border-radius: 4px;
+  opacity: 0;
+  transition: opacity .2s;
+  &.active {
+    opacity: 1;
+    background-color: var(--menu-button-active);
   }
 }
 
@@ -649,7 +670,7 @@ export default {
   justify-content: center;
   transition: background-color .2s;
   @include hover() {
-    background-color: var(--menu-button-selected);
+    background-color: var(--menu-button-active);
   }
   &.disabled {
     @include hover() {
@@ -802,7 +823,7 @@ export default {
 .typeImage {
   fill: var(--black-ultra-light);
   .active & {
-    fill: var(--black-forDarkMode);
+    fill: var(--menu-text);
   }
 }
 
@@ -827,7 +848,7 @@ export default {
   color: var(--black-ultra-light);
   font-weight: 400;
   .active & {
-    color: var(--black-forDarkMode);
+    color: var(--menu-text);
     font-weight: 500;
   }
   &.darkmode {
@@ -848,7 +869,7 @@ input[type="range"] {
   // -webkit-向けのつまみ
   &::-webkit-slider-thumb {
     -webkit-appearance: none;                               // お決まり
-    background: var(--menu-button-selected);                // 背景色
+    background: var(--menu-button-active);                // 背景色
     width: 16px;                                            // 幅
     height: 16px;                                           // 高さ
     border-radius: 50%;                                     // 円形に
@@ -856,7 +877,7 @@ input[type="range"] {
   }
   // -moz-向けのつまみ
   &::-moz-range-thumb {
-    background: var(--menu-button-selected);                // 背景色
+    background: var(--menu-button-active);                // 背景色
     width: 18px;                                            // 幅
     height: 18px;                                           // 高さ
     border-radius: 50%;                                     // 円形に
@@ -941,6 +962,7 @@ input[type="range"] {
     }
     &.color10 {
       background-color: var(--white);
+      border: 1px var(--gray6) solid;
     }
     &.color11 {
       background-color: var(--colormode11);
@@ -978,7 +1000,8 @@ input[type="range"] {
       background-color: var(--colormode9-transparent);
     }
     &.color10 {
-      background-color: var(--white-transparent);
+      background-color: var(--gray3);
+      border: 1px var(--gray6) solid;
     }
     &.color11 {
       background-color: var(--colormode11-transparent);
