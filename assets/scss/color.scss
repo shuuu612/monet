@@ -1,3 +1,25 @@
+@mixin darkmode {
+  --white-forDarkMode: var(--black);
+  --white-dark-forDarkMode: var(--black-dark);
+  --white-super-dark-forDarkMode: var(--black-super-dark);
+  --white-ultra-dark-forDarkMode: var(--black-ultra-dark);
+  --white-hover-forDarkMode: var(--black-hover);
+  --white-transparent-forDarkMode: var(--black-transparent);
+  --white-transparent-high-forDarkMode: var(--black-transparent-high);
+  --white-transparent-low-forDarkMode: var(--black-transparent-low);
+
+  --black-forDarkMode: var(--white);
+  --black-light-forDarkMode: var(--white-light);
+  --black-super-light-forDarkMode: var(--white-super-light);
+  --black-ultra-light-forDarkMode: var(--white-ultra-light);
+  --black-dark-forDarkMode: var(--white-dark);
+  --black-super-dark-forDarkMode: var(--white-super-dark);
+  --black-ultra-dark-forDarkMode: var(--white-ultra-dark);
+  --black-hover-forDarkMode: var(--white-hover);
+  --black-transparent-forDarkMode: var(--white-transparent);
+  --black-transparent-high-forDarkMode: var(--white-transparent-high);
+  --black-transparent-low-forDarkMode: var(--white-transparent-low);
+}
 :root {
   --white: #f3f3f3;
   --white-light: #ebebeb;
@@ -79,26 +101,26 @@
   --color-dark-transparent-low: var(--blue-dark-transparent-low);
   --color-dark-transparent-low-hover: var(--blue-dark-transparent-low-hover);
 
-  --white-forDarkMode: var(--black);
-  --white-dark-forDarkMode: var(--black-dark);
-  --white-super-dark-forDarkMode: var(--black-super-dark);
-  --white-ultra-dark-forDarkMode: var(--black-ultra-dark);
-  --white-hover-forDarkMode: var(--black-hover);
-  --white-transparent-forDarkMode: var(--black-transparent);
-  --white-transparent-high-forDarkMode: var(--black-transparent-high);
-  --white-transparent-low-forDarkMode: var(--black-transparent-low);
+  --white-forDarkMode: var(--white);
+  --white-dark-forDarkMode: var(--white-dark);
+  --white-super-dark-forDarkMode: var(--white-super-dark);
+  --white-ultra-dark-forDarkMode: var(--white-ultra-dark);
+  --white-hover-forDarkMode: var(--white-hover);
+  --white-transparent-forDarkMode: var(--white-transparent);
+  --white-transparent-high-forDarkMode: var(--white-transparent-high);
+  --white-transparent-low-forDarkMode: var(--white-transparent-low);
 
-  --black-forDarkMode: var(--white);
-  --black-light-forDarkMode: var(--white-light);
-  --black-super-light-forDarkMode: var(--white-super-light);
-  --black-ultra-light-forDarkMode: var(--white-ultra-light);
-  --black-dark-forDarkMode: var(--white-dark);
-  --black-super-dark-forDarkMode: var(--white-super-dark);
-  --black-ultra-dark-forDarkMode: var(--white-ultra-dark);
-  --black-hover-forDarkMode: var(--white-hover);
-  --black-transparent-forDarkMode: var(--white-transparent);
-  --black-transparent-high-forDarkMode: var(--white-transparent-high);
-  --black-transparent-low-forDarkMode: var(--white-transparent-low);
+  --black-forDarkMode: var(--black);
+  --black-light-forDarkMode: var(--black-light);
+  --black-super-light-forDarkMode: var(--black-super-light);
+  --black-ultra-light-forDarkMode: var(--black-ultra-light);
+  --black-dark-forDarkMode: var(--black-dark);
+  --black-super-dark-forDarkMode: var(--black-super-dark);
+  --black-ultra-dark-forDarkMode: var(--black-ultra-dark);
+  --black-hover-forDarkMode: var(--black-hover);
+  --black-transparent-forDarkMode: var(--black-transparent);
+  --black-transparent-high-forDarkMode: var(--black-transparent-high);
+  --black-transparent-low-forDarkMode: var(--black-transparent-low);
 
   --red: #ed4956;
   --red-transparent-high: #ed495715;
@@ -363,6 +385,7 @@
 }
 
 :root.color1 {
+  @include darkmode;
   --background: var(--colormode1);
   --logo: var(--white);
   --site-name: var(--white);
@@ -407,6 +430,7 @@
 }
 
 :root.color2 {
+  @include darkmode;
   --background: var(--colormode2);
   --logo: var(--white);
   --site-name: var(--white);
@@ -451,6 +475,7 @@
 }
 
 :root.color3 {
+  @include darkmode;
   --background: var(--colormode3);
   --logo: var(--white);
   --site-name: var(--white);
@@ -495,6 +520,7 @@
 }
 
 :root.color4 {
+  @include darkmode;
   --background: var(--colormode4);
   --logo: var(--white);
   --site-name: var(--white);
@@ -539,6 +565,7 @@
 }
 
 :root.color5 {
+  @include darkmode;
   --background: var(--colormode5);
   --logo: var(--white);
   --site-name: var(--white);
@@ -583,6 +610,7 @@
 }
 
 :root.color6 {
+  @include darkmode;
   --background: var(--colormode6);
   --logo: var(--white);
   --site-name: var(--white);
@@ -627,6 +655,7 @@
 }
 
 :root.color7 {
+  @include darkmode;
   --background: var(--colormode7);
   --logo: var(--white);
   --site-name: var(--white);
@@ -671,6 +700,7 @@
 }
 
 :root.color8 {
+  @include darkmode;
   --background: var(--colormode8);
   --logo: var(--white);
   --site-name: var(--white);
@@ -715,6 +745,7 @@
 }
 
 :root.color9 {
+  @include darkmode;
   --background: var(--colormode9);
   --logo: var(--white);
   --site-name: var(--white);
@@ -759,27 +790,6 @@
 }
 
 :root.color10 {
-  --white-forDarkMode: var(--white);
-  --white-dark-forDarkMode: var(--white-dark);
-  --white-super-dark-forDarkMode: var(--white-super-dark);
-  --white-ultra-dark-forDarkMode: var(--white-ultra-dark);
-  --white-hover-forDarkMode: var(--white-hover);
-  --white-transparent-forDarkMode: var(--white-transparent);
-  --white-transparent-high-forDarkMode: var(--white-transparent-high);
-  --white-transparent-low-forDarkMode: var(--white-transparent-low);
-
-  --black-forDarkMode: var(--black);
-  --black-light-forDarkMode: var(--black-light);
-  --black-super-light-forDarkMode: var(--black-super-light);
-  --black-ultra-light-forDarkMode: var(--black-ultra-light);
-  --black-dark-forDarkMode: var(--black-dark);
-  --black-super-dark-forDarkMode: var(--black-super-dark);
-  --black-ultra-dark-forDarkMode: var(--black-ultra-dark);
-  --black-hover-forDarkMode: var(--black-hover);
-  --black-transparent-forDarkMode: var(--black-transparent);
-  --black-transparent-high-forDarkMode: var(--black-transparent-high);
-  --black-transparent-low-forDarkMode: var(--black-transparent-low);
-
   --background: var(--white);
   --logo: var(--colormode10);
   --site-name: var(--colormode10-ultra-dark);
@@ -824,6 +834,7 @@
 }
 
 :root.color11 {
+  @include darkmode;
   --background: var(--colormode11);
   --logo: var(--white);
   --site-name: var(--white);
@@ -868,6 +879,7 @@
 }
 
 :root.color12 {
+  @include darkmode;
   --background: var(--colormode12);
   --logo: var(--white);
   --site-name: var(--white);
@@ -912,6 +924,7 @@
 }
 
 :root.darkmode {
+  @include darkmode;
   --white-forDarkMode: var(--black);
   --white-dark-forDarkMode: var(--black-dark);
   --white-super-dark-forDarkMode: var(--black-super-dark);

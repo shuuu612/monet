@@ -52,10 +52,16 @@ export default {
   plugins: [
     '@/plugins/common.js',
     '@/plugins/storageAvailable.js',
+    '@/plugins/vee-validate',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
-  components: true,
+  components:  {
+    dirs: [
+      '~/components',
+      '~/components/validation',
+    ]
+  },
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   /* buildModules: [
@@ -65,11 +71,23 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    '@nuxtjs/axios',
     '@nuxtjs/style-resources',
     '@nuxtjs/google-gtag', 
   ],
   'google-gtag': {
     id: 'G-QDLBX51TVH',
+  },
+
+  axios: {
+    proxy: true,
+  },
+
+  proxy: {
+    '/api/': {
+      target: 'https://inquiry.microcms.io',
+      pathRewrite: {'^/api/': ''},
+    }
   },
 
   styleResources: {
@@ -88,7 +106,8 @@ export default {
           drop_console: process.env.NODE_ENV === "production"
         }
       }
-    }
+    },
+    transpile: ["vee-validate/dist/rules"],
   },
 
   buildModules: [
