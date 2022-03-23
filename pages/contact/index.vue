@@ -56,7 +56,6 @@
   </div>
 </template>
 <script>
-/* import $axios from "axios"; */
 export default {
   /* components: {
     FormValidationInput: () =>
@@ -84,7 +83,8 @@ export default {
           email: this.inputEmail,
           message: this.inputMessage,
         }
-        await this.$axios.post('https://inquiry.microcms.io/api/v1/contact',postData, {
+        /* await this.$axios.post('https://inquiry.microcms.io/api/v1/contact',postData, { */
+        await this.$axios.$post('/api/v1/contact',postData, {
           headers: {
             'Content-Type': 'application/json',
             'X-MICROCMS-API-KEY': 'a266212255964abb9b0c7285d67907a390f7', // 作成したAPI-KEY

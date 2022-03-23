@@ -78,16 +78,13 @@ export default {
   'google-gtag': {
     id: 'G-QDLBX51TVH',
   },
-
+  
   axios: {
     proxy: true,
   },
 
   proxy: {
-    '/api/': {
-      target: 'https://inquiry.microcms.io',
-      pathRewrite: {'^/api/': ''},
-    }
+    '/api/': { target: 'https://inquiry.microcms.io' }
   },
 
   styleResources: {
