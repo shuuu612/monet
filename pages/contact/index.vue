@@ -15,7 +15,7 @@
         formComponentName="name"
         maxLength="50"
         placeHolderMessage="山田太郎"
-        :inputValue.sync="postData.inputName"
+        :inputValue.sync="inputName"
       >
         <!-- <template v-slot="inputProps">
           <p>
@@ -31,7 +31,7 @@
         formComponentName="email"
         maxLength="256"
         placeHolderMessage="contact@example.com"
-        :inputValue.sync="postData.inputEmail"
+        :inputValue.sync="inputEmail"
       />
       <FormValidationTextarea
         rules="required|max:1000"
@@ -41,7 +41,7 @@
         formComponentName="message"
         maxLength="1000"
         placeHolderMessage="お問い合わせ内容をご入力ください"
-        :inputValue.sync="postData.inputMessage"
+        :inputValue.sync="inputMessage"
       >
         <!-- <template v-slot="inputProps">
           <p>
@@ -66,11 +66,9 @@ export default {
   }, */
   data() {
     return {
-      postData: {
-        inputName: '',
-        inputEmail: '',
-        inputMessage: '',
-      },
+      inputName: '',
+      inputEmail: '',
+      inputMessage: '',
     }
   },
   methods: {
@@ -78,10 +76,15 @@ export default {
       console.log('ボタン押下')
       const isValid = await this.$refs.observer.validate()
       if (isValid) {
-        console.log(this.postData.inputName)
-        console.log(this.postData.inputEmail)
-        console.log(this.postData.inputMessage)
-        await this.$axios.post('https://inquiry.microcms.io/api/v1/contact',this.postData, {
+        console.log(this.inputName)
+        console.log(this.inputEmail)
+        console.log(this.inputMessage)
+        const postData = {
+          name: this.inputName,
+          email: this.inputEmail,
+          message: this.inputMessage,
+        }
+        await this.$axios.post('https://inquiry.microcms.io/api/v1/contact',postData, {
           headers: {
             'Content-Type': 'application/json',
             'X-MICROCMS-API-KEY': 'a266212255964abb9b0c7285d67907a390f7', // 作成したAPI-KEY
