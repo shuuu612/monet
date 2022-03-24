@@ -92,10 +92,13 @@ export default {
           })
 
           // pythonファイルにデータを送信
-          const res = await this.$axios.post('/send-mail.py',postData,).catch(error => {
-            return error.response
+          await this.$axios.post('/send-mail.py',{data: 'テスト'})
+          .then(res => {
+            console.log('成功',res)
           })
-          console.log(res)
+          .catch(error => {
+            console.log('エラー',error)
+          })
 
         }else {
           await this.$axios.post('/api/v1/contact',postData, {
