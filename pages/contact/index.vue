@@ -92,7 +92,7 @@ export default {
           })
 
           // pythonファイルにデータを送信
-          const res = await this.$axios.post('https://monet-design.com/script/send-mail.py',postData,).catch(error => {
+          const res = await this.$axios.post('/send-mail.py',postData,).catch(error => {
             return error.response
           })
           console.log(res)
