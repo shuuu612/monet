@@ -5,13 +5,14 @@
     :name="labelMessage"
   >
     <div class="container">
-      <div class="input">
+      <div class="input-outer">
         <label class="title" :for="formComponentName">
           {{ labelMessage }}
         </label>
         <input
           :id="formComponentName"
           v-model="inputValueModel"
+          class="input"
           :type="inputType"
           :name="formComponentName"
           :maxlength="maxLength"
@@ -20,7 +21,7 @@
       </div>
       <!-- 入力値と最大文字数を親Componentで扱えるようにする -->
       <!-- <slot :inputValue="inputValue" :maxLength="maxLength" /> -->
-      <p v-show="errors.length" class="attention">
+      <p v-if="errors.length" class="attention">
         {{ errors[0] }}
       </p>
     </div>
@@ -74,14 +75,14 @@ export default {
 <style lang="scss" scoped>
 .container {
   width: 100%;
-  height: 70px;
   background-color: var(--white);
   border-radius: 10px;
   margin-bottom: 10px;
   padding: 16px 20px;
   border: 1px var(--gray3) solid;
 }
-.input {
+.input-outer {
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -91,6 +92,10 @@ export default {
   width: 150px;
   font-size: var(--font-size-md);
   font-weight: 400;
+}
+.input {
+  width: calc(100% - 150px);
+  font-size: var(--font-size-lg);
 }
 .attention {
   padding-left: 150px;

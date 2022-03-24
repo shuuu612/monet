@@ -5,18 +5,17 @@
     :name="labelMessage"
   >
     <div class="container">
-      <div class="input">
+      <div class="input-outer">
         <label class="title" :for="formComponentName">
           {{ labelMessage }}
         </label>
         <textarea
           :id="formComponentName"
           v-model="inputValueModel"
-          
+          class="textarea"
           :name="formComponentName"
           :maxlength="maxLength"
           :placeholder="placeHolderMessage"
-          class="textarea"
         />
       </div>
       <!-- 入力値と最大文字数を親Componentで扱えるようにする -->
@@ -79,35 +78,39 @@ export default {
 <style lang="scss" scoped>
 .container {
   width: 100%;
-  height: 300px;
   background-color: var(--white);
   border-radius: 10px;
   margin-bottom: 10px;
-  padding: 16px 20px;
+  padding: 16px 0 16px 20px;
   border: 1px var(--gray3) solid;
 }
-.input {
+.input-outer {
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
   width: 100%;
-  height: calc(100% - 20px);
+  height: 300px;
 }
 .title {
   display: block;
   width: 150px;
   font-size: var(--font-size-md);
   font-weight: 400;
-}
-.attention {
-  padding-left: 150px;
-  padding-top: 6px;
-  color: var(--red);
+  margin-top: 10px;
 }
 .textarea {
   width: calc(100% - 150px);
   height: 100%;
   resize: none;
   overflow: auto;
+  font-size: var(--font-size-lg);
+  line-height: 2em;
+  padding-right: 30px;
+}
+
+.attention {
+  padding-left: 150px;
+  padding-top: 6px;
+  color: var(--red);
 }
 </style>

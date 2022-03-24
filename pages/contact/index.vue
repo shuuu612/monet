@@ -90,14 +90,25 @@ export default {
               'X-MICROCMS-API-KEY': 'a266212255964abb9b0c7285d67907a390f7', // 作成したAPI-KEY
             },
           })
+
+          // pythonファイルにデータを送信
+          const res = await this.$axios.post('https://monet-design.com/script/send-mail.py',postData,).catch(error => {
+            return error.response
+          })
+          console.log(res)
+
         }else {
-          await this.$axios.$post('/api/v1/contact',postData, {
+          await this.$axios.post('/api/v1/contact',postData, {
             headers: {
               'Content-Type': 'application/json',
               'X-MICROCMS-API-KEY': 'a266212255964abb9b0c7285d67907a390f7', // 作成したAPI-KEY
             },
           })
+
+          // pythonファイルにデータを送信
+          await this.$axios.post('/script/send-mail.py',postData,)
         }
+        
           
         // バリデーション通過時の処理(例：サーバーに値を送信する等)
         // サンクスページに遷移
