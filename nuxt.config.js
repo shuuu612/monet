@@ -1,5 +1,3 @@
-/* import { client } from './utils/microcms'; */
-
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
