@@ -89,8 +89,8 @@
             <p>時間をおいて再度お問合せください。</p>
           </div>
           <div class="buttons">
-              <button class="button" @click="home">ホーム</button>
-            </div>
+              <a href="https://monet-design.com/" class="button home">ホーム</a>
+          </div>
         </div>
       </div>
     </main>
@@ -198,9 +198,6 @@ export default {
           this.$store.dispatch("contact/pushClear");
           this.$router.push({path: '', query: { status: 'failed'}});
         }
-      },
-      home() {
-        this.$router.push({path: '/'});
       },
     },
 }
@@ -316,6 +313,12 @@ export default {
   }
   @include hover() {
     background-color: var(--gray10);
+  }
+  &.home {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
   }
 }
 .comment {
