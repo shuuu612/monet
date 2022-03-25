@@ -7,7 +7,8 @@
     <div class="container">
       <div class="input-outer">
         <label class="title" :for="formComponentName">
-          {{ labelMessage }}
+          <span>{{ labelMessage }}</span>
+          <span v-if="rules.includes('required')" class="required">必須</span>
         </label>
         <input
           :id="formComponentName"
@@ -19,8 +20,6 @@
           :placeholder="placeHolderMessage"
         />
       </div>
-      <!-- 入力値と最大文字数を親Componentで扱えるようにする -->
-      <!-- <slot :inputValue="inputValue" :maxLength="maxLength" /> -->
       <p v-if="errors.length" class="attention">
         {{ errors[0] }}
       </p>
@@ -73,6 +72,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .container {
   width: 100%;
   background-color: var(--white);
@@ -88,18 +88,31 @@ export default {
   justify-content: flex-start;
 }
 .title {
-  display: block;
-  width: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: var(--label-size);
   font-size: var(--font-size-md);
   font-weight: 400;
 }
+.required {
+  font-size: var(--font-size-xxs);
+  background-color: var(--colormode2);
+  color: var(--white);
+  border-radius: 4px;
+  margin-left: 5px;
+  margin-top: 1px;
+  padding: 2px 4px 3px 4px;
+}
 .input {
-  width: calc(100% - 150px);
+  width: calc(100% - var(--label-size));
   font-size: var(--font-size-lg);
 }
 .attention {
-  padding-left: 150px;
+  padding-left: var(--label-size);
   padding-top: 6px;
   color: var(--red);
+  font-size: var(--font-size-xs);
+  font-weight: 400;
 }
 </style>

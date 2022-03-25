@@ -7,7 +7,8 @@
     <div class="container">
       <div class="input-outer">
         <label class="title" :for="formComponentName">
-          {{ labelMessage }}
+          <span>{{ labelMessage }}</span>
+          <span v-if="rules.includes('required')" class="required">必須</span>
         </label>
         <textarea
           :id="formComponentName"
@@ -18,8 +19,6 @@
           :placeholder="placeHolderMessage"
         />
       </div>
-      <!-- 入力値と最大文字数を親Componentで扱えるようにする -->
-      <!-- <slot :inputValue="inputValue" :maxLength="maxLength" /> -->
       <p v-show="errors.length" class="attention">
         {{ errors[0] }}
       </p>
@@ -92,25 +91,44 @@ export default {
   height: 300px;
 }
 .title {
-  display: block;
-  width: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: var(--label-size);
   font-size: var(--font-size-md);
   font-weight: 400;
   margin-top: 10px;
 }
+.required {
+  font-size: var(--font-size-xxs);
+  background-color: var(--colormode2);
+  color: var(--white);
+  border-radius: 4px;
+  margin-left: 5px;
+  margin-top: 2px;
+  padding: 2px 4px 3px 4px;
+}
 .textarea {
-  width: calc(100% - 150px);
+  width: calc(100% - var(--label-size));
   height: 100%;
   resize: none;
   overflow: auto;
   font-size: var(--font-size-lg);
-  line-height: 2em;
   padding-right: 30px;
+  line-height: 2.667em;
+  @include responsive(md) {
+    line-height: 2.5em;
+  }
+  @include responsive(xl) {
+    line-height: 2.223em;
+  }
 }
 
 .attention {
-  padding-left: 150px;
+  padding-left: var(--label-size);
   padding-top: 6px;
   color: var(--red);
+  font-size: var(--font-size-xs);
+  font-weight: 400;
 }
 </style>
