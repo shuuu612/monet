@@ -92,7 +92,16 @@ export default {
           })
 
           // pythonファイルにデータを送信
-          await this.$axios.post('/send-mail.py',{data: 'テスト'})
+          /* await this.$axios.post('/send-mail.py',{data: 'テスト'})
+          .then(res => {
+            console.log('成功',res)
+          })
+          .catch(error => {
+            console.log('エラー',error)
+          }) */
+
+          // rubyファイルにデータを送信
+          await this.$axios.post('/pust-mail.rb',{data: 'テスト'})
           .then(res => {
             console.log('成功',res)
           })
