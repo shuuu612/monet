@@ -88,6 +88,9 @@
             <p>送信に失敗しました。</p>
             <p>時間をおいて再度お問合せください。</p>
           </div>
+          <div class="buttons">
+              <button class="button" @click="home">ホーム</button>
+            </div>
         </div>
       </div>
     </main>
@@ -195,7 +198,10 @@ export default {
           this.$store.dispatch("contact/pushClear");
           this.$router.push({path: '', query: { status: 'failed'}});
         }
-      }
+      },
+      home() {
+        this.$router.push({path: '/'});
+      },
     },
 }
 </script>
@@ -319,5 +325,6 @@ export default {
   flex-direction: column;
   font-size: var(--font-size-3xl);
   line-height: 2em;
+  margin-bottom: 150px;
 }
 </style>

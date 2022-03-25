@@ -30,7 +30,7 @@
         :src="`${getPath(content.url)}-pc-50.jpg`"
         :width="getWidth('pc')"
         :height="getHeight"
-        alt="loading-image"
+        :alt="`${content.name}`"
       >
     </div>
     <div class="imageWrapper">
@@ -63,7 +63,7 @@
         :src="`${getPath(content.url)}-tb-50.jpg`"
         :width="getWidth('tb')"
         :height="getHeight"
-        alt="loading-image"
+        :alt="`${content.name}`"
       >
     </div>
     <div class="imageWrapper">
@@ -96,7 +96,7 @@
         :src="`${getPath(content.url)}-sp-50.jpg`"
         :width="getWidth('sp')"
         :height="getHeight"
-        alt="loading-image"
+        :alt="`${content.name}`"
       >
     </div>
   </a>

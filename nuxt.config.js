@@ -20,7 +20,7 @@ export default {
       // OGP設定
       { hid: 'og:site_name', property: 'og:site_name', content: 'Monet' },
       { hid: 'og:type', property: 'og:type', content: 'website' },
-      { hid: 'og:url', property: 'og:url', content: 'https://mitsukaru-design.com/' },
+      { hid: 'og:url', property: 'og:url', content: 'https://monet-design.com/' },
       { hid: 'og:title', property: 'og:title', content: 'Monet | Webデザインギャラリー' },
       { hid: 'og:description', property: 'og:description', content: 'サイトの説明' },
       { hid: 'og:image', property: 'og:image', content: 'サイトURL' },
