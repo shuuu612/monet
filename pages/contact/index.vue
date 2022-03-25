@@ -92,7 +92,19 @@ export default {
           })
 
           // pythonファイルにデータを送信
-          await this.$axios.post('/send-mail',{data: 'テスト'})
+          /* await this.$axios.post('/send-mail',{data: 'テスト'})
+          .then(res => {
+            console.log('成功',res)
+          })
+          .catch(error => {
+            console.log('エラー',error)
+          }) */
+
+          // pythonファイルにデータを送信
+          const params = new URLSearchParams();
+          params.append('firstName', 'Mineo');
+          params.append('lastName', 'Okuda');
+          await this.$axios.post('/send-mail',params)
           .then(res => {
             console.log('成功',res)
           })
