@@ -15,7 +15,7 @@
         <div class="order or">OR</div>
         <div class="order and">AND</div>
       </button>
-      <button v-for="item in selectedTag" :key="item.id" class="item searchBox" @click="clickTag(item.id, item.name, item.schema)">
+      <button v-for="item in selectedTag" :key="item.id" class="item searchBox" @click.stop="clickTag(item.id, item.name, item.schema)">
         <div>{{item.name}}</div>
         <div class="cancel">
           <svg class="cancelImage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 323.12 323.12" fill="#000000">
