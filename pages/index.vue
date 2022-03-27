@@ -1458,7 +1458,7 @@ export default {
 }
 
 .noContent {
-  font-size: var(--font-size-3xl);
+  font-size: var(--font-size-4xl);
   margin-top: -20px;
   margin-bottom: 20px;
   display: flex;

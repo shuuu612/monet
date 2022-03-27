@@ -106,7 +106,7 @@ export default {
 }
 .input {
   width: calc(100% - var(--label-size));
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-xl);
 }
 .attention {
   padding-left: var(--label-size);

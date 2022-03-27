@@ -93,7 +93,6 @@
   </div>
 </template>
 <script>
-import SimpleHeader from "../../components/SimpleHeader.vue";
 export default {
     data() {
         return {
@@ -118,7 +117,6 @@ export default {
         }
     },
     updated() {
-        console.log("updated");
     },
     methods: {
         async check() {
@@ -196,7 +194,6 @@ export default {
             }
         },
     },
-    components: { SimpleHeader }
 }
 </script>
 
@@ -297,7 +294,7 @@ export default {
   border-radius: 10px;
   background-color: var(--black);
   color: var(--white);
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-xl);
   /* margin: 20px auto 0; */
   display: block;
   transition: background-color .2s;
@@ -323,7 +320,7 @@ export default {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  font-size: var(--font-size-3xl);
+  font-size: var(--font-size-4xl);
   line-height: 2em;
   margin-bottom: 150px;
 }

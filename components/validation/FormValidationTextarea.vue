@@ -113,7 +113,7 @@ export default {
   height: 100%;
   resize: none;
   overflow: auto;
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-xl);
   padding-right: 30px;
   line-height: 2.667em;
   @include responsive(md) {

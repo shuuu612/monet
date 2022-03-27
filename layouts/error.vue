@@ -100,7 +100,7 @@
   }
 }
 .comment {
-  font-size: var(--font-size-xxl);
+  font-size: var(--font-size-3xl);
   text-align: center;
 }
 .top {

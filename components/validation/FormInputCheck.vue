@@ -67,7 +67,7 @@ export default {
 }
 .input {
   width: calc(100% - var(--label-size));
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-xl);
   line-height: 2.667em;
   @include responsive(md) {
     line-height: 2.5em;
