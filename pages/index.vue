@@ -776,23 +776,28 @@ export default {
                         maxStep = 7;
                     }
                     else if (windowWidth >= 1800 && windowWidth < 1900) {
-                        bestStep = 2;
+                        // bestStep = 2; 最大幅1600px対応
+                        bestStep = 5;
                         maxStep = 8;
                     }
                     else if (windowWidth >= 1900 && windowWidth < 1920) {
-                        bestStep = 2;
+                        // bestStep = 2; 最大幅1600px対応
+                        bestStep = 5;
                         maxStep = 8;
                     }
                     else if (windowWidth >= 1920 && windowWidth < 2000) {
-                        bestStep = 2;
+                        // bestStep = 2; 最大幅1600px対応
+                        bestStep = 5;
                         maxStep = 9;
                     }
                     else if (windowWidth >= 2000 && windowWidth < 2100) {
-                        bestStep = 2;
+                        // bestStep = 2; 最大幅1600px対応
+                        bestStep = 5;
                         maxStep = 9;
                     }
                     else if (windowWidth >= 2100) {
-                        bestStep = 3;
+                        // bestStep = 3; 最大幅1600px対応
+                        bestStep = 5;
                         maxStep = 10;
                     }
                     break;
@@ -857,23 +862,28 @@ export default {
                         maxStep = 9;
                     }
                     else if (windowWidth >= 1700 && windowWidth < 1800) {
-                        bestStep = 3;
+                        // bestStep = 3; 最大幅1600px対応
+                        bestStep = 2;
                         maxStep = 10;
                     }
                     else if (windowWidth >= 1800 && windowWidth < 1900) {
-                        bestStep = 3;
+                        // bestStep = 3; 最大幅1600px対応
+                        bestStep = 2;
                         maxStep = 10;
                     }
                     else if (windowWidth >= 1900 && windowWidth < 2000) {
-                        bestStep = 3;
+                        // bestStep = 3; 最大幅1600px対応
+                        bestStep = 2;
                         maxStep = 10;
                     }
                     else if (windowWidth >= 2000 && windowWidth < 2100) {
-                        bestStep = 4;
+                        // bestStep = 4; 最大幅1600px対応
+                        bestStep = 2;
                         maxStep = 10;
                     }
                     else if (windowWidth >= 2100) {
-                        bestStep = 4;
+                        // bestStep = 4; 最大幅1600px対応
+                        bestStep = 2;
                         maxStep = 10;
                     }
                     break;
@@ -938,19 +948,23 @@ export default {
                         maxStep = 10;
                     }
                     else if (windowWidth >= 1700 && windowWidth < 1800) {
-                        bestStep = 4;
+                        // bestStep = 4; 最大幅1600px対応
+                        bestStep = 3;
                         maxStep = 10;
                     }
                     else if (windowWidth >= 1800 && windowWidth < 1900) {
-                        bestStep = 4;
+                        // bestStep = 4; 最大幅1600px対応
+                        bestStep = 3;
                         maxStep = 10;
                     }
                     else if (windowWidth >= 1900 && windowWidth < 2000) {
-                        bestStep = 4;
+                        // bestStep = 4; 最大幅1600px対応
+                        bestStep = 3;
                         maxStep = 10;
                     }
                     else if (windowWidth >= 2000 && windowWidth < 2100) {
-                        bestStep = 4;
+                        // bestStep = 4; 最大幅1600px対応
+                        bestStep = 3;
                         maxStep = 10;
                     }
                     else if (windowWidth >= 2100) {
@@ -1023,19 +1037,23 @@ export default {
                         maxStep = 10;
                     }
                     else if (windowWidth >= 1600 && windowWidth < 1700) {
-                        bestStep = 5;
+                        // bestStep = 5; 最大幅1600px対応
+                        bestStep = 4;
                         maxStep = 10;
                     }
                     else if (windowWidth >= 1700 && windowWidth < 1800) {
-                        bestStep = 5;
+                        // bestStep = 5; 最大幅1600px対応
+                        bestStep = 4;
                         maxStep = 10;
                     }
                     else if (windowWidth >= 1800 && windowWidth < 1900) {
-                        bestStep = 5;
+                        // bestStep = 5; 最大幅1600px対応
+                        bestStep = 4;
                         maxStep = 10;
                     }
                     else if (windowWidth >= 1900 && windowWidth < 2000) {
-                        bestStep = 5;
+                        // bestStep = 5; 最大幅1600px対応
+                        bestStep = 4;
                         maxStep = 10;
                     }
                     else if (windowWidth >= 2000 && windowWidth < 2100) {
@@ -1047,7 +1065,8 @@ export default {
                         maxStep = 10;
                     }
                     else if (windowWidth >= 2200) {
-                        bestStep = 5;
+                        // bestStep = 5; 最大幅1600px対応
+                        bestStep = 4;
                         maxStep = 10;
                     }
                     break;
