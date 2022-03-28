@@ -1088,8 +1088,6 @@ export default {
             this.createDummyContent();
             // コンテンツ初期表示
             this.InitialDisplay();
-            // ダークモードボタンのクリックカウントをクリア
-            this.$store.dispatch("darkmode/pushClickCountClear")
         },
         resizeProcess() {
             this.setWindowSize();

@@ -5,7 +5,6 @@ export const state = () => ({
   selectedOff: true,        // ローカルストレージ保存対象
   selectedOs: false,        // ローカルストレージ保存対象
   active: false,
-  clickCount: 0,            // 初期値：ダークモードOFF[0]、ダークモードON[1]
 })
 
 export const getters = {
@@ -24,9 +23,6 @@ export const getters = {
   getActive: state => {
     return state.active
   },
-  getClickCount: state => {
-    return state.clickCount
-  },
  }
 
 export const mutations = {
@@ -34,14 +30,12 @@ export const mutations = {
     state.selectedOn = true
     state.selectedOff = false
     state.selectedOs = false
-    if(state.active === false) state.clickCount++;
     state.active = true
   },
   setDarkmodeOff(state) {
     state.selectedOn = false
     state.selectedOff = true
     state.selectedOs = false
-    if(state.active === true) state.clickCount++;
     state.active = false
   },
   setDarkmodeOs(state) {
@@ -50,21 +44,10 @@ export const mutations = {
     state.selectedOs = true
     const osDark = window.matchMedia("(prefers-color-scheme: dark)").matches
     if(osDark) {
-      if(state.active === false) state.clickCount++;
       state.active = true
     }else {
-      if(state.active === true) state.clickCount++;
       state.active = false
     }
-  },
-  setClickCount(state) {
-    state.clickCount = state.active ? 1 : 0;
-  },
-  setClickCountUp(state) {
-    state.clickCount++
-  },
-  setClickCountClear(state) {
-    state.clickCount = state.active ? 1 : 0;
   },
   setDarkmodeOnForPage(state) {
     state.selectedOn = true
@@ -85,18 +68,14 @@ export const mutations = {
     state.selectedOs = Boolean(key[2])
     if(state.selectedOn) {
       state.active = true
-      state.clickCount = 1
     }else if(state.selectedOff) {
       state.active = false
-      state.clickCount = 0
     }else if(state.selectedOs) {
       const osDark = window.matchMedia("(prefers-color-scheme: dark)")
       if(osDark) {
         state.active = true
-        state.clickCount = 1
       }else {
         state.active = false
-        state.clickCount = 0
       }
     }
   },
@@ -122,12 +101,6 @@ export const actions = {
   pushDarkmodeOs({commit}) {
     commit('setDarkmodeOs')
     commit('updateLocalStorage')
-  },
-  pushCountUp({commit}) {
-    commit('setClickCountUp')
-  },
-  pushClickCountClear({commit}) {
-    commit('setClickCountClear')
   },
   pushDarkmodeOnForPage({commit}) {
     commit('setDarkmodeOnForPage')
