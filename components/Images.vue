@@ -20,6 +20,7 @@
             :width="getWidth('pc')"
             :height="getHeight"
             :alt="`${content.name}`"
+            loading="lazy"
             @load="imageLoaded"
           >
         </picture>
@@ -31,6 +32,7 @@
         :width="getWidth('pc')"
         :height="getHeight"
         :alt="`${content.name}`"
+        loading="lazy"
       >
     </div>
     <div class="imageWrapper">
@@ -53,6 +55,7 @@
             :width="getWidth('tb')"
             :height="getHeight"
             :alt="`${content.name}`"
+            loading="lazy"
             @load="imageLoaded"
           >
         </picture>
@@ -64,6 +67,7 @@
         :width="getWidth('tb')"
         :height="getHeight"
         :alt="`${content.name}`"
+        loading="lazy"
       >
     </div>
     <div class="imageWrapper">
@@ -86,6 +90,7 @@
             :width="getWidth('sp')"
             :height="getHeight"
             :alt="`${content.name}`"
+            loading="lazy"
             @load="imageLoaded"
           >
         </picture>
@@ -97,6 +102,7 @@
         :width="getWidth('sp')"
         :height="getHeight"
         :alt="`${content.name}`"
+        loading="lazy"
       >
     </div>
   </a>
