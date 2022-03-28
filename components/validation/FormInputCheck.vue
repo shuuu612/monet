@@ -39,11 +39,13 @@ export default {
   padding: 16px 20px;
   border: 1px var(--gray3) solid;
 }
+
 .input-outer {
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
 }
+
 .title {
   display: flex;
   align-items: center;
@@ -56,6 +58,7 @@ export default {
   align-items: center;
   justify-content: flex-start;
 }
+
 .required {
   font-size: var(--font-size-xxs);
   background-color: var(--colormode2);
@@ -65,6 +68,7 @@ export default {
   margin-top: 1px;
   padding: 2px 4px 3px 4px;
 }
+
 .input {
   width: calc(100% - var(--label-size));
   font-size: var(--font-size-xl);

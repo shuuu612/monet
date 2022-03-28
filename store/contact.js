@@ -1,7 +1,7 @@
 export const state = () => ({
-  name: '',       // セッションストレージ
-  email: '',      // セッションストレージ
-  message: '',    // セッションストレージ
+  name: '',       // セッションストレージ保存対象
+  email: '',      // セッションストレージ保存対象
+  message: '',    // セッションストレージ保存対象
 })
 
 export const getters = {
@@ -33,17 +33,17 @@ export const mutations = {
     localStorage.removeItem('contact');
   },
   setLocalStorage(state,key) {
-    // 初回ロード時にローカルストレージからデータを取得
+    // 初回ロード時にセッションストレージからデータを取得
     state.name = key[0];
     state.email = key[1];
     state.message = key[2];
   },
   updateLocalStorage(state) {
-    // ローカルストレージ更新
-    if (this.$storageAvailable('localStorage')) {
+    // セッションストレージ更新
+    if (this.$storageAvailable('sessionStorage')) {
       const contact = [state.name, state.email, state.message]
       const contactJson = JSON.stringify(contact)
-      localStorage.setItem('contact', contactJson)
+      sessionStorage.setItem('contact', contactJson)
     }
   },
  }

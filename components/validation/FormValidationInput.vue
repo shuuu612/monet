@@ -72,7 +72,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .container {
   width: 100%;
   background-color: var(--white);
@@ -81,12 +80,14 @@ export default {
   padding: 16px 20px;
   border: 1px var(--gray3) solid;
 }
+
 .input-outer {
   height: 40px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
 }
+
 .title {
   display: flex;
   align-items: center;
@@ -95,6 +96,7 @@ export default {
   font-size: var(--font-size-md);
   font-weight: 400;
 }
+
 .required {
   font-size: var(--font-size-xxs);
   background-color: var(--colormode2);
@@ -104,10 +106,12 @@ export default {
   margin-top: 1px;
   padding: 2px 4px 3px 4px;
 }
+
 .input {
   width: calc(100% - var(--label-size));
   font-size: var(--font-size-xl);
 }
+
 .attention {
   padding-left: var(--label-size);
   padding-top: 6px;

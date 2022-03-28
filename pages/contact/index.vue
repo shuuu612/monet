@@ -94,106 +94,111 @@
 </template>
 <script>
 export default {
-    data() {
-        return {
-            inputName: "",
-            inputEmail: "",
-            inputMessage: "",
-            success: undefined,
-        };
-    },
-    computed: {},
-    mounted() {
-        if (this.$route.query.status === "check") {
-            // ローカルストレージから情報を取得
-            const contactJson = localStorage.getItem("contact");
-            const contact = JSON.parse(contactJson);
-            if (contact !== null) {
-                this.$store.dispatch("contact/pushLocalStorage", contact);
-            }
-            this.inputName = this.$store.getters["contact/getName"];
-            this.inputEmail = this.$store.getters["contact/getEmail"];
-            this.inputMessage = this.$store.getters["contact/getMessage"];
+  data() {
+    return {
+      inputName: "",
+      inputEmail: "",
+      inputMessage: "",
+      success: undefined,
+    };
+  },
+  computed: {},
+  mounted() {
+    if (this.$route.query.status === "check") {
+      // セッションストレージから情報を取得
+      if (this.$storageAvailable('sessionStorage')) {
+        const contactJson = sessionStorage.getItem("contact");
+        const contact = JSON.parse(contactJson);
+        if (contact !== null) {
+          this.$store.dispatch("contact/pushLocalStorage", contact);
         }
+        this.inputName = this.$store.getters["contact/getName"];
+        this.inputEmail = this.$store.getters["contact/getEmail"];
+        this.inputMessage = this.$store.getters["contact/getMessage"];
+      }
+    }
+  },
+  updated() {
+  },
+  methods: {
+    async check() {
+      // バリデーションエラーの有無を取得
+      const isValid = await this.$refs.observer.validate();
+      // バリデーションのエラーがないとき
+      if (isValid) {
+        // 確認ページに遷移
+        this.$router.push({ path: "", query: { status: "check" } });
+        // ローカルストレージに保存
+        const postData = {
+          name: this.inputName,
+          email: this.inputEmail,
+          message: this.inputMessage,
+        };
+        this.$store.dispatch("contact/pushInputData", postData);
+      }
     },
-    updated() {
+    back() {
+      this.$store.dispatch("contact/pushClear");
+      this.$router.go(-1);
     },
-    methods: {
-        async check() {
-            const isValid = await this.$refs.observer.validate();
-            if (isValid) {
-                this.$router.push({ path: "", query: { status: "check" } });
-                // ローカルストレージに保存
-                const postData = {
-                    name: this.inputName,
-                    email: this.inputEmail,
-                    message: this.inputMessage,
-                };
-                this.$store.dispatch("contact/pushInputData", postData);
-                /* requestAnimationFrame(() => {
-                  this.$refs.observer.reset();
-                }); */
-            }
-        },
-        back() {
-            this.$store.dispatch("contact/pushClear");
-            this.$router.go(-1);
-        },
-        async submit() {
-            console.log("ボタン押下");
-            console.log(this.inputName);
-            console.log(this.inputEmail);
-            console.log(this.inputMessage);
-            const postData = {
-                name: this.inputName,
-                email: this.inputEmail,
-                message: this.inputMessage,
-            };
-            if (process.env.NODE_ENV === "production") {
-                await this.$axios.post("https://inquiry.microcms.io/api/v1/contact", postData, {
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-MICROCMS-API-KEY": "a266212255964abb9b0c7285d67907a390f7",
-                    },
-                })
-                    .then(res => {
-                    console.log("成功", res);
-                    this.success = true;
-                })
-                    .catch(error => {
-                    console.log("エラー", error);
-                    this.success = false;
-                });
-            }
-            else {
-                await this.$axios.post("/api/v1/contact", postData, {
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-MICROCMS-API-KEY": "a266212255964abb9b0c7285d67907a390f7",
-                    },
-                })
-                    .then(res => {
-                    console.log("成功", res);
-                    this.success = true;
-                })
-                    .catch(error => {
-                    console.log("エラー", error);
-                    this.success = false;
-                });
-            }
-            this.inputName = "";
-            this.inputEmail = "";
-            this.inputMessage = "";
-            if (this.success) {
-                this.$store.dispatch("contact/pushClear");
-                this.$router.push({ path: "", query: { status: "thanks" } });
-            }
-            else {
-                this.$store.dispatch("contact/pushClear");
-                this.$router.push({ path: "", query: { status: "failed" } });
-            }
-        },
+    async submit() {
+      // 送信データを作成
+      const postData = {
+        name: this.inputName,
+        email: this.inputEmail,
+        message: this.inputMessage,
+      };
+
+      // microCMSへの送信処理
+      if (process.env.NODE_ENV === "production") {
+        await this.$axios.post("https://inquiry.microcms.io/api/v1/contact", postData, {
+          headers: {
+          "Content-Type": "application/json",
+          "X-MICROCMS-API-KEY": "a266212255964abb9b0c7285d67907a390f7",
+          },
+        })
+        .then(res => {
+          console.log("成功", res);
+          this.success = true;
+        })
+        .catch(error => {
+          console.log("エラー", error);
+          this.success = false;
+        });
+      }
+      else {
+        await this.$axios.post("/api/v1/contact", postData, {
+          headers: {
+            "Content-Type": "application/json",
+            "X-MICROCMS-API-KEY": "a266212255964abb9b0c7285d67907a390f7",
+          },
+        })
+        .then(res => {
+          console.log("成功", res);
+          this.success = true;
+        })
+        .catch(error => {
+          console.log("エラー", error);
+          this.success = false;
+        });
+      }
+
+      // 入力情報をクリア
+      this.inputName = "";
+      this.inputEmail = "";
+      this.inputMessage = "";
+
+      // 完了ページに遷移
+      if (this.success) {
+        this.$store.dispatch("contact/pushClear");
+        this.$router.push({ path: "", query: { status: "thanks" } });
+      }
+      else {
+        this.$store.dispatch("contact/pushClear");
+        this.$router.push({ path: "", query: { status: "failed" } });
+      }
     },
+  },
 }
 </script>
 
@@ -202,14 +207,7 @@ export default {
   min-height: 100vh;
   background-color: var(--gray1);
 }
-/* .header {
-  width: 100%;
-  height: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 0 30px;
-} */
+
 .contact-form {
   --form-size: 800px;
   --label-size: 180px;
@@ -220,17 +218,20 @@ export default {
   justify-content: center;
   flex-direction: column;
 }
+
 .title {
   font-size: 40px;
   font-weight: 400;
   margin-bottom: 40px;
 }
+
 .status-outer {
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 40px;
 }
+
 .status {
   width: 100px;
   height: 60px;
@@ -275,19 +276,23 @@ export default {
     background-image: url('/images/line.svg');
   }
 }
+
 .form-outer {
   width: 100%;
   max-width: var(--form-size);
 }
+
 .form {
   width: 100%;
 }
+
 .buttons {
   display: flex;
   align-items: center;
   justify-content: center;
   margin-top: 40px;
 }
+
 .button {
   width: 130px;
   height: 60px;
@@ -315,6 +320,7 @@ export default {
     text-decoration: none;
   }
 }
+
 .comment {
   display: flex;
   align-items: center;

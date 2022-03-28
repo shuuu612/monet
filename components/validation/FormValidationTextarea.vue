@@ -83,6 +83,7 @@ export default {
   padding: 16px 0 16px 20px;
   border: 1px var(--gray3) solid;
 }
+
 .input-outer {
   display: flex;
   align-items: flex-start;
@@ -90,6 +91,7 @@ export default {
   width: 100%;
   height: 300px;
 }
+
 .title {
   display: flex;
   align-items: center;
@@ -99,6 +101,7 @@ export default {
   font-weight: 400;
   margin-top: 10px;
 }
+
 .required {
   font-size: var(--font-size-xxs);
   background-color: var(--colormode2);
@@ -108,6 +111,7 @@ export default {
   margin-top: 2px;
   padding: 2px 4px 3px 4px;
 }
+
 .textarea {
   width: calc(100% - var(--label-size));
   height: 100%;

@@ -83,6 +83,7 @@
   min-height: 100vh;
   background-color: var(--gray0);
 }
+
 .main {
   display: flex;
   align-items: flex-start;
@@ -110,6 +111,7 @@
     
   }
 }
+
 .policy {
   width: 100%;
   max-width: 800px;
@@ -137,6 +139,7 @@
     
   }
 }
+
 .title-outer {
   display: flex;
   align-items: center;
@@ -167,21 +170,25 @@
     
   }
 }
+
 .title {
   font-size: var(--font-size-xxl);
   color: var(--white);
 }
+
 .container {
   
   &:not(:last-child) {
     margin-bottom: 55px;
   }
 }
+
 .heading {
   margin-bottom: 18px;
   font-weight: 300;
   font-size: var(--font-size-lg);
 }
+
 .info {
   margin-top: 14px;
 }
