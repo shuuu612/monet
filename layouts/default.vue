@@ -1,7 +1,11 @@
 <template>
-  <transition name="nuxt">
-    <Nuxt />
-  </transition>
+  <div>
+    <transition-group name="nuxt">
+      <Nuxt key="nuxt" />
+      <Footer key="footer" />
+    </transition-group>
+  </div>
+  
 </template>
 
 <style lang="scss" scoped>

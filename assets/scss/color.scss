@@ -344,7 +344,9 @@
   --menu-item-text: var(--gray12);
   --menu-item-selected: var(--gray2);
   --scrollbar-button: var(--white);
-  --scrollbar-background: var(--colormode);
+  --scrollbar-background: var(--white);
+  --footer-background: var(--colormode2);
+  --footer-text: var(--white);
 
   --white-transparent0: #f3f3f311;
   --white-transparent1: #f3f3f322;
@@ -427,6 +429,8 @@
   --menu-item-selected: var(--gray2);
   --scrollbar-button: var(--white);
   --scrollbar-background: var(--colormode1);
+  --footer-background: var(--colormode1);
+  --footer-text: var(--white);
 }
 
 :root.color2 {
@@ -472,6 +476,8 @@
   --menu-item-selected: var(--gray2);
   --scrollbar-button: var(--white);
   --scrollbar-background: var(--colormode2);
+  --footer-background: var(--colormode2);
+  --footer-text: var(--white);
 }
 
 :root.color3 {
@@ -517,6 +523,8 @@
   --menu-item-selected: var(--gray2);
   --scrollbar-button: var(--white);
   --scrollbar-background: var(--colormode3);
+  --footer-background: var(--colormode3);
+  --footer-text: var(--white);
 }
 
 :root.color4 {
@@ -562,6 +570,8 @@
   --menu-item-selected: var(--gray2);
   --scrollbar-button: var(--white);
   --scrollbar-background: var(--colormode4);
+  --footer-background: var(--colormode4);
+  --footer-text: var(--white);
 }
 
 :root.color5 {
@@ -607,6 +617,8 @@
   --menu-item-selected: var(--gray2);
   --scrollbar-button: var(--white);
   --scrollbar-background: var(--colormode5);
+  --footer-background: var(--colormode5);
+  --footer-text: var(--white);
 }
 
 :root.color6 {
@@ -652,6 +664,8 @@
   --menu-item-selected: var(--gray2);
   --scrollbar-button: var(--white);
   --scrollbar-background: var(--colormode6);
+  --footer-background: var(--colormode6);
+  --footer-text: var(--white);
 }
 
 :root.color7 {
@@ -697,6 +711,8 @@
   --menu-item-selected: var(--gray2);
   --scrollbar-button: var(--white);
   --scrollbar-background: var(--colormode7);
+  --footer-background: var(--colormode7);
+  --footer-text: var(--white);
 }
 
 :root.color8 {
@@ -742,6 +758,8 @@
   --menu-item-selected: var(--gray2);
   --scrollbar-button: var(--white);
   --scrollbar-background: var(--colormode8);
+  --footer-background: var(--colormode8);
+  --footer-text: var(--white);
 }
 
 :root.color9 {
@@ -787,6 +805,8 @@
   --menu-item-selected: var(--gray2);
   --scrollbar-button: var(--white);
   --scrollbar-background: var(--colormode9);
+  --footer-background: var(--colormode9);
+  --footer-text: var(--white);
 }
 
 :root.color10 {
@@ -831,6 +851,8 @@
   --menu-item-selected: var(--gray2);
   --scrollbar-button: var(--colormode10);
   --scrollbar-background: var(--white);
+  --footer-background: var(--white);
+  --footer-text: var(--colormode10);
 }
 
 :root.color11 {
@@ -876,6 +898,8 @@
   --menu-item-selected: var(--gray2);
   --scrollbar-button: var(--white);
   --scrollbar-background: var(--colormode11);
+  --footer-background: var(--colormode11);
+  --footer-text: var(--white);
 }
 
 :root.color12 {
@@ -921,6 +945,8 @@
   --menu-item-selected: var(--gray2);
   --scrollbar-button: var(--white);
   --scrollbar-background: var(--colormode12);
+  --footer-background: var(--colormode12);
+  --footer-text: var(--white);
 }
 
 :root.darkmode {
@@ -986,4 +1012,6 @@
   --menu-item-selected: var(--gray9);
   --scrollbar-button: var(--gray6);
   --scrollbar-background: var(--black);
+  --footer-background: var(--black);
+  --footer-text: var(--white);
 }
