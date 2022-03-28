@@ -394,9 +394,9 @@ export default {
     methods: {
         darkModeSetting() {
           if(this.$store.getters["darkmode/getActive"]) {
-            this.colormode = [this.$store.getters["colormode/getColormode"],'darkmode']
+            this.colormode = [this.$store.getters["colormode/getColormode"], 'darkmode', 'monet']
           }else {
-            this.colormode = [this.$store.getters["colormode/getColormode"]];
+            this.colormode = [this.$store.getters["colormode/getColormode"], 'monet'];
           }
         },
         setContentsElement() {
@@ -1107,8 +1107,6 @@ export default {
             this.createDummyContent();
             // コンテンツ初期表示
             this.InitialDisplay();
-            // ダークモードボタンのクリックカウントをクリア
-            this.$store.dispatch("darkmode/pushClickCountClear")
         },
         resizeProcess() {
             this.setWindowSize();
@@ -1477,7 +1475,7 @@ export default {
 }
 
 .noContent {
-  font-size: var(--font-size-3xl);
+  font-size: var(--font-size-4xl);
   margin-top: -20px;
   margin-bottom: 20px;
   display: flex;

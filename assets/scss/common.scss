@@ -1,7 +1,9 @@
 html {
   font-size: var(--font-size-sm);
   // スクロールバーの色（Firefox用）
-  scrollbar-color: var(--scrollbar-button) var(--scrollbar-background);
+  .monet & {
+    scrollbar-color: var(--scrollbar-button) var(--scrollbar-background);
+  }
 }
 
 body {
@@ -25,18 +27,20 @@ h1 {
   font-size: var(--font-size-md);
 }
 
-// スクロールバーの色
-::-webkit-scrollbar {
-  width: 15px;
-}
+:root.monet {
+  // スクロールバーの色
+  ::-webkit-scrollbar {
+    width: 15px;
+  }
 
-::-webkit-scrollbar-track {
-  background: var(--scrollbar-background);
-}
+  ::-webkit-scrollbar-track {
+    background: var(--scrollbar-background);
+  }
 
-::-webkit-scrollbar-thumb {
-  width: 12px;
-  border-radius: 20px;
-  background: var(--scrollbar-button);
-  border: 3px var(--scrollbar-background) solid;
+  ::-webkit-scrollbar-thumb {
+    width: 12px;
+    border-radius: 20px;
+    background: var(--scrollbar-button);
+    border: 3px var(--scrollbar-background) solid;
+  }
 }

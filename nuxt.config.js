@@ -1,5 +1,3 @@
-/* import { client } from './utils/microcms'; */
-
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
@@ -22,7 +20,7 @@ export default {
       // OGP設定
       { hid: 'og:site_name', property: 'og:site_name', content: 'Monet' },
       { hid: 'og:type', property: 'og:type', content: 'website' },
-      { hid: 'og:url', property: 'og:url', content: 'https://mitsukaru-design.com/' },
+      { hid: 'og:url', property: 'og:url', content: 'https://monet-design.com/' },
       { hid: 'og:title', property: 'og:title', content: 'Monet | Webデザインギャラリー' },
       { hid: 'og:description', property: 'og:description', content: 'サイトの説明' },
       { hid: 'og:image', property: 'og:image', content: 'サイトURL' },
@@ -52,10 +50,16 @@ export default {
   plugins: [
     '@/plugins/common.js',
     '@/plugins/storageAvailable.js',
+    '@/plugins/vee-validate',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
-  components: true,
+  components:  {
+    dirs: [
+      '~/components',
+      '~/components/validation',
+    ]
+  },
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   /* buildModules: [
@@ -65,11 +69,21 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    '@nuxtjs/axios',
     '@nuxtjs/style-resources',
     '@nuxtjs/google-gtag', 
   ],
   'google-gtag': {
     id: 'G-QDLBX51TVH',
+  },
+  
+  axios: {
+    proxy: true,
+  },
+
+  proxy: {
+    '/api/': { target: 'https://inquiry.microcms.io' },
+    '/script/': { target: 'https://monet-design.com' }
   },
 
   styleResources: {
@@ -88,7 +102,8 @@ export default {
           drop_console: process.env.NODE_ENV === "production"
         }
       }
-    }
+    },
+    transpile: ["vee-validate/dist/rules"],
   },
 
   buildModules: [
