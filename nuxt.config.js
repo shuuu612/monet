@@ -83,7 +83,7 @@ export default {
 
   proxy: {
     '/api/': { target: 'https://inquiry.microcms.io' },
-    '/script/': { target: 'https://monet-design.com' }
+    '/dev/': { target: 'https://808l2nkkbf.execute-api.ap-northeast-1.amazonaws.com' }
   },
 
   styleResources: {
@@ -96,13 +96,13 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    terser: {
+    /* terser: {
       terserOptions: {
         compress: {
           drop_console: process.env.NODE_ENV === "production"
         }
       }
-    },
+    }, */
     transpile: ["vee-validate/dist/rules"],
   },
 

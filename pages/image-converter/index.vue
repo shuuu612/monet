@@ -1,0 +1,192 @@
+<template>
+  <div class="wrapper">
+    <SimpleHeader />
+    <main class="main">
+      <div
+        class="drop-area"
+        :class="getClassDropArea"
+        @dragenter="dragEnter"
+        @dragleave="dragLeave"
+        @dragover.prevent
+        @drop.prevent="dropFile"
+      >
+        <p class="text">ファイルアップロード</p>
+      </div>
+      <button class="button" :class="getClassSubmitButton" :disabled="getDisabledSubmitButton" @click="submit">送信</button>
+      <button class="button" :class="getClassDownloadButton" :disabled="getDisabledDownloadButton" @click="download">ダウンロード</button>
+    </main>
+  </div>
+</template>
+<script>
+export default {
+  data() {
+    return {
+      isEnter: false,
+      files: [],
+      filesBase64: [],
+      resFiles: [],
+    };
+  },
+  computed: {
+    getClassDropArea() {
+      return { enter: this.isEnter};
+    },
+    getDisabledSubmitButton() {
+      return !(this.files.length > 0 && this.files.length === this.filesBase64.length);
+    },
+    getClassSubmitButton() {
+      return { disabled: !(this.files.length > 0 && this.files.length === this.filesBase64.length) };
+    },
+    getDisabledDownloadButton() {
+      return !this.resFiles.length > 0;
+    },
+    getClassDownloadButton() {
+      return { disabled: !this.resFiles.length > 0 };
+    },
+  },
+  mounted() {
+
+  },
+  updated() {
+    
+  },
+  methods: {
+    dragEnter() {
+      this.isEnter = true;
+    },
+    dragLeave() {
+      this.isEnter = false;
+    },
+    dropFile(event) {
+      this.isEnter = false;
+      // ドロップされたファイルを取得
+      const files = [...event.dataTransfer.files];
+
+      // 画像ファイルだけを抽出
+      const imageFiles = files.filter(item => item.type === 'image/jpeg' || item.type === 'image/png');
+
+      // ローカルに保存
+      this.files = imageFiles;
+
+      // Base64変換
+      for(let i = 0; i < imageFiles.length; i++) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          // データが大きすぎると処理が止まるので前から100文字だけ切り出してからDataURIを削除する
+          const str1 = reader.result.substr(0, 100).replace(/data:.*\/.*;base64,/, '');
+          const str2 = reader.result.substr(100);
+          this.filesBase64.push(str1 + str2);
+        }
+        reader.readAsDataURL(this.files[i]);
+      }
+    },
+    async submit() {
+      // 送信データを作成
+      const data = {};
+      for(let i = 0; i < this.filesBase64.length; i++) {
+        data[`image${i}`] = `${this.filesBase64[i]}`
+      }
+      // API Gatewayへの送信処理
+      if (process.env.NODE_ENV === "production") {
+        await this.$axios.post("https://808l2nkkbf.execute-api.ap-northeast-1.amazonaws.com/dev/create", data, {
+          headers: {
+          "x-api-key": "RSzNuTJ85l7gjssXcAOB275XV6gALdTI9AQ3Hgab",
+          },
+        })
+        .then(res => {
+          console.log("成功", res);
+        })
+        .catch(error => {
+          console.log("エラー", error);
+        });
+      }
+      else {
+        await this.$axios.post("/dev/create", data, {
+          headers: {
+          "x-api-key": "RSzNuTJ85l7gjssXcAOB275XV6gALdTI9AQ3Hgab",
+          },
+        })
+        .then(res => {
+          console.log("成功", res);
+          // レスポンスボディーを取得
+          const data = res.data.body;
+          // JSONをパースする
+          const image = JSON.parse(data);
+          // Base64をfileに変換する
+          for(let i = 0; i < Object.keys(image).length; i++) {
+            const bin = atob(image[`image${i}`]);
+            const buffer = new Uint8Array(bin.length);
+            for(let j = 0; j < bin.length; j++){
+              buffer[j] = bin.charCodeAt(j);
+            }
+            const file = new File([buffer.buffer], `test${i}.jpeg`, {
+              type: "image/jpeg"
+            });
+            this.resFiles.push(file);
+          }
+        })
+        .catch(error => {
+          console.log("エラー", error);
+        });
+      }
+    },
+    download() {
+      for(let i = 0; i < this.resFiles.length; i++) {
+        const link = document.createElement('a');
+        link.download = `test${i}.jpeg`;
+        link.href = URL.createObjectURL(this.resFiles[i]);
+        link.click();
+        URL.revokeObjectURL(link.href);
+      }
+    },
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+.wrapper {
+  min-height: 100vh;
+  background-color: var(--gray1);
+}
+
+.main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.drop-area {
+  width: 500px;
+  height: 300px;
+  border: 5px var(--gray8) solid;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .text {
+    font-size: var(--font-size-lg);
+    color: var(--gray8);
+    font-weight: 400;
+    pointer-events: none;
+  }
+  &.enter {
+    background-color: var(--gray2);
+  }
+}
+.button {
+  width: 200px;
+  height: 80px;
+  border-radius: 10px;
+  background-color: var(--black);
+  color: var(--white);
+  font-size: var(--font-size-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
+  &.disabled {
+    background-color: var(--gray7);
+  }
+}
+
+</style>
