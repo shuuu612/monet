@@ -146,12 +146,24 @@ export default {
     download() {
       for(let i = 0; i < this.resFiles.length; i++) {
         const link = document.createElement('a');
-        link.download = `test${i}.jpeg`;
+        link.download = `${this.getDate()}.jpeg`;
         link.href = URL.createObjectURL(this.resFiles[i]);
         link.click();
         URL.revokeObjectURL(link.href);
       }
     },
+    getDate() {
+      const today = new Date();
+      const date =
+        today.getFullYear() +
+        (today.getMonth()+1).toString().padStart(2, "0") +
+        (today.getDate()).toString().padStart(2, "0") +
+        (today.getHours()).toString().padStart(2, "0") +
+        (today.getMinutes()).toString().padStart(2, "0") +
+        (today.getSeconds()).toString().padStart(2, "0") +
+        (today.getMilliseconds()).toString().padStart(3, "0")
+      return date;
+    }
   },
 }
 </script>
