@@ -15,8 +15,8 @@
       <div class="container">
         <div v-for="(file, index) in files" :key="index" class="contents">
           <img class="image" :src="getBeforeImage(index)" alt="">
-          <button class="button" :class="getClassSubmitButton" :disabled="getDisabledSubmitButton" @click="submit">変換</button>
-          <button class="button" :class="getClassDownloadButton" :disabled="getDisabledDownloadButton" @click="download">ダウンロード</button>
+          <button class="button" :class="getClassSubmitButton(index)" :disabled="getDisabledSubmitButton(index)" @click="submit(index)">変換</button>
+          <button class="button" :class="getClassDownloadButton(index)" :disabled="getDisabledDownloadButton(index)" @click="download">ダウンロード</button>
         </div>
       </div>
     </main>
@@ -37,16 +37,24 @@ export default {
       return { enter: this.isEnter};
     },
     getDisabledSubmitButton() {
-      return !(this.files.length > 0 && this.files.length === this.filesBase64.length);
+      return function(key) {
+        return !(this.files[key] && this.filesBase64[key]);
+      }
     },
     getClassSubmitButton() {
-      return { disabled: !(this.files.length > 0 && this.files.length === this.filesBase64.length) };
+      return function(key) {
+        return { disabled: !(this.files[key] && this.filesBase64[key]) };
+      }
     },
     getDisabledDownloadButton() {
-      return !this.resFiles.length > 0;
+      return function(key) {
+        return !this.resFiles[key];
+      }
     },
     getClassDownloadButton() {
-      return { disabled: !this.resFiles.length > 0 };
+      return function(key) {
+        return { disabled: !this.resFiles[key] };
+      }
     },
     getBeforeImage() {
       return function(key) {
@@ -75,11 +83,11 @@ export default {
       // 画像ファイルだけを抽出
       const imageFiles = files.filter(item => item.type === 'image/jpeg' || item.type === 'image/png');
 
-      // ローカルに保存
-      this.files.push(imageFiles);
-
       // Base64変換
       for(let i = 0; i < imageFiles.length; i++) {
+        // そのまま保存
+        this.files.push(imageFiles[i]);
+        // Base64変換して保存
         const reader = new FileReader();
         reader.onload = () => {
           this.filesBase64.push(reader.result);
@@ -93,12 +101,12 @@ export default {
       const str2 = str.substr(100);
       return str1 + str2;
     },
-    async submit() {
+    async submit(index) {
       // 送信データを作成
-      const data = {};
-      for(let i = 0; i < this.filesBase64.length; i++) {
-        data[`image${i}`] = `${this.deleteUnwantedPart(this.filesBase64[i])}`
-      }
+      const data = {
+        image: `${this.deleteUnwantedPart(this.filesBase64[index])}`
+      };
+
       // API Gatewayへの送信処理
       if (process.env.NODE_ENV === "production") {
         await this.$axios.post("https://808l2nkkbf.execute-api.ap-northeast-1.amazonaws.com/dev/create", data, {
@@ -122,21 +130,20 @@ export default {
         .then(res => {
           console.log("成功", res);
           // レスポンスボディーを取得
-          const data = res.data.body;
+          const dataJson = res.data.body;
           // JSONをパースする
-          const image = JSON.parse(data);
+          const data = JSON.parse(dataJson);
           // Base64をfileに変換する
-          for(let i = 0; i < Object.keys(image).length; i++) {
-            const bin = atob(image[`image${i}`]);
-            const buffer = new Uint8Array(bin.length);
-            for(let j = 0; j < bin.length; j++){
-              buffer[j] = bin.charCodeAt(j);
-            }
-            const file = new File([buffer.buffer], `test${i}.jpeg`, {
-              type: "image/jpeg"
-            });
-            this.resFiles.push(file);
+          const bin = atob(data.image);
+          const buffer = new Uint8Array(bin.length);
+          for(let j = 0; j < bin.length; j++){
+            buffer[j] = bin.charCodeAt(j);
           }
+          const file = new File([buffer.buffer], `${this.getDate()}.jpeg`, {
+            type: "image/jpeg"
+          });
+          this.resFiles[index] = file;
+          this.resFiles.splice();
         })
         .catch(error => {
           console.log("エラー", error);
