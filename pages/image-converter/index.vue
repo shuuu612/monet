@@ -104,9 +104,13 @@ export default {
     async submit(index) {
       // 送信データを作成
       const data = {
-        image: `${this.deleteUnwantedPart(this.filesBase64[index])}`
+        image: `${this.deleteUnwantedPart(this.filesBase64[index])}`,
+        type: 'jpeg',
+        format: 'webp',
+        level: 100,
+        width: 500,
+        height: 0
       };
-
       // API Gatewayへの送信処理
       if (process.env.NODE_ENV === "production") {
         await this.$axios.post("https://808l2nkkbf.execute-api.ap-northeast-1.amazonaws.com/dev/create", data, {
