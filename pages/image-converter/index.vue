@@ -12,8 +12,13 @@
       >
         <p class="text">ファイルアップロード</p>
       </div>
-      <button class="button" :class="getClassSubmitButton" :disabled="getDisabledSubmitButton" @click="submit">送信</button>
-      <button class="button" :class="getClassDownloadButton" :disabled="getDisabledDownloadButton" @click="download">ダウンロード</button>
+      <div class="container">
+        <div v-for="(file, index) in files" :key="index" class="contents">
+          <img class="image" :src="getBeforeImage(index)" alt="">
+          <button class="button" :class="getClassSubmitButton" :disabled="getDisabledSubmitButton" @click="submit">変換</button>
+          <button class="button" :class="getClassDownloadButton" :disabled="getDisabledDownloadButton" @click="download">ダウンロード</button>
+        </div>
+      </div>
     </main>
   </div>
 </template>
@@ -43,6 +48,11 @@ export default {
     getClassDownloadButton() {
       return { disabled: !this.resFiles.length > 0 };
     },
+    getBeforeImage() {
+      return function(key) {
+        return this.filesBase64[key];
+      }
+    }
   },
   mounted() {
 
@@ -66,25 +76,28 @@ export default {
       const imageFiles = files.filter(item => item.type === 'image/jpeg' || item.type === 'image/png');
 
       // ローカルに保存
-      this.files = imageFiles;
+      this.files.push(imageFiles);
 
       // Base64変換
       for(let i = 0; i < imageFiles.length; i++) {
         const reader = new FileReader();
         reader.onload = () => {
-          // データが大きすぎると処理が止まるので前から100文字だけ切り出してからDataURIを削除する
-          const str1 = reader.result.substr(0, 100).replace(/data:.*\/.*;base64,/, '');
-          const str2 = reader.result.substr(100);
-          this.filesBase64.push(str1 + str2);
+          this.filesBase64.push(reader.result);
         }
-        reader.readAsDataURL(this.files[i]);
+        reader.readAsDataURL(imageFiles[i]);
       }
+    },
+    deleteUnwantedPart(str) {
+      // データが大きすぎると処理が止まるので前から100文字だけ切り出してからDataURIを削除する
+      const str1 = str.substr(0, 100).replace(/data:.*\/.*;base64,/, '');
+      const str2 = str.substr(100);
+      return str1 + str2;
     },
     async submit() {
       // 送信データを作成
       const data = {};
       for(let i = 0; i < this.filesBase64.length; i++) {
-        data[`image${i}`] = `${this.filesBase64[i]}`
+        data[`image${i}`] = `${this.deleteUnwantedPart(this.filesBase64[i])}`
       }
       // API Gatewayへの送信処理
       if (process.env.NODE_ENV === "production") {
@@ -163,6 +176,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 40px;
   .text {
     font-size: var(--font-size-lg);
     color: var(--gray8);
@@ -173,20 +187,34 @@ export default {
     background-color: var(--gray2);
   }
 }
-.button {
-  width: 200px;
-  height: 80px;
-  border-radius: 10px;
-  background-color: var(--black);
-  color: var(--white);
-  font-size: var(--font-size-lg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 30px;
-  &.disabled {
-    background-color: var(--gray7);
+.container {
+  .contents {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 4px var(--colormode9) solid;
+    border-radius: 8px;
+    padding: 10px;
+    .image {
+      width: 100px;
+    }
+    .button {
+      width: 120px;
+      height: 40px;
+      border-radius: 10px;
+      background-color: var(--black);
+      color: var(--white);
+      font-size: var(--font-size-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 30px;
+      &.disabled {
+        background-color: var(--gray7);
+      }
+    }
   }
 }
+    
 
 </style>
