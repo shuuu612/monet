@@ -113,7 +113,7 @@ export default {
       };
       // API Gatewayへの送信処理
       if (process.env.NODE_ENV === "production") {
-        await this.$axios.post("https://808l2nkkbf.execute-api.ap-northeast-1.amazonaws.com/dev/create", data, {
+        await this.$axios.post("https://0nw778k56a.execute-api.ap-northeast-1.amazonaws.com/dev/v1", data, {
           headers: {
           "x-api-key": "RSzNuTJ85l7gjssXcAOB275XV6gALdTI9AQ3Hgab",
           },
@@ -126,7 +126,7 @@ export default {
         });
       }
       else {
-        await this.$axios.post("/dev/create", data, {
+        await this.$axios.post("/dev/v1/image-converter", data, {
           headers: {
           "x-api-key": "RSzNuTJ85l7gjssXcAOB275XV6gALdTI9AQ3Hgab",
           },

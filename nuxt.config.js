@@ -83,7 +83,7 @@ export default {
 
   proxy: {
     '/api/': { target: 'https://inquiry.microcms.io' },
-    '/dev/': { target: 'https://808l2nkkbf.execute-api.ap-northeast-1.amazonaws.com' }
+    '/dev/': { target: 'https://0nw778k56a.execute-api.ap-northeast-1.amazonaws.com' }
   },
 
   styleResources: {
