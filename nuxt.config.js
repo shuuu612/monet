@@ -1,4 +1,3 @@
-import redirectSSL from 'redirect-ssl'
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
@@ -109,12 +108,6 @@ export default {
 
   buildModules: [
     'nuxt-microcms-module',
-  ],
-
-  serverMiddleware: [
-    redirectSSL.create({
-      enabled: process.env.NODE_ENV === "production"
-     }),
   ],
 
   microcms: {
