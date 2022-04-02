@@ -1,4 +1,4 @@
-import redirectSSL from 'redirect-ssl';
+import redirectSSL from 'redirect-ssl'
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
@@ -113,7 +113,7 @@ export default {
 
   serverMiddleware: [
     redirectSSL.create({
-      enabled: process.env.NODE_ENV === 'production'
+      enabled: process.env.NODE_ENV === "production"
      }),
   ],
 
