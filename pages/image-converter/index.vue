@@ -13,10 +13,11 @@
         <p class="text">ファイルアップロード</p>
       </div>
       <div class="container">
-        <div v-for="(file, index) in files" :key="index" class="contents">
+        <div v-for="(file, index) in inputFiles" :key="index" class="contents">
           <img class="image" :src="getBeforeImage(index)" alt="">
+          <p class="name">{{getName(index)}}</p>
           <button class="button" :class="getClassSubmitButton(index)" :disabled="getDisabledSubmitButton(index)" @click="submit(index)">変換</button>
-          <button class="button" :class="getClassDownloadButton(index)" :disabled="getDisabledDownloadButton(index)" @click="download">ダウンロード</button>
+          <button class="button" :class="getClassDownloadButton(index)" :disabled="getDisabledDownloadButton(index)" @click="download(index)">ダウンロード</button>
         </div>
       </div>
     </main>
@@ -27,9 +28,9 @@ export default {
   data() {
     return {
       isEnter: false,
-      files: [],
-      filesBase64: [],
-      resFiles: [],
+      originalFiles: [],
+      inputFiles: [],
+      outputFiles: [],
     };
   },
   computed: {
@@ -38,27 +39,32 @@ export default {
     },
     getDisabledSubmitButton() {
       return function(key) {
-        return !(this.files[key] && this.filesBase64[key]);
+        return !this.inputFiles[key];
       }
     },
     getClassSubmitButton() {
       return function(key) {
-        return { disabled: !(this.files[key] && this.filesBase64[key]) };
+        return { disabled: !this.inputFiles[key] };
       }
     },
     getDisabledDownloadButton() {
       return function(key) {
-        return !this.resFiles[key];
+        return !this.outputFiles[key];
       }
     },
     getClassDownloadButton() {
       return function(key) {
-        return { disabled: !this.resFiles[key] };
+        return { disabled: !this.outputFiles[key] };
+      }
+    },
+    getName() {
+      return function(key) {
+        return this.originalFiles[key].name;
       }
     },
     getBeforeImage() {
       return function(key) {
-        return this.filesBase64[key];
+        return this.inputFiles[key].image;
       }
     }
   },
@@ -82,20 +88,37 @@ export default {
 
       // 画像ファイルだけを抽出
       const imageFiles = files.filter(item => item.type === 'image/jpeg' || item.type === 'image/png');
+      console.log(imageFiles)
 
-      // Base64変換
+      // データをローカルに保存
       for(let i = 0; i < imageFiles.length; i++) {
         // そのまま保存
-        this.files.push(imageFiles[i]);
+        this.originalFiles.push(imageFiles[i]);
+
         // Base64変換して保存
         const reader = new FileReader();
         reader.onload = () => {
-          this.filesBase64.push(reader.result);
+          // フォーマットを切り出し
+          const str = reader.result;
+          const str1 = str.substr(0, str.indexOf(';'));
+          const str2 = str1.substr(str1.indexOf('/') + 1);
+
+          // データを作成
+          const data = {
+            image: reader.result,
+            type: str2,
+            format: str2,
+            level: str2 === 'jpeg' ? 80 : str2 === 'png' ? 2 : str2 === webp ? 80 : 0,
+            width: 0,
+            height: 0
+          }
+          this.inputFiles.push(data);
         }
         reader.readAsDataURL(imageFiles[i]);
       }
     },
     deleteUnwantedPart(str) {
+      // 画像データとして不要な部分を削除
       // データが大きすぎると処理が止まるので前から100文字だけ切り出してからDataURIを削除する
       const str1 = str.substr(0, 100).replace(/data:.*\/.*;base64,/, '');
       const str2 = str.substr(100);
@@ -104,12 +127,12 @@ export default {
     async submit(index) {
       // 送信データを作成
       const data = {
-        image: `${this.deleteUnwantedPart(this.filesBase64[index])}`,
-        type: 'jpeg',
-        format: 'webp',
-        level: 100,
-        width: 500,
-        height: 0
+        image: `${this.deleteUnwantedPart(this.inputFiles[index].image)}`,
+        type: this.inputFiles[index].type,
+        format: this.inputFiles[index].format,
+        level: this.inputFiles[index].level,
+        width: this.inputFiles[index].width,
+        height: this.inputFiles[index].height
       };
       // API Gatewayへの送信処理
       if (process.env.NODE_ENV === "production") {
@@ -143,25 +166,23 @@ export default {
           for(let j = 0; j < bin.length; j++){
             buffer[j] = bin.charCodeAt(j);
           }
-          const file = new File([buffer.buffer], `${this.getDate()}.jpeg`, {
-            type: "image/jpeg"
+          const file = new File([buffer.buffer], `${this.getDate()}.${this.inputFiles[index].format}`, {
+            type: `image/${this.inputFiles[index].format}`
           });
-          this.resFiles[index] = file;
-          this.resFiles.splice();
+          this.outputFiles[index] = file;
+          this.outputFiles.splice();
         })
         .catch(error => {
           console.log("エラー", error);
         });
       }
     },
-    download() {
-      for(let i = 0; i < this.resFiles.length; i++) {
-        const link = document.createElement('a');
-        link.download = `${this.getDate()}.jpeg`;
-        link.href = URL.createObjectURL(this.resFiles[i]);
-        link.click();
-        URL.revokeObjectURL(link.href);
-      }
+    download(index) {
+      const link = document.createElement('a');
+      link.download = `${this.getDate()}.${this.inputFiles[index].format}`;
+      link.href = URL.createObjectURL(this.outputFiles[index]);
+      link.click();
+      URL.revokeObjectURL(link.href);
     },
     getDate() {
       const today = new Date();
