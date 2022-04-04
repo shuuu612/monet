@@ -22,6 +22,35 @@
 }
 :root {
   --white: #f3f3f3;
+  --black: #202020;
+  --gray1: #eeeeee;
+  --gray2: #dddddd;
+  --gray3: #cccccc;
+  --gray4: #bbbbbb;
+  --gray5: #aaaaaa;
+  --gray6: #999999;
+  --gray7: #888888;
+  --gray8: #777777;
+  --gray9: #666666;
+  --gray10: #555555;
+  --gray11: #444444;
+  --gray12: #333333;
+  --gray13: #222222;
+
+  --colormode2: #cc6363;
+  --colormode2-light: #df8282;
+  --colormode2-dark: #c75656;
+  --colormode2-super-dark: #b64949;
+  --colormode2-ultra-dark: #a03b3b;
+  --colormode2-white: #ffc8c8;
+  --colormode2-transparent: #cc636381;
+  --colormode2-super-dark-transparent-low: #b64949ec;
+  --colormode2-ultra-dark-transparent-low: #a03b3bee;
+
+  --red: #ed4956;
+}
+:root.gallery {
+  --white: #f3f3f3;
   --white-light: #ebebeb;
   --white-super-light: #e2e2e2;
   --white-ultra-light: #d6d6d6;
@@ -61,18 +90,6 @@
   --blue-dark-transparent-low: #07578dd7;
   --blue-dark-transparent-low-hover: #0968a7d7;
 
-  --yellow: #f0e21d;
-  --yellow-light: #fcf268;
-  --yellow-super-light: #fffab6;
-  --yellow-ultra-light: #fffeec;
-  --yellow-dark: #d4c710;
-  --yellow-super-dark: #aca10b;
-  --yellow-ultra-dark: #7c7408;
-  --yellow-hover: #dace2f;
-  --yellow-transparent: #f0e21d7e;
-  --yellow-transparent-high: #f0e21d31;
-  --yellow-transparent-low: #f0e21dc0;
-
   --grey: #555555;
   --grey-light: #696969;
   --grey-super-light: #929292;
@@ -84,22 +101,6 @@
   --grey-transparent: #55555577;
   --grey-transparent-high: #55555534;
   --grey-transparent-low: #555555c9;
-
-  --color: var(--blue);
-  --color-light: var(--blue-light);
-  --color-super-light: var(--blue-super-light);
-  --color-ultra-light: var(--blue-ultra-light);
-  --color-dark: var(--blue-dark);
-  --color-super-dark: var(--blue-super-dark);
-  --color-ultra-dark: var(--blue-ultra-dark);
-  --color-hover: var(--blue-hover);
-  --color-transparent: var(--blue-transparent);
-  --color-transparent-high: var(--blue-transparent-high);
-  --color-transparent-low: var(--blue-transparent-low);
-  --color-dark-transparent: var(--blue-dark-transparent);
-  --color-dark-transparent-high: var(--blue-dark-transparent-high);
-  --color-dark-transparent-low: var(--blue-dark-transparent-low);
-  --color-dark-transparent-low-hover: var(--blue-dark-transparent-low-hover);
 
   --white-forDarkMode: var(--white);
   --white-dark-forDarkMode: var(--white-dark);
@@ -132,8 +133,6 @@
   --notice-normal-border: #85d461;
   --notice-normal-background: #e9ffdf;
 
-  --sideMenuWidth: 400px;
-
   --color-image-red: #e42525;
   --color-image-pink: #df5ec3;
   --color-image-purple: #880ccf;
@@ -148,7 +147,6 @@
   --color-image-black: #181818;
 
   // カラーモード
-
   --colormode1: #c84219;
   --colormode1-light: #df5e37;
   --colormode1-dark: #ac3814;
@@ -219,11 +217,6 @@
   --colormode7-super-dark-transparent-low: #316d34e8;
   --colormode7-ultra-dark-transparent-low: #245c27ee;
 
-  /* --colormode8: #63a367;
-  --colormode8-dark: #529456;
-  --colormode8-super-dark: #46834a;
-  --colormode8-ultra-dark: #46834a;
-  --colormode8-white: #dcffdf; */
   --colormode8: #535353;
   --colormode8-light: #7e7e7e;
   --colormode8-dark: #464646;
@@ -244,18 +237,6 @@
   --colormode9-super-dark-transparent-low: #6d4470ea;
   --colormode9-ultra-dark-transparent-low: #59385cec;
 
-  /* --colormode10: #a483a7;
-  --colormode10-dark: #937196;
-  --colormode10-super-dark: #826485;
-  --colormode10-white: #fde6ff; */
-  /* --colormode10: #eeeeee;
-  --colormode10-dark: #d4d4d4;
-  --colormode10-super-dark: #bdbdbd;
-  --colormode10-ultra-dark: #a0a0a0;
-  --colormode10-white: #242424;
-  --colormode10-transparent: #eeeeee7e;
-  --colormode10-super-dark-transparent-low: #bdbdbdef;
-  --colormode10-ultra-dark-transparent-low: #a0a0a0ef; */
   --colormode10: #9b8664;
   --colormode10-light: #b6a68d;
   --colormode10-dark: #8d7753;
@@ -287,67 +268,6 @@
   --colormode12-super-dark-transparent-low: #7c6746ec;
   --colormode12-ultra-dark-transparent-low: #6b583aec;
 
-  // グラデーション
-  --gradation-start: #005c97;
-  --gradation-start-hover: #247bb1;
-  --gradation-end: #363795;
-  --gradation-end-hover: #52549e;
-
-  --gradation-start: #0a3119;
-  --gradation-start-hover: #0f4d27;
-  --gradation-end: #0f9b0f;
-  --gradation-end-hover: #14be14;
-
-  --gradation-start: var(--black-super-light);
-  --gradation-start-hover: #0f4d27;
-  --gradation-end: var(--color);
-  --gradation-end-hover: #14be14;
-
-  // 要素（ダークモード用）
-  --background: var(--white);
-  --logo: var(--black);
-  --site-name: var(--color-ultra-dark);
-  --site-time: var(--black-super-light);
-  --site-border: var(--color-dark-transparent);
-  --side-menu: var(--color-dark-transparent-low);
-  --side-menu-icon: var(--white);
-  --side-menu-hover: var(--color-dark-transparent-low-hover);
-  --side-menu-borber: transparent;
-  --tool-button-hover: var(--black-transparent-high);
-  --more-button: var(--color-dark-transparent-low);
-  --more-button-hover: var(--color-dark-transparent-low-hover);
-  --more-button-text: var(--black);
-  --search-background: var(--white);
-  --search-border: var(--color-dark);
-  --search-icon: var(--black-super-light-forDarkMode);
-  --search-text: var(--black-super-light-forDarkMode);
-  --search-placeholder: var(--black-transparent-forDarkMode);
-  --scroll-top-button: var(--black-transparent-high);
-  --scroll-top-button-hover: var(--color-dark-transparent-low-hover);
-  --scroll-top-button-shadow: var(--grey);
-  --scroll-top-icon: var(--color-dark);
-  --favorite-icon: var(--red);
-  --favorite-icon-stroke: var(--black-dark-forDarkMode);
-  --favorite-icon-selected: var(--black-dark-forDarkMode);
-  --favorite-icon-hover: var(--red-transparent-high);
-  --darkmode-button-mask: var(--colormode1);
-  --menu-bar: var(--color-dark-transparent-low);
-  --menu-bar-hover: var(--white-transparent-high);
-  --category-name: var(--black-forDarkMode);
-  --barkmode-light-icon: var(--black-forDarkMode);
-  --menu-background: var(--white);
-  --menu-border: var(--gray3);
-  --menu-text: var(--black);
-  --menu-comment: var(--grey);
-  --menu-button-background: var(--grey-ultra-light);
-  --menu-button-active: var(--white);
-  --menu-item-text: var(--gray12);
-  --menu-item-selected: var(--gray2);
-  --scrollbar-button: var(--white);
-  --scrollbar-background: var(--white);
-  --footer-background: var(--colormode2);
-  --footer-text: var(--white);
-
   --white-transparent0: #f3f3f311;
   --white-transparent1: #f3f3f322;
   --white-transparent2: #f3f3f333;
@@ -363,19 +283,19 @@
   --white-transparent12: #f3f3f3dd;
   --white-transparent13: #f3f3f3ee;
 
-  --gray0: #eeeeee;
-  --gray1: #dddddd;
-  --gray2: #cccccc;
-  --gray3: #bbbbbb;
-  --gray4: #aaaaaa;
-  --gray5: #999999;
-  --gray6: #888888;
-  --gray7: #777777;
-  --gray8: #666666;
-  --gray9: #555555;
-  --gray10: #444444;
-  --gray11: #333333;
-  --gray12: #222222;
+  --gray1: #eeeeee;
+  --gray2: #dddddd;
+  --gray3: #cccccc;
+  --gray4: #bbbbbb;
+  --gray5: #aaaaaa;
+  --gray6: #999999;
+  --gray7: #888888;
+  --gray8: #777777;
+  --gray9: #666666;
+  --gray10: #555555;
+  --gray11: #444444;
+  --gray12: #333333;
+  --gray13: #222222;
 
   --search-red: #e03131;
   --search-orange: #e07131;
@@ -404,8 +324,8 @@
   --search-background: var(--white);
   --search-border: var(--white);
   --search-icon: var(--colormode1);
-  --search-text: var(--gray12);
-  --search-placeholder: var(--gray7);
+  --search-text: var(--gray13);
+  --search-placeholder: var(--gray8);
   --scroll-top-button: var(--colormode1-super-dark);
   --scroll-top-button-hover: var(--colormode1-ultra-dark);
   --scroll-top-button-shadow: transparent;
@@ -420,13 +340,13 @@
   --category-name: var(--black-forDarkMode);
   --barkmode-light-icon: var(--black-forDarkMode);
   --menu-background: var(--white);
-  --menu-border: var(--gray3);
+  --menu-border: var(--gray4);
   --menu-text: var(--black);
   --menu-comment: var(--grey);
   --menu-button-background: var(--grey-ultra-light);
   --menu-button-active: var(--white);
-  --menu-item-text: var(--gray12);
-  --menu-item-selected: var(--gray2);
+  --menu-item-text: var(--gray13);
+  --menu-item-selected: var(--gray3);
   --scrollbar-button: var(--white);
   --scrollbar-background: var(--colormode1);
   --footer-background: var(--colormode1);
@@ -451,8 +371,8 @@
   --search-background: var(--white);
   --search-border: var(--white);
   --search-icon: var(--colormode2);
-  --search-text: var(--gray12);
-  --search-placeholder: var(--gray7);
+  --search-text: var(--gray13);
+  --search-placeholder: var(--gray8);
   --scroll-top-button: var(--colormode2-super-dark);
   --scroll-top-button-hover: var(--colormode2-ultra-dark);
   --scroll-top-button-shadow: transparent;
@@ -467,13 +387,13 @@
   --category-name: var(--black-forDarkMode);
   --barkmode-light-icon: var(--black-forDarkMode);
   --menu-background: var(--white);
-  --menu-border: var(--gray3);
+  --menu-border: var(--gray4);
   --menu-text: var(--black);
   --menu-comment: var(--grey);
   --menu-button-background: var(--grey-ultra-light);
   --menu-button-active: var(--white);
-  --menu-item-text: var(--gray12);
-  --menu-item-selected: var(--gray2);
+  --menu-item-text: var(--gray13);
+  --menu-item-selected: var(--gray3);
   --scrollbar-button: var(--white);
   --scrollbar-background: var(--colormode2);
   --footer-background: var(--colormode2);
@@ -498,8 +418,8 @@
   --search-background: var(--white);
   --search-border: var(--white);
   --search-icon: var(--colormode3);
-  --search-text: var(--gray12);
-  --search-placeholder: var(--gray7);
+  --search-text: var(--gray13);
+  --search-placeholder: var(--gray8);
   --scroll-top-button: var(--colormode3-super-dark);
   --scroll-top-button-hover: var(--colormode3-ultra-dark);
   --scroll-top-button-shadow: transparent;
@@ -514,13 +434,13 @@
   --category-name: var(--black-forDarkMode);
   --barkmode-light-icon: var(--black-forDarkMode);
   --menu-background: var(--white);
-  --menu-border: var(--gray3);
+  --menu-border: var(--gray4);
   --menu-text: var(--black);
   --menu-comment: var(--grey);
   --menu-button-background: var(--grey-ultra-light);
   --menu-button-active: var(--white);
-  --menu-item-text: var(--gray12);
-  --menu-item-selected: var(--gray2);
+  --menu-item-text: var(--gray13);
+  --menu-item-selected: var(--gray3);
   --scrollbar-button: var(--white);
   --scrollbar-background: var(--colormode3);
   --footer-background: var(--colormode3);
@@ -545,8 +465,8 @@
   --search-background: var(--white);
   --search-border: var(--white);
   --search-icon: var(--colormode4);
-  --search-text: var(--gray12);
-  --search-placeholder: var(--gray7);
+  --search-text: var(--gray13);
+  --search-placeholder: var(--gray8);
   --scroll-top-button: var(--colormode4-super-dark);
   --scroll-top-button-hover: var(--colormode4-ultra-dark);
   --scroll-top-button-shadow: transparent;
@@ -561,13 +481,13 @@
   --category-name: var(--black-forDarkMode);
   --barkmode-light-icon: var(--black-forDarkMode);
   --menu-background: var(--white);
-  --menu-border: var(--gray3);
+  --menu-border: var(--gray4);
   --menu-text: var(--black);
   --menu-comment: var(--grey);
   --menu-button-background: var(--grey-ultra-light);
   --menu-button-active: var(--white);
-  --menu-item-text: var(--gray12);
-  --menu-item-selected: var(--gray2);
+  --menu-item-text: var(--gray13);
+  --menu-item-selected: var(--gray3);
   --scrollbar-button: var(--white);
   --scrollbar-background: var(--colormode4);
   --footer-background: var(--colormode4);
@@ -592,8 +512,8 @@
   --search-background: var(--white);
   --search-border: var(--white);
   --search-icon: var(--colormode5);
-  --search-text: var(--gray12);
-  --search-placeholder: var(--gray7);
+  --search-text: var(--gray13);
+  --search-placeholder: var(--gray8);
   --scroll-top-button: var(--colormode5-super-dark);
   --scroll-top-button-hover: var(--colormode5-ultra-dark);
   --scroll-top-button-shadow: transparent;
@@ -608,13 +528,13 @@
   --category-name: var(--black-forDarkMode);
   --barkmode-light-icon: var(--black-forDarkMode);
   --menu-background: var(--white);
-  --menu-border: var(--gray3);
+  --menu-border: var(--gray4);
   --menu-text: var(--black);
   --menu-comment: var(--grey);
   --menu-button-background: var(--grey-ultra-light);
   --menu-button-active: var(--white);
-  --menu-item-text: var(--gray12);
-  --menu-item-selected: var(--gray2);
+  --menu-item-text: var(--gray13);
+  --menu-item-selected: var(--gray3);
   --scrollbar-button: var(--white);
   --scrollbar-background: var(--colormode5);
   --footer-background: var(--colormode5);
@@ -639,8 +559,8 @@
   --search-background: var(--white);
   --search-border: var(--white);
   --search-icon: var(--colormode6);
-  --search-text: var(--gray12);
-  --search-placeholder: var(--gray7);
+  --search-text: var(--gray13);
+  --search-placeholder: var(--gray8);
   --scroll-top-button: var(--colormode6-super-dark);
   --scroll-top-button-hover: var(--colormode6-ultra-dark);
   --scroll-top-button-shadow: transparent;
@@ -655,13 +575,13 @@
   --category-name: var(--black-forDarkMode);
   --barkmode-light-icon: var(--black-forDarkMode);
   --menu-background: var(--white);
-  --menu-border: var(--gray3);
+  --menu-border: var(--gray4);
   --menu-text: var(--black);
   --menu-comment: var(--grey);
   --menu-button-background: var(--grey-ultra-light);
   --menu-button-active: var(--white);
-  --menu-item-text: var(--gray12);
-  --menu-item-selected: var(--gray2);
+  --menu-item-text: var(--gray13);
+  --menu-item-selected: var(--gray3);
   --scrollbar-button: var(--white);
   --scrollbar-background: var(--colormode6);
   --footer-background: var(--colormode6);
@@ -686,8 +606,8 @@
   --search-background: var(--white);
   --search-border: var(--white);
   --search-icon: var(--colormode7);
-  --search-text: var(--gray12);
-  --search-placeholder: var(--gray7);
+  --search-text: var(--gray13);
+  --search-placeholder: var(--gray8);
   --scroll-top-button: var(--colormode7-super-dark);
   --scroll-top-button-hover: var(--colormode7-ultra-dark);
   --scroll-top-button-shadow: transparent;
@@ -702,13 +622,13 @@
   --category-name: var(--black-forDarkMode);
   --barkmode-light-icon: var(--black-forDarkMode);
   --menu-background: var(--white);
-  --menu-border: var(--gray3);
+  --menu-border: var(--gray4);
   --menu-text: var(--black);
   --menu-comment: var(--grey);
   --menu-button-background: var(--grey-ultra-light);
   --menu-button-active: var(--white);
-  --menu-item-text: var(--gray12);
-  --menu-item-selected: var(--gray2);
+  --menu-item-text: var(--gray13);
+  --menu-item-selected: var(--gray3);
   --scrollbar-button: var(--white);
   --scrollbar-background: var(--colormode7);
   --footer-background: var(--colormode7);
@@ -733,8 +653,8 @@
   --search-background: var(--white);
   --search-border: var(--white);
   --search-icon: var(--colormode8);
-  --search-text: var(--gray12);
-  --search-placeholder: var(--gray7);
+  --search-text: var(--gray13);
+  --search-placeholder: var(--gray8);
   --scroll-top-button: var(--colormode8-super-dark);
   --scroll-top-button-hover: var(--colormode8-ultra-dark);
   --scroll-top-button-shadow: transparent;
@@ -749,13 +669,13 @@
   --category-name: var(--black-forDarkMode);
   --barkmode-light-icon: var(--black-forDarkMode);
   --menu-background: var(--white);
-  --menu-border: var(--gray3);
+  --menu-border: var(--gray4);
   --menu-text: var(--black);
   --menu-comment: var(--grey);
   --menu-button-background: var(--grey-ultra-light);
   --menu-button-active: var(--white);
-  --menu-item-text: var(--gray12);
-  --menu-item-selected: var(--gray2);
+  --menu-item-text: var(--gray13);
+  --menu-item-selected: var(--gray3);
   --scrollbar-button: var(--white);
   --scrollbar-background: var(--colormode8);
   --footer-background: var(--colormode8);
@@ -780,8 +700,8 @@
   --search-background: var(--white);
   --search-border: var(--white);
   --search-icon: var(--colormode9);
-  --search-text: var(--gray12);
-  --search-placeholder: var(--gray7);
+  --search-text: var(--gray13);
+  --search-placeholder: var(--gray8);
   --scroll-top-button: var(--colormode9-super-dark);
   --scroll-top-button-hover: var(--colormode9-ultra-dark);
   --scroll-top-button-shadow: transparent;
@@ -796,13 +716,13 @@
   --category-name: var(--black-forDarkMode);
   --barkmode-light-icon: var(--black-forDarkMode);
   --menu-background: var(--white);
-  --menu-border: var(--gray3);
+  --menu-border: var(--gray4);
   --menu-text: var(--black);
   --menu-comment: var(--grey);
   --menu-button-background: var(--grey-ultra-light);
   --menu-button-active: var(--white);
-  --menu-item-text: var(--gray12);
-  --menu-item-selected: var(--gray2);
+  --menu-item-text: var(--gray13);
+  --menu-item-selected: var(--gray3);
   --scrollbar-button: var(--white);
   --scrollbar-background: var(--colormode9);
   --footer-background: var(--colormode9);
@@ -842,13 +762,13 @@
   --category-name: var(--colormode10-ultra-dark);
   --barkmode-light-icon: var(--colormode10-ultra-dark);
   --menu-background: var(--white);
-  --menu-border: var(--gray3);
+  --menu-border: var(--gray4);
   --menu-text: var(--black);
   --menu-comment: var(--grey);
   --menu-button-background: var(--grey-ultra-light);
   --menu-button-active: var(--white);
-  --menu-item-text: var(--gray12);
-  --menu-item-selected: var(--gray2);
+  --menu-item-text: var(--gray13);
+  --menu-item-selected: var(--gray3);
   --scrollbar-button: var(--colormode10);
   --scrollbar-background: var(--white);
   --footer-background: var(--white);
@@ -873,8 +793,8 @@
   --search-background: var(--white);
   --search-border: var(--white);
   --search-icon: var(--colormode11);
-  --search-text: var(--gray12);
-  --search-placeholder: var(--gray7);
+  --search-text: var(--gray13);
+  --search-placeholder: var(--gray8);
   --scroll-top-button: var(--colormode11-super-dark);
   --scroll-top-button-hover: var(--colormode11-ultra-dark);
   --scroll-top-button-shadow: transparent;
@@ -889,13 +809,13 @@
   --category-name: var(--black-forDarkMode);
   --barkmode-light-icon: var(--black-forDarkMode);
   --menu-background: var(--white);
-  --menu-border: var(--gray3);
+  --menu-border: var(--gray4);
   --menu-text: var(--black);
   --menu-comment: var(--grey);
   --menu-button-background: var(--grey-ultra-light);
   --menu-button-active: var(--white);
-  --menu-item-text: var(--gray12);
-  --menu-item-selected: var(--gray2);
+  --menu-item-text: var(--gray13);
+  --menu-item-selected: var(--gray3);
   --scrollbar-button: var(--white);
   --scrollbar-background: var(--colormode11);
   --footer-background: var(--colormode11);
@@ -920,8 +840,8 @@
   --search-background: var(--white);
   --search-border: var(--white);
   --search-icon: var(--colormode12);
-  --search-text: var(--gray12);
-  --search-placeholder: var(--gray7);
+  --search-text: var(--gray13);
+  --search-placeholder: var(--gray8);
   --scroll-top-button: var(--colormode12-super-dark);
   --scroll-top-button-hover: var(--colormode12-ultra-dark);
   --scroll-top-button-shadow: transparent;
@@ -936,13 +856,13 @@
   --category-name: var(--black-forDarkMode);
   --barkmode-light-icon: var(--black-forDarkMode);
   --menu-background: var(--white);
-  --menu-border: var(--gray3);
+  --menu-border: var(--gray4);
   --menu-text: var(--black);
   --menu-comment: var(--grey);
   --menu-button-background: var(--grey-ultra-light);
   --menu-button-active: var(--white);
-  --menu-item-text: var(--gray12);
-  --menu-item-selected: var(--gray2);
+  --menu-item-text: var(--gray13);
+  --menu-item-selected: var(--gray3);
   --scrollbar-button: var(--white);
   --scrollbar-background: var(--colormode12);
   --footer-background: var(--colormode12);
@@ -1003,14 +923,14 @@
   --category-name: var(--black-forDarkMode);
   --barkmode-light-icon: var(--black-forDarkMode);
   --menu-background: var(--black);
-  --menu-border: var(--gray9);
+  --menu-border: var(--gray10);
   --menu-text: var(--white);
-  --menu-comment: var(--gray4);
-  --menu-button-background: var(--gray11);
-  --menu-button-active: var(--gray9);
-  --menu-item-text: var(--gray3);
-  --menu-item-selected: var(--gray9);
-  --scrollbar-button: var(--gray6);
+  --menu-comment: var(--gray5);
+  --menu-button-background: var(--gray12);
+  --menu-button-active: var(--gray10);
+  --menu-item-text: var(--gray4);
+  --menu-item-selected: var(--gray10);
+  --scrollbar-button: var(--gray7);
   --scrollbar-background: var(--black);
   --footer-background: var(--black);
   --footer-text: var(--white);

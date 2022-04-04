@@ -394,9 +394,9 @@ export default {
     methods: {
         darkModeSetting() {
           if(this.$store.getters["darkmode/getActive"]) {
-            this.colormode = [this.$store.getters["colormode/getColormode"], 'darkmode', 'monet']
+            this.colormode = [this.$store.getters["colormode/getColormode"], 'darkmode', 'gallery']
           }else {
-            this.colormode = [this.$store.getters["colormode/getColormode"], 'monet'];
+            this.colormode = [this.$store.getters["colormode/getColormode"], 'gallery'];
           }
         },
         setContentsElement() {

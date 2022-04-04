@@ -81,7 +81,7 @@
 <style lang="scss" scoped>
 .wrapper {
   min-height: 100vh;
-  background-color: var(--gray0);
+  background-color: var(--gray1);
 }
 
 .main {
@@ -89,7 +89,7 @@
   align-items: flex-start;
   justify-content: center;
   font-size: var(--font-size-lg);
-  color: var(--gray9);
+  color: var(--gray10);
   line-height: 1.7em;
   padding: 10px 10px;
   @include responsive(xs) {
@@ -117,7 +117,7 @@
   max-width: 800px;
   background-color: var(--white);
   border-radius: 10px;
-  box-shadow: 0px 0px 20px var(--gray2);
+  box-shadow: 0px 0px 20px var(--gray3);
   padding: 120px 20px 50px;
   position: relative;
   @include responsive(xs) {

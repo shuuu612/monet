@@ -792,10 +792,10 @@ export default {
   &.on {
     .switch {
       transform: translateX(15px);
-      background-color: var(--color-light);
+      background-color: var(--blue-light);
     }
     .background {
-      background-color: var(--color-transparent);
+      background-color: var(--blue-transparent);
     }
   }
   &.off {
@@ -962,7 +962,7 @@ input[type="range"] {
     }
     &.color10 {
       background-color: var(--white);
-      border: 1px var(--gray6) solid;
+      border: 1px var(--gray7) solid;
     }
     &.color11 {
       background-color: var(--colormode11);
@@ -1000,8 +1000,8 @@ input[type="range"] {
       background-color: var(--colormode9-transparent);
     }
     &.color10 {
-      background-color: var(--gray3);
-      border: 1px var(--gray6) solid;
+      background-color: var(--gray4);
+      border: 1px var(--gray7) solid;
     }
     &.color11 {
       background-color: var(--colormode11-transparent);

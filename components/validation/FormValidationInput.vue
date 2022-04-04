@@ -78,7 +78,7 @@ export default {
   border-radius: 10px;
   margin-bottom: 10px;
   padding: 16px 20px;
-  border: 1px var(--gray3) solid;
+  border: 1px var(--gray4) solid;
 }
 
 .input-outer {

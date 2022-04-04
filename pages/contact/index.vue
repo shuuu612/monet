@@ -205,7 +205,7 @@ export default {
 <style lang="scss" scoped>
 .wrapper {
   min-height: 100vh;
-  background-color: var(--gray1);
+  background-color: var(--gray2);
 }
 
 .contact-form {
@@ -304,14 +304,14 @@ export default {
   display: block;
   transition: background-color .2s;
   &.disabled {
-    background-color: var(--gray6);
+    background-color: var(--gray7);
     pointer-events: none;
   }
   &:not(:first-child) {
     margin-left: 50px;
   }
   @include hover() {
-    background-color: var(--gray10);
+    background-color: var(--gray11);
   }
   &.home {
     display: flex;

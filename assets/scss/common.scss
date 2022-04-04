@@ -1,7 +1,7 @@
 html {
   font-size: var(--font-size-sm);
   // スクロールバーの色（Firefox用）
-  .monet & {
+  .gallery & {
     scrollbar-color: var(--scrollbar-button) var(--scrollbar-background);
   }
 }
@@ -27,7 +27,7 @@ h1 {
   font-size: var(--font-size-md);
 }
 
-:root.monet {
+:root.gallery {
   // スクロールバーの色
   ::-webkit-scrollbar {
     width: 15px;

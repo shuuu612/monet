@@ -811,8 +811,8 @@ export default {
   white-space: nowrap;
   margin-bottom: 0;
   background-color: var(--white);
-  color: var(--gray12);
-  border: 1px var(--gray3) solid;
+  color: var(--gray13);
+  border: 1px var(--gray4) solid;
 }
 .cancel {
   width: 14px;
@@ -832,7 +832,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--gray2);
+  background-color: var(--gray3);
   padding: 8px 6px 8px 6px;
   margin-right: 8px;
   position: relative;

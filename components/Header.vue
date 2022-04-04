@@ -284,13 +284,6 @@ export default {
   }
 }
 
-.gradationStart {
-  stop-color : var(--gradation-start);
-}
-
-.gradationEnd {
-  stop-color : var(--gradation-end);
-}
 .tool {
   display: flex;
   align-items: flex-start;
