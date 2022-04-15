@@ -58,6 +58,7 @@ export default {
     dirs: [
       '~/components',
       '~/components/validation',
+      '~/components/image-converter',
     ]
   },
 
@@ -91,6 +92,7 @@ export default {
       '@/assets/scss/mixin.scss',
       '@/assets/scss/font.scss',
       '@/assets/scss/color.scss',
+      '@/assets/scss/object.scss',
     ]
   },
 

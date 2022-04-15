@@ -1,5 +1,5 @@
 <template>
-  <footer class="footer">
+  <footer v-if="getDisplay" class="footer">
     <div class="menu">
       <div class="content">
         <nuxt-link class="link" to="/contact">お問い合わせ</nuxt-link>
@@ -23,6 +23,9 @@ export default {
     };
   },
   computed: {
+    getDisplay() {
+      return this.$route.path !== '/image-converter';
+    }
   },
   created() {
   },

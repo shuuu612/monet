@@ -1015,3 +1015,16 @@
   --footer-background: var(--black);
   --footer-text: var(--white);
 }
+
+:root.image-converter {
+  --color1: #f0f3fa; // background
+  --color2: #bcbccc; // icon
+  --color3: #bcbce8; // border
+  --color4: #986efa; // button
+  --color5: #e3ebff; // hover
+  --color6: #8759f142;
+  --white: #ffffff;
+
+  --background: var(--color1);
+  --color: var(--gray7);
+}
