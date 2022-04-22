@@ -20,7 +20,7 @@ export default {
       // OGP設定
       { hid: 'og:site_name', property: 'og:site_name', content: 'Monet' },
       { hid: 'og:type', property: 'og:type', content: 'website' },
-      { hid: 'og:url', property: 'og:url', content: 'https://monet-design.com/' },
+      { hid: 'og:url', property: 'og:url', content: 'https://monet.shuuu.jp/' },
       { hid: 'og:title', property: 'og:title', content: 'Monet | Webデザインギャラリー' },
       { hid: 'og:description', property: 'og:description', content: 'サイトの説明' },
       { hid: 'og:image', property: 'og:image', content: 'サイトURL' },
@@ -50,22 +50,21 @@ export default {
   plugins: [
     '@/plugins/common.js',
     '@/plugins/storageAvailable.js',
-    '@/plugins/vee-validate',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components:  {
     dirs: [
       '~/components',
-      '~/components/validation',
     ]
   },
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  /* buildModules: [
+  buildModules: [
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
-  ], */
+    'nuxt-microcms-module',
+  ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
@@ -103,12 +102,7 @@ export default {
         }
       }
     },
-    transpile: ["vee-validate/dist/rules"],
   },
-
-  buildModules: [
-    'nuxt-microcms-module',
-  ],
 
   microcms: {
     options: {

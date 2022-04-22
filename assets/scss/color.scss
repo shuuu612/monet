@@ -7,7 +7,6 @@
   --white-transparent-forDarkMode: var(--black-transparent);
   --white-transparent-high-forDarkMode: var(--black-transparent-high);
   --white-transparent-low-forDarkMode: var(--black-transparent-low);
-
   --black-forDarkMode: var(--white);
   --black-light-forDarkMode: var(--white-light);
   --black-super-light-forDarkMode: var(--white-super-light);
@@ -20,36 +19,8 @@
   --black-transparent-high-forDarkMode: var(--white-transparent-high);
   --black-transparent-low-forDarkMode: var(--white-transparent-low);
 }
+
 :root {
-  --white: #f3f3f3;
-  --black: #202020;
-  --gray1: #eeeeee;
-  --gray2: #dddddd;
-  --gray3: #cccccc;
-  --gray4: #bbbbbb;
-  --gray5: #aaaaaa;
-  --gray6: #999999;
-  --gray7: #888888;
-  --gray8: #777777;
-  --gray9: #666666;
-  --gray10: #555555;
-  --gray11: #444444;
-  --gray12: #333333;
-  --gray13: #222222;
-
-  --colormode2: #cc6363;
-  --colormode2-light: #df8282;
-  --colormode2-dark: #c75656;
-  --colormode2-super-dark: #b64949;
-  --colormode2-ultra-dark: #a03b3b;
-  --colormode2-white: #ffc8c8;
-  --colormode2-transparent: #cc636381;
-  --colormode2-super-dark-transparent-low: #b64949ec;
-  --colormode2-ultra-dark-transparent-low: #a03b3bee;
-
-  --red: #ed4956;
-}
-:root.gallery {
   --white: #f3f3f3;
   --white-light: #ebebeb;
   --white-super-light: #e2e2e2;
@@ -61,7 +32,6 @@
   --white-transparent: #f3f3f356;
   --white-transparent-high: #f3f3f31e;
   --white-transparent-low: #f3f3f3e1;
-
   --black: #202020;
   --black-light: #292929;
   --black-super-light: #414141;
@@ -73,7 +43,6 @@
   --black-transparent: #20202080;
   --black-transparent-high: #20202015;
   --black-transparent-low: #202020e3;
-
   --blue: #0c81cf;
   --blue-light: #30a2ee;
   --blue-super-light: #54b6f7;
@@ -89,7 +58,6 @@
   --blue-dark-transparent-high: #07578d18;
   --blue-dark-transparent-low: #07578dd7;
   --blue-dark-transparent-low-hover: #0968a7d7;
-
   --grey: #555555;
   --grey-light: #696969;
   --grey-super-light: #929292;
@@ -101,7 +69,6 @@
   --grey-transparent: #55555577;
   --grey-transparent-high: #55555534;
   --grey-transparent-low: #555555c9;
-
   --white-forDarkMode: var(--white);
   --white-dark-forDarkMode: var(--white-dark);
   --white-super-dark-forDarkMode: var(--white-super-dark);
@@ -110,7 +77,6 @@
   --white-transparent-forDarkMode: var(--white-transparent);
   --white-transparent-high-forDarkMode: var(--white-transparent-high);
   --white-transparent-low-forDarkMode: var(--white-transparent-low);
-
   --black-forDarkMode: var(--black);
   --black-light-forDarkMode: var(--black-light);
   --black-super-light-forDarkMode: var(--black-super-light);
@@ -122,17 +88,14 @@
   --black-transparent-forDarkMode: var(--black-transparent);
   --black-transparent-high-forDarkMode: var(--black-transparent-high);
   --black-transparent-low-forDarkMode: var(--black-transparent-low);
-
   --red: #ed4956;
   --red-transparent-high: #ed495715;
-
   --notice-error-border: #ff919a;
   --notice-error-background: #ffdbde;
   --notice-caution-border: #f0e21d;
   --notice-caution-background: #fffeec;
   --notice-normal-border: #85d461;
   --notice-normal-background: #e9ffdf;
-
   --color-image-red: #e42525;
   --color-image-pink: #df5ec3;
   --color-image-purple: #880ccf;
@@ -145,7 +108,6 @@
   --color-image-beige: #ada58a;
   --color-image-grey: #636363;
   --color-image-black: #181818;
-
   // カラーモード
   --colormode1: #c84219;
   --colormode1-light: #df5e37;
@@ -156,7 +118,6 @@
   --colormode1-transparent: #c8421979;
   --colormode1-super-dark-transparent-low: #972e0eec;
   --colormode1-ultra-dark-transparent-low: #802206ee;
-
   --colormode2: #cc6363;
   --colormode2-light: #df8282;
   --colormode2-dark: #c75656;
@@ -166,7 +127,6 @@
   --colormode2-transparent: #cc636381;
   --colormode2-super-dark-transparent-low: #b64949ec;
   --colormode2-ultra-dark-transparent-low: #a03b3bee;
-
   --colormode3: #334b7c;
   --colormode3-light: #506796;
   --colormode3-dark: #2c4370;
@@ -176,7 +136,6 @@
   --colormode3-transparent: #334b7c7c;
   --colormode3-super-dark-transparent-low: #2a3a5ae7;
   --colormode3-ultra-dark-transparent-low: #212f4be8;
-
   --colormode4: #4891bb;
   --colormode4-light: #63abd4;
   --colormode4-dark: #3a86b3;
@@ -186,7 +145,6 @@
   --colormode4-transparent: #4891bb79;
   --colormode4-super-dark-transparent-low: #2f76a0ea;
   --colormode4-ultra-dark-transparent-low: #22678fee;
-
   --colormode5: #e2892f;
   --colormode5-light: #f5af69;
   --colormode5-dark: #d87c20;
@@ -196,7 +154,6 @@
   --colormode5-transparent: #e2882f79;
   --colormode5-super-dark-transparent-low: #c76e16ec;
   --colormode5-ultra-dark-transparent-low: #ad5d0df1;
-
   --colormode6: #c99914;
   --colormode6-light: #dbb241;
   --colormode6-dark: #b88b0f;
@@ -206,7 +163,6 @@
   --colormode6-transparent: #c9991479;
   --colormode6-super-dark-transparent-low: #a37a09ec;
   --colormode6-ultra-dark-transparent-low: #8d6906ef;
-
   --colormode7: #4a7e4d;
   --colormode7-light: #6f9971;
   --colormode7-dark: #3c773f;
@@ -216,7 +172,6 @@
   --colormode7-transparent: #4a7e4d77;
   --colormode7-super-dark-transparent-low: #316d34e8;
   --colormode7-ultra-dark-transparent-low: #245c27ee;
-
   --colormode8: #535353;
   --colormode8-light: #7e7e7e;
   --colormode8-dark: #464646;
@@ -226,7 +181,6 @@
   --colormode8-transparent: #53535379;
   --colormode8-super-dark-transparent-low: #3a3a3ae8;
   --colormode8-ultra-dark-transparent-low: #2e2e2eea;
-
   --colormode9: #875b8b;
   --colormode9-light: #a585a8;
   --colormode9-dark: #7a517e;
@@ -236,7 +190,6 @@
   --colormode9-transparent: #875b8b7a;
   --colormode9-super-dark-transparent-low: #6d4470ea;
   --colormode9-ultra-dark-transparent-low: #59385cec;
-
   --colormode10: #9b8664;
   --colormode10-light: #b6a68d;
   --colormode10-dark: #8d7753;
@@ -247,7 +200,6 @@
   --colormode10-transparent-high: #9b86643d;
   --colormode10-super-dark-transparent-low: #7c6746ec;
   --colormode10-ultra-dark-transparent-low: #6b583aec;
-
   --colormode11: #9b6733;
   --colormode11-light: #b48657;
   --colormode11-dark: #86592c;
@@ -257,7 +209,6 @@
   --colormode11-transparent: #9b673377;
   --colormode11-super-dark-transparent-low: #754d24ee;
   --colormode11-ultra-dark-transparent-low: #614020ee;
-
   --colormode12: #9b8664;
   --colormode12-light: #ac9d85;
   --colormode12-dark: #8d7753;
@@ -267,7 +218,6 @@
   --colormode12-transparent: #9b866475;
   --colormode12-super-dark-transparent-low: #7c6746ec;
   --colormode12-ultra-dark-transparent-low: #6b583aec;
-
   --white-transparent0: #f3f3f311;
   --white-transparent1: #f3f3f322;
   --white-transparent2: #f3f3f333;
@@ -282,7 +232,6 @@
   --white-transparent11: #f3f3f3cc;
   --white-transparent12: #f3f3f3dd;
   --white-transparent13: #f3f3f3ee;
-
   --gray1: #eeeeee;
   --gray2: #dddddd;
   --gray3: #cccccc;
@@ -296,7 +245,6 @@
   --gray11: #444444;
   --gray12: #333333;
   --gray13: #222222;
-
   --search-red: #e03131;
   --search-orange: #e07131;
   --search-yellow: #e0c631;
@@ -307,8 +255,9 @@
 }
 
 :root.color1 {
-  @include darkmode;
   --background: var(--colormode1);
+
+  @include darkmode;
   --logo: var(--white);
   --site-name: var(--white);
   --site-time: var(--colormode1-white);
@@ -354,8 +303,9 @@
 }
 
 :root.color2 {
-  @include darkmode;
   --background: var(--colormode2);
+
+  @include darkmode;
   --logo: var(--white);
   --site-name: var(--white);
   --site-time: var(--colormode2-white);
@@ -401,8 +351,9 @@
 }
 
 :root.color3 {
-  @include darkmode;
   --background: var(--colormode3);
+
+  @include darkmode;
   --logo: var(--white);
   --site-name: var(--white);
   --site-time: var(--colormode3-white);
@@ -448,8 +399,9 @@
 }
 
 :root.color4 {
-  @include darkmode;
   --background: var(--colormode4);
+
+  @include darkmode;
   --logo: var(--white);
   --site-name: var(--white);
   --site-time: var(--colormode4-white);
@@ -495,8 +447,9 @@
 }
 
 :root.color5 {
-  @include darkmode;
   --background: var(--colormode5);
+
+  @include darkmode;
   --logo: var(--white);
   --site-name: var(--white);
   --site-time: var(--colormode5-white);
@@ -542,8 +495,9 @@
 }
 
 :root.color6 {
-  @include darkmode;
   --background: var(--colormode6);
+
+  @include darkmode;
   --logo: var(--white);
   --site-name: var(--white);
   --site-time: var(--colormode6-white);
@@ -589,8 +543,9 @@
 }
 
 :root.color7 {
-  @include darkmode;
   --background: var(--colormode7);
+
+  @include darkmode;
   --logo: var(--white);
   --site-name: var(--white);
   --site-time: var(--colormode7-white);
@@ -636,8 +591,9 @@
 }
 
 :root.color8 {
-  @include darkmode;
   --background: var(--colormode8);
+
+  @include darkmode;
   --logo: var(--white);
   --site-name: var(--white);
   --site-time: var(--colormode8-white);
@@ -683,8 +639,9 @@
 }
 
 :root.color9 {
-  @include darkmode;
   --background: var(--colormode9);
+
+  @include darkmode;
   --logo: var(--white);
   --site-name: var(--white);
   --site-time: var(--colormode9-white);
@@ -731,6 +688,7 @@
 
 :root.color10 {
   --background: var(--white);
+
   --logo: var(--colormode10);
   --site-name: var(--colormode10-ultra-dark);
   --site-time: var(--colormode10-super-dark);
@@ -776,8 +734,9 @@
 }
 
 :root.color11 {
-  @include darkmode;
   --background: var(--colormode11);
+
+  @include darkmode;
   --logo: var(--white);
   --site-name: var(--white);
   --site-time: var(--colormode11-white);
@@ -823,8 +782,9 @@
 }
 
 :root.color12 {
-  @include darkmode;
   --background: var(--colormode12);
+
+  @include darkmode;
   --logo: var(--white);
   --site-name: var(--white);
   --site-time: var(--colormode12-white);
@@ -870,6 +830,8 @@
 }
 
 :root.darkmode {
+  --background: var(--black);
+
   @include darkmode;
   --white-forDarkMode: var(--black);
   --white-dark-forDarkMode: var(--black-dark);
@@ -879,7 +841,6 @@
   --white-transparent-forDarkMode: var(--black-transparent);
   --white-transparent-high-forDarkMode: var(--black-transparent-high);
   --white-transparent-low-forDarkMode: var(--black-transparent-low);
-
   --black-forDarkMode: var(--white);
   --black-light-forDarkMode: var(--white-light);
   --black-super-light-forDarkMode: var(--white-super-light);
@@ -891,8 +852,6 @@
   --black-transparent-forDarkMode: var(--white-transparent);
   --black-transparent-high-forDarkMode: var(--white-transparent-high);
   --black-transparent-low-forDarkMode: var(--white-transparent-low);
-
-  --background: var(--black);
   --logo: var(--white);
   --site-name: var(--white);
   --site-time: var(--white-super-light);

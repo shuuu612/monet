@@ -197,260 +197,286 @@ export default {
   },
   computed: {
     getDesktop() {
-      return this.$store.getters['windowSize/getWindowWidth'] >= 768
+      return this.$store.getters['windowSize/getWindowWidth'] >= 768;
     },
     getDisplay() {
-      return this.$store.getters['windowSize/getWindowWidth'] < 576
+      return this.$store.getters['windowSize/getWindowWidth'] < 576;
     },
     getStatePC() {
       return {
         active: this.$store.getters['devicePattern/getActivePC'],
-        disabled: this.$store.getters['devicePattern/getDisabledPC']
+        disabled: this.$store.getters['devicePattern/getDisabledPC'],
       };
     },
     getStateTB() {
       return {
         active: this.$store.getters['devicePattern/getActiveTB'],
-        disabled: this.$store.getters['devicePattern/getDisabledTB']
+        disabled: this.$store.getters['devicePattern/getDisabledTB'],
       };
     },
     getStateSP() {
       return {
         active: this.$store.getters['devicePattern/getActiveSP'],
-        disabled: this.$store.getters['devicePattern/getDisabledSP']
+        disabled: this.$store.getters['devicePattern/getDisabledSP'],
       };
     },
     getDarkmodeOn() {
       return {
-        active: this.$store.getters['darkmode/getSelectedOn']
+        active: this.$store.getters['darkmode/getSelectedOn'],
       };
     },
     getDarkmodeOff() {
       return {
-        active: this.$store.getters['darkmode/getSelectedOff']
+        active: this.$store.getters['darkmode/getSelectedOff'],
       };
     },
     getDarkmodeOs() {
       return {
-        active: this.$store.getters['darkmode/getSelectedOs']
+        active: this.$store.getters['darkmode/getSelectedOs'],
       };
     },
     getDarkmodeOnDisabled() {
-      return this.$store.getters['darkmode/getSelectedOn']
+      return this.$store.getters['darkmode/getSelectedOn'];
     },
     getDarkmodeOffDisabled() {
-      return this.$store.getters['darkmode/getSelectedOff']
+      return this.$store.getters['darkmode/getSelectedOff'];
     },
     getDarkmodeOsDisabled() {
-      return this.$store.getters['darkmode/getSelectedOs']
+      return this.$store.getters['darkmode/getSelectedOs'];
     },
     getSliderValue() {
-      return  this.$store.getters['slider/getValue']
+      return this.$store.getters['slider/getValue'];
     },
     getDeviceCheckboxChecked() {
-      return  { on: this.$store.getters['devicePattern/getMultidevaice'], off: !this.$store.getters['devicePattern/getMultidevaice'] }
+      return {
+        on: this.$store.getters['devicePattern/getMultidevaice'],
+        off: !this.$store.getters['devicePattern/getMultidevaice'],
+      };
     },
     getSliderCheckboxChecked() {
-      return  { on: this.$store.getters['slider/getAutoSizing'], off: !this.$store.getters['slider/getAutoSizing'] }
+      return { on: this.$store.getters['slider/getAutoSizing'], off: !this.$store.getters['slider/getAutoSizing'] };
     },
     getColor1Checked() {
-      return  { on: this.$store.getters['colormode/getColor1'], off: !this.$store.getters['colormode/getColor1'] }
+      return { on: this.$store.getters['colormode/getColor1'], off: !this.$store.getters['colormode/getColor1'] };
     },
     getColor2Checked() {
-      return  { on: this.$store.getters['colormode/getColor2'], off: !this.$store.getters['colormode/getColor2'] }
+      return { on: this.$store.getters['colormode/getColor2'], off: !this.$store.getters['colormode/getColor2'] };
     },
     getColor3Checked() {
-      return  { on: this.$store.getters['colormode/getColor3'], off: !this.$store.getters['colormode/getColor3'] }
+      return { on: this.$store.getters['colormode/getColor3'], off: !this.$store.getters['colormode/getColor3'] };
     },
     getColor4Checked() {
-      return  { on: this.$store.getters['colormode/getColor4'], off: !this.$store.getters['colormode/getColor4'] }
+      return { on: this.$store.getters['colormode/getColor4'], off: !this.$store.getters['colormode/getColor4'] };
     },
     getColor5Checked() {
-      return  { on: this.$store.getters['colormode/getColor5'], off: !this.$store.getters['colormode/getColor5'] }
+      return { on: this.$store.getters['colormode/getColor5'], off: !this.$store.getters['colormode/getColor5'] };
     },
     getColor6Checked() {
-      return  { on: this.$store.getters['colormode/getColor6'], off: !this.$store.getters['colormode/getColor6'] }
+      return { on: this.$store.getters['colormode/getColor6'], off: !this.$store.getters['colormode/getColor6'] };
     },
     getColor7Checked() {
-      return  { on: this.$store.getters['colormode/getColor7'], off: !this.$store.getters['colormode/getColor7'] }
+      return { on: this.$store.getters['colormode/getColor7'], off: !this.$store.getters['colormode/getColor7'] };
     },
     getColor8Checked() {
-      return  { on: this.$store.getters['colormode/getColor8'], off: !this.$store.getters['colormode/getColor8'] }
+      return { on: this.$store.getters['colormode/getColor8'], off: !this.$store.getters['colormode/getColor8'] };
     },
     getColor9Checked() {
-      return  { on: this.$store.getters['colormode/getColor9'], off: !this.$store.getters['colormode/getColor9'] }
+      return { on: this.$store.getters['colormode/getColor9'], off: !this.$store.getters['colormode/getColor9'] };
     },
     getColor10Checked() {
-      return  { on: this.$store.getters['colormode/getColor10'], off: !this.$store.getters['colormode/getColor10'] }
+      return { on: this.$store.getters['colormode/getColor10'], off: !this.$store.getters['colormode/getColor10'] };
     },
     getColor11Checked() {
-      return  { on: this.$store.getters['colormode/getColor11'], off: !this.$store.getters['colormode/getColor11'] }
+      return { on: this.$store.getters['colormode/getColor11'], off: !this.$store.getters['colormode/getColor11'] };
     },
     getColor12Checked() {
-      return  { on: this.$store.getters['colormode/getColor12'], off: !this.$store.getters['colormode/getColor12'] }
+      return { on: this.$store.getters['colormode/getColor12'], off: !this.$store.getters['colormode/getColor12'] };
     },
     getDevicePcDisabled() {
-      return this.$store.getters['devicePattern/getDisabledPC']
+      return this.$store.getters['devicePattern/getDisabledPC'];
     },
     getDeviceTbDisabled() {
-      return this.$store.getters['devicePattern/getDisabledTB']
+      return this.$store.getters['devicePattern/getDisabledTB'];
     },
     getDeviceSpDisabled() {
-      return this.$store.getters['devicePattern/getDisabledSP']
+      return this.$store.getters['devicePattern/getDisabledSP'];
     },
     getMultideviceDisabled() {
-      return { disabled: this.multideviceDisabled }
+      return { disabled: this.multideviceDisabled };
     },
     getScaleValue() {
-      const steps = this.$store.getters["slider/getSteps"]
-      return steps[0] ? 1 : steps[1] ? 2 : steps[2] ? 3 : steps[3] ? 4 : steps[4] ? 5 : steps[5] ? 6 : steps[6] ? 7 : steps[7] ? 8 : steps[8] ? 9 : steps[9] ? 10 : steps[10] ? 11 : ''
+      const steps = this.$store.getters['slider/getSteps'];
+      return steps[0]
+        ? 1
+        : steps[1]
+        ? 2
+        : steps[2]
+        ? 3
+        : steps[3]
+        ? 4
+        : steps[4]
+        ? 5
+        : steps[5]
+        ? 6
+        : steps[6]
+        ? 7
+        : steps[7]
+        ? 8
+        : steps[8]
+        ? 9
+        : steps[9]
+        ? 10
+        : steps[10]
+        ? 11
+        : '';
     },
     getSliderDownButtonDisabled() {
       // 現在のスライダーステップが０だったら無効化
-      return { disabled: this.$store.getters["slider/getSteps"][0]}
+      return { disabled: this.$store.getters['slider/getSteps'][0] };
     },
     getSliderUpButtonDisabled() {
       // 現在のスライダーステップが最大値だったら無効化
-      return { disabled: this.$store.getters["slider/getValue"] === this.$store.getters["slider/getMaxValue"]}
+      return { disabled: this.$store.getters['slider/getValue'] === this.$store.getters['slider/getMaxValue'] };
     },
     gatMaxValue() {
-      return this.$store.getters["slider/getMaxSteps"]
+      return this.$store.getters['slider/getMaxSteps'];
     },
   },
-  created() {
-  },
+  created() {},
   mounted() {
+    window.addEventListener('load', this.sliderInitialSet);
 
-    window.addEventListener('load', this.sliderInitialSet)
-    
-    window.matchMedia("(min-width:576px)").addEventListener("change", this.changeMultideviceDisabled);
+    window.matchMedia('(min-width:576px)').addEventListener('change', this.changeMultideviceDisabled);
   },
   beforeDestroy() {
+    window.removeEventListener('load', this.sliderInitialSet);
 
-    window.removeEventListener('load', this.sliderInitialSet)
-
-    window.matchMedia("(min-width:576px)").removeEventListener("change", this.changeMultideviceDisabled);
+    window.matchMedia('(min-width:576px)').removeEventListener('change', this.changeMultideviceDisabled);
   },
   methods: {
     openMenu() {
       this.menuOpen = !this.menuOpen;
-      if(this.menuOpenDelay) {
-        setTimeout(()=>{this.menuOpenDelay = false},260);
-      }else {
+      if (this.menuOpenDelay) {
+        setTimeout(() => {
+          this.menuOpenDelay = false;
+        }, 260);
+      } else {
         this.menuOpenDelay = true;
       }
-      if(!this.menuOpen) this.$store.dispatch('slider/pushDecidedSteps');
+      if (!this.menuOpen) this.$store.dispatch('slider/pushDecidedSteps');
     },
     closeMenu() {
-        this.menuOpen = false;
-        setTimeout(()=>{this.menuOpenDelay = false},260);
-        this.$store.dispatch('slider/pushDecidedSteps');
+      this.menuOpen = false;
+      setTimeout(() => {
+        this.menuOpenDelay = false;
+      }, 260);
+      this.$store.dispatch('slider/pushDecidedSteps');
     },
     sliderChange(event) {
-      this.$store.dispatch('slider/pushSlider',event.target.value)
+      this.$store.dispatch('slider/pushSlider', event.target.value);
 
       // 親コンポーネントでダミーコンテンツ作成関数を実行
-      this.$emit('sliderChange')
+      this.$emit('sliderChange');
     },
     sliderUp() {
-      const nowValue = this.$store.getters["slider/getValue"]
-      if(nowValue < 1) {
-        this.$store.dispatch('slider/pushSlider',(nowValue*1000 + 0.075*1000)/1000)
+      const nowValue = this.$store.getters['slider/getValue'];
+      if (nowValue < 1) {
+        this.$store.dispatch('slider/pushSlider', (nowValue * 1000 + 0.075 * 1000) / 1000);
         // 親コンポーネントでダミーコンテンツ作成関数を実行
-        this.$emit('sliderChange')
+        this.$emit('sliderChange');
       }
     },
     sliderDown() {
-      const nowValue = this.$store.getters["slider/getValue"]
-      if(nowValue > 0.25) {
-        this.$store.dispatch('slider/pushSlider',(nowValue*1000 - 0.075*1000)/1000)
+      const nowValue = this.$store.getters['slider/getValue'];
+      if (nowValue > 0.25) {
+        this.$store.dispatch('slider/pushSlider', (nowValue * 1000 - 0.075 * 1000) / 1000);
         // 親コンポーネントでダミーコンテンツ作成関数を実行
-        this.$emit('sliderChange')
+        this.$emit('sliderChange');
       }
     },
     sliderInitialSet() {
-      this.$store.dispatch('slider/pushSliderInitial')
+      this.$store.dispatch('slider/pushSliderInitial');
 
       // マルチデバイスの利用可否の初期値を設定
       this.changeMultideviceDisabled();
     },
     clickDevicePc() {
-      this.$store.dispatch('devicePattern/pushPC')
-      this.$emit('deviceChange')
+      this.$store.dispatch('devicePattern/pushPC');
+      this.$emit('deviceChange');
     },
     clickDeviceTb() {
-      this.$store.dispatch('devicePattern/pushTB')
-      this.$emit('deviceChange')
+      this.$store.dispatch('devicePattern/pushTB');
+      this.$emit('deviceChange');
     },
     clickDeviceSp() {
-      this.$store.dispatch('devicePattern/pushSP')
-      this.$emit('deviceChange')
+      this.$store.dispatch('devicePattern/pushSP');
+      this.$emit('deviceChange');
     },
     deviceCheckboxChange() {
-      this.$store.dispatch('devicePattern/pushMultidevaice')
-      if(!this.$store.getters["devicePattern/getMultidevaice"]) {
-        this.$emit('deviceChange')
+      this.$store.dispatch('devicePattern/pushMultidevaice');
+      if (!this.$store.getters['devicePattern/getMultidevaice']) {
+        this.$emit('deviceChange');
       }
     },
     sliderCheckboxChange() {
-      this.$store.dispatch('slider/pushAutoSizing')
-      this.$emit('autoSizing')
+      this.$store.dispatch('slider/pushAutoSizing');
+      this.$emit('autoSizing');
     },
     colormodeChange(key) {
-      if(key === 1) {
-        this.$store.dispatch('colormode/pushColor1')
-      }else if(key === 2) {
-        this.$store.dispatch('colormode/pushColor2')
-      }else if(key === 3) {
-        this.$store.dispatch('colormode/pushColor3')
-      }else if(key === 4) {
-        this.$store.dispatch('colormode/pushColor4')
-      }else if(key === 5) {
-        this.$store.dispatch('colormode/pushColor5')
-      }else if(key === 6) {
-        this.$store.dispatch('colormode/pushColor6')
-      }else if(key === 7) {
-        this.$store.dispatch('colormode/pushColor7')
-      }else if(key === 8) {
-        this.$store.dispatch('colormode/pushColor8')
-      }else if(key === 9) {
-        this.$store.dispatch('colormode/pushColor9')
-      }else if(key === 10) {
-        this.$store.dispatch('colormode/pushColor10')
-      }else if(key === 11) {
-        this.$store.dispatch('colormode/pushColor11')
-      }else if(key === 12) {
-        this.$store.dispatch('colormode/pushColor12')
-      }else {
-        this.$store.dispatch('colormode/pushRandom')
+      if (key === 1) {
+        this.$store.dispatch('colormode/pushColor1');
+      } else if (key === 2) {
+        this.$store.dispatch('colormode/pushColor2');
+      } else if (key === 3) {
+        this.$store.dispatch('colormode/pushColor3');
+      } else if (key === 4) {
+        this.$store.dispatch('colormode/pushColor4');
+      } else if (key === 5) {
+        this.$store.dispatch('colormode/pushColor5');
+      } else if (key === 6) {
+        this.$store.dispatch('colormode/pushColor6');
+      } else if (key === 7) {
+        this.$store.dispatch('colormode/pushColor7');
+      } else if (key === 8) {
+        this.$store.dispatch('colormode/pushColor8');
+      } else if (key === 9) {
+        this.$store.dispatch('colormode/pushColor9');
+      } else if (key === 10) {
+        this.$store.dispatch('colormode/pushColor10');
+      } else if (key === 11) {
+        this.$store.dispatch('colormode/pushColor11');
+      } else if (key === 12) {
+        this.$store.dispatch('colormode/pushColor12');
+      } else {
+        this.$store.dispatch('colormode/pushRandom');
       }
-      this.$store.dispatch('darkmode/pushDarkmodeOff')
-      this.$emit('colormodeChange')
+      this.$store.dispatch('darkmode/pushDarkmodeOff');
+      this.$emit('colormodeChange');
     },
     clickDarkmode(key) {
-      if(key === 'on') {
-        this.$store.dispatch('darkmode/pushDarkmodeOn')
-      }else if(key === 'off') {
-        this.$store.dispatch('darkmode/pushDarkmodeOff')
-      }else if(key === 'os') {
-        this.$store.dispatch('darkmode/pushDarkmodeOs')
+      if (key === 'on') {
+        this.$store.dispatch('darkmode/pushDarkmodeOn');
+      } else if (key === 'off') {
+        this.$store.dispatch('darkmode/pushDarkmodeOff');
+      } else if (key === 'os') {
+        this.$store.dispatch('darkmode/pushDarkmodeOs');
       }
-      this.$emit('colormodeChange')
+      this.$emit('colormodeChange');
     },
     changeMultideviceDisabled() {
-      const windowWidth = window.innerWidth // ウィンドウサイズ
-      if(windowWidth < 576) {
+      const windowWidth = window.innerWidth; // ウィンドウサイズ
+      if (windowWidth < 576) {
         this.multideviceDisabled = true;
         // マルチデバイスが有効になっている場合は解除する
-        if(this.$store.getters["devicePattern/getMultidevaice"]) {
+        if (this.$store.getters['devicePattern/getMultidevaice']) {
           // 手動調整中の場合は自動調整にする
-          if (!this.$store.getters["slider/getAutoSizing"]) {
-            this.$store.dispatch("slider/pushAutoSizing");
+          if (!this.$store.getters['slider/getAutoSizing']) {
+            this.$store.dispatch('slider/pushAutoSizing');
           }
           this.deviceCheckboxChange();
-          this.$emit('multideviceCancel')
+          this.$emit('multideviceCancel');
         }
-      }else {
+      } else {
         this.multideviceDisabled = false;
       }
     },
@@ -460,13 +486,13 @@ export default {
 
 <style lang="scss" scoped>
 .mask {
-  background-color: var(--black-transparent);
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 100;
   width: 100vw;
   height: 100vh;
-  z-index: 100;
+  background-color: var(--black-transparent);
 }
 
 .mask-enter-active {
@@ -477,26 +503,26 @@ export default {
   transition: opacity .25s ease-in;
 }
 
-.mask-enter, .mask-leave-to {
+.mask-enter,.mask-leave-to {
   opacity: 0;
 }
 .menuBtns {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  position: relative;
 }
 
 .menuBtn {
   display: flex;
   align-items: center;
   justify-content: center;
-  user-select: none;
-  cursor: pointer;
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  
+  cursor: pointer;
+
+  user-select: none;
   @include hover() {
     background-color: var(--tool-button-hover);
   }
@@ -506,20 +532,21 @@ export default {
 }
 
 .menuLink {
-  width: inherit;
-  height: inherit;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 5px;
+  width: inherit;
+  height: inherit;
   text-decoration: none;
   font-size: var(--font-size-md);
-  padding: 5px;
 }
 
 .buttonImage {
   height: 18px;
-  fill: var(--favorite-icon-stroke);
   transition: transform .25s;
+
+  fill: var(--favorite-icon-stroke);
 }
 
 .title {
@@ -527,32 +554,26 @@ export default {
   color: var(--black-forDarkMode);
 }
 .menu {
-  width: 400px;
-  max-width: 95vw;
-  border: 1px var(--menu-border) solid;
   position: absolute;
   top: 45px;
   right: -66px;
-  margin: auto;
-  background-color: var(--menu-background);
-  padding: 20px;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-10px);
-  transition: opacity .2s, transform .2s;
-  overflow-y: auto;
   z-index: 150;
+  visibility: hidden;
+  overflow-y: auto;
+  margin: auto;
+  padding: 20px;
+  max-width: 95vw;
+  width: 400px;
+  border: 1px var(--menu-border) solid;
+  background-color: var(--menu-background);
   color: var(--menu-text);
-  &.open {
-    opacity: 1;
-    transform: translateY(0);
-    visibility: visible;
-  }
+  opacity: 0;
+  transition: opacity .2s, transform .2s;
+  transform: translateY(-10px);
+
   @include responsive(xs) {
-    
   }
   @include responsive(sm) {
-    
   }
   @include responsive(md) {
     position: absolute;
@@ -561,21 +582,23 @@ export default {
     left: auto;
   }
   @include responsive(lg) {
-    
   }
   @include responsive(xl) {
-    
   }
   @include responsive(xxl) {
-    
+  }
+  &.open {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 .sideMenuContent {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
   padding-bottom: 100px;
+  width: 100%;
 }
 
 .controllerTitleWrapper {
@@ -587,8 +610,8 @@ export default {
 
 .controllerTitle {
   color: var(--menu-text);
-  font-size: var(--font-size-xs);
   font-weight: 500;
+  font-size: var(--font-size-xs);
 }
 
 .controllerItems {
@@ -597,17 +620,17 @@ export default {
   justify-content: center;
   margin-top: 14px;
   width: 100%;
-  background-color: var(--menu-button-background);
   border-radius: 5px;
+  background-color: var(--menu-button-background);
 }
 
 .controllerItem {
+  position: relative;
   display: flex;
   align-items: center;
+  flex-grow: 1;
   justify-content: center;
-  flex-grow:1;
   height: 50px;
-  position: relative;
   &:first-child {
     border-radius: 5px 0 0 5px;
   }
@@ -618,7 +641,7 @@ export default {
     pointer-events: none;
   }
   &.threeItems {
-    width: 33.3%
+    width: 33.3%;
   }
 }
 .controllerButton {
@@ -628,15 +651,15 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
+  margin: 4px;
   width: 93.1%;
   height: 42px;
-  margin: 4px;
   border-radius: 4px;
   opacity: 0;
   transition: opacity .2s;
   &.active {
-    opacity: 1;
     background-color: var(--menu-button-active);
+    opacity: 1;
   }
 }
 
@@ -645,94 +668,94 @@ export default {
 }
 
 .selectableRange {
+  margin-left: 20px;
+  padding: 4px 6px;
   border-radius: 3px;
   background-color: var(--menu-button-background);
   font-size: var(--font-size-xs);
-  margin-left: 20px;
-  padding: 4px 6px;
 }
 
 .sliderStyle {
+  position: relative;
+  justify-content: left;
   margin-top: 28px;
   margin-left: 10px;
   background-color: transparent;
-  justify-content: left;
-  position: relative;
 }
 
 .sliderButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 24px;
   height: 24px;
   border-radius: 3px;
   background-color: var(--menu-button-background);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   transition: background-color .2s;
+
   @include hover() {
     background-color: var(--menu-button-active);
   }
   &.disabled {
+    pointer-events: none;
+
     @include hover() {
       background-color: var(--menu-button-background);
     }
-    pointer-events: none;
   }
 }
 
 .sliderImageMinus {
   width: 12px;
+
   fill: var(--menu-comment);
 }
 
 .sliderImagePlus {
   width: 12px;
+
   fill: var(--menu-comment);
 }
 .scale {
-  width: 24px;
-  height: 24px;
-  background-color: var(--menu-button-background);
-  border-radius: 2px;
   display: none;
   align-items: center;
   justify-content: center;
-  padding-bottom: 1px;
   margin-left: 16px;
+  padding-bottom: 1px;
+  width: 24px;
+  height: 24px;
+  border-radius: 2px;
+  background-color: var(--menu-button-background);
+
   @include responsive(xs) {
     display: flex;
   }
   @include responsive(sm) {
-    
   }
   @include responsive(md) {
-    
   }
   @include responsive(lg) {
-    
   }
   @include responsive(xl) {
-    
   }
   @include responsive(xxl) {
-    
   }
 }
 
 .sliderNotice {
-  width: 100%;
-  padding: 10px;
   display: flex;
   align-items: center;
   justify-content: left;
-  background-color: var(--grey-super-light);
   margin-top: 20px;
+  padding: 10px;
+  width: 100%;
   border-radius: 4px;
+  background-color: var(--grey-super-light);
 }
 
 .sliderNoticeIcon {
-  width: 16px;
   margin-right: 8px;
+  width: 16px;
 }
 
 .sliderNoticeText {
@@ -751,36 +774,36 @@ export default {
   display: flex;
   align-items: center;
   justify-content: left;
-  background-color: transparent;
   margin-top: 22px;
+  background-color: transparent;
 }
 
 .check {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-top: 22px;
-  position: relative;
-  width: 100%;
   padding-right: 10px;
+  width: 100%;
   .text {
     font-size: var(--font-size-xs);
   }
   .checkboxOuter {
-    width: 32px;
-    height: 18px;
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
+    width: 32px;
+    height: 18px;
   }
   .switch {
-    width: 18px;
-    height: 18px;
-    border-radius: 10px;
     position: absolute;
     top: 0;
     left: 0;
+    width: 18px;
+    height: 18px;
+    border-radius: 10px;
     transition: transform .1s, background-color .1s;
   }
   .background {
@@ -791,8 +814,8 @@ export default {
   }
   &.on {
     .switch {
-      transform: translateX(15px);
       background-color: var(--blue-light);
+      transform: translateX(15px);
     }
     .background {
       background-color: var(--blue-transparent);
@@ -843,10 +866,10 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: var(--font-size-xxs);
   margin-top: 3px;
   color: var(--black-ultra-light);
   font-weight: 400;
+  font-size: var(--font-size-xxs);
   .active & {
     color: var(--menu-text);
     font-weight: 500;
@@ -857,32 +880,34 @@ export default {
 }
 
 // スライダーのスタイル
-input[type="range"] {
-  -webkit-appearance: none;                                 // お決まり
-  appearance: none;                                         // お決まり
-  cursor: pointer;                                          // カーソル
-  outline: none;                                            // スライダーのアウトライン
-  background: var(--menu-button-background);                // スライダーの背景色
-  height: 3px;                                              // スライダーの高さ
-  width: 222px;                                             // スライダーの幅
-  border-radius: 10px;                                      // スライダーの端の丸み
+input[type='range'] {
+  width: 222px; // スライダーの幅
+  height: 3px; // スライダーの高さ
+  outline: none; // スライダーのアウトライン
+  border-radius: 10px; // スライダーの端の丸み
+  background: var(--menu-button-background); // スライダーの背景色
+  cursor: pointer; // カーソル
+
+  -webkit-appearance: none; // お決まり
+          appearance: none; // お決まり
   // -webkit-向けのつまみ
   &::-webkit-slider-thumb {
-    -webkit-appearance: none;                               // お決まり
-    background: var(--menu-button-active);                // 背景色
-    width: 16px;                                            // 幅
-    height: 16px;                                           // 高さ
-    border-radius: 50%;                                     // 円形に
-    box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.15);    // 影
+    width: 16px; // 幅
+    height: 16px; // 高さ
+    border-radius: 50%; // 円形に
+    background: var(--menu-button-active); // 背景色
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, .15); // 影
+
+    -webkit-appearance: none; // お決まり
   }
   // -moz-向けのつまみ
   &::-moz-range-thumb {
-    background: var(--menu-button-active);                // 背景色
-    width: 18px;                                            // 幅
-    height: 18px;                                           // 高さ
-    border-radius: 50%;                                     // 円形に
-    box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.15);    // 影
-    border: none;                                           // デフォルトの線を消す
+    width: 18px; // 幅
+    height: 18px; // 高さ
+    border: none; // デフォルトの線を消す
+    border-radius: 50%; // 円形に
+    background: var(--menu-button-active); // 背景色
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, .15); // 影
   }
   // Firefoxで点線が周りに表示されてしまう問題の解消
   &::-moz-focus-outer {
@@ -890,20 +915,20 @@ input[type="range"] {
   }
   // つまみをドラッグしているときのスタイル
   &:active::-webkit-slider-thumb {
-    box-shadow: 0px 5px 10px -2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 5px 10px -2px rgba(0, 0, 0, .3);
   }
 }
 
 .partitionLine {
+  margin: 30px auto 20px auto;
   width: 100%;
   height: 2px;
-  margin: 30px auto 20px auto;
   background-color: var(--menu-button-background);
 }
 
 .comment {
-  font-size: var(--font-size-xs);
   color: var(--menu-comment);
+  font-size: var(--font-size-xs);
   line-height: 1.6em;
   &:nth-child(1) {
     margin-top: 20px;
@@ -916,8 +941,8 @@ input[type="range"] {
 .text {
   color: var(--menu-text);
   &.color {
-    width: 50px;
     margin-bottom: 2px;
+    width: 50px;
   }
 }
 
@@ -961,8 +986,8 @@ input[type="range"] {
       background-color: var(--colormode9);
     }
     &.color10 {
-      background-color: var(--white);
       border: 1px var(--gray7) solid;
+      background-color: var(--white);
     }
     &.color11 {
       background-color: var(--colormode11);
@@ -1000,8 +1025,8 @@ input[type="range"] {
       background-color: var(--colormode9-transparent);
     }
     &.color10 {
-      background-color: var(--gray4);
       border: 1px var(--gray7) solid;
+      background-color: var(--gray4);
     }
     &.color11 {
       background-color: var(--colormode11-transparent);
@@ -1012,7 +1037,6 @@ input[type="range"] {
   }
 }
 .invalid {
-
   .on & {
     fill: transparent;
   }
@@ -1053,4 +1077,5 @@ input[type="range"] {
     fill: var(--colormode12);
   }
 }
+
 </style>

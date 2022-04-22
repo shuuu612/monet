@@ -8,78 +8,78 @@
       <div class="errorCode">{{error.statusCode}}</div>
       <h1 class="comment">エラーが発生しました。</h1>
     </template>
-    <a href="https://monet-design.com/" class="top">ホームに戻る</a>
+    <nuxt-link to="/" class="top">ホームに戻る</nuxt-link>
   </div>
 </template>
 
 <script>
-  export default {
-    props: ['error'],
-    layout: 'error', // エラーページ用のカスタムレイアウトを指定できます
-    data() {
-      return {   
-        colormode: [],
-      };
-    },
-    head() {
-      return {
-        htmlAttrs: {
-          class: this.colormode
-        },
-      };
-    },
-    mounted(){
-      // ローカルストレージの取得
-      if (this.$storageAvailable('localStorage')) {
-          this.getLocalStorage();
-      }
-      else {
-          console.log("ブラウザのローカルストレージがオフになっています。");
-      }
-      // ダークモードの初期設定
-      this.darkModeSetting();
-    },
-    methods: {
-      darkModeSetting() {
-        if(this.$store.getters["darkmode/getActive"]) {
-          this.colormode = [this.$store.getters["colormode/getColormode"],'darkmode']
-        }else {
-          this.colormode = [this.$store.getters["colormode/getColormode"]];
-        }
+export default {
+  layout: 'error', // エラーページ用のカスタムレイアウトを指定できます
+  props: ['error'],
+  data() {
+    return {
+      colormode: [],
+    };
+  },
+  head() {
+    return {
+      htmlAttrs: {
+        class: this.colormode,
       },
-      getLocalStorage() {
-            // ダークモード
-            const darkmodeJson = localStorage.getItem("darkmode");
-            const darkmode = JSON.parse(darkmodeJson);
-            if (darkmode !== null) {
-                this.$store.dispatch("darkmode/pushLocalStorage", darkmode);
-            }
-            // カラーモード
-            const colormodeJson = localStorage.getItem("colormode");
-            const colormode = JSON.parse(colormodeJson);
-            if (colormode !== null) {
-                this.$store.dispatch("colormode/pushLocalStorage", colormode);
-            }
-        },
+    };
+  },
+  mounted() {
+    // ローカルストレージの取得
+    if (this.$storageAvailable('localStorage')) {
+      this.getLocalStorage();
+    } else {
+      console.log('ブラウザのローカルストレージがオフになっています。');
     }
-  }
+    // ダークモードの初期設定
+    this.darkModeSetting();
+  },
+  methods: {
+    darkModeSetting() {
+      if (this.$store.getters['darkmode/getActive']) {
+        this.colormode = [this.$store.getters['colormode/getColormode'], 'darkmode'];
+      } else {
+        this.colormode = [this.$store.getters['colormode/getColormode']];
+      }
+    },
+    getLocalStorage() {
+      // ダークモード
+      const darkmodeJson = localStorage.getItem('darkmode');
+      const darkmode = JSON.parse(darkmodeJson);
+      if (darkmode !== null) {
+        this.$store.dispatch('darkmode/pushLocalStorage', darkmode);
+      }
+      // カラーモード
+      const colormodeJson = localStorage.getItem('colormode');
+      const colormode = JSON.parse(colormodeJson);
+      if (colormode !== null) {
+        this.$store.dispatch('colormode/pushLocalStorage', colormode);
+      }
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
 .errorWrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  padding-bottom: 200px;
+  height: 100vh;
   background-color: var(--background);
   color: var(--site-name);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  padding-bottom: 200px;
 }
 .errorCode {
-  font-size: 100px;
   text-align: center;
   font-weight: 400;
+  font-size: 100px;
+
   @include responsive(xs) {
     font-size: 120px;
   }
@@ -100,20 +100,22 @@
   }
 }
 .comment {
-  font-size: var(--font-size-3xl);
   text-align: center;
+  font-size: var(--font-size-3xl);
 }
 .top {
-  font-size: var(--font-size-md);
-  text-align: center;
-  text-decoration: none;
-  background-color: var(--site-name);
-  color: var(--background);
   margin-top: 50px;
   padding: 8px 20px;
   border-radius: 50px;
+  background-color: var(--site-name);
+  color: var(--background);
+  text-align: center;
+  text-decoration: none;
   font-weight: 400;
-  user-select: none;
+  font-size: var(--font-size-md);
   cursor: pointer;
+
+  user-select: none;
 }
+
 </style>

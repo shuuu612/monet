@@ -16,58 +16,53 @@
 <script>
 export default {
   data() {
-    return {
-    };
+    return {};
   },
   computed: {
     getDisplay() {
-      return { display: this.$store.getters['notice/getDisplay'] }
+      return { display: this.$store.getters['notice/getDisplay'] };
     },
     getText() {
-      return this.$store.getters['notice/getText']
+      return this.$store.getters['notice/getText'];
     },
     getType() {
       return {
         error: this.$store.getters['notice/getType'] === 1,
         caution: this.$store.getters['notice/getType'] === 2,
-        normal: this.$store.getters['notice/getType'] === 3
-      }
+        normal: this.$store.getters['notice/getType'] === 3,
+      };
     },
     getError() {
-      return this.$store.getters['notice/getType'] === 1
+      return this.$store.getters['notice/getType'] === 1;
     },
     getCaution() {
-      return this.$store.getters['notice/getType'] === 2
+      return this.$store.getters['notice/getType'] === 2;
     },
     getNormal() {
-      return this.$store.getters['notice/getType'] === 3
+      return this.$store.getters['notice/getType'] === 3;
     },
   },
-  created() {
-  },
-  mounted() {
-  },
-  beforeDestroy() {
-  },
-  methods: {
-  },
+  created() {},
+  mounted() {},
+  beforeDestroy() {},
+  methods: {},
 };
 </script>
 
 <style lang="scss" scoped>
 .notice {
-  height: 70px;
-  border-radius: 4px;
   position: fixed;
   top: 8px;
   right: 8px;
-  padding: 20px;
   z-index: 150;
   display: flex;
   align-items: center;
   justify-content: left;
-  transform: translateX(calc(100% + 20px));
+  padding: 20px;
+  height: 70px;
+  border-radius: 4px;
   transition: transform .3s;
+  transform: translateX(calc(100% + 20px));
 }
 
 .display {
@@ -75,39 +70,43 @@ export default {
 }
 
 .error {
-  background-color: var(--notice-error-background);
   border: 1px var(--notice-error-border) solid;
+  background-color: var(--notice-error-background);
 }
 
 .caution {
-  background-color: var(--notice-caution-background);
   border: 1px var(--notice-caution-border) solid;
+  background-color: var(--notice-caution-background);
 }
 
 .normal {
-  background-color: var(--notice-normal-background);
   border: 1px var(--notice-normal-border) solid;
+  background-color: var(--notice-normal-background);
 }
 
 .errorIcon {
   width: 16px;
+
   fill: #f16874;
 }
 
 .cautionIcon {
   width: 18px;
+
   fill: #ebdc0c;
 }
 
 .normalIcon {
   width: 18px;
+
   fill: #85d461;
 }
 
 .text {
+  margin-bottom: 2px;
+  margin-left: 5px;
   color: var(--black-light);
   font-size: var(--font-size-xs);
-  margin-left: 5px;
-  margin-bottom: 2px;
 }
+
 </style>

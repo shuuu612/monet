@@ -101,14 +101,14 @@
 </template>
 
 <script>
-const unifiedFormattingChar = function(key) {
-  return key.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
-}
-const unifiedFormattingArray = function(keys) {
-  return keys.map(function(key) {
-    return key.toLowerCase().replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 96));
-  })
-}
+const unifiedFormattingChar = function (key) {
+  return key.toLowerCase().replace(/[ぁ-ゖ]/g, (ch) => String.fromCharCode(ch.charCodeAt(0) + 96));
+};
+const unifiedFormattingArray = function (keys) {
+  return keys.map(function (key) {
+    return key.toLowerCase().replace(/[ぁ-ゖ]/g, (ch) => String.fromCharCode(ch.charCodeAt(0) + 96));
+  });
+};
 export default {
   props: {
     contents: {
@@ -184,24 +184,21 @@ export default {
   },
   computed: {
     getSelectedTag() {
-      return function(key) {
+      return function (key) {
         return { selected: this.selectedTag.find((item) => item.id === key) !== undefined };
-      }
-    }
+      };
+    },
   },
   watch: {
-      $route: 'setInitialTags'
-    },
+    $route: 'setInitialTags',
+  },
   mounted() {
     this.setInitialTags();
-
   },
-  beforeDestroy() {
-
-  },
+  beforeDestroy() {},
   methods: {
     setKeyword() {
-      if(!this.keyword) {
+      if (!this.keyword) {
         this.site.length = 0;
         this.displayingType = this.type;
         this.displayingImpression = this.impression;
@@ -216,13 +213,15 @@ export default {
       }
 
       // キーワードをスペースで分割
-      let key = []
-      if(this.keyword) {
-        if(this.keyword.includes('　') || this.keyword.includes(' ')) {
+      let key = [];
+      if (this.keyword) {
+        if (this.keyword.includes('　') || this.keyword.includes(' ')) {
           key = this.keyword.split(/\s/);
           // 最後スペースの場合に作成される空文字（''）を削除
-          key = key.filter(function(item) {return item !== ''});
-        }else {
+          key = key.filter(function (item) {
+            return item !== '';
+          });
+        } else {
           key.push(this.keyword);
         }
       }
@@ -234,181 +233,201 @@ export default {
       // サイト名を検索
       // ======================
       const contents = this.contents;
-      const filterContents = contents.filter(function(content) {
+      const filterContents = contents.filter(function (content) {
         // 検索対象を抽出
-        const name = content.name !== undefined ? unifiedFormattingChar(content.name) : "";
-        const url = content.url !== undefined ? unifiedFormattingChar(content.url) : "";
-        const keyword = (content.keyword !== undefined && content.keyword !== null) ? unifiedFormattingChar(content.keyword) : "";
+        const name = content.name !== undefined ? unifiedFormattingChar(content.name) : '';
+        const url = content.url !== undefined ? unifiedFormattingChar(content.url) : '';
+        const keyword =
+          content.keyword !== undefined && content.keyword !== null ? unifiedFormattingChar(content.keyword) : '';
 
         let matchingCount = 0;
-        unifiedKey.forEach(function(key) {
+        unifiedKey.forEach(function (key) {
           // 一致判定
-          const result = (name.length !== 0 ? name.includes(key) : false) ||
-                         (url.length !== 0 ? url.includes(key) : false) ||
-                         (keyword.length !== 0 ? keyword.includes(key) : false);
+          const result =
+            (name.length !== 0 ? name.includes(key) : false) ||
+            (url.length !== 0 ? url.includes(key) : false) ||
+            (keyword.length !== 0 ? keyword.includes(key) : false);
           // 検索キーワードに一致した場合はマッチングカウントをUP
-          if(result) matchingCount++;
-        })
+          if (result) matchingCount++;
+        });
         return unifiedKey.length === matchingCount;
-      })
+      });
       this.site = filterContents;
 
       // ======================
       // タグをフィルター
       // ======================
-      const filterType = this.type.filter(function(content) {
+      const filterType = this.type.filter(function (content) {
         // 検索対象を抽出
-        const name = content.name !== undefined ? unifiedFormattingChar(content.name) : "";
-        const id = content.id !== undefined ? unifiedFormattingChar(content.id) : "";
-        const keyword = (content.keyword !== undefined && content.keyword !== null) ? unifiedFormattingChar(content.keyword) : "";
+        const name = content.name !== undefined ? unifiedFormattingChar(content.name) : '';
+        const id = content.id !== undefined ? unifiedFormattingChar(content.id) : '';
+        const keyword =
+          content.keyword !== undefined && content.keyword !== null ? unifiedFormattingChar(content.keyword) : '';
 
         let matchingCount = 0;
-        unifiedKey.forEach(function(key) {
+        unifiedKey.forEach(function (key) {
           // 一致判定
-          const result = (name.length !== 0 ? name.includes(key) : false) ||
-                         (id.length !== 0 ? id.includes(key) : false) ||
-                         (keyword.length !== 0 ? keyword.includes(key) : false);
+          const result =
+            (name.length !== 0 ? name.includes(key) : false) ||
+            (id.length !== 0 ? id.includes(key) : false) ||
+            (keyword.length !== 0 ? keyword.includes(key) : false);
           // 検索キーワードに一致した場合はマッチングカウントをUP
-          if(result) matchingCount++;
-        })
+          if (result) matchingCount++;
+        });
         return unifiedKey.length === matchingCount;
-      })
-      const filterImpression = this.impression.filter(function(content) {
+      });
+      const filterImpression = this.impression.filter(function (content) {
         // 検索対象を抽出
-        const name = content.name !== undefined ? unifiedFormattingChar(content.name) : "";
-        const id = content.id !== undefined ? unifiedFormattingChar(content.id) : "";
-        const keyword = (content.keyword !== undefined && content.keyword !== null) ? unifiedFormattingChar(content.keyword) : "";
+        const name = content.name !== undefined ? unifiedFormattingChar(content.name) : '';
+        const id = content.id !== undefined ? unifiedFormattingChar(content.id) : '';
+        const keyword =
+          content.keyword !== undefined && content.keyword !== null ? unifiedFormattingChar(content.keyword) : '';
 
         let matchingCount = 0;
-        unifiedKey.forEach(function(key) {
+        unifiedKey.forEach(function (key) {
           // 一致判定
-          const result = (name.length !== 0 ? name.includes(key) : false) ||
-                         (id.length !== 0 ? id.includes(key) : false) ||
-                         (keyword.length !== 0 ? keyword.includes(key) : false);
+          const result =
+            (name.length !== 0 ? name.includes(key) : false) ||
+            (id.length !== 0 ? id.includes(key) : false) ||
+            (keyword.length !== 0 ? keyword.includes(key) : false);
           // 検索キーワードに一致した場合はマッチングカウントをUP
-          if(result) matchingCount++;
-        })
+          if (result) matchingCount++;
+        });
         return unifiedKey.length === matchingCount;
-      })
-      const filterIndustry = this.industry.filter(function(content) {
+      });
+      const filterIndustry = this.industry.filter(function (content) {
         // 検索対象を抽出
-        const name = content.name !== undefined ? unifiedFormattingChar(content.name) : "";
-        const id = content.id !== undefined ? unifiedFormattingChar(content.id) : "";
-        const keyword = (content.keyword !== undefined && content.keyword !== null) ? unifiedFormattingChar(content.keyword) : "";
+        const name = content.name !== undefined ? unifiedFormattingChar(content.name) : '';
+        const id = content.id !== undefined ? unifiedFormattingChar(content.id) : '';
+        const keyword =
+          content.keyword !== undefined && content.keyword !== null ? unifiedFormattingChar(content.keyword) : '';
 
         let matchingCount = 0;
-        unifiedKey.forEach(function(key) {
+        unifiedKey.forEach(function (key) {
           // 一致判定
-          const result = (name.length !== 0 ? name.includes(key) : false) ||
-                         (id.length !== 0 ? id.includes(key) : false) ||
-                         (keyword.length !== 0 ? keyword.includes(key) : false);
+          const result =
+            (name.length !== 0 ? name.includes(key) : false) ||
+            (id.length !== 0 ? id.includes(key) : false) ||
+            (keyword.length !== 0 ? keyword.includes(key) : false);
           // 検索キーワードに一致した場合はマッチングカウントをUP
-          if(result) matchingCount++;
-        })
+          if (result) matchingCount++;
+        });
         return unifiedKey.length === matchingCount;
-      })
-      const filterPickup = this.pickup.filter(function(content) {
+      });
+      const filterPickup = this.pickup.filter(function (content) {
         // 検索対象を抽出
-        const name = content.name !== undefined ? unifiedFormattingChar(content.name) : "";
-        const id = content.id !== undefined ? unifiedFormattingChar(content.id) : "";
-        const keyword = (content.keyword !== undefined && content.keyword !== null) ? unifiedFormattingChar(content.keyword) : "";
+        const name = content.name !== undefined ? unifiedFormattingChar(content.name) : '';
+        const id = content.id !== undefined ? unifiedFormattingChar(content.id) : '';
+        const keyword =
+          content.keyword !== undefined && content.keyword !== null ? unifiedFormattingChar(content.keyword) : '';
 
         let matchingCount = 0;
-        unifiedKey.forEach(function(key) {
+        unifiedKey.forEach(function (key) {
           // 一致判定
-          const result = (name.length !== 0 ? name.includes(key) : false) ||
-                         (id.length !== 0 ? id.includes(key) : false) ||
-                         (keyword.length !== 0 ? keyword.includes(key) : false);
+          const result =
+            (name.length !== 0 ? name.includes(key) : false) ||
+            (id.length !== 0 ? id.includes(key) : false) ||
+            (keyword.length !== 0 ? keyword.includes(key) : false);
           // 検索キーワードに一致した場合はマッチングカウントをUP
-          if(result) matchingCount++;
-        })
+          if (result) matchingCount++;
+        });
         return unifiedKey.length === matchingCount;
-      })
-      const filterTechnique = this.technique.filter(function(content) {
+      });
+      const filterTechnique = this.technique.filter(function (content) {
         // 検索対象を抽出
-        const name = content.name !== undefined ? unifiedFormattingChar(content.name) : "";
-        const id = content.id !== undefined ? unifiedFormattingChar(content.id) : "";
-        const keyword = (content.keyword !== undefined && content.keyword !== null) ? unifiedFormattingChar(content.keyword) : "";
+        const name = content.name !== undefined ? unifiedFormattingChar(content.name) : '';
+        const id = content.id !== undefined ? unifiedFormattingChar(content.id) : '';
+        const keyword =
+          content.keyword !== undefined && content.keyword !== null ? unifiedFormattingChar(content.keyword) : '';
 
         let matchingCount = 0;
-        unifiedKey.forEach(function(key) {
+        unifiedKey.forEach(function (key) {
           // 一致判定
-          const result = (name.length !== 0 ? name.includes(key) : false) ||
-                         (id.length !== 0 ? id.includes(key) : false) ||
-                         (keyword.length !== 0 ? keyword.includes(key) : false);
+          const result =
+            (name.length !== 0 ? name.includes(key) : false) ||
+            (id.length !== 0 ? id.includes(key) : false) ||
+            (keyword.length !== 0 ? keyword.includes(key) : false);
           // 検索キーワードに一致した場合はマッチングカウントをUP
-          if(result) matchingCount++;
-        })
+          if (result) matchingCount++;
+        });
         return unifiedKey.length === matchingCount;
-      })
-      const filterLayout = this.layout.filter(function(content) {
+      });
+      const filterLayout = this.layout.filter(function (content) {
         // 検索対象を抽出
-        const name = content.name !== undefined ? unifiedFormattingChar(content.name) : "";
-        const id = content.id !== undefined ? unifiedFormattingChar(content.id) : "";
-        const keyword = (content.keyword !== undefined && content.keyword !== null) ? unifiedFormattingChar(content.keyword) : "";
+        const name = content.name !== undefined ? unifiedFormattingChar(content.name) : '';
+        const id = content.id !== undefined ? unifiedFormattingChar(content.id) : '';
+        const keyword =
+          content.keyword !== undefined && content.keyword !== null ? unifiedFormattingChar(content.keyword) : '';
 
         let matchingCount = 0;
-        unifiedKey.forEach(function(key) {
+        unifiedKey.forEach(function (key) {
           // 一致判定
-          const result = (name.length !== 0 ? name.includes(key) : false) ||
-                         (id.length !== 0 ? id.includes(key) : false) ||
-                         (keyword.length !== 0 ? keyword.includes(key) : false);
+          const result =
+            (name.length !== 0 ? name.includes(key) : false) ||
+            (id.length !== 0 ? id.includes(key) : false) ||
+            (keyword.length !== 0 ? keyword.includes(key) : false);
           // 検索キーワードに一致した場合はマッチングカウントをUP
-          if(result) matchingCount++;
-        })
+          if (result) matchingCount++;
+        });
         return unifiedKey.length === matchingCount;
-      })
-      const filterColor = this.color.filter(function(content) {
+      });
+      const filterColor = this.color.filter(function (content) {
         // 検索対象を抽出
-        const name = content.name !== undefined ? unifiedFormattingChar(content.name) : "";
-        const id = content.id !== undefined ? unifiedFormattingChar(content.id) : "";
-        const keyword = (content.keyword !== undefined && content.keyword !== null) ? unifiedFormattingChar(content.keyword) : "";
+        const name = content.name !== undefined ? unifiedFormattingChar(content.name) : '';
+        const id = content.id !== undefined ? unifiedFormattingChar(content.id) : '';
+        const keyword =
+          content.keyword !== undefined && content.keyword !== null ? unifiedFormattingChar(content.keyword) : '';
 
         let matchingCount = 0;
-        unifiedKey.forEach(function(key) {
+        unifiedKey.forEach(function (key) {
           // 一致判定
-          const result = (name.length !== 0 ? name.includes(key) : false) ||
-                         (id.length !== 0 ? id.includes(key) : false) ||
-                         (keyword.length !== 0 ? keyword.includes(key) : false);
+          const result =
+            (name.length !== 0 ? name.includes(key) : false) ||
+            (id.length !== 0 ? id.includes(key) : false) ||
+            (keyword.length !== 0 ? keyword.includes(key) : false);
           // 検索キーワードに一致した場合はマッチングカウントをUP
-          if(result) matchingCount++;
-        })
+          if (result) matchingCount++;
+        });
         return unifiedKey.length === matchingCount;
-      })
-      const filterScheme = this.scheme.filter(function(content) {
+      });
+      const filterScheme = this.scheme.filter(function (content) {
         // 検索対象を抽出
-        const name = content.name !== undefined ? unifiedFormattingChar(content.name) : "";
-        const id = content.id !== undefined ? unifiedFormattingChar(content.id) : "";
-        const keyword = (content.keyword !== undefined && content.keyword !== null) ? unifiedFormattingChar(content.keyword) : "";
+        const name = content.name !== undefined ? unifiedFormattingChar(content.name) : '';
+        const id = content.id !== undefined ? unifiedFormattingChar(content.id) : '';
+        const keyword =
+          content.keyword !== undefined && content.keyword !== null ? unifiedFormattingChar(content.keyword) : '';
 
         let matchingCount = 0;
-        unifiedKey.forEach(function(key) {
+        unifiedKey.forEach(function (key) {
           // 一致判定
-          const result = (name.length !== 0 ? name.includes(key) : false) ||
-                         (id.length !== 0 ? id.includes(key) : false) ||
-                         (keyword.length !== 0 ? keyword.includes(key) : false);
+          const result =
+            (name.length !== 0 ? name.includes(key) : false) ||
+            (id.length !== 0 ? id.includes(key) : false) ||
+            (keyword.length !== 0 ? keyword.includes(key) : false);
           // 検索キーワードに一致した場合はマッチングカウントをUP
-          if(result) matchingCount++;
-        })
+          if (result) matchingCount++;
+        });
         return unifiedKey.length === matchingCount;
-      })
-      const filterTechnology = this.technology.filter(function(content) {
+      });
+      const filterTechnology = this.technology.filter(function (content) {
         // 検索対象を抽出
-        const name = content.name !== undefined ? unifiedFormattingChar(content.name) : "";
-        const id = content.id !== undefined ? unifiedFormattingChar(content.id) : "";
-        const keyword = (content.keyword !== undefined && content.keyword !== null) ? unifiedFormattingChar(content.keyword) : "";
+        const name = content.name !== undefined ? unifiedFormattingChar(content.name) : '';
+        const id = content.id !== undefined ? unifiedFormattingChar(content.id) : '';
+        const keyword =
+          content.keyword !== undefined && content.keyword !== null ? unifiedFormattingChar(content.keyword) : '';
 
         let matchingCount = 0;
-        unifiedKey.forEach(function(key) {
+        unifiedKey.forEach(function (key) {
           // 一致判定
-          const result = (name.length !== 0 ? name.includes(key) : false) ||
-                         (id.length !== 0 ? id.includes(key) : false) ||
-                         (keyword.length !== 0 ? keyword.includes(key) : false);
+          const result =
+            (name.length !== 0 ? name.includes(key) : false) ||
+            (id.length !== 0 ? id.includes(key) : false) ||
+            (keyword.length !== 0 ? keyword.includes(key) : false);
           // 検索キーワードに一致した場合はマッチングカウントをUP
-          if(result) matchingCount++;
-        })
+          if (result) matchingCount++;
+        });
         return unifiedKey.length === matchingCount;
-      })
+      });
       this.displayingType = filterType;
       this.displayingImpression = filterImpression;
       this.displayingIndustry = filterIndustry;
@@ -431,36 +450,76 @@ export default {
       let color = [];
       let scheme = [];
       let technology = [];
-      if(this.selectedTag.length > 0) {
-        site = this.selectedTag.filter(function(item) {return item.schema === 'site'});
-        site = site.map(function(item) {return item.id});
-        type = this.selectedTag.filter(function(item) {return item.schema === 'type'});
-        type = type.map(function(item) {return item.id});
-        impression = this.selectedTag.filter(function(item) {return item.schema === 'impression'});
-        impression = impression.map(function(item) {return item.id});
-        industry = this.selectedTag.filter(function(item) {return item.schema === 'industry'});
-        industry = industry.map(function(item) {return item.id});
-        pickup = this.selectedTag.filter(function(item) {return item.schema === 'pickup'});
-        pickup = pickup.map(function(item) {return item.id});
-        technique = this.selectedTag.filter(function(item) {return item.schema === 'technique'});
-        technique = technique.map(function(item) {return item.id});
-        layout = this.selectedTag.filter(function(item) {return item.schema === 'layout'});
-        layout = layout.map(function(item) {return item.id});
-        color = this.selectedTag.filter(function(item) {return item.schema === 'color'});
-        color = color.map(function(item) {return item.id});
-        scheme = this.selectedTag.filter(function(item) {return item.schema === 'scheme'});
-        scheme = scheme.map(function(item) {return item.id});
-        technology = this.selectedTag.filter(function(item) {return item.schema === 'technology'});
-        technology = technology.map(function(item) {return item.id});
+      if (this.selectedTag.length > 0) {
+        site = this.selectedTag.filter(function (item) {
+          return item.schema === 'site';
+        });
+        site = site.map(function (item) {
+          return item.id;
+        });
+        type = this.selectedTag.filter(function (item) {
+          return item.schema === 'type';
+        });
+        type = type.map(function (item) {
+          return item.id;
+        });
+        impression = this.selectedTag.filter(function (item) {
+          return item.schema === 'impression';
+        });
+        impression = impression.map(function (item) {
+          return item.id;
+        });
+        industry = this.selectedTag.filter(function (item) {
+          return item.schema === 'industry';
+        });
+        industry = industry.map(function (item) {
+          return item.id;
+        });
+        pickup = this.selectedTag.filter(function (item) {
+          return item.schema === 'pickup';
+        });
+        pickup = pickup.map(function (item) {
+          return item.id;
+        });
+        technique = this.selectedTag.filter(function (item) {
+          return item.schema === 'technique';
+        });
+        technique = technique.map(function (item) {
+          return item.id;
+        });
+        layout = this.selectedTag.filter(function (item) {
+          return item.schema === 'layout';
+        });
+        layout = layout.map(function (item) {
+          return item.id;
+        });
+        color = this.selectedTag.filter(function (item) {
+          return item.schema === 'color';
+        });
+        color = color.map(function (item) {
+          return item.id;
+        });
+        scheme = this.selectedTag.filter(function (item) {
+          return item.schema === 'scheme';
+        });
+        scheme = scheme.map(function (item) {
+          return item.id;
+        });
+        technology = this.selectedTag.filter(function (item) {
+          return item.schema === 'technology';
+        });
+        technology = technology.map(function (item) {
+          return item.id;
+        });
       }
-      
+
       // AND/ORが必要かどうか判定
-      if(this.selectedTag.length >= 2) {
+      if (this.selectedTag.length >= 2) {
         this.order = true;
-      }else {
+      } else {
         this.order = false;
       }
-      
+
       // クエリパラメーターを付加
       this.$router.push({
         path: '',
@@ -477,7 +536,7 @@ export default {
           technology: technology.length > 0 ? technology.join('_') : undefined,
           order: this.order ? (this.and ? 'and' : 'or') : undefined,
           sort: this.$route.query.sort,
-        }
+        },
       });
     },
     openMenu() {
@@ -486,7 +545,9 @@ export default {
     },
     closeMenu() {
       this.menuOpen = false;
-      setTimeout(()=>{this.menuOpenDelay = false},260);
+      setTimeout(() => {
+        this.menuOpenDelay = false;
+      }, 260);
     },
     setInitialTags() {
       // クエリパラメーターから検索フォームに選択中のタグを復元する
@@ -503,96 +564,96 @@ export default {
       const color = this.color;
       const scheme = this.scheme;
       const technology = this.technology;
-      if(this.$route.query.site !== undefined) {
+      if (this.$route.query.site !== undefined) {
         const query = this.$route.query.site.split('_');
-        query.forEach(function(item) {
-          const tag = site.find(key => key.id === item);
-          selectedTags.push({id: `${tag.id}`, name: `${tag.name}`, schema: 'site'});
+        query.forEach(function (item) {
+          const tag = site.find((key) => key.id === item);
+          selectedTags.push({ id: `${tag.id}`, name: `${tag.name}`, schema: 'site' });
           count++;
-        })
+        });
       }
-      if(this.$route.query.type !== undefined) {
+      if (this.$route.query.type !== undefined) {
         const query = this.$route.query.type.split('_');
-        query.forEach(function(item) {
-          const tag = type.find(key => key.id === item);
-          selectedTags.push({id: `${tag.id}`, name: `${tag.name}`, schema: 'type'});
+        query.forEach(function (item) {
+          const tag = type.find((key) => key.id === item);
+          selectedTags.push({ id: `${tag.id}`, name: `${tag.name}`, schema: 'type' });
           count++;
-        })
+        });
       }
-      if(this.$route.query.impression !== undefined) {
+      if (this.$route.query.impression !== undefined) {
         const query = this.$route.query.impression.split('_');
-        query.forEach(function(item) {
-          const tag = impression.find(key => key.id === item);
-          selectedTags.push({id: `${tag.id}`, name: `${tag.name}`, schema: 'impression'});
+        query.forEach(function (item) {
+          const tag = impression.find((key) => key.id === item);
+          selectedTags.push({ id: `${tag.id}`, name: `${tag.name}`, schema: 'impression' });
           count++;
-        })
+        });
       }
-      if(this.$route.query.industry !== undefined) {
+      if (this.$route.query.industry !== undefined) {
         const query = this.$route.query.industry.split('_');
-        query.forEach(function(item) {
-          const tag = industry.find(key => key.id === item);
-          selectedTags.push({id: `${tag.id}`, name: `${tag.name}`, schema: 'industry'});
+        query.forEach(function (item) {
+          const tag = industry.find((key) => key.id === item);
+          selectedTags.push({ id: `${tag.id}`, name: `${tag.name}`, schema: 'industry' });
           count++;
-        })
+        });
       }
-      if(this.$route.query.pickup !== undefined) {
+      if (this.$route.query.pickup !== undefined) {
         const query = this.$route.query.pickup.split('_');
-        query.forEach(function(item) {
-          const tag = pickup.find(key => key.id === item);
-          selectedTags.push({id: `${tag.id}`, name: `${tag.name}`, schema: 'pickup'});
+        query.forEach(function (item) {
+          const tag = pickup.find((key) => key.id === item);
+          selectedTags.push({ id: `${tag.id}`, name: `${tag.name}`, schema: 'pickup' });
           count++;
-        })
+        });
       }
-      if(this.$route.query.technique !== undefined) {
+      if (this.$route.query.technique !== undefined) {
         const query = this.$route.query.technique.split('_');
-        query.forEach(function(item) {
-          const tag = technique.find(key => key.id === item);
-          selectedTags.push({id: `${tag.id}`, name: `${tag.name}`, schema: 'technique'});
+        query.forEach(function (item) {
+          const tag = technique.find((key) => key.id === item);
+          selectedTags.push({ id: `${tag.id}`, name: `${tag.name}`, schema: 'technique' });
           count++;
-        })
+        });
       }
-      if(this.$route.query.layout !== undefined) {
+      if (this.$route.query.layout !== undefined) {
         const query = this.$route.query.layout.split('_');
-        query.forEach(function(item) {
-          const tag = layout.find(key => key.id === item);
-          selectedTags.push({id: `${tag.id}`, name: `${tag.name}`, schema: 'layout'});
+        query.forEach(function (item) {
+          const tag = layout.find((key) => key.id === item);
+          selectedTags.push({ id: `${tag.id}`, name: `${tag.name}`, schema: 'layout' });
           count++;
-        })
+        });
       }
-      if(this.$route.query.color !== undefined) {
+      if (this.$route.query.color !== undefined) {
         const query = this.$route.query.color.split('_');
-        query.forEach(function(item) {
-          const tag = color.find(key => key.id === item);
-          selectedTags.push({id: `${tag.id}`, name: `${tag.name}`, schema: 'color'});
+        query.forEach(function (item) {
+          const tag = color.find((key) => key.id === item);
+          selectedTags.push({ id: `${tag.id}`, name: `${tag.name}`, schema: 'color' });
           count++;
-        })
+        });
       }
-      if(this.$route.query.scheme !== undefined) {
+      if (this.$route.query.scheme !== undefined) {
         const query = this.$route.query.scheme.split('_');
-        query.forEach(function(item) {
-          const tag = scheme.find(key => key.id === item);
-          selectedTags.push({id: `${tag.id}`, name: `${tag.name}`, schema: 'scheme'});
+        query.forEach(function (item) {
+          const tag = scheme.find((key) => key.id === item);
+          selectedTags.push({ id: `${tag.id}`, name: `${tag.name}`, schema: 'scheme' });
           count++;
-        })
+        });
       }
-      if(this.$route.query.technology !== undefined) {
+      if (this.$route.query.technology !== undefined) {
         const query = this.$route.query.technology.split('_');
-        query.forEach(function(item) {
-          const tag = technology.find(key => key.id === item);
-          selectedTags.push({id: `${tag.id}`, name: `${tag.name}`, schema: 'technology'});
+        query.forEach(function (item) {
+          const tag = technology.find((key) => key.id === item);
+          selectedTags.push({ id: `${tag.id}`, name: `${tag.name}`, schema: 'technology' });
           count++;
-        })
+        });
       }
       this.selectedTag = selectedTags;
-      
+
       // オーダーの解析
-      if(this.$route.query.order !== undefined) {
+      if (this.$route.query.order !== undefined) {
         this.and = this.$route.query.order === 'and';
       }
       // AND/ORが必要かどうか判定
-      if(count >= 2) {
+      if (count >= 2) {
         this.order = true;
-      }else {
+      } else {
         this.order = false;
       }
 
@@ -606,14 +667,16 @@ export default {
       this.displayingColor = this.color;
       this.displayingScheme = this.scheme;
       this.displayingTechnology = this.technology;
-
     },
     clickTag(id, name, schema) {
-      const key = {id: `${id}`, name: `${name}`, schema: `${schema}`};
-      if(this.selectedTag.find(item => item.id === id) !== undefined) {
+      const key = { id: `${id}`, name: `${name}`, schema: `${schema}` };
+      if (this.selectedTag.find((item) => item.id === id) !== undefined) {
         // 削除
-        this.selectedTag.splice(this.selectedTag.findIndex(item => item.id === id),1);
-      }else {
+        this.selectedTag.splice(
+          this.selectedTag.findIndex((item) => item.id === id),
+          1
+        );
+      } else {
         // 追加
         this.selectedTag.push(key);
       }
@@ -624,18 +687,18 @@ export default {
       this.setQueryParameter();
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
 .mask {
-  background-color: var(--black-transparent);
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 100;
   width: 100vw;
   height: 100vh;
-  z-index: 100;
+  background-color: var(--black-transparent);
 }
 
 .mask-enter-active {
@@ -646,30 +709,28 @@ export default {
   transition: opacity .25s ease-in;
 }
 
-.mask-enter, .mask-leave-to {
+.mask-enter,.mask-leave-to {
   opacity: 0;
 }
 .searchWrapper {
-  width: 100%;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 10px;
+  width: 100%;
   width: 100%;
   height: 40px;
-  position: relative;
-  margin-top: 10px;
-  @include responsive(xs) {
 
+  @include responsive(xs) {
   }
   @include responsive(sm) {
-
   }
   @include responsive(md) {
-
   }
   @include responsive(lg) {
-    width: 800px;
     margin-top: 0;
+    width: 800px;
   }
   @include responsive(xl) {
   }
@@ -679,36 +740,30 @@ export default {
 
 .searchBlock {
   display: flex;
+  overflow-x: hidden;
   align-items: center;
   justify-content: flex-start;
+  padding-left: 10px;
   width: 100%;
-  border-radius: 50px;
   height: 100%;
   border: 1px var(--search-border) solid;
-  padding-left: 10px;
-  overflow-x: hidden;
+  border-radius: 50px;
   background-color: var(--white);
-  &.selected {
-    z-index: 150;
-  }
+
   @include responsive(xs) {
-    
   }
   @include responsive(sm) {
-    
   }
   @include responsive(md) {
-
-    
   }
   @include responsive(lg) {
-    
   }
   @include responsive(xl) {
-    
   }
   @include responsive(xxl) {
-    
+  }
+  &.selected {
+    z-index: 150;
   }
 }
 .imageWrapper {
@@ -718,86 +773,81 @@ export default {
 }
 
 .searchImage {
-  width: 17px;
   margin-right: 10px;
   margin-left: 6px;
+  width: 17px;
+
   fill: var(--search-icon);
   @include responsive(xs) {
-    
   }
   @include responsive(sm) {
-    
   }
   @include responsive(md) {
-    
   }
   @include responsive(lg) {
-    
   }
   @include responsive(xl) {
-    
   }
   @include responsive(xxl) {
-    
   }
 }
 .search {
   width: calc(100% - 20px);
   height: 36px;
   border-radius: 4px;
-  font-size: var(--font-size-sm);
   color: var(--search-text);
+  font-size: var(--font-size-sm);
 }
 ::placeholder {
   color: var(--search-placeholder);
 }
 .tags {
-  width: 100%;
-  /* height: calc(100vh - 100px); */
-  border: 1px var(--menu-border) solid;
   position: absolute;
   top: 45px;
   left: 0;
-  background-color: var(--menu-background);
-  padding: 20px;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-10px);
-  transition: opacity .2s, transform .2s;
-  overflow-y: auto;
   z-index: 150;
+  visibility: hidden;
+  overflow-y: auto;
+  padding: 20px;
+  width: 100%;
+  /* height: calc(100vh - 100px); */
+  border: 1px var(--menu-border) solid;
+  background-color: var(--menu-background);
+  opacity: 0;
+  transition: opacity .2s, transform .2s;
+  transform: translateY(-10px);
   &.open {
+    visibility: visible;
     opacity: 1;
     transform: translateY(0);
-    visibility: visible;
   }
 }
 .tag {
   margin-bottom: 24px;
 }
 .title {
-  font-size: 15px;
-  font-weight: 400;
   color: var(--menu-text);
+  font-weight: 400;
+  font-size: 15px;
 }
 .items {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
   flex-wrap: wrap;
+  justify-content: flex-start;
   margin-top: 10px;
   margin-left: 8px;
 }
 .item {
-  padding: 3px 10px 5px;
-  border-radius: 20px;
-  font-size: var(--font-size-xs);
-  font-weight: 400;
   margin-right: 8px;
   margin-bottom: 8px;
+  padding: 3px 10px 5px;
+  border: 1px var(--menu-border) solid;
+  border-radius: 20px;
   background-color: var(--menu-background);
   color: var(--menu-item-text);
-  border: 1px var(--menu-border) solid;
+  font-weight: 400;
+  font-size: var(--font-size-xs);
   &.selected {
     background-color: var(--menu-item-selected);
     color: var(--menu-text);
@@ -807,45 +857,44 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 3px 6px 5px 10px;
-  white-space: nowrap;
   margin-bottom: 0;
+  padding: 3px 6px 5px 10px;
+  border: 1px var(--gray4) solid;
   background-color: var(--white);
   color: var(--gray13);
-  border: 1px var(--gray4) solid;
+  white-space: nowrap;
 }
 .cancel {
-  width: 14px;
-  height: 17px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-left: 5px;
+  width: 14px;
+  height: 17px;
 }
 .cancelImage {
-  width: 9px;
   margin-top: 3px;
+  width: 9px;
+
   fill: var(--black);
 }
 .orders {
-  border-radius: 50px;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--gray3);
-  padding: 8px 6px 8px 6px;
   margin-right: 8px;
-  position: relative;
+  padding: 8px 6px 8px 6px;
+  border-radius: 50px;
+  background-color: var(--gray3);
   .order {
-    width: 30px;
-    font-size: 12px;
     z-index: 10;
     margin-bottom: 1px;
-    font-weight: 400;
+    width: 30px;
     color: var(--black);
-    &.or {
-      
-    }
+    font-weight: 400;
+    font-size: 12px;
+
     &.and {
       margin-left: 2px;
     }
@@ -860,8 +909,8 @@ export default {
     background-color: var(--white);
     transition: width .1s, left .1s;
     &.and {
-      width: 37px;
       left: 34px;
+      width: 37px;
     }
   }
 }
@@ -870,4 +919,5 @@ export default {
   color: var(--menu-comment);
   font-weight: 400;
 }
+
 </style>

@@ -30,28 +30,23 @@
 <script>
 export default {
   data() {
-    return {
-    };
+    return {};
   },
   computed: {
     getDarkMode() {
       return this.$store.getters['darkmode/getActive'];
     },
   },
-  created() {
-  },
-  mounted() {
-
-  },
-  beforeDestroy() {
-  },
+  created() {},
+  mounted() {},
+  beforeDestroy() {},
   methods: {
     clickLight() {
-      this.$store.dispatch("darkmode/pushDarkmodeOnForPage");
+      this.$store.dispatch('darkmode/pushDarkmodeOnForPage');
       this.$emit('colormodeChange');
     },
-    clickDark(){
-      this.$store.dispatch("darkmode/pushDarkmodeOffForPage");
+    clickDark() {
+      this.$store.dispatch('darkmode/pushDarkmodeOffForPage');
       this.$emit('colormodeChange');
     },
   },
@@ -72,12 +67,13 @@ export default {
 }
 
 .lightButton,.darkButton {
-  width: 40px;
-  height: 40px;
-  border-radius: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+
   @include hover() {
     background-color: var(--tool-button-hover);
   }
@@ -85,14 +81,16 @@ export default {
 
 .lightImage {
   width: 20px;
+
   fill: var(--barkmode-light-icon);
 }
 
 .darkImage {
-  width: 13px;
-  fill: var(--white);
-  transform: rotate(225deg);
   margin-top: 1px;
+  width: 13px;
+  transform: rotate(225deg);
+
+  fill: var(--white);
 }
 
 .dark-enter-active {
@@ -103,7 +101,8 @@ export default {
   transition: opacity .25s ease-in;
 }
 
-.dark-enter, .dark-leave-to {
+.dark-enter,.dark-leave-to {
   opacity: 0;
 }
+
 </style>

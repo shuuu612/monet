@@ -127,116 +127,103 @@ export default {
   },
   computed: {
     getPcHide() {
-        return this.$store.getters["devicePattern/getActivePC"];
+      return this.$store.getters['devicePattern/getActivePC'];
     },
     getTbHide() {
-        return this.$store.getters["devicePattern/getActiveTB"];
+      return this.$store.getters['devicePattern/getActiveTB'];
     },
     getSpHide() {
-        return this.$store.getters["devicePattern/getActiveSP"];
+      return this.$store.getters['devicePattern/getActiveSP'];
     },
     getDisplaySteps() {
-      return function(key, type) {
-        const steps = this.$store.getters["slider/getDecidedSteps"];
-        
-        let active
-        if(type === 'pc') {
-          active = this.$store.getters["devicePattern/getActivePC"]
-        }else if(type === 'tb') {
-          active = this.$store.getters["devicePattern/getActiveTB"]
-        }else if(type === 'sp') {
-          active = this.$store.getters["devicePattern/getActiveSP"]
+      return function (key, type) {
+        const steps = this.$store.getters['slider/getDecidedSteps'];
+
+        let active;
+        if (type === 'pc') {
+          active = this.$store.getters['devicePattern/getActivePC'];
+        } else if (type === 'tb') {
+          active = this.$store.getters['devicePattern/getActiveTB'];
+        } else if (type === 'sp') {
+          active = this.$store.getters['devicePattern/getActiveSP'];
         }
 
-        return steps[key] && active
-      }
-        
+        return steps[key] && active;
+      };
     },
     getMargin() {
-        return function (id) {
-            const pattern = this.$store.getters["devicePattern/getStatePatternNumber"];
-            if (pattern === 1 || pattern === 2 || pattern === 3) {
-                return { marginRight: false };
-            }
-            else if (pattern === 4) {
-                if (id === "pc") {
-                    return { marginRight: true };
-                }
-                else if (id === "tb") {
-                    return { marginRight: true };
-                }
-                else if (id === "sp") {
-                    return { marginRight: false };
-                }
-            }
-            else if (pattern === 5 || pattern === 6) {
-                if (id === "pc") {
-                    return { marginRight: true };
-                }
-                else if (id === "tb") {
-                    return { marginRight: false };
-                }
-                else if (id === "sp") {
-                    return { marginRight: false };
-                }
-            }
-            else if (pattern === 7) {
-                if (id === "pc") {
-                    return { marginRight: false };
-                }
-                else if (id === "tb") {
-                    return { marginRight: true };
-                }
-                else if (id === "sp") {
-                    return { marginRight: false };
-                }
-            }
-        };
+      return function (id) {
+        const pattern = this.$store.getters['devicePattern/getStatePatternNumber'];
+        if (pattern === 1 || pattern === 2 || pattern === 3) {
+          return { marginRight: false };
+        } else if (pattern === 4) {
+          if (id === 'pc') {
+            return { marginRight: true };
+          } else if (id === 'tb') {
+            return { marginRight: true };
+          } else if (id === 'sp') {
+            return { marginRight: false };
+          }
+        } else if (pattern === 5 || pattern === 6) {
+          if (id === 'pc') {
+            return { marginRight: true };
+          } else if (id === 'tb') {
+            return { marginRight: false };
+          } else if (id === 'sp') {
+            return { marginRight: false };
+          }
+        } else if (pattern === 7) {
+          if (id === 'pc') {
+            return { marginRight: false };
+          } else if (id === 'tb') {
+            return { marginRight: true };
+          } else if (id === 'sp') {
+            return { marginRight: false };
+          }
+        }
+      };
     },
     getWidth() {
-        return function (key) {
-          if(key === 'pc') {
-            return `${Math.round(873*this.$store.getters["slider/getValue"])}`
-          }else if(key === 'tb') {
-            return `${Math.round(600*this.$store.getters["slider/getValue"])}`
-          }else if(key === 'sp') {
-            return `${Math.round(369*this.$store.getters["slider/getValue"])}`
-          }
-        };
+      return function (key) {
+        if (key === 'pc') {
+          return `${Math.round(873 * this.$store.getters['slider/getValue'])}`;
+        } else if (key === 'tb') {
+          return `${Math.round(600 * this.$store.getters['slider/getValue'])}`;
+        } else if (key === 'sp') {
+          return `${Math.round(369 * this.$store.getters['slider/getValue'])}`;
+        }
+      };
     },
     getHeight() {
-      const windowWidth = this.$store.getters["windowSize/getWindowWidth"]; // ウィンドウサイズ
+      const windowWidth = this.$store.getters['windowSize/getWindowWidth']; // ウィンドウサイズ
       if (windowWidth < 375) {
-        return ''
-      }else {
-        return `${Math.round(800*this.$store.getters["slider/getValue"])}`
+        return '';
+      } else {
+        return `${Math.round(800 * this.$store.getters['slider/getValue'])}`;
       }
     },
     getPath() {
-      return function(url) {
+      return function (url) {
         // '//'以降を切り出し
         const parts1 = url.substr(url.indexOf('//') + 2);
         // 最後が'/'だったら削除
-        const parts2 = parts1.slice(-1) === '/' ? parts1.slice(0,-1) : parts1;
+        const parts2 = parts1.slice(-1) === '/' ? parts1.slice(0, -1) : parts1;
         // '/'を'_'に置換
         const parts3 = parts2.replace(/\//g, '_');
         // ファイルパスを追加
-        const parts4 = `/images/site/${parts3}`
+        const parts4 = `/images/site/${parts3}`;
 
-        return parts4
-      }
-    }
+        return parts4;
+      };
+    },
   },
-  created() {
-  },
-  mounted() {
-  },
-  beforeDestroy() {
-  },
+  created() {},
+  mounted() {},
+  beforeDestroy() {},
   methods: {
     imageLoaded() {
       // 画像ロード済みフラグの設定
-      this.$store.dispatch("loaded/pushLoadedImage");
+      this.$store.dispatch('loaded/pushLoadedImage');
     },
   },
 };
@@ -244,51 +231,42 @@ export default {
 
 <style lang="scss" scoped>
 .images {
+  position: relative;
   display: flex;
   justify-content: center;
   max-width: 100%;
   width: 100%;
-  position: relative;
+
   @include responsive(xs) {
-    
   }
   @include responsive(sm) {
-    
   }
   @include responsive(md) {
-    
   }
   @include responsive(lg) {
-    
   }
   @include responsive(xl) {
-    
   }
   @include responsive(xxl) {
-    
   }
 }
 
 .imageWrapper {
   position: relative;
   overflow: hidden;
+
   @include responsive(xs) {
     overflow: visible;
   }
   @include responsive(sm) {
-    
   }
   @include responsive(md) {
-    
   }
   @include responsive(lg) {
-    
   }
   @include responsive(xl) {
-    
   }
   @include responsive(xxl) {
-    
   }
 }
 
@@ -296,23 +274,18 @@ export default {
 //      ここの値を変更する場合は、一緒にcreateDummyContentも変更必要（あとで直す）
 .image {
   max-width: 100%;
-  @include responsive(xs) {
 
+  @include responsive(xs) {
   }
   @include responsive(sm) {
-    
   }
   @include responsive(md) {
-    
   }
   @include responsive(lg) {
-    
   }
   @include responsive(xl) {
-    
   }
   @include responsive(xxl) {
-    
   }
 }
 
@@ -324,8 +297,8 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  border: none;
   z-index: -1;
+  border: none;
 }
 
 .image-leave-active {
@@ -335,4 +308,5 @@ export default {
 .image-leave-to {
   opacity: 0;
 }
+
 </style>

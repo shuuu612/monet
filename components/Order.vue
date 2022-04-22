@@ -48,16 +48,16 @@ export default {
   },
   computed: {
     getSelectedNew() {
-      return { selected: this.$route.query.sort === 'new' || this.$route.query.sort === undefined}
+      return { selected: this.$route.query.sort === 'new' || this.$route.query.sort === undefined };
     },
     getSelectedOld() {
-      return { selected: this.$route.query.sort === 'old' }
+      return { selected: this.$route.query.sort === 'old' };
     },
     getSelectedUpdate() {
-      return { selected: this.$route.query.sort === 'update' }
+      return { selected: this.$route.query.sort === 'update' };
     },
     getOpenList() {
-      return { open: this.open }
+      return { open: this.open };
     },
   },
   mounted() {
@@ -69,36 +69,40 @@ export default {
   methods: {
     openList() {
       this.open = !this.open;
-      if(this.openDelay) {
-        setTimeout(()=>{this.openDelay = false},260);
-      }else {
+      if (this.openDelay) {
+        setTimeout(() => {
+          this.openDelay = false;
+        }, 260);
+      } else {
         this.openDelay = true;
       }
     },
     closeList() {
       this.open = false;
-      setTimeout(()=>{this.openDelay = false},260);
+      setTimeout(() => {
+        this.openDelay = false;
+      }, 260);
     },
     clickButton(key) {
       // クエリパラメーターを付加
-      const query = { ...this.$route.query};
+      const query = { ...this.$route.query };
       query.sort = key;
-      
-      this.$router.push({ path: '/', query: { ...query} });
-    }
+
+      this.$router.push({ path: '/', query: { ...query } });
+    },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
 .mask {
-  background-color: var(--black-transparent);
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 100;
   width: 100vw;
   height: 100vh;
-  z-index: 100;
+  background-color: var(--black-transparent);
 }
 
 .mask-enter-active {
@@ -109,37 +113,38 @@ export default {
   transition: opacity .25s ease-in;
 }
 
-.mask-enter, .mask-leave-to {
+.mask-enter,.mask-leave-to {
   opacity: 0;
 }
 .orderOuter {
+  position: relative;
+  z-index: 50;
   display: flex;
   align-items: flex-start;
-  justify-content: flex-end;
   flex-direction: column;
-  z-index: 50;
-  position: relative;
+  justify-content: flex-end;
   height: 40px;
 }
 
 .buttonOuter {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
   position: absolute;
   top: 0;
   right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .button {
   display: flex;
   align-items: center;
   justify-content: center;
-  user-select: none;
-  cursor: pointer;
   width: 40px;
   height: 40px;
   border-radius: 5px;
+  cursor: pointer;
+
+  user-select: none;
   @include hover() {
     background-color: var(--tool-button-hover);
   }
@@ -153,6 +158,7 @@ export default {
   align-items: center;
   justify-content: center;
   width: 18px;
+
   fill: var(--favorite-icon-stroke);
 }
 
@@ -161,37 +167,38 @@ export default {
 }
 
 .pulldown {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
   position: absolute;
   top: 40px;
   right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
   width: 140px;
 }
 
 .lists {
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-10px);
-  transition: opacity .2s, transform .2s;
-  border: 1px var(--menu-border) solid;
   z-index: 150;
+  visibility: hidden;
+  border: 1px var(--menu-border) solid;
+  opacity: 0;
+  transition: opacity .2s, transform .2s;
+  transform: translateY(-10px);
   &.open {
+    visibility: visible;
     opacity: 1;
     transform: translateY(0);
-    visibility: visible;
   }
 }
 
 .list {
-  height: 40px;
   display: flex;
   align-items: center;
-  user-select: none;
+  padding-left: 10px;
+  height: 40px;
   background-color: var(--menu-background);
   cursor: pointer;
-  padding-left: 10px;
+
+  user-select: none;
   @include hover() {
     background-color: var(--menu-item-selected);
   }
@@ -205,8 +212,8 @@ export default {
   align-items: center;
   width: 100%;
   height: 100%;
-  text-decoration: none;
   color: var(--menu-text);
+  text-decoration: none;
 }
 
 </style>

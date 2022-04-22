@@ -20,32 +20,28 @@
 <script>
 export default {
   data() {
-    return {
-    };
+    return {};
   },
   computed: {
     getSelectedBookmark() {
       return this.$route.query.bookmark === undefined;
     },
   },
-  created() {
-  },
-  mounted() {
-  },
-  beforeDestroy() {
-  },
+  created() {},
+  mounted() {},
+  beforeDestroy() {},
   methods: {
     update() {
-      if(this.$store.getters['scroll/getWindowScroll'] === 0) {
-        this.$emit('update')
-      }else {
-        window.scrollTo ({top: 0,behavior: "smooth"})
+      if (this.$store.getters['scroll/getWindowScroll'] === 0) {
+        this.$emit('update');
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     },
     clickFavorite() {
       // クエリパラメーターを付加
-      this.$router.push({ path: '/', query: {bookmark: 1} });
-    }
+      this.$router.push({ path: '/', query: { bookmark: 1 } });
+    },
   },
 };
 </script>
@@ -57,22 +53,16 @@ export default {
   justify-content: flex-end;
 
   @include responsive(xs) {
-    
   }
   @include responsive(sm) {
-    
   }
   @include responsive(md) {
-    
   }
   @include responsive(lg) {
-    
   }
   @include responsive(xl) {
-
   }
   @include responsive(xxl) {
-    
   }
 }
 
@@ -80,26 +70,26 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  user-select: none;
-  cursor: pointer;
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  
+  cursor: pointer;
+
+  user-select: none;
   @include hover() {
     background-color: var(--tool-button-hover);
   }
 }
 
 .menuLink {
-  width: inherit;
-  height: inherit;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 5px;
+  width: inherit;
+  height: inherit;
   text-decoration: none;
   font-size: var(--font-size-md);
-  padding: 5px;
 }
 
 .homeImage {
@@ -118,8 +108,9 @@ export default {
 
 .bookmarkImage {
   height: 16px;
-  stroke: var(--favorite-icon-stroke);
   transition: transform .25s;
+
+  stroke: var(--favorite-icon-stroke);
   .selected & {
     fill: var(--favorite-icon-selected);
   }
@@ -129,4 +120,5 @@ export default {
   margin-left: 10px;
   color: var(--black-forDarkMode);
 }
+
 </style>

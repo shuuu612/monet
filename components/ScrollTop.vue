@@ -17,25 +17,24 @@ export default {
   },
   computed: {
     getHide() {
-      return {hide: !(this.$store.getters['scroll/getWindowScroll'] > this.windowHeight)}
+      return { hide: !(this.$store.getters['scroll/getWindowScroll'] > this.windowHeight) };
     },
     getDesktop() {
-      return this.$store.getters['windowSize/getWindowWidth'] >= 768
+      return this.$store.getters['windowSize/getWindowWidth'] >= 768;
     },
   },
-  created() {
-  },
+  created() {},
   mounted() {
-    this.setWindowHeight()
-    window.addEventListener("resize",this.setWindowHeight)
+    this.setWindowHeight();
+    window.addEventListener('resize', this.setWindowHeight);
   },
   beforeDestroy() {
-    window.removeEventListener("resize",this.setWindowHeight)
+    window.removeEventListener('resize', this.setWindowHeight);
   },
   methods: {
     setWindowHeight() {
-      this.windowHeight = document.documentElement.clientHeight
-    }
+      this.windowHeight = document.documentElement.clientHeight;
+    },
   },
 };
 </script>
@@ -43,19 +42,20 @@ export default {
 <style lang="scss" scoped>
 .scrollTop {
   position: fixed;
-  bottom: 70px;
   right: 40px;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  box-shadow: 1px 1px 5px var(--scroll-top-button-shadow);
-  background-color: var(--scroll-top-button);
+  bottom: 70px;
   z-index: 50;
-  transition: transform .4s;
-  transform: translateY(0);
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: var(--scroll-top-button);
+  box-shadow: 1px 1px 5px var(--scroll-top-button-shadow);
+  transition: transform .4s;
+  transform: translateY(0);
+
   @include hover() {
     background-color: var(--scroll-top-button-hover);
   }
@@ -66,6 +66,8 @@ export default {
 
 .scrollTopImage {
   width: 45%;
+
   fill: var(--scroll-top-icon);
 }
+
 </style>

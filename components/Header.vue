@@ -119,17 +119,12 @@ export default {
     },
   },
   data() {
-    return {
-    };
+    return {};
   },
-  computed: {
-  },
-  created() {
-  },
-  mounted() {
-  },
-  beforeDestroy() {
-  },
+  computed: {},
+  created() {},
+  mounted() {},
+  beforeDestroy() {},
   methods: {
     passToTheTopSearch() {
       this.$emit('search');
@@ -164,43 +159,39 @@ export default {
   padding-top: 12px;
 }
 .header {
-  margin: 0 auto;
-  width: 90%;
-  max-width: 1600px;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 0 auto;
+  max-width: 1600px;
+  width: 90%;
   height: 150px;
+
   @include responsive(xs) {
-    
   }
   @include responsive(sm) {
-    
   }
   @include responsive(md) {
-
   }
   @include responsive(lg) {
     height: 55px;
   }
   @include responsive(xl) {
-    
   }
   @include responsive(xxl) {
-    
   }
 }
 
 .topMenu {
   position: relative;
-  width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
   flex-direction: column;
+  justify-content: center;
+  width: 100%;
   transition: transform .25s ease-in;
+
   @include responsive(xs) {
-    
   }
   @include responsive(sm) {
   }
@@ -208,77 +199,67 @@ export default {
     margin-left: 25px;
   }
   @include responsive(lg) {
-    margin-left: 0px;
-    flex-direction: row;
     align-items: center;
+    flex-direction: row;
+    margin-left: 0;
   }
   @include responsive(xl) {
-
   }
   @include responsive(xxl) {
-
   }
 }
 .desktop {
   display: none;
+
   @include responsive(xs) {
-    
   }
   @include responsive(sm) {
-    
   }
   @include responsive(md) {
-    
   }
   @include responsive(lg) {
     display: flex;
   }
   @include responsive(xl) {
-    
   }
   @include responsive(xxl) {
-    
   }
 }
 .mobile {
   display: flex;
+
   @include responsive(xs) {
-    
   }
   @include responsive(sm) {
-    
   }
   @include responsive(md) {
-    
   }
   @include responsive(lg) {
     display: none;
   }
   @include responsive(xl) {
-    
   }
   @include responsive(xxl) {
-    
   }
 }
 .logo {
-  width: 100px;
   align-self: flex-start;
+  width: 100px;
+
   @include responsive(xs) {
-    width:110px;
+    width: 110px;
   }
   @include responsive(sm) {
-    width:120px;
+    width: 120px;
   }
   @include responsive(md) {
     width: 130px;
   }
   @include responsive(lg) {
-    width: calc(60px * 4);
     align-self: auto;
+    width: calc(60px * 4);
   }
   @include responsive(xl) {
-
   }
   @include responsive(xxl) {
   }
@@ -287,14 +268,13 @@ export default {
 .tool {
   display: flex;
   align-items: flex-start;
+  align-self: flex-end;
   justify-content: flex-end;
   padding-right: 50px;
-  align-self: flex-end;
+
   @include responsive(xs) {
-    
   }
   @include responsive(sm) {
-    
   }
   @include responsive(md) {
     padding-right: 0;
@@ -306,11 +286,11 @@ export default {
     width: calc(60px * 4);
   }
   @include responsive(xxl) {
-    
   }
 }
 
 .toolItem {
   width: 60px;
 }
+
 </style>
