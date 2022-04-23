@@ -91,7 +91,7 @@
           </button>
         </div>
         <div>
-          <div class="comment">表示崩れを防止するため、自動調整が無効の場合でもブラウザのサイズ変更を検知すると自動調整が有効になります。</div>
+          <div class="comment">表示崩れを防止するため、自動調整を無効にしていても、ブラウザのサイズを変更すると自動調整が有効になります。</div>
         </div>
       </div>
       <div class="partitionLine"></div>
@@ -179,7 +179,7 @@
         </div>
         <div>
           <div class="comment">テーマカラーはダークモードOFF時に利用されます。</div>
-          <div class="comment">複数の選択がある場合は選択された色からのランダム表示、選択なしの場合はすべての色からのランダム表示となります。</div>
+          <div class="comment">複数の選択がある場合は選択された色からランダムに、選択なしの場合はすべての色からランダムに利用されます。</div>
         </div>
       </div>
     </div>

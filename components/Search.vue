@@ -810,7 +810,6 @@ export default {
   overflow-y: auto;
   padding: 20px;
   width: 100%;
-  /* height: calc(100vh - 100px); */
   border: 1px var(--menu-border) solid;
   background-color: var(--menu-background);
   opacity: 0;
@@ -858,7 +857,7 @@ export default {
   align-items: center;
   justify-content: center;
   margin-bottom: 0;
-  padding: 3px 6px 5px 10px;
+  padding: 5px 6px 6px 10px;
   border: 1px var(--gray4) solid;
   background-color: var(--white);
   color: var(--gray13);
@@ -884,7 +883,7 @@ export default {
   align-items: center;
   justify-content: center;
   margin-right: 8px;
-  padding: 8px 6px 8px 6px;
+  padding: 5px 6px 6px 6px;
   border-radius: 50px;
   background-color: var(--gray3);
   .order {
@@ -904,7 +903,7 @@ export default {
     top: 3px;
     left: 4px;
     width: 33px;
-    height: 28px;
+    height: 23px;
     border-radius: 50px;
     background-color: var(--white);
     transition: width .1s, left .1s;
