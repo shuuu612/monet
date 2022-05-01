@@ -75,15 +75,6 @@ export default {
   'google-gtag': {
     id: 'G-QDLBX51TVH',
   },
-  
-  axios: {
-    proxy: true,
-  },
-
-  proxy: {
-    '/api/': { target: 'https://inquiry.microcms.io' },
-    '/script/': { target: 'https://monet-design.com' }
-  },
 
   styleResources: {
     scss: [

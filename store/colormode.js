@@ -1,15 +1,15 @@
 // 現在未使用
 export const state = () => ({
   color1: true,         // ローカルストレージ保存対象
-  color2: true,        // ローカルストレージ保存対象
-  color3: true,        // ローカルストレージ保存対象
-  color4: true,        // ローカルストレージ保存対象
-  color5: true,        // ローカルストレージ保存対象
-  color6: true,        // ローカルストレージ保存対象
+  color2: true,         // ローカルストレージ保存対象
+  color3: true,         // ローカルストレージ保存対象
+  color4: true,         // ローカルストレージ保存対象
+  color5: true,         // ローカルストレージ保存対象
+  color6: true,         // ローカルストレージ保存対象
   color7: true,         // ローカルストレージ保存対象
-  color8: true,        // ローカルストレージ保存対象
-  color9: true,        // ローカルストレージ保存対象
-  color10: false,        // ローカルストレージ保存対象
+  color8: true,         // ローカルストレージ保存対象
+  color9: true,         // ローカルストレージ保存対象
+  color10: false,       // ローカルストレージ保存対象
   color11: true,        // ローカルストレージ保存対象
   color12: true,        // ローカルストレージ保存対象
   random: true,

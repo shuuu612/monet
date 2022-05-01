@@ -2,47 +2,59 @@
   <div class="wrapper">
     <Loading />
     <Header
-    :contents="contents"
-    :tag="tag"
-    :width="contentsWidth"
-    @search="searchByKeyword"
-    @autoSizing="pushAutoSizing"
-    @deviceChange="changeDevice"
-    @sliderChange="changeSliderSize"
-    @multideviceCancel="monitorReturnToSingledevice"
-    @colormodeChange="darkModeSetting"
-    @update="searchByKeyword"
+      :contents="contents"
+      :tag="tag"
+      :width="contentsWidth"
+      @search="searchByKeyword"
+      @autoSizing="pushAutoSizing"
+      @deviceChange="changeDevice"
+      @sliderChange="changeSliderSize"
+      @multideviceCancel="monitorReturnToSingledevice"
+      @colormodeChange="darkModeSetting"
+      @update="searchByKeyword"
     />
     <ScrollTop />
     <Notice />
     <div id="divider" class="divider">
       <div v-cloak class="container">
-        
         <div class="contentsWrapper">
-          <div v-if="getNoContentComment.length > 0" class="noContent" style="white-space: pre-wrap;" v-text="getNoContentComment"></div>
+          <div
+            v-if="getNoContentComment.length > 0"
+            class="noContent"
+            style="white-space: pre-wrap"
+            v-text="getNoContentComment"
+          ></div>
           <div id="contents" class="contents">
             <div v-for="content in getDisplayingContent" :key="content.id" class="content" :class="getStateSliderStep">
               <div class="contentImage">
-                <Images
-                :content="content"
-                />
+                <Images :content="content" />
               </div>
               <div class="info" :style="infoStyle">
                 <div class="infoText" :style="infoButtonStyle">
                   <div class="name">
                     <a :href="`${content.url}`" target="_blank" rel="noopener noreferrer" class="nameLink">
                       <div class="nameText" :style="infoButtonStyle">
-                        {{content.name}}
+                        {{ content.name }}
                       </div>
                     </a>
                   </div>
                   <div class="time">
-                    <div class="published">{{content.publishedAtJST}}</div>
+                    <div class="published">{{ content.publishedAtJST }}</div>
                   </div>
                 </div>
                 <button class="infoButton bookmark" aria-label="Add To Favorites" @click="setBookmark(content.id)">
-                  <svg class="bookmarkImage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 451.61 428.07" fill="transparent" stroke="#231815" :class="getAddedBookmark(content.id)">
-                    <path d="M328.66,20C282,20,244.47,43.3,225.55,83.13,206.7,43.3,169.53,20,123.42,20,66.39,20,20,65.5,20,121.42,20,186,57.06,233.7,95,277,132,319,203.44,390.25,220.41,406.24a6.76,6.76,0,0,0,4.62,1.83h1a6.76,6.76,0,0,0,4.62-1.83C248.93,389,320.58,317.9,356.53,277c38-43.35,75.08-91.08,75.08-155.59C431.61,64.56,386.4,20,328.66,20Z" style="stroke-miterlimit:10;stroke-width:40px"/>
+                  <svg
+                    class="bookmarkImage"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 451.61 428.07"
+                    fill="transparent"
+                    stroke="#231815"
+                    :class="getAddedBookmark(content.id)"
+                  >
+                    <path
+                      d="M328.66,20C282,20,244.47,43.3,225.55,83.13,206.7,43.3,169.53,20,123.42,20,66.39,20,20,65.5,20,121.42,20,186,57.06,233.7,95,277,132,319,203.44,390.25,220.41,406.24a6.76,6.76,0,0,0,4.62,1.83h1a6.76,6.76,0,0,0,4.62-1.83C248.93,389,320.58,317.9,356.53,277c38-43.35,75.08-91.08,75.08-155.59C431.61,64.56,386.4,20,328.66,20Z"
+                      style="stroke-miterlimit: 10; stroke-width: 40px"
+                    />
                   </svg>
                   <div class="comment">お気に入り</div>
                 </button>
@@ -52,7 +64,7 @@
           </div>
         </div>
         <div class="moreButton button" :class="getNextContent" @click="clickMore">
-          もっと見る（残り{{remainingContent}}サイト）
+          もっと見る（残り{{ remainingContent }}サイト）
         </div>
       </div>
     </div>
@@ -219,12 +231,11 @@ export default {
       columnContent: 0,
       meta: {
         title: 'Monet | Webデザインギャラリー',
-        keywords: 'デザイン,Webデザイン,Web design,参考,Webデザインギャラリー,ギャラリー,Webサイト',
-        description:
-          'MonetはWeb制作の参考になるWebサイトを集めたギャラリー･リンク集です。日本国内の優れたWebデザインを厳選してご紹介しています。Webデザインの参考にぜひご活用ください。',
+        keywords: 'Webデザイン,Web design,ギャラリー',
+        description: 'MonetはWebサイトギャラリーです。',
         type: 'website',
-        url: 'https://mitsukaru-design.com/',
-        image: 'https://mitsukaru-design.com/images/ogp/logo.png',
+        url: 'https://monet.shuuu.jp/',
+        image: 'https://monet.shuuu.jp/images/ogp/logo.png',
       },
       contentsWidth: {},
     };
@@ -1333,7 +1344,7 @@ export default {
 .divider {
   position: relative;
   padding: 0 0 150px 0;
-  transition: transform .25s ease-in;
+  transition: transform 0.25s ease-in;
 
   @include responsive(xs) {
   }
@@ -1496,12 +1507,12 @@ export default {
   width: 32px;
   height: 32px;
   border-radius: 15px;
-  transition: background-color .25s;
+  transition: background-color 0.25s;
 }
 
 .bookmark {
   right: 3px;
-  transition: background-color .25s;
+  transition: background-color 0.25s;
 
   @include hover() {
     background-color: var(--favorite-icon-hover);
@@ -1514,21 +1525,20 @@ export default {
   }
   .bookmarkImage {
     width: 15px;
-    transition: stroke .25s, fill .25s;
-
+    transition: stroke 0.25s, fill 0.25s;
     stroke: var(--favorite-icon-stroke);
   }
   .bookmarkRegistered {
     animation-name: like;
-    animation-duration: .3s;
+    animation-duration: 0.3s;
     animation-play-state: running;
     animation-timing-function: ease-in-out;
     animation-delay: 0s;
     animation-iteration-count: 1;
     animation-direction: normal;
-
-    stroke: var(--favorite-icon);
     fill: var(--favorite-icon);
+    stroke: var(--favorite-icon);
+
     animation-fill-mode: forwards;
 
     @keyframes like {
@@ -1575,10 +1585,10 @@ export default {
     .comment {
       display: flex;
       animation-name: comment-open;
-      animation-duration: .2s;
+      animation-duration: 0.2s;
       animation-play-state: running;
       animation-timing-function: ease;
-      animation-delay: .3s;
+      animation-delay: 0.3s;
       animation-iteration-count: 1;
       animation-direction: normal;
 
@@ -1654,5 +1664,4 @@ export default {
 
   user-select: none;
 }
-
 </style>

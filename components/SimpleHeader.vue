@@ -1,9 +1,9 @@
 <template>
   <header class="header">
-      <h1>
-       <Logo />
-      </h1>
-    </header>
+    <h1>
+      <Logo />
+    </h1>
+  </header>
 </template>
 <script>
 export default {

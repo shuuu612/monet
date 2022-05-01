@@ -6,39 +6,35 @@
           <Logo />
         </h1>
         <Search
-        :contents="contents"
-        :type="tag.type.contents"
-        :impression="tag.impression.contents"
-        :industry="tag.industry.contents"
-        :pickup="tag.pickup.contents"
-        :technique="tag.technique.contents"
-        :layout="tag.layout.contents"
-        :color="tag.color.contents"
-        :scheme="tag.scheme.contents"
-        :technology="tag.technology.contents"
-        @search="passToTheTopSearch"
+          :contents="contents"
+          :type="tag.type.contents"
+          :impression="tag.impression.contents"
+          :industry="tag.industry.contents"
+          :pickup="tag.pickup.contents"
+          :technique="tag.technique.contents"
+          :layout="tag.layout.contents"
+          :color="tag.color.contents"
+          :scheme="tag.scheme.contents"
+          :technology="tag.technology.contents"
+          @search="passToTheTopSearch"
         />
         <div class="tool">
           <div class="toolItem">
-            <DarkModeButton
-            @colormodeChange="darkModeSetting2"
-            />
+            <DarkModeButton @colormodeChange="darkModeSetting2" />
           </div>
           <div class="toolItem">
-            <FavoriteButton
-            @update="update"
-            />
+            <FavoriteButton @update="update" />
           </div>
           <div class="toolItem">
             <Order />
           </div>
           <div class="toolItem">
             <Setting
-            @autoSizing="pushAutoSizing"
-            @deviceChange="changeDevice"
-            @sliderChange="changeSliderSize"
-            @multideviceCancel="monitorReturnToSingledevice"
-            @colormodeChange="darkModeSetting"
+              @autoSizing="pushAutoSizing"
+              @deviceChange="changeDevice"
+              @sliderChange="changeSliderSize"
+              @multideviceCancel="monitorReturnToSingledevice"
+              @colormodeChange="darkModeSetting"
             />
           </div>
         </div>
@@ -49,40 +45,36 @@
         </h1>
         <div class="tool">
           <div class="toolItem">
-            <DarkModeButton
-            @colormodeChange="darkModeSetting2"
-            />
+            <DarkModeButton @colormodeChange="darkModeSetting2" />
           </div>
           <div class="toolItem">
-            <FavoriteButton
-            @update="update"
-            />
+            <FavoriteButton @update="update" />
           </div>
           <div class="toolItem">
             <Order />
           </div>
           <div class="toolItem">
             <Setting
-            @autoSizing="pushAutoSizing"
-            @deviceChange="changeDevice"
-            @sliderChange="changeSliderSize"
-            @multideviceCancel="monitorReturnToSingledevice"
-            @colormodeChange="darkModeSetting"
+              @autoSizing="pushAutoSizing"
+              @deviceChange="changeDevice"
+              @sliderChange="changeSliderSize"
+              @multideviceCancel="monitorReturnToSingledevice"
+              @colormodeChange="darkModeSetting"
             />
           </div>
         </div>
         <Search
-        :contents="contents"
-        :type="tag.type.contents"
-        :impression="tag.impression.contents"
-        :industry="tag.industry.contents"
-        :pickup="tag.pickup.contents"
-        :technique="tag.technique.contents"
-        :layout="tag.layout.contents"
-        :color="tag.color.contents"
-        :scheme="tag.scheme.contents"
-        :technology="tag.technology.contents"
-        @search="passToTheTopSearch"
+          :contents="contents"
+          :type="tag.type.contents"
+          :impression="tag.impression.contents"
+          :industry="tag.industry.contents"
+          :pickup="tag.pickup.contents"
+          :technique="tag.technique.contents"
+          :layout="tag.layout.contents"
+          :color="tag.color.contents"
+          :scheme="tag.scheme.contents"
+          :technology="tag.technology.contents"
+          @search="passToTheTopSearch"
         />
       </div>
     </header>

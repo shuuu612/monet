@@ -1,37 +1,36 @@
 <template>
   <div class="orderOuter">
     <transition name="mask">
-      <div v-if="open" class="mask" @click="closeList">
-      </div>
+      <div v-if="open" class="mask" @click="closeList"></div>
     </transition>
     <div class="buttonOuter">
-      <div class="button" :class="{selected: openDelay}" @click.stop="openList">
+      <div class="button" :class="{ selected: openDelay }" @click.stop="openList">
         <svg class="image" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 456.33 425.69" fill="#231815">
-          <polygon points="88.85 141.9 131.85 141.9 131.85 0 88.85 0 88.85 49.45 0 49.45 0 92.45 88.85 92.45 88.85 141.9"/>
-          <polygon points="173.41 283.79 216.41 283.79 216.41 141.9 173.41 141.9 173.41 191.34 0 191.34 0 234.34 173.41 234.34 173.41 283.79"/>
-          <polygon points="257.97 333.24 0 333.24 0 376.24 257.97 376.24 257.97 425.69 300.97 425.69 300.97 283.79 257.97 283.79 257.97 333.24"/>
-          <rect x="260.2" y="191.34" width="196.13" height="43"/>
-          <rect x="345.23" y="333.24" width="111.1" height="43"/>
-          <rect x="176.46" y="49.45" width="279.86" height="43"/>
+          <polygon
+            points="88.85 141.9 131.85 141.9 131.85 0 88.85 0 88.85 49.45 0 49.45 0 92.45 88.85 92.45 88.85 141.9"
+          />
+          <polygon
+            points="173.41 283.79 216.41 283.79 216.41 141.9 173.41 141.9 173.41 191.34 0 191.34 0 234.34 173.41 234.34 173.41 283.79"
+          />
+          <polygon
+            points="257.97 333.24 0 333.24 0 376.24 257.97 376.24 257.97 425.69 300.97 425.69 300.97 283.79 257.97 283.79 257.97 333.24"
+          />
+          <rect x="260.2" y="191.34" width="196.13" height="43" />
+          <rect x="345.23" y="333.24" width="111.1" height="43" />
+          <rect x="176.46" y="49.45" width="279.86" height="43" />
         </svg>
       </div>
     </div>
     <div id="pulldown" class="pulldown">
       <ul class="lists" :class="getOpenList">
         <li class="list" :class="getSelectedNew">
-          <button class="link" :class="getSelectedNew" @click="clickButton('new')">
-              追加日（新しい順）
-          </button>
+          <button class="link" :class="getSelectedNew" @click="clickButton('new')">追加日（新しい順）</button>
         </li>
         <li class="list" :class="getSelectedOld">
-          <button class="link" :class="getSelectedOld" @click="clickButton('old')">
-              追加日（古い順）
-          </button>
+          <button class="link" :class="getSelectedOld" @click="clickButton('old')">追加日（古い順）</button>
         </li>
         <li class="list" :class="getSelectedUpdate">
-          <button class="link" :class="getSelectedUpdate" @click="clickButton('update')">
-              更新日（新しい順）
-          </button>
+          <button class="link" :class="getSelectedUpdate" @click="clickButton('update')">更新日（新しい順）</button>
         </li>
       </ul>
     </div>
@@ -158,7 +157,6 @@ export default {
   align-items: center;
   justify-content: center;
   width: 18px;
-
   fill: var(--favorite-icon-stroke);
 }
 

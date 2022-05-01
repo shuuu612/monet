@@ -2,7 +2,9 @@
   <div v-if="getDesktop">
     <button class="scrollTop" :class="getHide" aria-label="scroll top" @click="$moveTop">
       <svg class="scrollTopImage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520.18 307.33" fill="#231815">
-        <path d="M474.68,307.33a45.34,45.34,0,0,1-32.44-13.59L261.31,109.84,77.41,290.78a45.5,45.5,0,0,1-63.82-64.87L229.92,13.07a45.5,45.5,0,0,1,64.35.52L507.11,229.92a45.49,45.49,0,0,1-32.43,77.41Z"/>
+        <path
+          d="M474.68,307.33a45.34,45.34,0,0,1-32.44-13.59L261.31,109.84,77.41,290.78a45.5,45.5,0,0,1-63.82-64.87L229.92,13.07a45.5,45.5,0,0,1,64.35.52L507.11,229.92a45.49,45.49,0,0,1-32.43,77.41Z"
+        />
       </svg>
     </button>
   </div>
@@ -66,7 +68,6 @@ export default {
 
 .scrollTopImage {
   width: 45%;
-
   fill: var(--scroll-top-icon);
 }
 

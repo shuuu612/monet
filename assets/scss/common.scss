@@ -1,6 +1,5 @@
 html {
   font-size: var(--font-size-sm);
-  // スクロールバーの色（Firefox用）
 
   scrollbar-color: var(--scrollbar-button) var(--scrollbar-background);
 }
@@ -27,7 +26,6 @@ h1 {
 }
 
 :root {
-  // スクロールバーの色
   ::-webkit-scrollbar {
     width: 15px;
   }

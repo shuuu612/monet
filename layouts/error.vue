@@ -5,7 +5,7 @@
       <h1 class="comment">ページが見つかりません。</h1>
     </template>
     <template v-else>
-      <div class="errorCode">{{error.statusCode}}</div>
+      <div class="errorCode">{{ error.statusCode }}</div>
       <h1 class="comment">エラーが発生しました。</h1>
     </template>
     <nuxt-link to="/" class="top">ホームに戻る</nuxt-link>

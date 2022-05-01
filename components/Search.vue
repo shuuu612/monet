@@ -1,35 +1,59 @@
 <template>
   <div class="searchWrapper">
     <transition name="mask">
-      <div v-if="menuOpen" class="mask" @click="closeMenu">
-      </div>
+      <div v-if="menuOpen" class="mask" @click="closeMenu"></div>
     </transition>
-    <div id="search" class="searchBlock" :class="{selected: menuOpenDelay}" @click="openMenu">
+    <div id="search" class="searchBlock" :class="{ selected: menuOpenDelay }" @click="openMenu">
       <div class="imageWrapper">
         <svg class="searchImage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 393.47 393.47" fill="#000000">
-          <path d="M383.52,335.43l-102-102c36.94-58.86,29.95-137.61-21.23-188.8-59.45-59.45-156.19-59.46-215.65,0s-59.45,156.19,0,215.65c51.19,51.17,129.94,58.18,188.81,21.24l102,102a34,34,0,1,0,48.08-48.09ZM232.77,232.76a113.64,113.64,0,1,1,0-160.71A113.77,113.77,0,0,1,232.77,232.76Z"/>
+          <path
+            d="M383.52,335.43l-102-102c36.94-58.86,29.95-137.61-21.23-188.8-59.45-59.45-156.19-59.46-215.65,0s-59.45,156.19,0,215.65c51.19,51.17,129.94,58.18,188.81,21.24l102,102a34,34,0,1,0,48.08-48.09ZM232.77,232.76a113.64,113.64,0,1,1,0-160.71A113.77,113.77,0,0,1,232.77,232.76Z"
+          />
         </svg>
       </div>
       <button v-if="order" class="orders" @click.stop="clickOrder">
-        <div class="swich" :class="{and: and}"></div>
+        <div class="swich" :class="{ and: and }"></div>
         <div class="order or">OR</div>
         <div class="order and">AND</div>
       </button>
-      <button v-for="item in selectedTag" :key="item.id" class="item searchBox" @click.stop="clickTag(item.id, item.name, item.schema)">
-        <div>{{item.name}}</div>
+      <button
+        v-for="item in selectedTag"
+        :key="item.id"
+        class="item searchBox"
+        @click.stop="clickTag(item.id, item.name, item.schema)"
+      >
+        <div>{{ item.name }}</div>
         <div class="cancel">
           <svg class="cancelImage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 323.12 323.12" fill="#000000">
-            <polygon points="323.12 28.29 294.83 0 161.56 133.27 28.28 0 0 28.29 133.27 161.56 0 294.83 28.28 323.12 161.56 189.84 294.83 323.12 323.12 294.83 189.84 161.56 323.12 28.29"/>
+            <polygon
+              points="323.12 28.29 294.83 0 161.56 133.27 28.28 0 0 28.29 133.27 161.56 0 294.83 28.28 323.12 161.56 189.84 294.83 323.12 323.12 294.83 189.84 161.56 323.12 28.29"
+            />
           </svg>
         </div>
       </button>
-      <input v-model="keyword" class="search" type="text" placeholder="検索" autocomplete="off" @input="setKeyword" @focus="openMenu">
+      <input
+        v-model="keyword"
+        class="search"
+        type="text"
+        placeholder="検索"
+        autocomplete="off"
+        @input="setKeyword"
+        @focus="openMenu"
+      />
     </div>
-    <div id="menu" class="tags" :class="{open: menuOpen}">
+    <div id="menu" class="tags" :class="{ open: menuOpen }">
       <div class="tag">
         <div class="title">SITE</div>
         <div class="items">
-          <button v-for="(item, index) in site.slice(0, 5)" :key="index" class="item" :class="getSelectedTag(item.id)" @click="clickTag(item.id, item.name, 'site')">{{item.name}}</button>
+          <button
+            v-for="(item, index) in site.slice(0, 5)"
+            :key="index"
+            class="item"
+            :class="getSelectedTag(item.id)"
+            @click="clickTag(item.id, item.name, 'site')"
+          >
+            {{ item.name }}
+          </button>
           <div v-if="!keyword" class="comment">キーワードを入力してサイト名での検索ができます。</div>
           <div v-if="keyword && site.length === 0" class="comment">一致するサイトがありません。</div>
         </div>
@@ -37,62 +61,134 @@
       <div v-if="displayingType.length > 0" class="tag">
         <div class="title">TYPE</div>
         <div class="items">
-          <button v-for="(item, index) in displayingType" :key="index" class="item" :class="getSelectedTag(item.id)" @click="clickTag(item.id, item.name, 'type')">{{item.name}}</button>
+          <button
+            v-for="(item, index) in displayingType"
+            :key="index"
+            class="item"
+            :class="getSelectedTag(item.id)"
+            @click="clickTag(item.id, item.name, 'type')"
+          >
+            {{ item.name }}
+          </button>
         </div>
       </div>
       <div class="tag">
         <div class="title">IMPRESSION</div>
         <div class="items">
-          <button v-for="(item, index) in displayingImpression" :key="index" class="item" :class="getSelectedTag(item.id)" @click="clickTag(item.id, item.name, 'impression')">{{item.name}}</button>
+          <button
+            v-for="(item, index) in displayingImpression"
+            :key="index"
+            class="item"
+            :class="getSelectedTag(item.id)"
+            @click="clickTag(item.id, item.name, 'impression')"
+          >
+            {{ item.name }}
+          </button>
           <div v-if="keyword && displayingImpression.length === 0" class="comment">一致するタグがありません。</div>
         </div>
       </div>
       <div class="tag">
         <div class="title">INDUSTRY</div>
         <div class="items">
-          <button v-for="(item, index) in displayingIndustry" :key="index" class="item" :class="getSelectedTag(item.id)" @click="clickTag(item.id, item.name, 'industry')">{{item.name}}</button>
+          <button
+            v-for="(item, index) in displayingIndustry"
+            :key="index"
+            class="item"
+            :class="getSelectedTag(item.id)"
+            @click="clickTag(item.id, item.name, 'industry')"
+          >
+            {{ item.name }}
+          </button>
           <div v-if="keyword && displayingIndustry.length === 0" class="comment">一致するタグがありません。</div>
         </div>
       </div>
       <div class="tag">
         <div class="title">PICKUP</div>
         <div class="items">
-          <button v-for="(item, index) in displayingPickup" :key="index" class="item" :class="getSelectedTag(item.id)" @click="clickTag(item.id, item.name, 'pickup')">{{item.name}}</button>
+          <button
+            v-for="(item, index) in displayingPickup"
+            :key="index"
+            class="item"
+            :class="getSelectedTag(item.id)"
+            @click="clickTag(item.id, item.name, 'pickup')"
+          >
+            {{ item.name }}
+          </button>
           <div v-if="keyword && displayingPickup.length === 0" class="comment">一致するタグがありません。</div>
         </div>
       </div>
       <div class="tag">
         <div class="title">TECHNIQUE</div>
         <div class="items">
-          <button v-for="(item, index) in displayingTechnique" :key="index" class="item" :class="getSelectedTag(item.id)" @click="clickTag(item.id, item.name, 'technique')">{{item.name}}</button>
+          <button
+            v-for="(item, index) in displayingTechnique"
+            :key="index"
+            class="item"
+            :class="getSelectedTag(item.id)"
+            @click="clickTag(item.id, item.name, 'technique')"
+          >
+            {{ item.name }}
+          </button>
           <div v-if="keyword && displayingTechnique.length === 0" class="comment">一致するタグがありません。</div>
         </div>
       </div>
       <div class="tag">
         <div class="title">LAYOUT</div>
         <div class="items">
-          <button v-for="(item, index) in displayingLayout" :key="index" class="item" :class="getSelectedTag(item.id)" @click="clickTag(item.id, item.name, 'layout')">{{item.name}}</button>
+          <button
+            v-for="(item, index) in displayingLayout"
+            :key="index"
+            class="item"
+            :class="getSelectedTag(item.id)"
+            @click="clickTag(item.id, item.name, 'layout')"
+          >
+            {{ item.name }}
+          </button>
           <div v-if="keyword && displayingLayout.length === 0" class="comment">一致するタグがありません。</div>
         </div>
       </div>
       <div class="tag">
         <div class="title">COLOR</div>
         <div class="items">
-          <button v-for="(item, index) in displayingColor" :key="index" class="item" :class="getSelectedTag(item.id)" @click="clickTag(item.id, item.name, 'color')">{{item.name}}</button>
+          <button
+            v-for="(item, index) in displayingColor"
+            :key="index"
+            class="item"
+            :class="getSelectedTag(item.id)"
+            @click="clickTag(item.id, item.name, 'color')"
+          >
+            {{ item.name }}
+          </button>
           <div v-if="keyword && displayingColor.length === 0" class="comment">一致するタグがありません。</div>
         </div>
       </div>
       <div class="tag">
         <div class="title">SCHEME</div>
         <div class="items">
-          <button v-for="(item, index) in displayingScheme" :key="index" class="item" :class="getSelectedTag(item.id)" @click="clickTag(item.id, item.name, 'scheme')">{{item.name}}</button>
+          <button
+            v-for="(item, index) in displayingScheme"
+            :key="index"
+            class="item"
+            :class="getSelectedTag(item.id)"
+            @click="clickTag(item.id, item.name, 'scheme')"
+          >
+            {{ item.name }}
+          </button>
           <div v-if="keyword && displayingScheme.length === 0" class="comment">一致するタグがありません。</div>
         </div>
       </div>
       <div class="tag">
         <div class="title">TECHNOLOGY</div>
         <div class="items">
-          <button v-for="(item, index) in displayingTechnology" :key="index" class="item" :class="getSelectedTag(item.id)" @click="clickTag(item.id, item.name, 'technology')">{{item.name}}</button>
+          <button
+            v-for="(item, index) in displayingTechnology"
+            :key="index"
+            class="item"
+            :class="getSelectedTag(item.id)"
+            @click="clickTag(item.id, item.name, 'technology')"
+          >
+            {{ item.name }}
+          </button>
           <div v-if="keyword && displayingTechnology.length === 0" class="comment">一致するタグがありません。</div>
         </div>
       </div>
@@ -776,8 +872,8 @@ export default {
   margin-right: 10px;
   margin-left: 6px;
   width: 17px;
-
   fill: var(--search-icon);
+
   @include responsive(xs) {
   }
   @include responsive(sm) {
@@ -874,7 +970,6 @@ export default {
 .cancelImage {
   margin-top: 3px;
   width: 9px;
-
   fill: var(--black);
 }
 .orders {

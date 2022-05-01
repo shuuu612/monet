@@ -30,13 +30,13 @@
           </p>
           <p class="info">
             【お問い合わせ先】
-            <br>
+            <br />
             （メールアドレス）
-            <br>
+            <br />
             contact@monet-design.com
-            <br>
+            <br />
             （コンタクトフォーム）
-            <br>
+            <br />
             https://monet-design.com/contact
           </p>
         </div>
@@ -54,9 +54,7 @@
         </div>
         <div class="container">
           <h3 class="heading">第６条（著作権・肖像権）</h3>
-          <p class="content">
-            当サイトで掲載している画像の著作権・肖像権は各サイトの権利者様に帰属します。
-          </p>
+          <p class="content">当サイトで掲載している画像の著作権・肖像権は各サイトの権利者様に帰属します。</p>
         </div>
         <div class="container">
           <h3 class="heading">第７条（アクセス解析ツール）</h3>
@@ -88,10 +86,11 @@
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  font-size: var(--font-size-lg);
-  color: var(--gray10);
-  line-height: 1.7em;
   padding: 10px 10px;
+  color: var(--gray10);
+  font-size: var(--font-size-lg);
+  line-height: 1.7em;
+
   @include responsive(xs) {
     padding: 10px 10px;
   }
@@ -105,21 +104,20 @@
     padding: 80px 50px;
   }
   @include responsive(xl) {
-    
   }
   @include responsive(xxl) {
-    
   }
 }
 
 .policy {
-  width: 100%;
-  max-width: 800px;
-  background-color: var(--white);
-  border-radius: 10px;
-  box-shadow: 0px 0px 20px var(--gray3);
-  padding: 120px 20px 50px;
   position: relative;
+  padding: 120px 20px 50px;
+  max-width: 800px;
+  width: 100%;
+  border-radius: 10px;
+  background-color: var(--white);
+  box-shadow: 0 0 20px var(--gray3);
+
   @include responsive(xs) {
     padding: 120px 20px 50px;
   }
@@ -133,24 +131,23 @@
     padding: 150px 70px 50px;
   }
   @include responsive(xl) {
-    
   }
   @include responsive(xxl) {
-    
   }
 }
 
 .title-outer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   position: absolute;
   top: 0;
   left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
-  background-color: var(--colormode2);
-  border-radius: 10px 10px 0 0;
   height: 70px;
+  border-radius: 10px 10px 0 0;
+  background-color: var(--colormode2);
+
   @include responsive(xs) {
     height: 70px;
   }
@@ -164,20 +161,17 @@
     height: 100px;
   }
   @include responsive(xl) {
-    
   }
   @include responsive(xxl) {
-    
   }
 }
 
 .title {
-  font-size: var(--font-size-xxl);
   color: var(--white);
+  font-size: var(--font-size-xxl);
 }
 
 .container {
-  
   &:not(:last-child) {
     margin-bottom: 55px;
   }
@@ -192,4 +186,5 @@
 .info {
   margin-top: 14px;
 }
+
 </style>

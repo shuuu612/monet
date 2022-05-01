@@ -1,50 +1,87 @@
 <template>
   <div class="menuBtns">
     <transition name="mask">
-      <div v-if="menuOpen" class="mask" @click="closeMenu">
-      </div>
+      <div v-if="menuOpen" class="mask" @click="closeMenu"></div>
     </transition>
-    <div class="menuBtn" :class="{selected: menuOpenDelay}">
+    <div class="menuBtn" :class="{ selected: menuOpenDelay }">
       <button class="menuLink" @click.stop="openMenu">
         <svg class="buttonImage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 371.93 371.93" fill="#231815">
           <title>設定</title>
-          <path d="M371.93,212.17V159.76H327.77a143.81,143.81,0,0,0-23-55.59L336,73l-37-37L267.73,67.12a143.12,143.12,0,0,0-55.57-23V0h-52.4V44.16a143.32,143.32,0,0,0-55.59,23L73,35.94,36,73l31.18,31.2a143.57,143.57,0,0,0-23,55.57H0v52.41H44.16a143.51,143.51,0,0,0,23,55.57L36,298.94l37,37,31.2-31.17a143,143,0,0,0,55.59,23v44.14h52.4V327.79a143.34,143.34,0,0,0,55.6-23L299,336l37-37L304.8,267.76a143.88,143.88,0,0,0,23-55.59ZM235.35,235.35A69.71,69.71,0,1,1,255.86,186,69.55,69.55,0,0,1,235.35,235.35Z"/>
+          <path
+            d="M371.93,212.17V159.76H327.77a143.81,143.81,0,0,0-23-55.59L336,73l-37-37L267.73,67.12a143.12,143.12,0,0,0-55.57-23V0h-52.4V44.16a143.32,143.32,0,0,0-55.59,23L73,35.94,36,73l31.18,31.2a143.57,143.57,0,0,0-23,55.57H0v52.41H44.16a143.51,143.51,0,0,0,23,55.57L36,298.94l37,37,31.2-31.17a143,143,0,0,0,55.59,23v44.14h52.4V327.79a143.34,143.34,0,0,0,55.6-23L299,336l37-37L304.8,267.76a143.88,143.88,0,0,0,23-55.59ZM235.35,235.35A69.71,69.71,0,1,1,255.86,186,69.55,69.55,0,0,1,235.35,235.35Z"
+          />
         </svg>
       </button>
     </div>
-    <div id="setting" class="menu" :class="{open: menuOpen}">
+    <div id="setting" class="menu" :class="{ open: menuOpen }">
       <div class="controllerContent">
         <div class="controllerTitle">デバイス</div>
         <div class="controllerItems">
-          <button class="controllerItem threeItems" :class="getStatePC" :disabled="getDevicePcDisabled" @click="clickDevicePc">
+          <button
+            class="controllerItem threeItems"
+            :class="getStatePC"
+            :disabled="getDevicePcDisabled"
+            @click="clickDevicePc"
+          >
             <div class="controllerButton">
               <div class="typeImageWrapper">
-                <svg class="typeImage typeImagePC" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 357 299" fill="#ffffff">
-                  <path d="M348.44,0H8.56A8.56,8.56,0,0,0,0,8.56V240.44A8.56,8.56,0,0,0,8.56,249H348.44a8.56,8.56,0,0,0,8.56-8.56V8.56A8.56,8.56,0,0,0,348.44,0ZM331,219.12a4.87,4.87,0,0,1-4.88,4.88H29.88A4.87,4.87,0,0,1,25,219.12V29.88A4.87,4.87,0,0,1,29.88,25H326.12A4.87,4.87,0,0,1,331,29.88Z"/>
-                  <rect class="cls-1" x="66" y="274" width="225" height="25" rx="2.6"/>
+                <svg
+                  class="typeImage typeImagePC"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 357 299"
+                  fill="#ffffff"
+                >
+                  <path
+                    d="M348.44,0H8.56A8.56,8.56,0,0,0,0,8.56V240.44A8.56,8.56,0,0,0,8.56,249H348.44a8.56,8.56,0,0,0,8.56-8.56V8.56A8.56,8.56,0,0,0,348.44,0ZM331,219.12a4.87,4.87,0,0,1-4.88,4.88H29.88A4.87,4.87,0,0,1,25,219.12V29.88A4.87,4.87,0,0,1,29.88,25H326.12A4.87,4.87,0,0,1,331,29.88Z"
+                  />
+                  <rect class="cls-1" x="66" y="274" width="225" height="25" rx="2.6" />
                 </svg>
               </div>
               <div class="typeTitle">デスクトップ</div>
             </div>
             <div class="activeButton" :class="getStatePC"></div>
           </button>
-          <button class="controllerItem threeItems" :class="getStateTB" :disabled="getDeviceTbDisabled" @click="clickDeviceTb">
+          <button
+            class="controllerItem threeItems"
+            :class="getStateTB"
+            :disabled="getDeviceTbDisabled"
+            @click="clickDeviceTb"
+          >
             <div class="controllerButton">
               <div class="typeImageWrapper">
-                <svg class="typeImage typeImageTB" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 315.88 374.1" fill="#ffffff">
-                  <path d="M304.56,0H11.32A11.32,11.32,0,0,0,0,11.32V362.78A11.32,11.32,0,0,0,11.32,374.1H304.56a11.32,11.32,0,0,0,11.32-11.32V11.32A11.32,11.32,0,0,0,304.56,0Zm-17.8,340.3a9.06,9.06,0,0,1-9.05,9.06H37a9.06,9.06,0,0,1-9.06-9.06V37.87a9.06,9.06,0,0,1,9.06-9H277.71a9,9,0,0,1,9.05,9Z"/>
+                <svg
+                  class="typeImage typeImageTB"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 315.88 374.1"
+                  fill="#ffffff"
+                >
+                  <path
+                    d="M304.56,0H11.32A11.32,11.32,0,0,0,0,11.32V362.78A11.32,11.32,0,0,0,11.32,374.1H304.56a11.32,11.32,0,0,0,11.32-11.32V11.32A11.32,11.32,0,0,0,304.56,0Zm-17.8,340.3a9.06,9.06,0,0,1-9.05,9.06H37a9.06,9.06,0,0,1-9.06-9.06V37.87a9.06,9.06,0,0,1,9.06-9H277.71a9,9,0,0,1,9.05,9Z"
+                  />
                 </svg>
               </div>
               <div class="typeTitle">タブレット</div>
             </div>
             <div class="activeButton" :class="getStateTB"></div>
           </button>
-          <button class="controllerItem threeItems" :class="getStateSP" :disabled="getDeviceSpDisabled" @click="clickDeviceSp">
+          <button
+            class="controllerItem threeItems"
+            :class="getStateSP"
+            :disabled="getDeviceSpDisabled"
+            @click="clickDeviceSp"
+          >
             <div class="controllerButton">
               <div class="typeImageWrapper">
-                <svg class="typeImage typeImageSP" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 216.45 386.3" fill="#ffffff">
-                  <path d="M207.69,0H8.76A8.76,8.76,0,0,0,0,8.76V377.54a8.76,8.76,0,0,0,8.76,8.76H207.69a8.76,8.76,0,0,0,8.76-8.76V8.76A8.76,8.76,0,0,0,207.69,0Zm-19.8,351a8.21,8.21,0,0,1-8.22,8.21H35.57A8.21,8.21,0,0,1,27.35,351V36.77a8.22,8.22,0,0,1,8.22-8.21h144.1a8.22,8.22,0,0,1,8.22,8.21Z"/>
-                  <rect x="75.16" y="9.02" width="63.13" height="37.58" rx="4.34"/>
+                <svg
+                  class="typeImage typeImageSP"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 216.45 386.3"
+                  fill="#ffffff"
+                >
+                  <path
+                    d="M207.69,0H8.76A8.76,8.76,0,0,0,0,8.76V377.54a8.76,8.76,0,0,0,8.76,8.76H207.69a8.76,8.76,0,0,0,8.76-8.76V8.76A8.76,8.76,0,0,0,207.69,0Zm-19.8,351a8.21,8.21,0,0,1-8.22,8.21H35.57A8.21,8.21,0,0,1,27.35,351V36.77a8.22,8.22,0,0,1,8.22-8.21h144.1a8.22,8.22,0,0,1,8.22,8.21Z"
+                  />
+                  <rect x="75.16" y="9.02" width="63.13" height="37.58" rx="4.34" />
                 </svg>
               </div>
               <div class="typeTitle">スマートフォン</div>
@@ -52,7 +89,7 @@
             <div class="activeButton" :class="getStateSP"></div>
           </button>
         </div>
-        <div class="check" :class="[getDeviceCheckboxChecked,getMultideviceDisabled]">
+        <div class="check" :class="[getDeviceCheckboxChecked, getMultideviceDisabled]">
           <div class="text">マルチデバイスを有効にする</div>
           <button class="checkboxOuter" @click="deviceCheckboxChange">
             <div class="switch"></div>
@@ -60,28 +97,44 @@
           </button>
         </div>
         <div>
-          <div v-if="getDisplay" class="comment">マルチデバイスは画面の横幅が576px以上の端末でご利用いただけます。(ご利用の端末は{{$store.getters['windowSize/getWindowWidth']}}pxです。)</div>
+          <div v-if="getDisplay" class="comment">
+            マルチデバイスは画面の横幅が576px以上の端末でご利用いただけます。(ご利用の端末は{{
+              $store.getters['windowSize/getWindowWidth']
+            }}pxです。)
+          </div>
         </div>
       </div>
       <div class="partitionLine"></div>
       <div class="controllerContent">
         <div class="controllerTitleWrapper">
           <div class="controllerTitle">サイズ調整</div>
-          <div class="selectableRange">現在の選択可能範囲：{{`1 〜 ${gatMaxValue}`}}</div>
+          <div class="selectableRange">現在の選択可能範囲：{{ `1 〜 ${gatMaxValue}` }}</div>
         </div>
         <div class="controllerItems sliderStyle">
           <button class="sliderButton" :class="getSliderDownButtonDisabled" @click="sliderDown">
             <svg class="sliderImageMinus" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 425.2 68.03" fill="#fff">
-              <rect width="425.2" height="68.03" rx="8.5"/>
+              <rect width="425.2" height="68.03" rx="8.5" />
             </svg>
           </button>
-          <input id="slider" class="slider" type="range" name="size" min="0.25" max="1" step="0.075" :value="getSliderValue" @input="sliderChange">
+          <input
+            id="slider"
+            class="slider"
+            type="range"
+            name="size"
+            min="0.25"
+            max="1"
+            step="0.075"
+            :value="getSliderValue"
+            @input="sliderChange"
+          />
           <button class="sliderButton" :class="getSliderUpButtonDisabled" @click="sliderUp">
             <svg class="sliderImagePlus" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 425.2 425.2" fill="#fff">
-              <path d="M416.69,178.58H246.61V8.5a8.5,8.5,0,0,0-8.5-8.5h-51a8.51,8.51,0,0,0-8.51,8.5V178.58H8.5A8.51,8.51,0,0,0,0,187.09v51a8.5,8.5,0,0,0,8.5,8.5H178.58V416.69a8.51,8.51,0,0,0,8.51,8.51h51a8.5,8.5,0,0,0,8.5-8.51V246.61H416.69a8.5,8.5,0,0,0,8.51-8.5v-51A8.51,8.51,0,0,0,416.69,178.58Z"/>
+              <path
+                d="M416.69,178.58H246.61V8.5a8.5,8.5,0,0,0-8.5-8.5h-51a8.51,8.51,0,0,0-8.51,8.5V178.58H8.5A8.51,8.51,0,0,0,0,187.09v51a8.5,8.5,0,0,0,8.5,8.5H178.58V416.69a8.51,8.51,0,0,0,8.51,8.51h51a8.5,8.5,0,0,0,8.5-8.51V246.61H416.69a8.5,8.5,0,0,0,8.51-8.5v-51A8.51,8.51,0,0,0,416.69,178.58Z"
+              />
             </svg>
           </button>
-          <div class="scale">{{getScaleValue}}</div>
+          <div class="scale">{{ getScaleValue }}</div>
         </div>
         <div class="check" :class="getSliderCheckboxChecked">
           <div class="text">自動調整を有効にする</div>
@@ -91,22 +144,39 @@
           </button>
         </div>
         <div>
-          <div class="comment">表示崩れを防止するため、自動調整を無効にしていても、ブラウザのサイズを変更すると自動調整が有効になります。</div>
+          <div class="comment">
+            表示崩れを防止するため、自動調整を無効にしていても、ブラウザのサイズを変更すると自動調整が有効になります。
+          </div>
         </div>
       </div>
       <div class="partitionLine"></div>
       <div class="controllerContent">
         <div class="controllerTitle">ダークモード</div>
         <div class="controllerItems">
-          <button class="controllerItem threeItems" :class="getDarkmodeOn" :disabled="getDarkmodeOnDisabled" @click="clickDarkmode('on')">
+          <button
+            class="controllerItem threeItems"
+            :class="getDarkmodeOn"
+            :disabled="getDarkmodeOnDisabled"
+            @click="clickDarkmode('on')"
+          >
             <div class="typeTitle darkmode controllerButton">ON</div>
             <div class="activeButton" :class="getDarkmodeOn"></div>
           </button>
-          <button class="controllerItem threeItems" :class="getDarkmodeOff" :disabled="getDarkmodeOffDisabled" @click="clickDarkmode('off')">
+          <button
+            class="controllerItem threeItems"
+            :class="getDarkmodeOff"
+            :disabled="getDarkmodeOffDisabled"
+            @click="clickDarkmode('off')"
+          >
             <div class="typeTitle darkmode controllerButton">OFF</div>
             <div class="activeButton" :class="getDarkmodeOff"></div>
           </button>
-          <button class="controllerItem threeItems" :class="getDarkmodeOs" :disabled="getDarkmodeOsDisabled" @click="clickDarkmode('os')">
+          <button
+            class="controllerItem threeItems"
+            :class="getDarkmodeOs"
+            :disabled="getDarkmodeOsDisabled"
+            @click="clickDarkmode('os')"
+          >
             <div class="typeTitle darkmode controllerButton">OSの設定</div>
             <div class="activeButton" :class="getDarkmodeOs"></div>
           </button>
@@ -118,68 +188,94 @@
         <div class="colors">
           <button class="color color1" :class="getColor1Checked" @click="colormodeChange(1)">
             <svg class="invalid" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 435.35 435.35" fill="#231815">
-              <path d="M371.59,63.76A217.67,217.67,0,1,0,63.76,371.59,217.67,217.67,0,1,0,371.59,63.76ZM42,217.67A174.8,174.8,0,0,1,79,110L325.34,356.4a174.85,174.85,0,0,1-107.66,37C120.81,393.35,42,314.54,42,217.67ZM355.2,326.86,108.49,80.15A174.82,174.82,0,0,1,217.68,42c96.86,0,175.67,78.81,175.67,175.67A174.8,174.8,0,0,1,355.2,326.86Z"/>
+              <path
+                d="M371.59,63.76A217.67,217.67,0,1,0,63.76,371.59,217.67,217.67,0,1,0,371.59,63.76ZM42,217.67A174.8,174.8,0,0,1,79,110L325.34,356.4a174.85,174.85,0,0,1-107.66,37C120.81,393.35,42,314.54,42,217.67ZM355.2,326.86,108.49,80.15A174.82,174.82,0,0,1,217.68,42c96.86,0,175.67,78.81,175.67,175.67A174.8,174.8,0,0,1,355.2,326.86Z"
+              />
             </svg>
           </button>
           <button class="color color2" :class="getColor2Checked" @click="colormodeChange(2)">
             <svg class="invalid" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 435.35 435.35" fill="#231815">
-              <path d="M371.59,63.76A217.67,217.67,0,1,0,63.76,371.59,217.67,217.67,0,1,0,371.59,63.76ZM42,217.67A174.8,174.8,0,0,1,79,110L325.34,356.4a174.85,174.85,0,0,1-107.66,37C120.81,393.35,42,314.54,42,217.67ZM355.2,326.86,108.49,80.15A174.82,174.82,0,0,1,217.68,42c96.86,0,175.67,78.81,175.67,175.67A174.8,174.8,0,0,1,355.2,326.86Z"/>
+              <path
+                d="M371.59,63.76A217.67,217.67,0,1,0,63.76,371.59,217.67,217.67,0,1,0,371.59,63.76ZM42,217.67A174.8,174.8,0,0,1,79,110L325.34,356.4a174.85,174.85,0,0,1-107.66,37C120.81,393.35,42,314.54,42,217.67ZM355.2,326.86,108.49,80.15A174.82,174.82,0,0,1,217.68,42c96.86,0,175.67,78.81,175.67,175.67A174.8,174.8,0,0,1,355.2,326.86Z"
+              />
             </svg>
           </button>
           <button class="color color5" :class="getColor5Checked" @click="colormodeChange(5)">
             <svg class="invalid" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 435.35 435.35" fill="#231815">
-              <path d="M371.59,63.76A217.67,217.67,0,1,0,63.76,371.59,217.67,217.67,0,1,0,371.59,63.76ZM42,217.67A174.8,174.8,0,0,1,79,110L325.34,356.4a174.85,174.85,0,0,1-107.66,37C120.81,393.35,42,314.54,42,217.67ZM355.2,326.86,108.49,80.15A174.82,174.82,0,0,1,217.68,42c96.86,0,175.67,78.81,175.67,175.67A174.8,174.8,0,0,1,355.2,326.86Z"/>
+              <path
+                d="M371.59,63.76A217.67,217.67,0,1,0,63.76,371.59,217.67,217.67,0,1,0,371.59,63.76ZM42,217.67A174.8,174.8,0,0,1,79,110L325.34,356.4a174.85,174.85,0,0,1-107.66,37C120.81,393.35,42,314.54,42,217.67ZM355.2,326.86,108.49,80.15A174.82,174.82,0,0,1,217.68,42c96.86,0,175.67,78.81,175.67,175.67A174.8,174.8,0,0,1,355.2,326.86Z"
+              />
             </svg>
           </button>
           <button class="color color6" :class="getColor6Checked" @click="colormodeChange(6)">
             <svg class="invalid" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 435.35 435.35" fill="#231815">
-              <path d="M371.59,63.76A217.67,217.67,0,1,0,63.76,371.59,217.67,217.67,0,1,0,371.59,63.76ZM42,217.67A174.8,174.8,0,0,1,79,110L325.34,356.4a174.85,174.85,0,0,1-107.66,37C120.81,393.35,42,314.54,42,217.67ZM355.2,326.86,108.49,80.15A174.82,174.82,0,0,1,217.68,42c96.86,0,175.67,78.81,175.67,175.67A174.8,174.8,0,0,1,355.2,326.86Z"/>
+              <path
+                d="M371.59,63.76A217.67,217.67,0,1,0,63.76,371.59,217.67,217.67,0,1,0,371.59,63.76ZM42,217.67A174.8,174.8,0,0,1,79,110L325.34,356.4a174.85,174.85,0,0,1-107.66,37C120.81,393.35,42,314.54,42,217.67ZM355.2,326.86,108.49,80.15A174.82,174.82,0,0,1,217.68,42c96.86,0,175.67,78.81,175.67,175.67A174.8,174.8,0,0,1,355.2,326.86Z"
+              />
             </svg>
           </button>
           <button class="color color7" :class="getColor7Checked" @click="colormodeChange(7)">
             <svg class="invalid" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 435.35 435.35" fill="#231815">
-              <path d="M371.59,63.76A217.67,217.67,0,1,0,63.76,371.59,217.67,217.67,0,1,0,371.59,63.76ZM42,217.67A174.8,174.8,0,0,1,79,110L325.34,356.4a174.85,174.85,0,0,1-107.66,37C120.81,393.35,42,314.54,42,217.67ZM355.2,326.86,108.49,80.15A174.82,174.82,0,0,1,217.68,42c96.86,0,175.67,78.81,175.67,175.67A174.8,174.8,0,0,1,355.2,326.86Z"/>
+              <path
+                d="M371.59,63.76A217.67,217.67,0,1,0,63.76,371.59,217.67,217.67,0,1,0,371.59,63.76ZM42,217.67A174.8,174.8,0,0,1,79,110L325.34,356.4a174.85,174.85,0,0,1-107.66,37C120.81,393.35,42,314.54,42,217.67ZM355.2,326.86,108.49,80.15A174.82,174.82,0,0,1,217.68,42c96.86,0,175.67,78.81,175.67,175.67A174.8,174.8,0,0,1,355.2,326.86Z"
+              />
             </svg>
           </button>
           <button class="color color4" :class="getColor4Checked" @click="colormodeChange(4)">
             <svg class="invalid" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 435.35 435.35" fill="#231815">
-              <path d="M371.59,63.76A217.67,217.67,0,1,0,63.76,371.59,217.67,217.67,0,1,0,371.59,63.76ZM42,217.67A174.8,174.8,0,0,1,79,110L325.34,356.4a174.85,174.85,0,0,1-107.66,37C120.81,393.35,42,314.54,42,217.67ZM355.2,326.86,108.49,80.15A174.82,174.82,0,0,1,217.68,42c96.86,0,175.67,78.81,175.67,175.67A174.8,174.8,0,0,1,355.2,326.86Z"/>
+              <path
+                d="M371.59,63.76A217.67,217.67,0,1,0,63.76,371.59,217.67,217.67,0,1,0,371.59,63.76ZM42,217.67A174.8,174.8,0,0,1,79,110L325.34,356.4a174.85,174.85,0,0,1-107.66,37C120.81,393.35,42,314.54,42,217.67ZM355.2,326.86,108.49,80.15A174.82,174.82,0,0,1,217.68,42c96.86,0,175.67,78.81,175.67,175.67A174.8,174.8,0,0,1,355.2,326.86Z"
+              />
             </svg>
           </button>
           <button class="color color3" :class="getColor3Checked" @click="colormodeChange(3)">
             <svg class="invalid" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 435.35 435.35" fill="#231815">
-              <path d="M371.59,63.76A217.67,217.67,0,1,0,63.76,371.59,217.67,217.67,0,1,0,371.59,63.76ZM42,217.67A174.8,174.8,0,0,1,79,110L325.34,356.4a174.85,174.85,0,0,1-107.66,37C120.81,393.35,42,314.54,42,217.67ZM355.2,326.86,108.49,80.15A174.82,174.82,0,0,1,217.68,42c96.86,0,175.67,78.81,175.67,175.67A174.8,174.8,0,0,1,355.2,326.86Z"/>
+              <path
+                d="M371.59,63.76A217.67,217.67,0,1,0,63.76,371.59,217.67,217.67,0,1,0,371.59,63.76ZM42,217.67A174.8,174.8,0,0,1,79,110L325.34,356.4a174.85,174.85,0,0,1-107.66,37C120.81,393.35,42,314.54,42,217.67ZM355.2,326.86,108.49,80.15A174.82,174.82,0,0,1,217.68,42c96.86,0,175.67,78.81,175.67,175.67A174.8,174.8,0,0,1,355.2,326.86Z"
+              />
             </svg>
           </button>
           <button class="color color9" :class="getColor9Checked" @click="colormodeChange(9)">
             <svg class="invalid" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 435.35 435.35" fill="#231815">
-              <path d="M371.59,63.76A217.67,217.67,0,1,0,63.76,371.59,217.67,217.67,0,1,0,371.59,63.76ZM42,217.67A174.8,174.8,0,0,1,79,110L325.34,356.4a174.85,174.85,0,0,1-107.66,37C120.81,393.35,42,314.54,42,217.67ZM355.2,326.86,108.49,80.15A174.82,174.82,0,0,1,217.68,42c96.86,0,175.67,78.81,175.67,175.67A174.8,174.8,0,0,1,355.2,326.86Z"/>
+              <path
+                d="M371.59,63.76A217.67,217.67,0,1,0,63.76,371.59,217.67,217.67,0,1,0,371.59,63.76ZM42,217.67A174.8,174.8,0,0,1,79,110L325.34,356.4a174.85,174.85,0,0,1-107.66,37C120.81,393.35,42,314.54,42,217.67ZM355.2,326.86,108.49,80.15A174.82,174.82,0,0,1,217.68,42c96.86,0,175.67,78.81,175.67,175.67A174.8,174.8,0,0,1,355.2,326.86Z"
+              />
             </svg>
           </button>
           <button class="color color11" :class="getColor11Checked" @click="colormodeChange(11)">
             <svg class="invalid" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 435.35 435.35" fill="#231815">
-              <path d="M371.59,63.76A217.67,217.67,0,1,0,63.76,371.59,217.67,217.67,0,1,0,371.59,63.76ZM42,217.67A174.8,174.8,0,0,1,79,110L325.34,356.4a174.85,174.85,0,0,1-107.66,37C120.81,393.35,42,314.54,42,217.67ZM355.2,326.86,108.49,80.15A174.82,174.82,0,0,1,217.68,42c96.86,0,175.67,78.81,175.67,175.67A174.8,174.8,0,0,1,355.2,326.86Z"/>
+              <path
+                d="M371.59,63.76A217.67,217.67,0,1,0,63.76,371.59,217.67,217.67,0,1,0,371.59,63.76ZM42,217.67A174.8,174.8,0,0,1,79,110L325.34,356.4a174.85,174.85,0,0,1-107.66,37C120.81,393.35,42,314.54,42,217.67ZM355.2,326.86,108.49,80.15A174.82,174.82,0,0,1,217.68,42c96.86,0,175.67,78.81,175.67,175.67A174.8,174.8,0,0,1,355.2,326.86Z"
+              />
             </svg>
           </button>
           <button class="color color12" :class="getColor12Checked" @click="colormodeChange(12)">
             <svg class="invalid" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 435.35 435.35" fill="#231815">
-              <path d="M371.59,63.76A217.67,217.67,0,1,0,63.76,371.59,217.67,217.67,0,1,0,371.59,63.76ZM42,217.67A174.8,174.8,0,0,1,79,110L325.34,356.4a174.85,174.85,0,0,1-107.66,37C120.81,393.35,42,314.54,42,217.67ZM355.2,326.86,108.49,80.15A174.82,174.82,0,0,1,217.68,42c96.86,0,175.67,78.81,175.67,175.67A174.8,174.8,0,0,1,355.2,326.86Z"/>
+              <path
+                d="M371.59,63.76A217.67,217.67,0,1,0,63.76,371.59,217.67,217.67,0,1,0,371.59,63.76ZM42,217.67A174.8,174.8,0,0,1,79,110L325.34,356.4a174.85,174.85,0,0,1-107.66,37C120.81,393.35,42,314.54,42,217.67ZM355.2,326.86,108.49,80.15A174.82,174.82,0,0,1,217.68,42c96.86,0,175.67,78.81,175.67,175.67A174.8,174.8,0,0,1,355.2,326.86Z"
+              />
             </svg>
           </button>
           <button class="color color8" :class="getColor8Checked" @click="colormodeChange(8)">
             <svg class="invalid" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 435.35 435.35" fill="#231815">
-              <path d="M371.59,63.76A217.67,217.67,0,1,0,63.76,371.59,217.67,217.67,0,1,0,371.59,63.76ZM42,217.67A174.8,174.8,0,0,1,79,110L325.34,356.4a174.85,174.85,0,0,1-107.66,37C120.81,393.35,42,314.54,42,217.67ZM355.2,326.86,108.49,80.15A174.82,174.82,0,0,1,217.68,42c96.86,0,175.67,78.81,175.67,175.67A174.8,174.8,0,0,1,355.2,326.86Z"/>
+              <path
+                d="M371.59,63.76A217.67,217.67,0,1,0,63.76,371.59,217.67,217.67,0,1,0,371.59,63.76ZM42,217.67A174.8,174.8,0,0,1,79,110L325.34,356.4a174.85,174.85,0,0,1-107.66,37C120.81,393.35,42,314.54,42,217.67ZM355.2,326.86,108.49,80.15A174.82,174.82,0,0,1,217.68,42c96.86,0,175.67,78.81,175.67,175.67A174.8,174.8,0,0,1,355.2,326.86Z"
+              />
             </svg>
           </button>
           <button class="color color10" :class="getColor10Checked" @click="colormodeChange(10)">
             <svg class="invalid" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 435.35 435.35" fill="#231815">
-              <path d="M371.59,63.76A217.67,217.67,0,1,0,63.76,371.59,217.67,217.67,0,1,0,371.59,63.76ZM42,217.67A174.8,174.8,0,0,1,79,110L325.34,356.4a174.85,174.85,0,0,1-107.66,37C120.81,393.35,42,314.54,42,217.67ZM355.2,326.86,108.49,80.15A174.82,174.82,0,0,1,217.68,42c96.86,0,175.67,78.81,175.67,175.67A174.8,174.8,0,0,1,355.2,326.86Z"/>
+              <path
+                d="M371.59,63.76A217.67,217.67,0,1,0,63.76,371.59,217.67,217.67,0,1,0,371.59,63.76ZM42,217.67A174.8,174.8,0,0,1,79,110L325.34,356.4a174.85,174.85,0,0,1-107.66,37C120.81,393.35,42,314.54,42,217.67ZM355.2,326.86,108.49,80.15A174.82,174.82,0,0,1,217.68,42c96.86,0,175.67,78.81,175.67,175.67A174.8,174.8,0,0,1,355.2,326.86Z"
+              />
             </svg>
           </button>
         </div>
         <div>
           <div class="comment">テーマカラーはダークモードOFF時に利用されます。</div>
-          <div class="comment">複数の選択がある場合は選択された色からランダムに、選択なしの場合はすべての色からランダムに利用されます。</div>
+          <div class="comment">
+            複数の選択がある場合は選択された色からランダムに、選択なしの場合はすべての色からランダムに利用されます。
+          </div>
         </div>
       </div>
     </div>
@@ -545,7 +641,6 @@ export default {
 .buttonImage {
   height: 18px;
   transition: transform .25s;
-
   fill: var(--favorite-icon-stroke);
 }
 
@@ -707,13 +802,11 @@ export default {
 
 .sliderImageMinus {
   width: 12px;
-
   fill: var(--menu-comment);
 }
 
 .sliderImagePlus {
   width: 12px;
-
   fill: var(--menu-comment);
 }
 .scale {

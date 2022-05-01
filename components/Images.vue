@@ -6,7 +6,7 @@
           <source
             :srcset="`
             ${getPath(content.url)}-pc-${step}.webp 1x,
-            ${getPath(content.url)}-pc-${step*2}.webp 2x
+            ${getPath(content.url)}-pc-${step * 2}.webp 2x
             `"
             type="image/webp"
           />
@@ -15,14 +15,14 @@
             :src="`${getPath(content.url)}-pc-${step}.jpg`"
             :srcset="`
             ${getPath(content.url)}-pc-${step}.jpg 1x,
-            ${getPath(content.url)}-pc-${step*2}.jpg 2x
+            ${getPath(content.url)}-pc-${step * 2}.jpg 2x
             `"
             :width="getWidth('pc')"
             :height="getHeight"
             :alt="`${content.name}`"
             loading="lazy"
             @load="imageLoaded"
-          >
+          />
         </picture>
       </template>
       <img
@@ -33,15 +33,15 @@
         :height="getHeight"
         :alt="`${content.name}`"
         loading="lazy"
-      >
+      />
     </div>
     <div class="imageWrapper">
       <template v-for="(step, index) in stepsTb">
-        <picture v-if="getDisplaySteps(index, 'tb')" :key="index+100" :class="getMargin('tb')">
+        <picture v-if="getDisplaySteps(index, 'tb')" :key="index + 100" :class="getMargin('tb')">
           <source
             :srcset="`
             ${getPath(content.url)}-tb-${step}.webp 1x,
-            ${getPath(content.url)}-tb-${step*2}.webp 2x
+            ${getPath(content.url)}-tb-${step * 2}.webp 2x
             `"
             type="image/webp"
           />
@@ -50,14 +50,14 @@
             :src="`${getPath(content.url)}-tb-${step}.jpg`"
             :srcset="`
             ${getPath(content.url)}-tb-${step}.jpg 1x,
-            ${getPath(content.url)}-tb-${step*2}.jpg 2x
+            ${getPath(content.url)}-tb-${step * 2}.jpg 2x
             `"
             :width="getWidth('tb')"
             :height="getHeight"
             :alt="`${content.name}`"
             loading="lazy"
             @load="imageLoaded"
-          >
+          />
         </picture>
       </template>
       <img
@@ -68,15 +68,15 @@
         :height="getHeight"
         :alt="`${content.name}`"
         loading="lazy"
-      >
+      />
     </div>
     <div class="imageWrapper">
       <template v-for="(step, index) in stepsSp">
-        <picture v-if="getDisplaySteps(index, 'sp')" :key="index+200" :class="getMargin('sp')">
+        <picture v-if="getDisplaySteps(index, 'sp')" :key="index + 200" :class="getMargin('sp')">
           <source
             :srcset="`
             ${getPath(content.url)}-sp-${step}.webp 1x,
-            ${getPath(content.url)}-sp-${step*2}.webp 2x
+            ${getPath(content.url)}-sp-${step * 2}.webp 2x
             `"
             type="image/webp"
           />
@@ -85,14 +85,14 @@
             :src="`${getPath(content.url)}-sp-${step}.jpg`"
             :srcset="`
             ${getPath(content.url)}-sp-${step}.jpg 1x,
-            ${getPath(content.url)}-sp-${step*2}.jpg 2x
+            ${getPath(content.url)}-sp-${step * 2}.jpg 2x
             `"
             :width="getWidth('sp')"
             :height="getHeight"
             :alt="`${content.name}`"
             loading="lazy"
             @load="imageLoaded"
-          >
+          />
         </picture>
       </template>
       <img
@@ -103,7 +103,7 @@
         :height="getHeight"
         :alt="`${content.name}`"
         loading="lazy"
-      >
+      />
     </div>
   </a>
 </template>
