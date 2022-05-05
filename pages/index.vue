@@ -315,12 +315,12 @@ export default {
     console.log('mounted');
     // ウィンドウサイズを取得
     this.setWindowSize();
+
     // ローカルストレージの取得
     if (this.$storageAvailable('localStorage')) {
       this.getLocalStorage();
-    } else {
-      console.log('ブラウザのローカルストレージがオフになっています。');
     }
+
     // ダークモードの初期設定
     this.darkModeSetting();
 
@@ -1344,7 +1344,7 @@ export default {
 .divider {
   position: relative;
   padding: 0 0 150px 0;
-  transition: transform 0.25s ease-in;
+  transition: transform .25s ease-in;
 
   @include responsive(xs) {
   }
@@ -1507,12 +1507,12 @@ export default {
   width: 32px;
   height: 32px;
   border-radius: 15px;
-  transition: background-color 0.25s;
+  transition: background-color .25s;
 }
 
 .bookmark {
   right: 3px;
-  transition: background-color 0.25s;
+  transition: background-color .25s;
 
   @include hover() {
     background-color: var(--favorite-icon-hover);
@@ -1525,12 +1525,12 @@ export default {
   }
   .bookmarkImage {
     width: 15px;
-    transition: stroke 0.25s, fill 0.25s;
+    transition: stroke .25s, fill .25s;
     stroke: var(--favorite-icon-stroke);
   }
   .bookmarkRegistered {
     animation-name: like;
-    animation-duration: 0.3s;
+    animation-duration: .3s;
     animation-play-state: running;
     animation-timing-function: ease-in-out;
     animation-delay: 0s;
@@ -1585,10 +1585,10 @@ export default {
     .comment {
       display: flex;
       animation-name: comment-open;
-      animation-duration: 0.2s;
+      animation-duration: .2s;
       animation-play-state: running;
       animation-timing-function: ease;
-      animation-delay: 0.3s;
+      animation-delay: .3s;
       animation-iteration-count: 1;
       animation-direction: normal;
 
@@ -1664,4 +1664,5 @@ export default {
 
   user-select: none;
 }
+
 </style>
