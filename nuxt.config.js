@@ -12,8 +12,8 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
-      { hid: 'keywords', name: 'keywords', content: '' },
+      { hid: 'description', name: 'description', content: 'MonetはWebサイトギャラリーです。' },
+      { hid: 'keywords', name: 'keywords', content: 'Webデザイン,Web design,ギャラリー' },
       { name: 'format-detection', content: 'telephone=no' },
       { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
       
@@ -22,18 +22,15 @@ export default {
       { hid: 'og:type', property: 'og:type', content: 'website' },
       { hid: 'og:url', property: 'og:url', content: 'https://monet.shuuu.jp/' },
       { hid: 'og:title', property: 'og:title', content: 'Monet | Webデザインギャラリー' },
-      { hid: 'og:description', property: 'og:description', content: 'サイトの説明' },
-      { hid: 'og:image', property: 'og:image', content: 'サイトURL' },
+      { hid: 'og:description', property: 'og:description', content: 'MonetはWebサイトギャラリーです。' },
+      { hid: 'og:image', property: 'og:image', content: 'https://monet.shuuu.jp/images/ogp/logo.png' },
 
-      // Facebook
-      { hid: 'fb:app_id', property: 'fb:app_id', content: 'App-ID' },
       // Twitter
       { hid: 'twitter:card', name: 'twitter:card', content: 'summary_large_image' },
-      { hid: 'twitter:site', name: 'twitter:site', content: '@Twitter' }
+      { hid: 'twitter:site', name: 'twitter:site', content: '@shuuu612' }
     ],
     link: [
-      { rel: 'icon', type: 'image/png', href: '/favicons/icon-192x192.png' },
-      { rel: 'apple-touch-icon', type: 'image/png', href: '/favicons/apple-touch-icon-180x180.png' },
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       { rel: 'preconnect', href: 'https://fonts.googleapis.com'},
       { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: ''},
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap'},

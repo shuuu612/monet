@@ -231,11 +231,6 @@ export default {
       columnContent: 0,
       meta: {
         title: 'Monet | Webデザインギャラリー',
-        keywords: 'Webデザイン,Web design,ギャラリー',
-        description: 'MonetはWebサイトギャラリーです。',
-        type: 'website',
-        url: 'https://monet.shuuu.jp/',
-        image: 'https://monet.shuuu.jp/images/ogp/logo.png',
       },
       contentsWidth: {},
     };
@@ -246,15 +241,6 @@ export default {
         class: this.colormode,
       },
       title: this.japaneseTags === '' ? this.meta.title : this.japaneseTags + ' | ' + this.meta.title,
-      meta: [
-        { hid: 'description', name: 'description', content: this.meta.description },
-        { hid: 'keywords', name: 'keywords', content: this.meta.keywords },
-        { hid: 'og:type', property: 'og:type', content: this.meta.type },
-        { hid: 'og:title', property: 'og:title', content: this.meta.title },
-        { hid: 'og:description', property: 'og:description', content: this.meta.description },
-        { hid: 'og:url', property: 'og:url', content: this.meta.url },
-        { hid: 'og:image', property: 'og:image', content: this.meta.image },
-      ],
     };
   },
   computed: {
