@@ -23,7 +23,7 @@ export default {
       { hid: 'og:url', property: 'og:url', content: 'https://monet.shuuu.jp/' },
       { hid: 'og:title', property: 'og:title', content: 'Monet | Webデザインギャラリー' },
       { hid: 'og:description', property: 'og:description', content: 'MonetはWebサイトギャラリーです。' },
-      { hid: 'og:image', property: 'og:image', content: 'https://monet.shuuu.jp/images/ogp/logo.png' },
+      { hid: 'og:image', property: 'og:image', content: 'https://monet.shuuu.jp/ogp.png' },
 
       // Twitter
       { hid: 'twitter:card', name: 'twitter:card', content: 'summary_large_image' },
