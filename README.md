@@ -1,6 +1,6 @@
 # monet
 
-MONET is a design gallery for web creators
+Monet is a design gallery for web creators
 
 ## Build Setup
 
