@@ -211,7 +211,7 @@ export default {
         // '/'を'_'に置換
         const parts3 = parts2.replace(/\//g, '_');
         // ファイルパスを追加
-        const parts4 = `/images/site/${parts3}`;
+        const parts4 = `${process.env.NODE_ENV === 'production' ? '/works/monet' : ''}/images/site/${parts3}`;
 
         return parts4;
       };
