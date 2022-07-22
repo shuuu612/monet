@@ -70,10 +70,7 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ['@nuxtjs/axios', '@nuxtjs/style-resources', '@nuxtjs/google-gtag'],
-  'google-gtag': {
-    id: 'G-QDLBX51TVH',
-  },
+  modules: ['@nuxtjs/axios', '@nuxtjs/style-resources'],
 
   styleResources: {
     scss: ['@/assets/scss/mixin.scss', '@/assets/scss/font.scss', '@/assets/scss/color.scss'],
